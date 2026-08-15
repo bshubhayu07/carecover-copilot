@@ -38,6 +38,88 @@ button[title="View app in Streamlit Cloud"] {display: none !important;}
 </style>
 """, unsafe_allow_html=True)
 
+# Multi-Lingual Site Interface Translations Dictionary
+TRANSLATIONS = {
+    "English": {
+        "emergency": "EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call 112 / 108 immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.",
+        "site_lang": "App & Site Interface Language",
+        "select_lang": "Select Site Language",
+        "tab1": "Upload & Extract",
+        "tab2": "Ask Your Policy",
+        "tab3": "Find Hospital Options",
+        "tab4": "Care Journey & Safety",
+        "upload_header": "Upload Policy Document",
+        "ask_header": "Ask Questions About Your Coverage",
+        "hosp_header": "Hospital Network & Room Matching",
+        "journey_header": "Care Journey, Claim Estimator & Safety Guidelines"
+    },
+    "Hindi (हिंदी)": {
+        "emergency": "आपातकालीन सूचना: यदि आपको या आपके परिवार को चिकित्सा आपात स्थिति है, तो तुरंत 112 / 108 पर कॉल करें या निकटतम अस्पताल जाएं।",
+        "site_lang": "ऐप और साइट इंटरफ़ेस भाषा",
+        "select_lang": "साइट भाषा चुनें",
+        "tab1": "अपलोड और निष्कर्षण",
+        "tab2": "अपनी नीति से पूछें",
+        "tab3": "अस्पताल के विकल्प खोजें",
+        "tab4": "देखभाल यात्रा और सुरक्षा",
+        "upload_header": "नीति दस्तावेज़ अपलोड करें",
+        "ask_header": "अपनी कवरेज के बारे में प्रश्न पूछें",
+        "hosp_header": "अस्पताल नेटवर्क और रूम मिलान",
+        "journey_header": "देखभाल यात्रा और दावा अनुमानक"
+    },
+    "Marathi (मराठी)": {
+        "emergency": "तातडीची सूचना: वैद्यकीय आणीबाणी असल्यास, त्वरित 112 / 108 वर कॉल करा किंवा जवळच्या रुग्णालयात जा.",
+        "site_lang": "अ‍ॅप आणि साइट इंटरफेस भाषा",
+        "select_lang": "साइटची भाषा निवडा",
+        "tab1": "अपलोड आणि माहिती मिळवा",
+        "tab2": "तुमच्या पॉलिसीबद्दल विचारा",
+        "tab3": "रुग्णालय पर्याय शोधा",
+        "tab4": "काळजी प्रवास आणि सुरक्षितता",
+        "upload_header": "पॉलिसी दस्तऐवज अपलोड करा",
+        "ask_header": "तुमच्या कव्हरेजविषयी प्रश्न विचारा",
+        "hosp_header": "रुग्णालय नेटवर्क आणि रूम मॅचिंग",
+        "journey_header": "काळजी प्रवास आणि क्लेम अंदाज"
+    },
+    "Bengali (বাংলা)": {
+        "emergency": "জরুরী নোটিশ: কোনো চিকিৎসা জরুরী পরিস্থিতি হলে অবিলম্বে ১১২ / ১০৮ নম্বরে কল করুন বা নিকটস্থ হাসপাতালে যান।",
+        "site_lang": "অ্যাপ ও সাইট ইন্টারফেস ভাষা",
+        "select_lang": "সাইটের ভাষা নির্বাচন করুন",
+        "tab1": "আপলোড ও তথ্য সংগ্রহ",
+        "tab2": "আপনার পলিসি প্রশ্ন করুন",
+        "tab3": "হাসপাতাল অপশন খুঁজুন",
+        "tab4": "কেয়ার যাত্রা ও নিরাপত্তা",
+        "upload_header": "পলিসি নথি আপলোড করুন",
+        "ask_header": "আপনার কভারেজ সম্পর্কে প্রশ্ন জিজ্ঞাসা করুন",
+        "hosp_header": "হাসপাতাল নেটওয়ার্ক ও রুম ম্যাচিং",
+        "journey_header": "কেয়ার যাত্রা ও দাবি হিসাবক"
+    },
+    "Tamil (தமிழ்)": {
+        "emergency": "அவசர அறிவிப்பு: மருத்துவ அவசரம் என்றால் உடனடியாக 112 / 108 ஐ அழைக்கவும் அல்லது அருகிலுள்ள மருத்துவமனைக்குச் செல்லவும்.",
+        "site_lang": "பயன்பாடு மற்றும் தளத்தின் மொழி",
+        "select_lang": "தளத்தின் மொழியைத் தேர்ந்தெடுக்கவும்",
+        "tab1": "பதிவேற்றம் & பிரித்தெடுத்தல்",
+        "tab2": "உங்கள் பாலிசியைக் கேட்கவும்",
+        "tab3": "மருத்துவமனை விருப்பங்களைக் கண்டறியவும்",
+        "tab4": "பராமரிப்பு பயணம் & பாதுகாப்பு",
+        "upload_header": "பாலிசி ஆவணத்தைப் பதிவேற்றவும்",
+        "ask_header": "உங்கள் காப்பீடு பற்றி கேள்விகளைக் கேட்கவும்",
+        "hosp_header": "மருத்துவமனை நெட்வொர்க் & அறை பொருத்தம்",
+        "journey_header": "பராமரிப்பு பயணம் & கோரிக்கை மதிப்பீடு"
+    },
+    "Telugu (తెలుగు)": {
+        "emergency": "అత్యవసర నోటీసు: వైద్య అత్యవసర పరిస్థితి ఉంటే వెంటనే 112 / 108 కి కాల్ చేయండి లేదా సమీప ఆసుపత్రికి వెళ్లండి.",
+        "site_lang": "యాప్ & సైట్ ఇంటర్‌ఫేస్ భాష",
+        "select_lang": "సైట్ భాషను ఎంచుకోండి",
+        "tab1": "అప్‌లోడ్ & సారాంశం",
+        "tab2": "మీ పాలసీ గురించి అడగండి",
+        "tab3": "ఆసుపత్రి ఎంపికలను కనుగొనండి",
+        "tab4": "కేర్ ప్రయాణం & భద్రత",
+        "upload_header": "పాలసీ పత్రాన్ని అప్‌లోడ్ చేయండి",
+        "ask_header": "మీ కవరేజ్ గురించి ప్రశ్నలు అడగండి",
+        "hosp_header": "ఆసుపత్రి నెట్‌వర్క్ & రూమ్ మ్యాచింగ్",
+        "journey_header": "కేర్ ప్రయాణం & క్లెయిమ్ అంచనా"
+    }
+}
+
 # Session state initialization
 if "policy_profile" not in st.session_state:
     st.session_state.policy_profile = None
@@ -59,9 +141,8 @@ if "consent_given" not in st.session_state:
     st.session_state.consent_given = False
 if "deletion_receipt" not in st.session_state:
     st.session_state.deletion_receipt = None
-
-# --- Emergency Banner ---
-st.error("EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call 112 / 108 immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.")
+if "selected_site_lang" not in st.session_state:
+    st.session_state.selected_site_lang = "English"
 
 # --- Sidebar ---
 with st.sidebar:
@@ -72,8 +153,13 @@ with st.sidebar:
     st.success("System Status: Online | Encrypted Local Session Scope")
     
     st.markdown("---")
-    st.markdown("### Caregiver Language Support")
-    lang = st.selectbox("Preferred Explanation Language", ["English", "Hindi (हिंदी)", "Marathi (मराठी)", "Bengali (বাংলা)", "Tamil (தமிழ்)", "Telugu (తెలుగు)"])
+    # App & Site Interface Language Selection
+    site_lang_key = st.selectbox(
+        "App & Site Interface Language", 
+        ["English", "Hindi (हिंदी)", "Marathi (मराठी)", "Bengali (বাংলা)", "Tamil (தமிழ்)", "Telugu (తెలుగు)"],
+        key="selected_site_lang"
+    )
+    t = TRANSLATIONS.get(site_lang_key, TRANSLATIONS["English"])
     
     st.markdown("---")
     st.markdown("### Privacy & Compliance (DPDP Act 2023)")
@@ -140,17 +226,23 @@ Issued by CareCover Security & Compliance Systems
     st.markdown("---")
     st.caption("Important Disclaimer: For informational support only. Not medical advice, a diagnosis, or a guarantee of insurance coverage.")
 
-# --- Main App --- 4 Tabs Without Emojis ---
+# Current language translation shortcuts
+t = TRANSLATIONS.get(st.session_state.selected_site_lang, TRANSLATIONS["English"])
+
+# --- Emergency Banner (Dynamic Language) ---
+st.error(t["emergency"])
+
+# --- Main App --- 4 Tabs Dynamic Language ---
 tab1, tab2, tab3, tab4 = st.tabs([
-    "Upload & Extract", 
-    "Ask Your Policy", 
-    "Find Hospital Options", 
-    "Care Journey & Safety"
+    t["tab1"], 
+    t["tab2"], 
+    t["tab3"], 
+    t["tab4"]
 ])
 
 # TAB 1: Upload & Extract (With Fast SHA-256 Vector & Extraction Caching)
 with tab1:
-    st.header("Upload Policy Document")
+    st.header(t["upload_header"])
     
     if not st.session_state.consent_given:
         st.warning("Please check 'I consent to temporary document processing' in the sidebar to enable policy upload.")
@@ -303,7 +395,7 @@ with tab1:
 
 # TAB 2: Ask Your Policy (With Real-Time Token Streaming & Audit Log Trace)
 with tab2:
-    st.header("Ask Questions About Your Coverage")
+    st.header(t["ask_header"])
     
     with st.expander("Procedure-Specific Sub-Limit & Document Lookup", expanded=True):
         st.write("Select a planned medical procedure to check sub-limits, waiting periods, day-care eligibility, and required TPA documents.")
@@ -357,7 +449,7 @@ with tab2:
 
 # TAB 3: Find Hospital Options (With Precise Insurer / TPA Citations & Data Freshness Timestamp)
 with tab3:
-    st.header("Hospital Network & Room Matching")
+    st.header(t["hosp_header"])
     st.caption("Data Source Citation: Individual Insurer & TPA Published Cashless Directories (Niva Bupa, Star Health, ICICI Lombard, Medi Assist) compliant with IRDAI Health Insurance Regulations 2024. CareCover Copilot is an independent navigation tool and is NOT affiliated with or endorsed by IRDAI. | Directory Verification: August 16, 2026 03:16:30 IST")
     
     st.markdown("#### Admission Fast-Track Mode")
@@ -464,7 +556,7 @@ with tab3:
 
 # TAB 4: Care Journey & Safety (With Proportional Penalty Simulator)
 with tab4:
-    st.header("Care Journey, Claim Estimator & Safety Guidelines")
+    st.header(t["journey_header"])
     st.caption("Combined guidance timeline, out-of-pocket calculator, patient checklist, and medical disclaimers.")
     
     subtab1, subtab2, subtab3 = st.tabs([
