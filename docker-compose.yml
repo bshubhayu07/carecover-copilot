@@ -6,6 +6,10 @@ services:
     container_name: carecover_copilot
     ports:
       - "8505:8501"
+    env_file:
+      - .env
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - OPENAI_MODEL_NAME=${OPENAI_MODEL_NAME}
     restart: unless-stopped
