@@ -9,116 +9,56 @@ H007,HCG Cancer Centre (Science City Road),Ahmedabad,Oncology|Radiation|Surgery,
 H008,KD Hospital (Kailash Deepak) (SG Highway),Ahmedabad,General|Orthopedics|Pediatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
 H009,Narayana Multispeciality Hospital (Rakhial),Ahmedabad,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,6080,Medium,Yes,6.6
 H010,UN Mehta Institute of Cardiology (Asarwa),Ahmedabad,Cardiology|Vascular,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H011,Civil Hospital Ahmedabad (Asarwa),Ahmedabad,General|Trauma|Pediatrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
-H012,SVP Institute of Medical Sciences (Ellis Bridge),Ahmedabad,General|Cardiology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H013,VS General Hospital (Ellis Bridge),Ahmedabad,General|Gynaecology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
-H014,Asian BGI Hospital (Paldi),Ahmedabad,General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
-H015,Rajasthan Hospitals (Shahibaug),Ahmedabad,General|Cardiology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H016,Shardaben General Hospital (Saraspur),Ahmedabad,Pediatrics|General,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H017,Sanjivani Super Speciality Hospital (Vastrapur),Ahmedabad,General|Gastroenterology,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H018,Bodyline Hospital (Paldi),Ahmedabad,Gynaecology|Obstetrics|Pediatrics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H019,Parekhs Hospital (Shyamal Cross Road),Ahmedabad,Orthopedics|Joint Replacement,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
-H020,Trupti Hospital (Navrangpura),Ahmedabad,General|ENT,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
-H021,Manipal Hospital (HAL Airport Road),Bengaluru,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,3520,Low,No,1.8
-H022,Fortis Hospital (Bannerghatta Road),Bengaluru,Oncology|Neurology|Cardiology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
-H023,Narayana Health City (Bommasandra),Bengaluru,Cardiology|Pediatrics|Oncology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
-H024,Aster CMI Hospital (Hebbal),Bengaluru,Orthopedics|General|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
-H025,Apollo Hospitals (Jayanagar),Bengaluru,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
-H026,St. Johns Medical College Hospital (Koramangala),Bengaluru,General|Trauma|Pediatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
-H027,Sakra World Hospital (Marathahalli Bellandur),Bengaluru,Orthopedics|Neurology|Cardiology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
-H028,Columbia Asia Referral Hospital (Yeshwanthpur),Bengaluru,General|Pediatrics|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
-H029,Sparsh Hospital (Yeshwanthpur),Bengaluru,Orthopedics|Trauma|Spine,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
-H030,Rainbow Childrens Hospital (Marathahalli),Bengaluru,Pediatrics|Neonatology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H031,BGS Gleneagles Global Hospital (Kengeri),Bengaluru,Transplant|Gastroenterology|Oncology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
-H032,Bangalore Baptist Hospital (Hebbal),Bengaluru,General|Cardiology|Pediatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H033,Sagar Hospitals (Jayanagar),Bengaluru,Cardiology|Neurology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,7360,High,Yes,9.0
-H034,Manipal Hospital (Whitefield),Bengaluru,General|Gynaecology|Oncology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,7680,High,Yes,9.6
-H035,Fortis Hospital (Cunningham Road),Bengaluru,Cardiology|Vascular,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H036,Aster RV Hospital (JP Nagar),Bengaluru,Cardiology|Neurology|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H037,Manipal Hospital (Jayanagar),Bengaluru,General|Cardiology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H038,Command Hospital Air Force (Old Airport Road),Bengaluru,General|Trauma|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H039,Victoria Hospital (KR Market),Bengaluru,General|Trauma|Dermatology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,9280,High,Yes,12.6
-H040,Bowring & Lady Curzon Hospital (Shivajinagar),Bengaluru,General|Pediatrics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
-H041,Lilavati Hospital & Research Centre (Bandra West),Mumbai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3520,Low,No,1.8
-H042,Kokilaben Dhirubhai Ambani Hospital (Andheri West),Mumbai,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
-H043,Breach Candy Hospital (Bhulabhai Desai Road),Mumbai,Cardiology|General|Gynaecology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
-H044,Nanavati Max Super Speciality Hospital (Vile Parle West),Mumbai,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
-H045,Sir H. N. Reliance Foundation Hospital (Girgaon),Mumbai,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
-H046,Tata Memorial Hospital (Parel),Mumbai,Oncology|Radiation|Surgery,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
-H047,Jaslok Hospital & Research Centre (Pedder Road),Mumbai,Cardiology|Gastroenterology|Neurology,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
-H048,Bombay Hospital & Medical Research Centre (Marine Lines),Mumbai,General|Cardiology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
-H049,KEM Hospital (Parel),Mumbai,General|Trauma|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
-H050,P. D. Hinduja Hospital (Mahim),Mumbai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H051,Fortis Hospital (Mulund West),Mumbai,Cardiology|Oncology|Transplant,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,6720,Medium,No,7.8
-H052,Dr. L. H. Hiranandani Hospital (Powai),Mumbai,General|Cardiology|Pediatrics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H053,Wockhardt Hospitals (Mumbai Central),Mumbai,Cardiology|Neurology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
-H054,S. L. Raheja Hospital (Mahim),Mumbai,Oncology|Diabetology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
-H055,Global Hospital (Parel),Mumbai,Hepatology|Transplant|Gastroenterology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H056,Apollo Hospitals (Belapur Navi Mumbai),Mumbai,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H057,Holy Family Hospital (Bandra West),Mumbai,General|Cardiology|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H058,MGM New Bombay Hospital (Vashi Navi Mumbai),Mumbai,General|Trauma,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H059,Criticare Asia Hospital (Andheri East),Mumbai,General|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
-H060,Asian Heart Institute (BKC Bandra East),Mumbai,Cardiology|Vascular Surgery,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
-H061,Max Super Speciality Hospital Saket (Saket),Delhi,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3520,Low,No,1.8
-H062,Sir Ganga Ram Hospital (Rajinder Nagar),Delhi,Oncology|Neurology|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
-H063,Fortis Escorts Heart Institute (Okhla),Delhi,Cardiology|Vascular,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,4160,Low,Yes,3.0
-H064,Indraprastha Apollo Hospitals (Sarita Vihar),Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4480,Low,Yes,3.6
-H065,BLK-Max Super Speciality Hospital (Pusa Road Karol Bagh),Delhi,Oncology|Transplant|Cardiology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
-H066,Medanta The Medicity (Gurugram Sector 38),Delhi,Cardiology|Oncology|Neurology|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
-H067,Fortis Memorial Research Institute (Gurugram Sector 44),Delhi,Oncology|Neurology|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
-H068,Artemis Hospital (Gurugram Sector 51),Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
-H069,Max Super Speciality Hospital Patparganj (Patparganj),Delhi,General|Cardiology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,6080,Medium,Yes,6.6
-H070,Fortis Hospital Shalimar Bagh (Shalimar Bagh),Delhi,General|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H071,Max Super Speciality Hospital Shalimar Bagh (Shalimar Bagh),Delhi,Cardiology|Oncology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
-H072,Max Super Speciality Hospital Vaishali (Vaishali),Delhi,General|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H073,Jaypee Hospital (Noida Sector 128),Delhi,Cardiology|Transplant|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
-H074,Fortis Hospital Noida (Noida Sector 62),Delhi,General|Neurology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
-H075,Manipal Hospital Dwarka (Dwarka Sector 6),Delhi,General|Cardiology|Gastroenterology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H076,Venkateshwar Hospital (Dwarka Sector 18),Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H077,AIIMS New Delhi (Ansari Nagar),Delhi,General|Trauma|Oncology|Cardiology,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H078,Safdarjung Hospital (Ring Road),Delhi,General|Trauma|Pediatrics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H079,Holy Family Hospital Delhi (Okhla),Delhi,General|Cardiology|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
-H080,Primus Super Speciality Hospital (Chanakyapuri),Delhi,Orthopedics|Joint Replacement|Neurology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
-H081,Manipal Hospital Salt Lake (Salt Lake Sector 3),Kolkata,General|Cardiology|Oncology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,3520,Low,No,1.8
-H082,AMRI Hospital Salt Lake (Salt Lake Sector 3),Kolkata,General|Orthopedics|Pediatrics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
-H083,Fortis Hospital Anandapur (Anandapur),Kolkata,General|Cardiology|Gastroenterology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
-H084,AMRI Hospital Dhakuria (Dhakuria),Kolkata,Orthopedics|General|Pediatrics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
-H085,Woodlands Multispecialty Hospital (Alipore),Kolkata,Oncology|Neurology|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
-H086,Apollo Multispecialty Hospitals (EM Bypass Kankurgachi),Kolkata,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
-H087,Ruby General Hospital (Kasba EM Bypass),Kolkata,General|Trauma|Cardiology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
-H088,Peerless Hospital (Mukundapur),Kolkata,Gastroenterology|Orthopedics|General,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
-H089,Medica Supersalty Hospital (Mukundapur),Kolkata,Cardiology|Neurology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
-H090,BM Birla Heart Research Centre (Alipore),Kolkata,Cardiology|Vascular Surgery,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H091,Desun Hospital (Kasba EM Bypass),Kolkata,Cardiology|Neurology|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
-H092,ILS Hospitals Salt Lake (Salt Lake Sector 1),Kolkata,Bariatrics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H093,Tata Medical Center (New Town),Kolkata,Oncology|Radiation|Bone Marrow,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,7360,High,Yes,9.0
-H094,Charnock Hospital (Rajarhat Tegharia),Kolkata,General|Cardiology|Neurology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,7680,High,Yes,9.6
-H095,Narayana Superspeciality Hospital (Howrah),Kolkata,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H096,RTIICS Rabindranath Tagore Hospital (Mukundapur),Kolkata,Cardiology|Transplant|Pediatrics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H097,IPGMER & SSKM Hospital (Bhowanipore),Kolkata,General|Trauma|Neurology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H098,CMRI Calcutta Medical Research Institute (Alipore),Kolkata,General|Orthopedics|Pediatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H099,Kothari Medical Centre (Alipore),Kolkata,General|Gynaecology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,9280,High,Yes,12.6
-H100,ILS Hospitals Dum Dum (Dum Dum),Kolkata,General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
-H101,Apollo Hospitals Greams Road (Greams Road),Chennai,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3520,Low,No,1.8
-H102,MIOT International (Manapakkam),Chennai,Orthopedics|Trauma|Joint Replacement,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
-H103,Fortis Malar Hospital (Adyar),Chennai,Cardiology|Pediatrics|Neurology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
-H104,Kauvery Hospital (Alwarpet),Chennai,Cardiology|Gastroenterology|Geriatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
-H105,Gleneagles Global Health City (Perumbakkam),Chennai,Hepatology|Transplant|Oncology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
-H106,MGM Healthcare (Aminjikarai),Chennai,Cardiology|Heart Transplant|ECMO,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
-H107,SIMS Hospital (Vadapalani),Chennai,Orthopedics|Cardiology|Neurology,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
-H108,Dr. Rela Institute & Medical Centre (Chromepet),Chennai,Liver Transplant|Pediatrics|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
-H109,Vijaya Hospital (Vadapalani),Chennai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
-H110,Apollo Speciality Hospital (Nungambakkam),Chennai,Oncology|Neurology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H111,Billroth Hospitals (Shenoy Nagar),Chennai,General|Gastroenterology|Oncology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,6720,Medium,No,7.8
-H112,Prashanth Super Speciality Hospital (Velachery),Chennai,Fertility|Gynaecology|Pediatrics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H113,Dr. Mehtas Hospitals (Chetpet),Chennai,Pediatrics|General|Gynaecology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
-H114,Chettinad Health City (Kelambakkam),Chennai,General|Cardiology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
-H115,Frontier Lifeline Hospital (Mogappair),Chennai,Cardiology|Pediatric Cardiac,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H116,Rajiv Gandhi Govt General Hospital (Park Town),Chennai,General|Trauma,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H117,Sundaram Medical Foundation (Anna Nagar),Chennai,General|Pediatrics|Diabetology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H118,Sri Ramachandra Medical Centre (Porur),Chennai,General|Cardiology|Oncology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H119,Apollo First Med Hospital (Kilpauk),Chennai,General|Cardiology,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
-H120,Madras Medical Mission (Mogappair),Chennai,Cardiology|Reproductive Medicine,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
+H021,Manipal Hospital (HAL Airport Road),Bengaluru,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
+H022,Fortis Hospital (Bannerghatta Road),Bengaluru,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
+H023,Narayana Health City (Bommasandra),Bengaluru,Cardiology|Pediatrics|Oncology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
+H024,Aster CMI Hospital (Hebbal),Bengaluru,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
+H025,Apollo Hospitals (Jayanagar),Bengaluru,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
+H026,St. Johns Medical College Hospital (Koramangala),Bengaluru,General|Trauma|Pediatrics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
+H027,Sakra World Hospital (Marathahalli Bellandur),Bengaluru,Orthopedics|Neurology|Cardiology,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
+H028,Columbia Asia Referral Hospital (Yeshwanthpur),Bengaluru,General|Pediatrics|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
+H029,Sparsh Hospital (Yeshwanthpur),Bengaluru,Orthopedics|Trauma|Spine,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
+H030,Rainbow Childrens Hospital (Marathahalli),Bengaluru,Pediatrics|Neonatology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
+H041,Lilavati Hospital & Research Centre (Bandra West),Mumbai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,3520,Low,No,1.8
+H042,Kokilaben Dhirubhai Ambani Hospital (Andheri West),Mumbai,Oncology|Neurology|Cardiology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
+H043,Breach Candy Hospital (Bhulabhai Desai Road),Mumbai,Cardiology|General|Gynaecology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
+H044,Nanavati Max Super Speciality Hospital (Vile Parle West),Mumbai,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
+H045,Sir H. N. Reliance Foundation Hospital (Girgaon),Mumbai,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
+H046,Tata Memorial Hospital (Parel),Mumbai,Oncology|Radiation|Surgery,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
+H047,Jaslok Hospital & Research Centre (Pedder Road),Mumbai,Cardiology|Gastroenterology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
+H048,Bombay Hospital & Medical Research Centre (Marine Lines),Mumbai,General|Cardiology|Neurology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
+H049,KEM Hospital (Parel),Mumbai,General|Trauma|Pediatrics,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
+H050,P. D. Hinduja Hospital (Mahim),Mumbai,General|Cardiology|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
+H061,Max Super Speciality Hospital Saket (Saket),Delhi,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
+H062,Sir Ganga Ram Hospital (Rajinder Nagar),Delhi,Oncology|Neurology|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
+H063,Fortis Escorts Heart Institute (Okhla),Delhi,Cardiology|Vascular,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,7360,High,Yes,9.0
+H064,Indraprastha Apollo Hospitals (Sarita Vihar),Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,7680,High,Yes,9.6
+H065,BLK-Max Super Speciality Hospital (Pusa Road Karol Bagh),Delhi,Oncology|Transplant|Cardiology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
+H066,Medanta The Medicity (Gurugram Sector 38),Delhi,Cardiology|Oncology|Neurology|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
+H067,Fortis Memorial Research Institute (Gurugram Sector 44),Delhi,Oncology|Neurology|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
+H068,Artemis Hospital (Gurugram Sector 51),Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
+H069,Max Super Speciality Hospital Patparganj (Patparganj),Delhi,General|Cardiology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,9280,High,Yes,12.6
+H070,Fortis Hospital Shalimar Bagh (Shalimar Bagh),Delhi,General|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
+H081,Manipal Hospital Salt Lake (Salt Lake Sector 3),Kolkata,General|Cardiology|Oncology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3520,Low,No,1.8
+H082,AMRI Hospital Salt Lake (Salt Lake Sector 3),Kolkata,General|Orthopedics|Pediatrics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
+H083,Fortis Hospital Anandapur (Anandapur),Kolkata,General|Cardiology|Gastroenterology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
+H084,AMRI Hospital Dhakuria (Dhakuria),Kolkata,Orthopedics|General|Pediatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
+H085,Woodlands Multispecialty Hospital (Alipore),Kolkata,Oncology|Neurology|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
+H086,Apollo Multispecialty Hospitals (EM Bypass Kankurgachi),Kolkata,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
+H087,Ruby General Hospital (Kasba EM Bypass),Kolkata,General|Trauma|Cardiology,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
+H088,Peerless Hospital (Mukundapur),Kolkata,Gastroenterology|Orthopedics|General,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
+H089,Medica Supersalty Hospital (Mukundapur),Kolkata,Cardiology|Neurology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
+H090,BM Birla Heart Research Centre (Alipore),Kolkata,Cardiology|Vascular Surgery,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
+H101,Apollo Hospitals Greams Road (Greams Road),Chennai,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,6720,Medium,No,7.8
+H102,MIOT International (Manapakkam),Chennai,Orthopedics|Trauma|Joint Replacement,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
+H103,Fortis Malar Hospital (Adyar),Chennai,Cardiology|Pediatrics|Neurology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
+H104,Kauvery Hospital (Alwarpet),Chennai,Cardiology|Gastroenterology|Geriatrics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
+H105,Gleneagles Global Health City (Perumbakkam),Chennai,Hepatology|Transplant|Oncology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
+H106,MGM Healthcare (Aminjikarai),Chennai,Cardiology|Heart Transplant|ECMO,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
+H107,SIMS Hospital (Vadapalani),Chennai,Orthopedics|Cardiology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,8640,High,Yes,11.4
+H108,Dr. Rela Institute & Medical Centre (Chromepet),Chennai,Liver Transplant|Pediatrics|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
+H109,Vijaya Hospital (Vadapalani),Chennai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
+H110,Apollo Speciality Hospital (Nungambakkam),Chennai,Oncology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
 H121,Yashoda Hospitals Secunderabad (Secunderabad),Hyderabad,Cardiology|Orthopedics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3520,Low,No,1.8
 H122,Yashoda Hospitals Somajiguda (Somajiguda),Hyderabad,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
 H123,Yashoda Hospitals Malakpet (Malakpet),Hyderabad,General|Cardiology|Trauma,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,4160,Low,Yes,3.0
@@ -128,34 +68,72 @@ H126,Continental Hospitals (Gachibowli),Hyderabad,General|Pediatrics|Orthopedics
 H127,Apollo Hospitals Jubilee Hills (Jubilee Hills),Hyderabad,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
 H128,CARE Hospitals Banjara Hills (Banjara Hills),Hyderabad,Cardiology|Neurology|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
 H129,CARE Hospitals Gachibowli (Gachibowli),Hyderabad,General|Orthopedics|Cardiology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,6080,Medium,Yes,6.6
-H130,Star Hospitals Banjara Hills (Banjara Hills),Hyderabad,Cardiology|Vascular Surgery,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H131,Sunshine Hospitals Gachibowli (Gachibowli),Hyderabad,Orthopedics|Joint Replacement|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
-H132,Medicover Hospitals HITECH City (HITECH City),Hyderabad,General|Cardiology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H133,AIG Hospitals (Asian Institute) (Gachibowli),Hyderabad,Gastroenterology|Hepatology|Oncology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
-H134,Virinchi Hospitals (Banjara Hills),Hyderabad,General|Cardiology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
-H135,MaxCure Hospitals (Madhapur),Hyderabad,Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H136,Citizens Specialty Hospital (Nallagandla),Hyderabad,Oncology|Neurology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H137,SLG Hospitals (Nizampet),Hyderabad,General|Trauma|Pediatrics,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H138,Nizams Institute of Medical Sciences (NIMS) (Punjagutta),Hyderabad,General|Cardiology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H139,Osmania General Hospital (Afzal Gunj),Hyderabad,General|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
-H140,Rainbow Childrens Hospital (Banjara Hills),Hyderabad,Pediatrics|Neonatology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
-H141,Ruby Hall Clinic Sassoon Road (Sassoon Road),Pune,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,3520,Low,No,1.8
-H142,Sahyadri Super Speciality Deccan (Deccan Gymkhana),Pune,Oncology|Neurology|Cardiology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
-H143,Sahyadri Hospital Kothrud (Kothrud),Pune,General|Pediatrics|Gynaecology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
-H144,Sahyadri Hospital Nagar Road (Nagar Road Yerwada),Pune,General|Orthopedics|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
-H145,Manipal Hospital Kharadi (Kharadi),Pune,General|Cardiology|Oncology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
-H146,Jehangir Hospital (Near Pune Station),Pune,General|Cardiology|Neurology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
-H147,Jupiter Hospital Baner (Baner),Pune,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
-H148,Deenanath Mangeshkar Hospital (Erandwane),Pune,General|Cardiology|Pediatrics|Oncology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
-H149,Sancheti Hospital (Shivaji Nagar),Pune,Orthopedics|Spine|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
-H150,Noble Hospital Hadapsar (Hadapsar),Pune,General|Cardiology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
-H151,Aditya Birla Memorial Hospital (Chinchwad),Pune,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
-H152,Inamdar Multispecialty Hospital (Fatima Nagar),Pune,General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
-H153,Poona Hospital & Research Centre (Sadashiv Peth),Pune,General|Cardiology|Nephrology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,7360,High,Yes,9.0
-H154,Columbia Asia Hospital Kharadi (Kharadi),Pune,General|Pediatrics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,7680,High,Yes,9.6
-H155,Sahyadri Hospital Hadapsar (Hadapsar),Pune,General|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
-H156,Bharati Hospital Katraj (Katraj),Pune,General|Pediatrics|Trauma,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
-H157,KEM Hospital Rasta Peth (Rasta Peth),Pune,General|Gynaecology|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
-H158,Hardikar Hospital (Shivaji Nagar),Pune,Orthopedics|Joint Replacement,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
-H159,Ruby Hall Clinic Wanowrie (Wanowrie),Pune,General|Cardiology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,9280,High,Yes,12.6
-H160,Oyster & Pearl Hospital (Shivaji Nagar),Pune,Gynaecology|Obstetrics|Pediatrics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
+H130,AIG Hospitals (Asian Institute) (Gachibowli),Hyderabad,Gastroenterology|Hepatology|Oncology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
+H141,Ruby Hall Clinic Sassoon Road (Sassoon Road),Pune,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
+H142,Sahyadri Super Speciality Deccan (Deccan Gymkhana),Pune,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
+H143,Sahyadri Hospital Kothrud (Kothrud),Pune,General|Pediatrics|Gynaecology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
+H144,Manipal Hospital Kharadi (Kharadi),Pune,General|Cardiology|Oncology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
+H145,Jehangir Hospital (Near Pune Station),Pune,General|Cardiology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
+H146,Jupiter Hospital Baner (Baner),Pune,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
+H147,Deenanath Mangeshkar Hospital (Erandwane),Pune,General|Cardiology|Pediatrics|Oncology,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
+H148,Sancheti Hospital (Shivaji Nagar),Pune,Orthopedics|Spine|Trauma,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
+H161,SMS Hospital & Medical Institute (JL N Marg),Jaipur,General|Cardiology|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
+H162,Fortis Escorts Hospital (Malviya Nagar),Jaipur,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
+H163,Manipal Hospital (Vidhyadhar Nagar),Jaipur,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,3520,Low,No,1.8
+H164,Eternal Hospital (EHCC) (Jawahar Circle),Jaipur,Cardiology|Neurology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
+H165,Apex Hospitals (Malviya Nagar),Jaipur,General|Oncology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
+H171,Medanta Super Speciality Hospital (Shaheed Path),Lucknow,Cardiology|Oncology|Neurology|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
+H172,KGMU King Georges Medical University (Chowk),Lucknow,General|Trauma|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
+H173,Sanjay Gandhi PGIMS (SGPGI) (Raebareli Road),Lucknow,Nephrology|Cardiology|Endocrinology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
+H174,ApolloMedics Super Speciality (LDA Kanpur Road),Lucknow,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
+H175,Sahara Hospital (Gomti Nagar),Lucknow,General|Cardiology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
+H181,PGIMER Post Graduate Institute (Sector 12),Chandigarh,General|Cardiology|Oncology|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
+H182,Fortis Hospital Mohali (Sector 62 Mohali),Chandigarh,Cardiology|Oncology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
+H183,Max Super Speciality Hospital (Phase 6 Mohali),Chandigarh,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
+H184,Government Medical College (GMCH 32) (Sector 32),Chandigarh,General|Trauma|Pediatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
+H185,Ivy Hospital (Sector 71 Mohali),Chandigarh,Oncology|Orthopedics|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,7360,High,Yes,9.0
+H191,KIMSHEALTH Hospital (Anayara),Thiruvananthapuram,Cardiology|Oncology|Neurology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,7680,High,Yes,9.6
+H192,Government Medical College (Medical College PO),Thiruvananthapuram,General|Trauma|Pediatrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
+H193,Aster Medcity (Cheranalloor),Kochi,General|Cardiology|Oncology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
+H194,Amrita Institute of Medical Sciences (Edappally),Kochi,Orthopedics|Neurology|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
+H195,Lakeshore Hospital (VPS) (Nettoor),Kochi,Gastroenterology|Oncology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
+H201,AIIMS Bhopal (Saket Nagar),Bhopal,General|Trauma|Oncology|Cardiology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,9280,High,Yes,12.6
+H202,Bansal Hospital (Shahpura),Bhopal,Cardiology|Orthopedics|General,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
+H203,Chirayu Medical College & Hospital (Bairagarh),Bhopal,General|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3520,Low,No,1.8
+H204,Medanta Super Speciality Hospital (Vijay Nagar),Indore,Cardiology|Oncology|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
+H205,Choithram Hospital & Research Centre (Manik Bagh),Indore,General|Pediatrics|Gastroenterology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,4160,Low,Yes,3.0
+H211,AIIMS Patna (Phulwari Sharif),Patna,General|Trauma|Oncology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,4480,Low,Yes,3.6
+H212,Paras HMRI Hospital (Raja Bazar),Patna,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
+H213,IGIMS Indira Gandhi Institute (Sheikhpura),Patna,General|Nephrology|Urology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
+H214,PMCH Patna Medical College (Ashok Rajpath),Patna,General|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
+H215,Ruban Memorial Hospital (Patliputra Colony),Patna,Cardiology|Orthopedics|General,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
+H221,AIIMS Bhubaneswar (Sijua Dumduma),Bhubaneswar,General|Trauma|Cardiology|Oncology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,6080,Medium,Yes,6.6
+H222,SUM Ultimate Medicare (Kalinga Nagar),Bhubaneswar,General|Cardiology|Oncology|Neurology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
+H223,Apollo Hospitals (Gajapati Nagar),Bhubaneswar,Cardiology|Orthopedics|Oncology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,6720,Medium,No,7.8
+H224,Kalinga Hospital (Chandrasekharpur),Bhubaneswar,General|Cardiology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
+H225,AMRI Hospital (Khandagiri),Bhubaneswar,General|Neurology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
+H231,Gauhati Medical College & Hospital (GMCH) (Bhangagarh),Guwahati,General|Trauma|Pediatrics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
+H232,GNRC Hospitals (Dispur),Guwahati,Neurology|Cardiology|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
+H233,Apollo Hospitals (GS Road International IT Park),Guwahati,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
+H234,Health City Hospital (Khanapara),Guwahati,Cardiology|Orthopedics|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Twin Sharing|Private|Suite,8640,High,Yes,11.4
+H235,Dr. B. Borooah Cancer Institute (Gopinath Nagar),Guwahati,Oncology|Radiation,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
+H241,RIMS Rajendra Institute of Medical Sciences (Bariatu),Ranchi,General|Trauma|Pediatrics,Niva Bupa|Star Health|DemoCare|HealthPlus,Private|Suite,9280,High,Yes,12.6
+H242,Medica Bhagwan Mahavir Hospital (Bariatu Road),Ranchi,Cardiology|Orthopedics|General,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,9600,High,Yes,13.2
+H243,AIIMS Raipur (Tatibandh),Raipur,General|Trauma|Cardiology,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3520,Low,No,1.8
+H244,Ramkrishna Care Hospitals (Aurobindo Enclave),Raipur,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3840,Low,Yes,2.4
+H245,NH MMMI Narayana Hospital (Dhamtari Road),Raipur,Cardiology|Orthopedics|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing,4160,Low,Yes,3.0
+H251,Max Super Speciality Hospital (Malsi Mussoorie Diversion),Dehradun,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4480,Low,Yes,3.6
+H252,AIIMS Rishikesh (Rishikesh),Dehradun,General|Trauma|Cardiology|Oncology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4800,Medium,Yes,4.2
+H253,Shri Mahant Indiresh Hospital (Patel Nagar),Dehradun,General|Trauma|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5120,Medium,No,4.8
+H254,IGMC Indira Gandhi Medical College (Lakkar Bazaar),Shimla,General|Trauma|Pediatrics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5440,Medium,Yes,5.4
+H255,Fortis Hospital Kangra (Kangra),Shimla,General|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5760,Medium,Yes,6.0
+H261,Apollo Hospitals Health City (Arilova),Visakhapatnam,Cardiology|Orthopedics|Oncology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,Private|Suite,6080,Medium,Yes,6.6
+H262,SevenHills Hospital (Rockdale Layout),Visakhapatnam,General|Cardiology|Neurology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6400,Medium,Yes,7.2
+H263,KIMS ICON Hospital (Sheela Nagar),Visakhapatnam,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6720,Medium,No,7.8
+H264,Manipal Hospital (Tadepalli),Vijayawada,General|Cardiology|Oncology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7040,High,Yes,8.4
+H265,Ramesh Hospitals (MG Road Vijayawada),Vijayawada,Cardiology|Neurology|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7360,High,Yes,9.0
+H271,Goa Medical College (GMC) (Bambolim Panaji),Goa,General|Trauma|Pediatrics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7680,High,Yes,9.6
+H272,Manipal Hospital Goa (Dona Paula Panaji),Goa,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,8000,High,Yes,10.2
+H273,Healthway Hospitals (Kadamba Plateau Old Goa),Goa,Cardiology|Oncology|Neurology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8320,High,No,10.8
+H274,Victor Hospital (Margao),Goa,Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8640,High,Yes,11.4
+H275,Apollo Victor Hospitals (Margao),Goa,General|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,8960,High,Yes,12.0
