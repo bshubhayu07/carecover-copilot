@@ -1,7 +1,7 @@
 import os
 import chromadb
 from typing import List, Dict, Any
-from langchain_openai import OpenAIEmbeddings
+from .config import OPENAI_BASE_URL
 
 def get_chroma_client(persist_directory: str = "chroma_db"):
     """Initialize ChromaDB client."""
@@ -11,7 +11,7 @@ def get_chroma_client(persist_directory: str = "chroma_db"):
 def initialize_vector_store(chunks: List[Dict[str, Any]], persist_directory: str = "chroma_db", use_dummy_mode: bool = False):
     """
     Creates embeddings for the chunks and stores them in ChromaDB.
-    In dummy mode (no API key), we skip real embeddings to avoid errors, and store raw text.
+    Uses ChromaDB local embeddings or OpenAI embeddings depending on availability.
     """
     client = get_chroma_client(persist_directory)
     
@@ -30,24 +30,34 @@ def initialize_vector_store(chunks: List[Dict[str, Any]], persist_directory: str
     documents = [c["text"] for c in chunks]
     metadatas = [c["metadata"] for c in chunks]
     
-    if use_dummy_mode:
-        # If no OpenAI key, we just add the documents. 
-        # ChromaDB has a default lightweight embedding function for basic use.
+    # If using Groq or dummy mode or custom base URL (Groq doesn't support /embeddings API endpoint),
+    # use ChromaDB's built-in local embedding generator.
+    if use_dummy_mode or (OPENAI_BASE_URL and "groq" in OPENAI_BASE_URL.lower()):
         collection.add(
             documents=documents,
             metadatas=metadatas,
             ids=ids
         )
     else:
-        # Use Langchain/OpenAI for better quality embeddings
-        embeddings_model = OpenAIEmbeddings()
-        embeddings = embeddings_model.embed_documents(documents)
-        
-        collection.add(
-            embeddings=embeddings,
-            documents=documents,
-            metadatas=metadatas,
-            ids=ids
-        )
-        
+        try:
+            from langchain_openai import OpenAIEmbeddings
+            kwargs = {}
+            if OPENAI_BASE_URL:
+                kwargs["base_url"] = OPENAI_BASE_URL
+            embeddings_model = OpenAIEmbeddings(**kwargs)
+            embeddings = embeddings_model.embed_documents(documents)
+            collection.add(
+                embeddings=embeddings,
+                documents=documents,
+                metadatas=metadatas,
+                ids=ids
+            )
+        except Exception as e:
+            print(f"Fallback to ChromaDB default local embeddings due to: {e}")
+            collection.add(
+                documents=documents,
+                metadatas=metadatas,
+                ids=ids
+            )
+            
     return collection
