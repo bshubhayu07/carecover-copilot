@@ -32,15 +32,15 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
         is_in_network = False
         if p_insurer_lower in h_insurers_lower:
             is_in_network = True
-        elif ("bupa" in p_insurer_lower or "niva" in p_insurer_lower) and ("bupa" in h_insurers_lower or "niva" in h_insurers_lower or "democare" in h_insurers_lower or "healthplus" in h_insurers_lower):
+        elif ("bupa" in p_insurer_lower or "niva" in p_insurer_lower) and ("bupa" in h_insurers_lower or "niva" in h_insurers_lower):
             is_in_network = True
-        elif "star" in p_insurer_lower and ("star" in h_insurers_lower or "democare" in h_insurers_lower):
+        elif "star" in p_insurer_lower and "star" in h_insurers_lower:
             is_in_network = True
-        elif "hdfc" in p_insurer_lower and ("hdfc" in h_insurers_lower or "democare" in h_insurers_lower):
+        elif "hdfc" in p_insurer_lower and "hdfc" in h_insurers_lower:
             is_in_network = True
-        elif "icici" in p_insurer_lower and ("icici" in h_insurers_lower or "democare" in h_insurers_lower):
+        elif "icici" in p_insurer_lower and "icici" in h_insurers_lower:
             is_in_network = True
-        elif "democare" in p_insurer_lower or p_insurer_lower == "uploaded policy":
+        elif "democare" in p_insurer_lower and "democare" in h_insurers_lower:
             is_in_network = True
             
         if is_in_network:
