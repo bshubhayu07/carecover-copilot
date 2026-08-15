@@ -102,16 +102,17 @@ with tab1:
     
     uploaded_file = st.file_uploader("Upload your Base Health Insurance Policy (PDF)", type=["pdf"], disabled=not st.session_state.consent_given)
     
-    if st.button("Load Demo Policy"):
-        if os.path.exists("data/demo_policy.pdf"):
-            with st.spinner("Processing demo policy..."):
-                pages = ingest_pdf("data/demo_policy.pdf")
+    if st.button("Load Demo Base Policy"):
+        demo_p = "data/demo_base_policy.pdf" if os.path.exists("data/demo_base_policy.pdf") else "data/demo_policy.pdf"
+        if os.path.exists(demo_p):
+            with st.spinner("Processing demo base policy..."):
+                pages = ingest_pdf(demo_p)
                 st.session_state.raw_text = " ".join([p["text"] for p in pages])
                 chunks = chunk_text(pages)
                 st.session_state.collection = initialize_vector_store(chunks, CHROMA_DB_DIR, USE_DUMMY_MODE)
                 st.session_state.policy_profile = extract_policy_profile(st.session_state.raw_text)
-                st.session_state.processed_filename = "demo_policy.pdf"
-                st.success("Demo Policy Loaded & Extracted!")
+                st.session_state.processed_filename = "demo_base_policy.pdf"
+                st.success("Demo Base Policy Loaded & Extracted!")
         else:
             st.error("Demo policy not found.")
 
@@ -138,21 +139,34 @@ with tab1:
             os.remove(temp_path)
             
     # Dual-Policy & Super Top-Up Comparison Engine
-    with st.expander("Dual-Policy & Super Top-Up Comparison Engine"):
-        st.write("Upload a secondary Super Top-Up policy to calculate combined sum insured and deductible triggers.")
-        topup_file = st.file_uploader("Upload Secondary / Super Top-Up Policy (PDF)", type=["pdf"], key="topup_file")
-        deductible_val = st.number_input("Top-Up Deductible Threshold (INR)", min_value=100000, max_value=1000000, value=300000, step=50000)
+    with st.expander("Dual-Policy & Super Top-Up Comparison Engine", expanded=True):
+        st.write("Upload or load a secondary Super Top-Up policy to calculate combined sum insured and deductible triggers.")
+        
+        col_tu1, col_tu2 = st.columns(2)
+        with col_tu1:
+            topup_file = st.file_uploader("Upload Secondary / Super Top-Up Policy (PDF)", type=["pdf"], key="topup_file")
+        with col_tu2:
+            if st.button("Load Demo Super Top-Up Policy"):
+                topup_p = "data/demo_super_topup_policy.pdf"
+                if os.path.exists(topup_p):
+                    pages_tu = ingest_pdf(topup_p)
+                    tu_text = " ".join([p["text"] for p in pages_tu])
+                    st.session_state.topup_profile = extract_policy_profile(tu_text)
+                    st.success("Demo Super Top-Up Policy (Star Health) Loaded & Analyzed!")
+                    
+        deductible_val = st.number_input("Top-Up Deductible Threshold (INR)", min_value=100000, max_value=1000000, value=500000, step=50000)
         
         if topup_file is not None:
-            if st.button("Process Secondary Top-Up Policy"):
-                st.session_state.topup_profile = PolicyProfile(
-                    insurer_name="Star Health Super Top-Up",
-                    policy_name="Super Surplus Top-Up",
-                    sum_insured_inr=1500000,
-                    room_eligibility="Single Private Room",
-                    co_pay="Nil (0%)"
-                )
+            if st.button("Process Uploaded Secondary Top-Up Policy"):
+                temp_tu = f"data/temp_topup_{topup_file.name}"
+                with open(temp_tu, "wb") as f:
+                    f.write(topup_file.getvalue())
+                pages_tu = ingest_pdf(temp_tu)
+                tu_text = " ".join([p["text"] for p in pages_tu])
+                st.session_state.topup_profile = extract_policy_profile(tu_text)
                 st.success("Secondary Top-Up Policy Analyzed!")
+                if os.path.exists(temp_tu):
+                    os.remove(temp_tu)
                 
         if st.session_state.policy_profile and st.session_state.topup_profile:
             base_si = st.session_state.policy_profile.sum_insured_inr or 500000
