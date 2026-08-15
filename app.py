@@ -2,7 +2,6 @@ import sys
 import os
 import json
 import streamlit as st
-import streamlit.components.v1 as components
 
 # Ensure project root is in Python path for Streamlit Cloud & local execution
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -34,6 +33,8 @@ if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 if "use_location" not in st.session_state:
     st.session_state.use_location = False
+if "user_current_city" not in st.session_state:
+    st.session_state.user_current_city = "Pune"
 
 # --- Sidebar ---
 with st.sidebar:
@@ -169,18 +170,21 @@ with tab3:
             st.rerun()
             
     with loc_col2:
+        available_cities = get_all_cities()
         if st.session_state.use_location:
-            st.success("Location Permission Granted! Distance is calculated dynamically from your live GPS location.")
+            pune_idx = available_cities.index("Pune") if "Pune" in available_cities else 0
+            user_curr_city = st.selectbox("Your Current Physical Location / City", available_cities, index=pune_idx)
+            st.session_state.user_current_city = user_curr_city
+            st.success(f"Location Granted: Computing live Haversine GPS distance relative to your position in {user_curr_city}.")
         else:
-            st.info("Location Permission Pending. (Distance is measured relative to central district milestone).")
+            st.info("Location Permission Pending. (Distance is measured relative to local landmark milestone).")
 
     st.markdown("---")
     
     col_city, col_spec, col_search = st.columns([1, 1, 1])
     
     with col_city:
-        available_cities = get_all_cities()
-        city = st.selectbox("Select City / District", available_cities)
+        city = st.selectbox("Select Target Hospital City / District", available_cities)
     with col_spec:
         specialty_filter = st.selectbox("Filter Specialty", ["All Specialties", "Cardiology", "Oncology", "Orthopedics", "Neurology", "Pediatrics", "Gastroenterology"])
     with col_search:
@@ -205,7 +209,13 @@ with tab3:
     if df.empty:
         st.error(f"No hospitals found for '{city}' in directory.")
     else:
-        matches = match_hospitals(df, profile_to_use, city)
+        matches = match_hospitals(
+            df, 
+            profile_to_use, 
+            context_city=city, 
+            user_city=st.session_state.user_current_city, 
+            use_live_location=st.session_state.use_location
+        )
         
         filtered_matches = []
         for m in matches:
@@ -229,7 +239,7 @@ with tab3:
                     st.markdown(f"**Eligible Room:** {m['eligible_room']}")
                 with col2:
                     st.markdown(f"**Specialties:** {m['specialties']}")
-                    dist_label = "Live GPS Distance" if st.session_state.use_location else "Approx. District Distance"
+                    dist_label = f"Distance from {st.session_state.user_current_city}" if st.session_state.use_location else "Approx. Local Distance"
                     st.markdown(f"**{dist_label}:** {m['distance']} km")
                 with col3:
                     st.metric("Match Score", f"{m['score']} pts")

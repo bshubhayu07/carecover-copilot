@@ -1,13 +1,44 @@
+import math
 import pandas as pd
 from typing import Dict, Any, List
 
-def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: str) -> List[Dict[str, Any]]:
+CITY_COORDINATES = {
+    'pune': (18.5204, 73.8567),
+    'bhubaneswar': (20.2961, 85.8245),
+    'bengaluru': (12.9716, 77.5946),
+    'mumbai': (19.0760, 72.8777),
+    'delhi': (28.6139, 77.2090),
+    'chennai': (13.0827, 80.2707),
+    'kolkata': (22.5726, 88.3639),
+    'hyderabad': (17.3850, 78.4867),
+    'ahmedabad': (23.0225, 72.5714),
+    'jaipur': (26.9124, 75.7873),
+    'lucknow': (26.8467, 80.9462),
+    'chandigarh': (30.7333, 76.7794),
+    'kochi': (9.9312, 76.2673),
+    'bhopal': (23.2599, 77.4126),
+    'patna': (25.5941, 85.1376),
+    'guwahati': (26.1445, 91.7362)
+}
+
+def calculate_haversine(lat1, lon1, lat2, lon2):
+    R = 6371.0 # Earth radius in km
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = math.sin(dlat / 2)**2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return R * c
+
+def match_hospitals(
+    hospitals_df: pd.DataFrame, 
+    policy_profile, 
+    context_city: str, 
+    user_city: str = None, 
+    use_live_location: bool = False
+) -> List[Dict[str, Any]]:
     """
     Deterministic eligibility and ranking engine for hospitals.
-    Ranking signals:
-    1. Network match (In-Network vs Out-of-Network)
-    2. Room eligibility match (General, Twin Sharing, Single Private, Suite)
-    3. Location/Distance
+    Calculates exact inter-city and intra-city distances when user location permission is enabled.
     """
     if hospitals_df.empty:
         return []
@@ -15,10 +46,8 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
     results = []
     
     for _, row in hospitals_df.iterrows():
-        # City Match
-        if context_city and row['city'].strip().lower() != context_city.strip().lower():
-            continue
-            
+        hosp_city = str(row['city']).strip()
+        
         score = 0
         explanation = []
         network_status = "Out of Network"
@@ -28,7 +57,6 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
         p_insurer_lower = policy_insurer.lower()
         h_insurers_lower = str(row['network_insurers']).lower() if pd.notna(row['network_insurers']) else ""
         
-        # Check direct substring or insurance brand keywords
         is_in_network = False
         if p_insurer_lower in h_insurers_lower:
             is_in_network = True
@@ -56,7 +84,6 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
         hosp_rooms = str(row['room_types']) if pd.notna(row['room_types']) else ""
         h_rooms_lower = hosp_rooms.lower()
         
-        # Check keyword overlaps (e.g. private, twin, general, single, suite, no capping)
         has_room_match = False
         matching_types = []
         
@@ -80,11 +107,32 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
             explanation.append(f"Room Warning: Policy covers {policy_rooms}, but hospital offers {hosp_rooms}.")
             eligible_room_display = "Requires out-of-pocket upgrade"
             
-        # 3. Distance 
-        distance = row.get('distance_km_demo', 999)
-        if pd.notna(distance):
-            dist_score = max(0, 20 - int(distance))
-            score += dist_score
+        # 3. Dynamic Distance Calculation (Inter-city vs Intra-city)
+        local_demo_dist = float(row.get('distance_km_demo', 5.0))
+        
+        if use_live_location and user_city:
+            u_city_clean = user_city.strip().lower()
+            h_city_clean = hosp_city.strip().lower()
+            
+            if u_city_clean in CITY_COORDINATES and h_city_clean in CITY_COORDINATES:
+                u_lat, u_lon = CITY_COORDINATES[u_city_clean]
+                h_lat, h_lon = CITY_COORDINATES[h_city_clean]
+                
+                if u_city_clean == h_city_clean:
+                    # Same city: use intra-city landmark distance
+                    computed_dist = local_demo_dist
+                else:
+                    # Inter-city distance calculation using Haversine formula
+                    inter_city_km = calculate_haversine(u_lat, u_lon, h_lat, h_lon)
+                    computed_dist = round(inter_city_km + local_demo_dist, 1)
+            else:
+                computed_dist = local_demo_dist
+        else:
+            computed_dist = local_demo_dist
+            
+        # Add distance scoring
+        dist_score = max(0, 20 - int(computed_dist / 10 if computed_dist > 50 else computed_dist))
+        score += dist_score
             
         caveat = "Verify with insurer/hospital before admission."
         if policy_profile and policy_profile.pre_authorization_required:
@@ -98,7 +146,7 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
             "score": score,
             "network_status": network_status,
             "eligible_room": eligible_room_display,
-            "distance": distance,
+            "distance": computed_dist,
             "explanation": " | ".join(explanation),
             "caveat": caveat
         })
