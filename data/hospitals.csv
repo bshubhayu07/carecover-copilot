@@ -1,0 +1,13 @@
+hospital_id,hospital_name,city,specialties,network_insurers,room_types,indicative_daily_room_cost_inr,indicative_procedure_cost_band,emergency_available,distance_km_demo
+H001,City Care Hospital,Bengaluru,General|Cardiology|Orthopedics,DemoCare|HealthPlus,General|Twin Sharing|Private,5000,Medium,Yes,4.2
+H002,Apex Superspecialty,Bengaluru,Oncology|Neurology|Cardiology,DemoCare|SafeLife,Twin Sharing|Private|Suite,8500,High,Yes,12.5
+H003,Narayana Clinic,Bengaluru,General|Pediatrics,HealthPlus,General,2000,Low,No,2.1
+H004,Metro Health Hub,Bengaluru,Orthopedics|General,DemoCare|HealthPlus|SafeLife,General|Twin Sharing,4000,Medium,Yes,8.0
+H005,Mumbai City Hospital,Mumbai,General|Cardiology|Orthopedics,DemoCare|HealthPlus,General|Twin Sharing|Private,6000,Medium,Yes,3.5
+H006,Coastal Care Centre,Mumbai,General|Dermatology,SafeLife,General|Twin Sharing,4500,Low,No,7.2
+H007,Western Heights Superspecialty,Mumbai,Oncology|Neurology|Cardiology,DemoCare,Private|Suite,12000,High,Yes,15.0
+H008,Fortress Clinic,Mumbai,Pediatrics|General,HealthPlus|SafeLife,General,2500,Low,No,1.8
+H009,Capital Medical Center,Delhi,General|Cardiology|Orthopedics,DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,5500,Medium,Yes,5.0
+H010,North Delhi Superspecialty,Delhi,Oncology|Neurology,DemoCare,Private|Suite,9000,High,Yes,11.0
+H011,Green Park Clinic,Delhi,Pediatrics|General,HealthPlus,General,2200,Low,No,3.3
+H012,Delhi Heart Institute,Delhi,Cardiology,DemoCare|SafeLife,Twin Sharing|Private,7000,High,Yes,8.5
