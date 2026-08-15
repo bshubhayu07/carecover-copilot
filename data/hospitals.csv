@@ -1,44 +1,161 @@
 hospital_id,hospital_name,city,specialties,network_insurers,room_types,indicative_daily_room_cost_inr,indicative_procedure_cost_band,emergency_available,distance_km_demo
-H001,Manipal Hospital (HAL Airport Rd),Bengaluru,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare|HealthPlus,General|Twin Sharing|Private,5500,Medium,Yes,4.2
-H002,Fortis Hospital (Bannerghatta Rd),Bengaluru,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,8500,High,Yes,12.5
-H003,Narayana Health City,Bengaluru,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,3000,Medium,Yes,18.1
-H004,Aster CMI Hospital (Hebbal),Bengaluru,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,6000,Medium,Yes,8.0
-H005,Lilavati Hospital & Research Centre,Mumbai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6500,High,Yes,3.5
-H006,Kokilaben Dhirubhai Ambani Hospital,Mumbai,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,11000,High,Yes,9.2
-H007,Breach Candy Hospital,Mumbai,Cardiology|General|Gynaecology,Niva Bupa|Star Health|SafeLife|HealthPlus,Private|Suite,12500,High,Yes,6.0
-H008,Nanavati Max Super Speciality,Mumbai,Pediatrics|General|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing,5000,Medium,Yes,4.8
-H009,Max Super Speciality Hospital (Saket),Delhi,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,6000,High,Yes,5.0
-H010,Sir Ganga Ram Hospital,Delhi,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,4500,Medium,Yes,7.3
-H011,Fortis Escorts Heart Institute,Delhi,Cardiology|Vascular,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,9500,High,Yes,8.5
-H012,Indraprastha Apollo Hospitals,Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,7000,High,Yes,11.2
-H013,Apollo Hospitals (Greams Road),Chennai,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,6500,High,Yes,4.0
-H014,MIOT International (Manapakkam),Chennai,Orthopedics|General|Trauma,Niva Bupa|HealthPlus|SafeLife,General|Twin Sharing,4000,Medium,Yes,9.1
-H015,Fortis Malar Hospital (Adyar),Chennai,Cardiology|Pediatrics,Niva Bupa|Star Health|DemoCare|SafeLife,Twin Sharing|Private,7500,High,Yes,5.3
-H016,Fortis Hospital (Anandapur),Kolkata,General|Cardiology|Gastroenterology,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,5200,Medium,Yes,6.8
-H017,AMRI Hospital (Dhakuria),Kolkata,Orthopedics|General|Pediatrics,Niva Bupa|SafeLife|HealthPlus,General|Twin Sharing,3800,Medium,Yes,4.5
-H018,Woodlands Multispecialty Hospital,Kolkata,Oncology|Neurology|General,Niva Bupa|Star Health|DemoCare|SafeLife,Twin Sharing|Private|Suite,8500,High,Yes,3.2
-H019,Yashoda Hospitals (Secunderabad),Hyderabad,Cardiology|Orthopedics|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,5500,Medium,Yes,5.5
-H020,KIMS Hospitals (Kondapur),Hyderabad,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,9200,High,Yes,10.8
-H021,Continental Hospitals (Gachibowli),Hyderabad,General|Pediatrics|Orthopedics,Niva Bupa|HealthPlus|DemoCare,General|Twin Sharing,4800,Medium,Yes,8.9
-H022,Ruby Hall Clinic (Sassoon Rd),Pune,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,5200,Medium,Yes,3.7
-H023,Sahyadri Super Speciality (Deccan),Pune,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,7800,High,Yes,6.9
-H024,Shalby Multi-Specialty (SG Highway),Ahmedabad,Orthopedics|Joint Replacement|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,4800,Medium,Yes,5.1
-H025,Apollo Hospitals (Gandhinagar),Ahmedabad,Cardiology|Oncology|Neurology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,8200,High,Yes,9.4
-H026,SMS Hospital & Medical Institute,Jaipur,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,3500,Medium,Yes,4.0
-H027,Fortis Escorts Hospital (Malviya Nagar),Jaipur,Cardiology|Oncology|Neurology,Niva Bupa|ICICI Lombard|SafeLife,Twin Sharing|Private|Suite,7200,High,Yes,8.1
-H028,Medanta Hospital (Shaheed Path),Lucknow,Cardiology|Oncology|Neurology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,6800,High,Yes,6.5
-H029,KGMU Super Speciality Hospital,Lucknow,General|Trauma|Pediatrics,Niva Bupa|HealthPlus|SafeLife,General|Twin Sharing,3200,Low,Yes,3.2
-H030,PGIMER & Fortis Healthcare,Chandigarh,General|Cardiology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,4200,Medium,Yes,5.0
-H031,Aster Medcity (Cheranalloor),Kochi,General|Cardiology|Oncology|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare,General|Twin Sharing|Private|Suite,6500,High,Yes,7.8
-H032,Amrita Institute of Medical Sciences,Kochi,Orthopedics|Neurology|Pediatrics,Niva Bupa|HDFC ERGO|SafeLife,General|Twin Sharing,4000,Medium,Yes,11.0
-H033,Medanta Super Speciality Hospital,Indore,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private,5800,Medium,Yes,4.5
-H034,CHOITHRAM Hospital & Research Centre,Indore,General|Pediatrics|Gastroenterology,Niva Bupa|HealthPlus|SafeLife,General|Twin Sharing,3500,Low,Yes,6.2
-H035,Bansal Hospital (Shahpura),Bhopal,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,4200,Medium,Yes,5.5
-H036,Paras HMRI Hospital (Raja Bazar),Patna,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|ICICI Lombard|DemoCare,General|Twin Sharing|Private,4500,Medium,Yes,6.0
-H037,Kiran Multi-Super Speciality Hospital,Surat,Cardiology|Orthopedics|General,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,5000,Medium,Yes,4.1
-H038,Sterling Hospital (Race Course),Vadodara,General|Cardiology|Neurology,Niva Bupa|ICICI Lombard|SafeLife,General|Twin Sharing|Private,4600,Medium,Yes,3.8
-H039,Alexis Multi-Specialty Hospital,Nagpur,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private,4800,Medium,Yes,5.2
-H040,Kovai Medical Center and Hospital,Coimbatore,Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private|Suite,5500,High,Yes,6.0
-H041,Apollo Hospitals (Health City),Visakhapatnam,Cardiology|Orthopedics|Oncology,Niva Bupa|ICICI Lombard|DemoCare,General|Twin Sharing|Private,5200,Medium,Yes,4.8
-H042,SUM Ultimate Medicare,Bhubaneswar,General|Cardiology|Oncology|Neurology,Niva Bupa|Star Health|HDFC ERGO|DemoCare,General|Twin Sharing|Private,4500,Medium,Yes,5.5
-H043,GNRC Hospitals (Dispur),Guwahati,General|Neurology|Cardiology,Niva Bupa|Star Health|SafeLife,General|Twin Sharing,3800,Low,Yes,4.2
+H001,Apollo Super Speciality (Bengaluru Sector 1),Bengaluru,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H002,Manipal Super Speciality (Bengaluru Sector 2),Bengaluru,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H003,Fortis Super Speciality (Bengaluru Sector 3),Bengaluru,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H004,Max Super Speciality (Bengaluru Sector 4),Bengaluru,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H005,Narayana Health Super Speciality (Bengaluru Sector 5),Bengaluru,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H006,Aster Super Speciality (Bengaluru Sector 6),Bengaluru,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H007,KIMS Super Speciality (Bengaluru Sector 7),Bengaluru,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H008,Yashoda Super Speciality (Bengaluru Sector 8),Bengaluru,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H009,Columbia Asia Super Speciality (Bengaluru Sector 9),Bengaluru,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H010,Sahyadri Super Speciality (Bengaluru Sector 10),Bengaluru,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H011,Sunshine Super Speciality (Bengaluru Sector 11),Bengaluru,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H012,Sparsh Super Speciality (Bengaluru Sector 12),Bengaluru,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H013,Medicover Super Speciality (Bengaluru Sector 13),Bengaluru,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H014,Care Super Speciality (Bengaluru Sector 14),Bengaluru,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H015,Sunrise Super Speciality (Bengaluru Sector 15),Bengaluru,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H016,Rainbow Childrens Super Speciality (Bengaluru Sector 16),Bengaluru,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H017,BMS Super Speciality (Bengaluru Sector 17),Bengaluru,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H018,Global Super Speciality (Bengaluru Sector 18),Bengaluru,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H019,Gleneagles Super Speciality (Bengaluru Sector 19),Bengaluru,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H020,Lifeline Super Speciality (Bengaluru Sector 20),Bengaluru,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
+H021,Apollo Super Speciality (Mumbai Sector 1),Mumbai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H022,Manipal Super Speciality (Mumbai Sector 2),Mumbai,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H023,Fortis Super Speciality (Mumbai Sector 3),Mumbai,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H024,Max Super Speciality (Mumbai Sector 4),Mumbai,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H025,Narayana Health Super Speciality (Mumbai Sector 5),Mumbai,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H026,Aster Super Speciality (Mumbai Sector 6),Mumbai,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H027,KIMS Super Speciality (Mumbai Sector 7),Mumbai,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H028,Yashoda Super Speciality (Mumbai Sector 8),Mumbai,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H029,Columbia Asia Super Speciality (Mumbai Sector 9),Mumbai,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H030,Sahyadri Super Speciality (Mumbai Sector 10),Mumbai,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H031,Sunshine Super Speciality (Mumbai Sector 11),Mumbai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H032,Sparsh Super Speciality (Mumbai Sector 12),Mumbai,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H033,Medicover Super Speciality (Mumbai Sector 13),Mumbai,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H034,Care Super Speciality (Mumbai Sector 14),Mumbai,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H035,Sunrise Super Speciality (Mumbai Sector 15),Mumbai,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H036,Rainbow Childrens Super Speciality (Mumbai Sector 16),Mumbai,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H037,BMS Super Speciality (Mumbai Sector 17),Mumbai,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H038,Global Super Speciality (Mumbai Sector 18),Mumbai,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H039,Gleneagles Super Speciality (Mumbai Sector 19),Mumbai,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H040,Lifeline Super Speciality (Mumbai Sector 20),Mumbai,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
+H041,Apollo Super Speciality (Delhi Sector 1),Delhi,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H042,Manipal Super Speciality (Delhi Sector 2),Delhi,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H043,Fortis Super Speciality (Delhi Sector 3),Delhi,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H044,Max Super Speciality (Delhi Sector 4),Delhi,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H045,Narayana Health Super Speciality (Delhi Sector 5),Delhi,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H046,Aster Super Speciality (Delhi Sector 6),Delhi,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H047,KIMS Super Speciality (Delhi Sector 7),Delhi,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H048,Yashoda Super Speciality (Delhi Sector 8),Delhi,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H049,Columbia Asia Super Speciality (Delhi Sector 9),Delhi,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H050,Sahyadri Super Speciality (Delhi Sector 10),Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H051,Sunshine Super Speciality (Delhi Sector 11),Delhi,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H052,Sparsh Super Speciality (Delhi Sector 12),Delhi,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H053,Medicover Super Speciality (Delhi Sector 13),Delhi,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H054,Care Super Speciality (Delhi Sector 14),Delhi,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H055,Sunrise Super Speciality (Delhi Sector 15),Delhi,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H056,Rainbow Childrens Super Speciality (Delhi Sector 16),Delhi,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H057,BMS Super Speciality (Delhi Sector 17),Delhi,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H058,Global Super Speciality (Delhi Sector 18),Delhi,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H059,Gleneagles Super Speciality (Delhi Sector 19),Delhi,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H060,Lifeline Super Speciality (Delhi Sector 20),Delhi,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
+H061,Apollo Super Speciality (Chennai Sector 1),Chennai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H062,Manipal Super Speciality (Chennai Sector 2),Chennai,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H063,Fortis Super Speciality (Chennai Sector 3),Chennai,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H064,Max Super Speciality (Chennai Sector 4),Chennai,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H065,Narayana Health Super Speciality (Chennai Sector 5),Chennai,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H066,Aster Super Speciality (Chennai Sector 6),Chennai,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H067,KIMS Super Speciality (Chennai Sector 7),Chennai,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H068,Yashoda Super Speciality (Chennai Sector 8),Chennai,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H069,Columbia Asia Super Speciality (Chennai Sector 9),Chennai,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H070,Sahyadri Super Speciality (Chennai Sector 10),Chennai,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H071,Sunshine Super Speciality (Chennai Sector 11),Chennai,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H072,Sparsh Super Speciality (Chennai Sector 12),Chennai,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H073,Medicover Super Speciality (Chennai Sector 13),Chennai,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H074,Care Super Speciality (Chennai Sector 14),Chennai,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H075,Sunrise Super Speciality (Chennai Sector 15),Chennai,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H076,Rainbow Childrens Super Speciality (Chennai Sector 16),Chennai,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H077,BMS Super Speciality (Chennai Sector 17),Chennai,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H078,Global Super Speciality (Chennai Sector 18),Chennai,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H079,Gleneagles Super Speciality (Chennai Sector 19),Chennai,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H080,Lifeline Super Speciality (Chennai Sector 20),Chennai,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
+H081,Apollo Super Speciality (Kolkata Sector 1),Kolkata,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H082,Manipal Super Speciality (Kolkata Sector 2),Kolkata,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H083,Fortis Super Speciality (Kolkata Sector 3),Kolkata,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H084,Max Super Speciality (Kolkata Sector 4),Kolkata,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H085,Narayana Health Super Speciality (Kolkata Sector 5),Kolkata,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H086,Aster Super Speciality (Kolkata Sector 6),Kolkata,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H087,KIMS Super Speciality (Kolkata Sector 7),Kolkata,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H088,Yashoda Super Speciality (Kolkata Sector 8),Kolkata,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H089,Columbia Asia Super Speciality (Kolkata Sector 9),Kolkata,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H090,Sahyadri Super Speciality (Kolkata Sector 10),Kolkata,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H091,Sunshine Super Speciality (Kolkata Sector 11),Kolkata,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H092,Sparsh Super Speciality (Kolkata Sector 12),Kolkata,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H093,Medicover Super Speciality (Kolkata Sector 13),Kolkata,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H094,Care Super Speciality (Kolkata Sector 14),Kolkata,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H095,Sunrise Super Speciality (Kolkata Sector 15),Kolkata,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H096,Rainbow Childrens Super Speciality (Kolkata Sector 16),Kolkata,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H097,BMS Super Speciality (Kolkata Sector 17),Kolkata,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H098,Global Super Speciality (Kolkata Sector 18),Kolkata,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H099,Gleneagles Super Speciality (Kolkata Sector 19),Kolkata,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H100,Lifeline Super Speciality (Kolkata Sector 20),Kolkata,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
+H101,Apollo Super Speciality (Hyderabad Sector 1),Hyderabad,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H102,Manipal Super Speciality (Hyderabad Sector 2),Hyderabad,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H103,Fortis Super Speciality (Hyderabad Sector 3),Hyderabad,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H104,Max Super Speciality (Hyderabad Sector 4),Hyderabad,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H105,Narayana Health Super Speciality (Hyderabad Sector 5),Hyderabad,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H106,Aster Super Speciality (Hyderabad Sector 6),Hyderabad,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H107,KIMS Super Speciality (Hyderabad Sector 7),Hyderabad,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H108,Yashoda Super Speciality (Hyderabad Sector 8),Hyderabad,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H109,Columbia Asia Super Speciality (Hyderabad Sector 9),Hyderabad,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H110,Sahyadri Super Speciality (Hyderabad Sector 10),Hyderabad,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H111,Sunshine Super Speciality (Hyderabad Sector 11),Hyderabad,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H112,Sparsh Super Speciality (Hyderabad Sector 12),Hyderabad,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H113,Medicover Super Speciality (Hyderabad Sector 13),Hyderabad,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H114,Care Super Speciality (Hyderabad Sector 14),Hyderabad,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H115,Sunrise Super Speciality (Hyderabad Sector 15),Hyderabad,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H116,Rainbow Childrens Super Speciality (Hyderabad Sector 16),Hyderabad,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H117,BMS Super Speciality (Hyderabad Sector 17),Hyderabad,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H118,Global Super Speciality (Hyderabad Sector 18),Hyderabad,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H119,Gleneagles Super Speciality (Hyderabad Sector 19),Hyderabad,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H120,Lifeline Super Speciality (Hyderabad Sector 20),Hyderabad,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
+H121,Apollo Super Speciality (Pune Sector 1),Pune,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H122,Manipal Super Speciality (Pune Sector 2),Pune,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H123,Fortis Super Speciality (Pune Sector 3),Pune,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H124,Max Super Speciality (Pune Sector 4),Pune,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H125,Narayana Health Super Speciality (Pune Sector 5),Pune,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H126,Aster Super Speciality (Pune Sector 6),Pune,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H127,KIMS Super Speciality (Pune Sector 7),Pune,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H128,Yashoda Super Speciality (Pune Sector 8),Pune,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H129,Columbia Asia Super Speciality (Pune Sector 9),Pune,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H130,Sahyadri Super Speciality (Pune Sector 10),Pune,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H131,Sunshine Super Speciality (Pune Sector 11),Pune,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H132,Sparsh Super Speciality (Pune Sector 12),Pune,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H133,Medicover Super Speciality (Pune Sector 13),Pune,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H134,Care Super Speciality (Pune Sector 14),Pune,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H135,Sunrise Super Speciality (Pune Sector 15),Pune,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H136,Rainbow Childrens Super Speciality (Pune Sector 16),Pune,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H137,BMS Super Speciality (Pune Sector 17),Pune,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H138,Global Super Speciality (Pune Sector 18),Pune,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H139,Gleneagles Super Speciality (Pune Sector 19),Pune,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H140,Lifeline Super Speciality (Pune Sector 20),Pune,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
+H141,Apollo Super Speciality (Ahmedabad Sector 1),Ahmedabad,General|Cardiology|Orthopedics,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing|Private,3350,Low,Yes,2.2
+H142,Manipal Super Speciality (Ahmedabad Sector 2),Ahmedabad,Oncology|Neurology|Cardiology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,3700,Low,Yes,2.9
+H143,Fortis Super Speciality (Ahmedabad Sector 3),Ahmedabad,Cardiology|Pediatrics|General,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing,4050,Low,Yes,3.6
+H144,Max Super Speciality (Ahmedabad Sector 4),Ahmedabad,Orthopedics|General|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,Private|Suite,4400,Low,Yes,4.3
+H145,Narayana Health Super Speciality (Ahmedabad Sector 5),Ahmedabad,General|Gynaecology|Obstetrics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private|Suite,4750,Medium,Yes,5.0
+H146,Aster Super Speciality (Ahmedabad Sector 6),Ahmedabad,Oncology|Neurology|Gastroenterology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private,5100,Medium,No,5.7
+H147,KIMS Super Speciality (Ahmedabad Sector 7),Ahmedabad,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,5450,Medium,Yes,6.4
+H148,Yashoda Super Speciality (Ahmedabad Sector 8),Ahmedabad,Pediatrics|General|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,5800,Medium,Yes,7.1
+H149,Columbia Asia Super Speciality (Ahmedabad Sector 9),Ahmedabad,General|Dermatology|ENT,HealthPlus|Niva Bupa|Star Health|DemoCare,Private|Suite,6150,Medium,Yes,7.8
+H150,Sahyadri Super Speciality (Ahmedabad Sector 10),Ahmedabad,Cardiology|Oncology|Orthopedics,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private|Suite,6500,Medium,Yes,8.5
+H151,Sunshine Super Speciality (Ahmedabad Sector 11),Ahmedabad,General|Cardiology|Orthopedics,Niva Bupa|Star Health|DemoCare|HealthPlus,General|Twin Sharing|Private,6850,Medium,Yes,9.2
+H152,Sparsh Super Speciality (Ahmedabad Sector 12),Ahmedabad,Oncology|Neurology|Cardiology,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,Twin Sharing|Private|Suite,7200,High,No,9.9
+H153,Medicover Super Speciality (Ahmedabad Sector 13),Ahmedabad,Cardiology|Pediatrics|General,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,General|Twin Sharing,7550,High,Yes,10.6
+H154,Care Super Speciality (Ahmedabad Sector 14),Ahmedabad,Orthopedics|General|Gastroenterology,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,Private|Suite,7900,High,Yes,11.3
+H155,Sunrise Super Speciality (Ahmedabad Sector 15),Ahmedabad,General|Gynaecology|Obstetrics,HealthPlus|Niva Bupa|Star Health|DemoCare,General|Twin Sharing|Private|Suite,8250,High,Yes,12.0
+H156,Rainbow Childrens Super Speciality (Ahmedabad Sector 16),Ahmedabad,Oncology|Neurology|Gastroenterology,Niva Bupa|HDFC ERGO|DemoCare|HealthPlus|SafeLife,General|Twin Sharing|Private,8600,High,Yes,12.7
+H157,BMS Super Speciality (Ahmedabad Sector 17),Ahmedabad,Cardiology|Vascular|Trauma,Niva Bupa|Star Health|DemoCare|HealthPlus,Twin Sharing|Private|Suite,8950,High,Yes,13.4
+H158,Global Super Speciality (Ahmedabad Sector 18),Ahmedabad,Pediatrics|General|Orthopedics,Niva Bupa|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing,9300,High,No,14.1
+H159,Gleneagles Super Speciality (Ahmedabad Sector 19),Ahmedabad,General|Dermatology|ENT,Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus,Private|Suite,9650,High,Yes,14.8
+H160,Lifeline Super Speciality (Ahmedabad Sector 20),Ahmedabad,Cardiology|Oncology|Orthopedics,Niva Bupa|Star Health|ICICI Lombard|DemoCare|SafeLife,General|Twin Sharing|Private|Suite,10000,High,Yes,15.5
