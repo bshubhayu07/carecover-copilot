@@ -1,5 +1,6 @@
 import sys
 import os
+import streamlit as st
 
 # Ensure project root is in Python path for Streamlit Cloud & local execution
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
