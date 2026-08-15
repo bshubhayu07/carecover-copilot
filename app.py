@@ -27,6 +27,10 @@ if "collection" not in st.session_state:
     st.session_state.collection = None
 if "raw_text" not in st.session_state:
     st.session_state.raw_text = ""
+if "processed_filename" not in st.session_state:
+    st.session_state.processed_filename = None
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
 # --- Sidebar ---
 with st.sidebar:
@@ -51,50 +55,48 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "Care Journey & Safety"
 ])
 
-# TAB 1: Upload & Extract
+# TAB 1: Upload & Extract (Auto-Processes on File Upload or Demo Click)
 with tab1:
     st.header("Upload Policy Document")
     uploaded_file = st.file_uploader("Upload your Health Insurance Policy (PDF)", type=["pdf"])
     
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        if st.button("Load Demo Policy"):
-            if os.path.exists("data/demo_policy.pdf"):
-                with st.spinner("Processing demo policy..."):
-                    pages = ingest_pdf("data/demo_policy.pdf")
-                    st.session_state.raw_text = " ".join([p["text"] for p in pages])
-                    chunks = chunk_text(pages)
-                    st.session_state.collection = initialize_vector_store(chunks, CHROMA_DB_DIR, USE_DUMMY_MODE)
-                    st.session_state.policy_profile = extract_policy_profile(st.session_state.raw_text)
-                    st.success("Demo Policy Loaded & Extracted!")
-            else:
-                st.error("Demo policy not found. Run generate_demo_pdf.py first.")
-                
-    with col2:
-        if uploaded_file is not None:
-            if st.button("Process Uploaded Policy"):
-                temp_path = f"data/temp_{uploaded_file.name}"
-                os.makedirs("data", exist_ok=True)
-                with open(temp_path, "wb") as f:
-                    f.write(uploaded_file.getbuffer())
-                    
-                with st.spinner("Processing policy..."):
-                    pages = ingest_pdf(temp_path)
-                    st.session_state.raw_text = " ".join([p["text"] for p in pages])
-                    chunks = chunk_text(pages)
-                    st.session_state.collection = initialize_vector_store(chunks, CHROMA_DB_DIR, USE_DUMMY_MODE)
-                    st.session_state.policy_profile = extract_policy_profile(st.session_state.raw_text)
-                    st.success("Policy Extracted Successfully!")
-                    
-                os.remove(temp_path)
-                
+    if st.button("Load Demo Policy"):
+        if os.path.exists("data/demo_policy.pdf"):
+            with st.spinner("Processing demo policy..."):
+                pages = ingest_pdf("data/demo_policy.pdf")
+                st.session_state.raw_text = " ".join([p["text"] for p in pages])
+                chunks = chunk_text(pages)
+                st.session_state.collection = initialize_vector_store(chunks, CHROMA_DB_DIR, USE_DUMMY_MODE)
+                st.session_state.policy_profile = extract_policy_profile(st.session_state.raw_text)
+                st.session_state.processed_filename = "demo_policy.pdf"
+                st.success("Demo Policy Loaded & Extracted!")
+        else:
+            st.error("Demo policy not found.")
+
+    # Automatic execution upon file upload (no separate button required)
+    if uploaded_file is not None and st.session_state.processed_filename != uploaded_file.name:
+        temp_path = f"data/temp_{uploaded_file.name}"
+        os.makedirs("data", exist_ok=True)
+        with open(temp_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+            
+        with st.spinner(f"Automatically extracting policy from '{uploaded_file.name}'..."):
+            pages = ingest_pdf(temp_path)
+            st.session_state.raw_text = " ".join([p["text"] for p in pages])
+            chunks = chunk_text(pages)
+            st.session_state.collection = initialize_vector_store(chunks, CHROMA_DB_DIR, USE_DUMMY_MODE)
+            st.session_state.policy_profile = extract_policy_profile(st.session_state.raw_text)
+            st.session_state.processed_filename = uploaded_file.name
+            st.success(f"Policy '{uploaded_file.name}' Extracted Successfully!")
+            
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+            
     if st.session_state.policy_profile:
         st.markdown("---")
         st.subheader("Extracted Policy Summary")
         profile = st.session_state.policy_profile
         
-        # Clean responsive grid layout so full text is visible without truncation
         sum_insured_str = f"INR {profile.sum_insured_inr:,.0f}" if profile.sum_insured_inr else "N/A"
         pre_auth_str = "Yes" if profile.pre_authorization_required else "No"
         
@@ -124,21 +126,30 @@ with tab1:
             mime="application/pdf"
         )
 
-# TAB 2: Ask Your Policy
+# TAB 2: Ask Your Policy (Executes instantly by pressing Enter!)
 with tab2:
     st.header("Ask Questions About Your Coverage")
     st.info("Suggested Questions:\n- Is a private room covered?\n- Is pre-authorization required for emergency admission?\n- What exclusions should I check before procedure?\n- What documents are needed for reimbursement claims?")
     
-    query = st.text_input("Enter your policy question:")
-    if st.button("Ask Assistant"):
+    # Render previous Q&A chat history
+    for q, a in st.session_state.chat_history:
+        st.chat_message("user").write(q)
+        st.chat_message("assistant").write(a)
+
+    # Pressing ENTER automatically triggers execution!
+    user_query = st.chat_input("Type your question and press Enter...")
+    if user_query:
         if not st.session_state.collection:
             st.warning("Please upload a policy first in the 'Upload & Extract' tab.")
-        elif check_medical_advice_query(query):
-            st.error(get_guardrail_response())
+        elif check_medical_advice_query(user_query):
+            guard_msg = get_guardrail_response()
+            st.session_state.chat_history.append((user_query, guard_msg))
+            st.rerun()
         else:
             with st.spinner("Analyzing policy clauses..."):
-                answer = ask_policy_question(query, st.session_state.collection, st.session_state.policy_profile)
-                st.success(answer)
+                answer = ask_policy_question(user_query, st.session_state.collection, st.session_state.policy_profile)
+                st.session_state.chat_history.append((user_query, answer))
+                st.rerun()
 
 # TAB 3: Find Hospital Options
 with tab3:
@@ -153,7 +164,7 @@ with tab3:
     with col_spec:
         specialty_filter = st.selectbox("Filter Specialty", ["All Specialties", "Cardiology", "Oncology", "Orthopedics", "Neurology", "Pediatrics", "Gastroenterology"])
     with col_search:
-        search_query = st.text_input("Search Hospital Name", "")
+        search_query = st.text_input("Search Hospital Name (Press Enter to filter)", "")
         
     c_net, c_emerg = st.columns(2)
     with c_net:
