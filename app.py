@@ -337,7 +337,7 @@ with tab2:
     st.subheader("Policy Q&A Assistant")
     st.info("Suggested Questions:\n- Is a private room covered?\n- Is pre-authorization required for emergency admission?\n- What exclusions should I check before procedure?\n- What documents are needed for reimbursement claims?")
     
-    # Render previous Q&A chat history
+    # Render all previous Q&A chat messages (user question + assistant response)
     for q, a in st.session_state.chat_history:
         st.chat_message("user").write(q)
         st.chat_message("assistant").write(a)
@@ -351,6 +351,9 @@ with tab2:
             st.session_state.chat_history.append((user_query, guard_msg))
             st.rerun()
         else:
+            # Render the user's question bubble immediately on screen
+            st.chat_message("user").write(user_query)
+            
             with st.chat_message("assistant"):
                 full_ans = st.write_stream(stream_policy_question(user_query, st.session_state.collection, st.session_state.policy_profile))
                 
@@ -358,7 +361,8 @@ with tab2:
                 trace_id = f"RAG-TRACE-{hashlib.md5(user_query.encode()).hexdigest()[:8].upper()}"
                 st.caption(f"RAG Audit Trace ID: {trace_id} | Document Isolation: Encrypted Session Scope | Model: Llama-3.3-70B-Versatile (Groq LLM Engine)")
                 
-                st.session_state.chat_history.append((user_query, full_ans))
+            st.session_state.chat_history.append((user_query, full_ans))
+            st.rerun()
 
 # TAB 3: Find Hospital Options (With Precise Insurer / TPA Citations & Data Freshness Timestamp)
 with tab3:
