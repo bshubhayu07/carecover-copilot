@@ -38,7 +38,7 @@ button[title="View app in Streamlit Cloud"] {display: none !important;}
 </style>
 """, unsafe_allow_html=True)
 
-# Multi-Lingual Site Interface Translations Dictionary
+# Comprehensive Multi-Lingual Site Interface Translations Dictionary
 TRANSLATIONS = {
     "English": {
         "emergency": "EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call 112 / 108 immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.",
@@ -49,6 +49,28 @@ TRANSLATIONS = {
         "tab3": "Find Hospital Options",
         "tab4": "Care Journey & Safety",
         "upload_header": "Upload Policy Document",
+        "upload_sub": "Upload your Base Health Insurance Policy (PDF)",
+        "load_demo_base": "Load Demo Base Policy",
+        "topup_expander": "Dual-Policy & Super Top-Up Comparison Engine",
+        "topup_desc": "Upload or load a secondary Super Top-Up policy to calculate combined sum insured and deductible triggers.",
+        "upload_topup_label": "Upload Secondary / Super Top-Up Policy (PDF)",
+        "load_demo_topup": "Load Demo Super Top-Up Policy",
+        "topup_deductible_label": "Top-Up Deductible Threshold (INR)",
+        "dual_breakdown": "Dual-Policy Protection Breakdown:",
+        "primary_cover": "Primary Policy Cover",
+        "topup_cover": "Top-Up Policy Cover",
+        "combined_si": "Combined Sum Insured",
+        "extracted_summary": "Extracted Policy Summary",
+        "base_coverage": "Base Policy Coverage",
+        "secondary_topup_coverage": "Secondary Super Top-Up Coverage",
+        "insurer_name": "Insurer Name",
+        "policy_name": "Policy Name",
+        "sum_insured": "Sum Insured",
+        "room_eligibility": "Room Eligibility",
+        "copay_terms": "Co-Pay Terms",
+        "preauth_req": "Pre-Auth Required",
+        "dl_pdf_summary": "Download Extracted Policy Summary (PDF)",
+        "dl_pdf_preauth": "Download Pre-Authorization TPA Form (PDF)",
         "ask_header": "Ask Questions About Your Coverage",
         "hosp_header": "Hospital Network & Room Matching",
         "journey_header": "Care Journey, Claim Estimator & Safety Guidelines"
@@ -62,22 +84,31 @@ TRANSLATIONS = {
         "tab3": "अस्पताल के विकल्प खोजें",
         "tab4": "देखभाल यात्रा और सुरक्षा",
         "upload_header": "नीति दस्तावेज़ अपलोड करें",
+        "upload_sub": "अपनी मूल स्वास्थ्य बीमा नीति (PDF) अपलोड करें",
+        "load_demo_base": "डेमो मूल नीति लोड करें",
+        "topup_expander": "दोहरी-नीति और सुपर टॉप-अप तुलना इंजन",
+        "topup_desc": "संयुक्त बीमा राशि और डिडक्टिबल ट्रिगर की गणना के लिए एक द्वितीयक सुपर टॉप-अप नीति अपलोड या लोड करें।",
+        "upload_topup_label": "द्वितीयक / सुपर टॉप-अप नीति (PDF) अपलोड करें",
+        "load_demo_topup": "डेमो सुपर टॉप-अप नीति लोड करें",
+        "topup_deductible_label": "टॉप-अप डिडक्टिबल सीमा (INR)",
+        "dual_breakdown": "दोहरी नीति सुरक्षा विवरण:",
+        "primary_cover": "प्राथमिक नीति कवर",
+        "topup_cover": "टॉप-अप नीति कवर",
+        "combined_si": "कुल संयुक्त बीमा राशि",
+        "extracted_summary": "निकालना नीति सारांश",
+        "base_coverage": "मूल नीति कवरेज",
+        "secondary_topup_coverage": "द्वितीयक सुपर टॉप-अप कवरेज",
+        "insurer_name": "बीमाकर्ता का नाम",
+        "policy_name": "नीति का नाम",
+        "sum_insured": "बीमा राशि",
+        "room_eligibility": "कमरे की पात्रता",
+        "copay_terms": "सह-भुगतान की शर्तें",
+        "preauth_req": "पूर्व-स्वीकृति आवश्यक",
+        "dl_pdf_summary": "नीति सारांश डाउनलोड करें (PDF)",
+        "dl_pdf_preauth": "पूर्व-स्वीकृति TPA फॉर्म डाउनलोड करें (PDF)",
         "ask_header": "अपनी कवरेज के बारे में प्रश्न पूछें",
         "hosp_header": "अस्पताल नेटवर्क और रूम मिलान",
         "journey_header": "देखभाल यात्रा और दावा अनुमानक"
-    },
-    "Marathi (मराठी)": {
-        "emergency": "तातडीची सूचना: वैद्यकीय आणीबाणी असल्यास, त्वरित 112 / 108 वर कॉल करा किंवा जवळच्या रुग्णालयात जा.",
-        "site_lang": "अ‍ॅप आणि साइट इंटरफेस भाषा",
-        "select_lang": "साइटची भाषा निवडा",
-        "tab1": "अपलोड आणि माहिती मिळवा",
-        "tab2": "तुमच्या पॉलिसीबद्दल विचारा",
-        "tab3": "रुग्णालय पर्याय शोधा",
-        "tab4": "काळजी प्रवास आणि सुरक्षितता",
-        "upload_header": "पॉलिसी दस्तऐवज अपलोड करा",
-        "ask_header": "तुमच्या कव्हरेजविषयी प्रश्न विचारा",
-        "hosp_header": "रुग्णालय नेटवर्क आणि रूम मॅचिंग",
-        "journey_header": "काळजी प्रवास आणि क्लेम अंदाज"
     },
     "Bengali (বাংলা)": {
         "emergency": "জরুরী নোটিশ: কোনো চিকিৎসা জরুরী পরিস্থিতি হলে অবিলম্বে ১১২ / ১০৮ নম্বরে কল করুন বা নিকটস্থ হাসপাতালে যান।",
@@ -88,9 +119,66 @@ TRANSLATIONS = {
         "tab3": "হাসপাতাল অপশন খুঁজুন",
         "tab4": "কেয়ার যাত্রা ও নিরাপত্তা",
         "upload_header": "পলিসি নথি আপলোড করুন",
+        "upload_sub": "আপনার মূল স্বাস্থ্য বীমা পলিসি (PDF) আপলোড করুন",
+        "load_demo_base": "ডেমো মূল পলিসি লোড করুন",
+        "topup_expander": "দ্বৈত-পলিসি ও সুপার টপ-আপ তুলনা ইঞ্জিন",
+        "topup_desc": "একত্রিত বীমা রাশি এবং ডিডাক্টিবল ট্রিগার গণনা করার জন্য একটি দ্বিতীয় সুপার টপ-আপ পলিসি আপলোড বা লোড করুন।",
+        "upload_topup_label": "দ্বিতীয় / সুপার টপ-আপ পলিসি (PDF) আপলোড করুন",
+        "load_demo_topup": "ডেমো সুপার টপ-আপ পলিসি লোড করুন",
+        "topup_deductible_label": "টপ-আপ ডিডাক্টিবল থ্রেশহোল্ড (INR)",
+        "dual_breakdown": "দ্বৈত-পলিসি সুরক্ষা বিবরণ:",
+        "primary_cover": "প্রাথমিক পলিসি কভার",
+        "topup_cover": "টপ-আপ পলিসি কভার",
+        "combined_si": "মোট একত্রিত বীমা রাশি",
+        "extracted_summary": "সংগৃহীত পলিসি সারাংশ",
+        "base_coverage": "মূল পলিসি কভারেজ",
+        "secondary_topup_coverage": "দ্বিতীয় সুপার টপ-আপ কভারেজ",
+        "insurer_name": "বীমাকারীর নাম",
+        "policy_name": "পলিসির নাম",
+        "sum_insured": "বীমা রাশি",
+        "room_eligibility": "রুমের যোগ্যতা",
+        "copay_terms": "কো-পে শর্তাবলী",
+        "preauth_req": "প্রাক-অনুমোদন প্রয়োজন",
+        "dl_pdf_summary": "পলিসি সারাংশ ডাউনলোড করুন (PDF)",
+        "dl_pdf_preauth": "প্রাক-অনুমোদন TPA ফর্ম ডাউনলোড করুন (PDF)",
         "ask_header": "আপনার কভারেজ সম্পর্কে প্রশ্ন জিজ্ঞাসা করুন",
         "hosp_header": "হাসপাতাল নেটওয়ার্ক ও রুম ম্যাচিং",
         "journey_header": "কেয়ার যাত্রা ও দাবি হিসাবক"
+    },
+    "Marathi (मराठी)": {
+        "emergency": "तातडीची सूचना: वैद्यकीय आणीबाणी असल्यास, त्वरित 112 / 108 वर कॉल करा किंवा जवळच्या रुग्णालयात जा.",
+        "site_lang": "अ‍ॅप आणि साइट इंटरफेस भाषा",
+        "select_lang": "साइटची भाषा निवडा",
+        "tab1": "अपलोड आणि माहिती मिळवा",
+        "tab2": "तुमच्या पॉलिसीबद्दल विचारा",
+        "tab3": "रुग्णालय पर्याय शोधा",
+        "tab4": "काळजी प्रवास आणि सुरक्षितता",
+        "upload_header": "पॉलिसी दस्तऐवज अपलोड करा",
+        "upload_sub": "तुमची मुख्य आरोग्य विमा पॉलिसी (PDF) अपलोड करा",
+        "load_demo_base": "डेमो मुख्य पॉलिसी लोड करा",
+        "topup_expander": "दुहेरी-पॉलिसी आणि सुपर टॉप-अप तुलना इंजिन",
+        "topup_desc": "एकत्रित विमा रक्कम आणि डिडक्टिबल ट्रिगर मोजण्यासाठी दुय्यम सुपर टॉप-अप पॉलिसी अपलोड किंवा लोड करा.",
+        "upload_topup_label": "दुय्यम / सुपर टॉप-अप पॉलिसी (PDF) अपलोड करा",
+        "load_demo_topup": "डेमो सुपर टॉप-अप पॉलिसी लोड करा",
+        "topup_deductible_label": "टॉप-अप डिडक्टिबल मर्यादा (INR)",
+        "dual_breakdown": "दुहेरी पॉलिसी संरक्षण तपशील:",
+        "primary_cover": "प्राथमिक पॉलिसी कव्हर",
+        "topup_cover": "टॉप-अप पॉलिसी कव्हर",
+        "combined_si": "एकत्रित एकूण विमा रक्कम",
+        "extracted_summary": "काढलेला पॉलिसी सारांश",
+        "base_coverage": "मुख्य पॉलिसी कव्हरेज",
+        "secondary_topup_coverage": "दुय्यम सुपर टॉप-अप कव्हरेज",
+        "insurer_name": "विमा कंपनीचे नाव",
+        "policy_name": "पॉलिसीचे नाव",
+        "sum_insured": "विमा रक्कम",
+        "room_eligibility": "खोलीची पात्रता",
+        "copay_terms": "सह-देय अटी",
+        "preauth_req": "पूर्व-मान्यता आवश्यक",
+        "dl_pdf_summary": "पॉलिसी सारांश डाउनलोड करा (PDF)",
+        "dl_pdf_preauth": "पूर्व-मान्यता TPA फॉर्म डाउनलोड करा (PDF)",
+        "ask_header": "तुमच्या कव्हरेजविषयी प्रश्न विचारा",
+        "hosp_header": "रुग्णालय नेटवर्क आणि रूम मॅचिंग",
+        "journey_header": "काळजी प्रवास आणि क्लेम अंदाज"
     },
     "Tamil (தமிழ்)": {
         "emergency": "அவசர அறிவிப்பு: மருத்துவ அவசரம் என்றால் உடனடியாக 112 / 108 ஐ அழைக்கவும் அல்லது அருகிலுள்ள மருத்துவமனைக்குச் செல்லவும்.",
@@ -101,6 +189,28 @@ TRANSLATIONS = {
         "tab3": "மருத்துவமனை விருப்பங்களைக் கண்டறியவும்",
         "tab4": "பராமரிப்பு பயணம் & பாதுகாப்பு",
         "upload_header": "பாலிசி ஆவணத்தைப் பதிவேற்றவும்",
+        "upload_sub": "உங்கள் அடிப்படை சுகாதார காப்பீட்டு பாலிசியைப் (PDF) பதிவேற்றவும்",
+        "load_demo_base": "டெமோ அடிப்படை பாலிசியை ஏற்று",
+        "topup_expander": "இரட்டை-பாலிசி & சூப்பர் டாப்-அப் ஒப்பீட்டு இயந்திரம்",
+        "topup_desc": "இணைந்த காப்பீட்டுத் தொகையைக் கணக்கிட இரண்டாம் நிலை சூப்பர் டாப்-அப் பாலிசியைப் பதிவேற்றவும்.",
+        "upload_topup_label": "சூப்பர் டாப்-அப் பாலிசியைப் (PDF) பதிவேற்றவும்",
+        "load_demo_topup": "டெமோ சூப்பர் டாப்-அப் பாலிசியை ஏற்று",
+        "topup_deductible_label": "டாப்-அப் விலக்கு வரம்பு (INR)",
+        "dual_breakdown": "இரட்டை பாலிசி பாதுகாப்பு விவரம்:",
+        "primary_cover": "முதன்மை பாலிசி காப்பீடு",
+        "topup_cover": "டாப்-அப் பாலிசி காப்பீடு",
+        "combined_si": "மொத்த கூட்டு காப்பீட்டுத் தொகை",
+        "extracted_summary": "பிரித்தெடுக்கப்பட்ட பாலிசி சுருக்கம்",
+        "base_coverage": "அடிப்படை பாலிசி காப்பீடு",
+        "secondary_topup_coverage": "இரண்டாம் நிலை சூப்பர் டாப்-அப் காப்பீடு",
+        "insurer_name": "காப்பீட்டாளர் பெயர்",
+        "policy_name": "பாலிசி பெயர்",
+        "sum_insured": "காப்பீட்டுத் தொகை",
+        "room_eligibility": "அறை தகுதி",
+        "copay_terms": "இணை-கட்டண விதிகள்",
+        "preauth_req": "முன் அனுமதி தேவை",
+        "dl_pdf_summary": "பாலிசி சுருக்கத்தைப் பதிவிறக்கவும் (PDF)",
+        "dl_pdf_preauth": "முன் அனுமதி TPA படிவத்தைப் பதிவிறக்கவும் (PDF)",
         "ask_header": "உங்கள் காப்பீடு பற்றி கேள்விகளைக் கேட்கவும்",
         "hosp_header": "மருத்துவமனை நெட்வொர்க் & அறை பொருத்தம்",
         "journey_header": "பராமரிப்பு பயணம் & கோரிக்கை மதிப்பீடு"
@@ -114,6 +224,28 @@ TRANSLATIONS = {
         "tab3": "ఆసుపత్రి ఎంపికలను కనుగొనండి",
         "tab4": "కేర్ ప్రయాణం & భద్రత",
         "upload_header": "పాలసీ పత్రాన్ని అప్‌లోడ్ చేయండి",
+        "upload_sub": "మీ ప్రాథమిక ఆరోగ్య భీమా పాలసీ (PDF) అప్‌లోడ్ చేయండి",
+        "load_demo_base": "డెమో ప్రాథమిక పాలసీని లోడ్ చేయండి",
+        "topup_expander": "ద్వంద్వ-పాలసీ & సూపర్ టాప్-అప్ పోలిక ఇంజిన్",
+        "topup_desc": "మొత్తం బీమా మరియు మినహాయింపును లెక్కింపు కోసం ద్వితీయ సూపర్ టాప్-అప్ పాలసీని అప్‌లోడ్ చేయండి.",
+        "upload_topup_label": "ద్వితీయ / సూపర్ టాప్-అప్ పాలసీ (PDF) అప్‌లోడ్ చేయండి",
+        "load_demo_topup": "డెమో సూపర్ టాప్-అప్ పాలసీని లోడ్ చేయండి",
+        "topup_deductible_label": "టాప్-అప్ మినహాయింపు పరిమితి (INR)",
+        "dual_breakdown": "ద్వంద్వ పాలసీ రక్షణ వివరాలు:",
+        "primary_cover": "ప్రాథమిక పాలసీ కవర్",
+        "topup_cover": "టాప్-అప్ పాలసీ కవర్",
+        "combined_si": "మొత్తం ఉమ్మడి బీమా పరిమితి",
+        "extracted_summary": "సేకరించిన పాలసీ సారాంశం",
+        "base_coverage": "ప్రాథమిక పాలసీ కవరేజ్",
+        "secondary_topup_coverage": "ద్వితీయ సూపర్ టాప్-అప్ కవరేజ్",
+        "insurer_name": "బీమా సంస్థ పేరు",
+        "policy_name": "పాలసీ పేరు",
+        "sum_insured": "బీమా మొత్తం",
+        "room_eligibility": "గది అర్హత",
+        "copay_terms": "సహ-చెల్లింపు నిబంధనలు",
+        "preauth_req": "ముందస్తు అనుమతి అవసరం",
+        "dl_pdf_summary": "పాలసీ సారాంశాన్ని డౌన్‌లోడ్ చేయండి (PDF)",
+        "dl_pdf_preauth": "ముందస్తు అనుమతి TPA ఫారాన్ని డౌన్‌లోడ్ చేయండి (PDF)",
         "ask_header": "మీ కవరేజ్ గురించి ప్రశ్నలు అడగండి",
         "hosp_header": "ఆసుపత్రి నెట్‌వర్క్ & రూమ్ మ్యాచింగ్",
         "journey_header": "కేర్ ప్రయాణం & క్లెయిమ్ అంచనా"
@@ -247,9 +379,9 @@ with tab1:
     if not st.session_state.consent_given:
         st.warning("Please check 'I consent to temporary document processing' in the sidebar to enable policy upload.")
     
-    uploaded_file = st.file_uploader("Upload your Base Health Insurance Policy (PDF)", type=["pdf"], disabled=not st.session_state.consent_given)
+    uploaded_file = st.file_uploader(t["upload_sub"], type=["pdf"], disabled=not st.session_state.consent_given)
     
-    if st.button("Load Demo Base Policy"):
+    if st.button(t["load_demo_base"]):
         demo_p = "data/demo_base_policy.pdf" if os.path.exists("data/demo_base_policy.pdf") else "data/demo_policy.pdf"
         if os.path.exists(demo_p):
             with st.spinner("Processing demo base policy..."):
@@ -286,14 +418,14 @@ with tab1:
             os.remove(temp_path)
             
     # Dual-Policy & Super Top-Up Comparison Engine
-    with st.expander("Dual-Policy & Super Top-Up Comparison Engine", expanded=True):
-        st.write("Upload or load a secondary Super Top-Up policy to calculate combined sum insured and deductible triggers.")
+    with st.expander(t["topup_expander"], expanded=True):
+        st.write(t["topup_desc"])
         
         col_tu1, col_tu2 = st.columns(2)
         with col_tu1:
-            topup_file = st.file_uploader("Upload Secondary / Super Top-Up Policy (PDF)", type=["pdf"], key="topup_file")
+            topup_file = st.file_uploader(t["upload_topup_label"], type=["pdf"], key="topup_file")
         with col_tu2:
-            if st.button("Load Demo Super Top-Up Policy"):
+            if st.button(t["load_demo_topup"]):
                 topup_p = "data/demo_super_topup_policy.pdf"
                 if os.path.exists(topup_p):
                     pages_tu = ingest_pdf(topup_p)
@@ -301,7 +433,7 @@ with tab1:
                     st.session_state.topup_profile = extract_policy_profile(tu_text)
                     st.success("Demo Super Top-Up Policy (Star Health) Loaded & Analyzed!")
                     
-        deductible_val = st.number_input("Top-Up Deductible Threshold (INR)", min_value=100000, max_value=1000000, value=500000, step=50000)
+        deductible_val = st.number_input(t["topup_deductible_label"], min_value=100000, max_value=1000000, value=500000, step=50000)
         
         if topup_file is not None:
             if st.button("Process Uploaded Secondary Top-Up Policy"):
@@ -320,53 +452,53 @@ with tab1:
             topup_si = st.session_state.topup_profile.sum_insured_inr or 1500000
             total_combined = base_si + topup_si
             
-            st.markdown("#### Dual-Policy Protection Breakdown:")
+            st.markdown(f"#### {t['dual_breakdown']}")
             dc1, dc2, dc3 = st.columns(3)
             with dc1:
-                st.metric("Primary Policy Cover", format_inr(base_si))
+                st.metric(t["primary_cover"], format_inr(base_si))
             with dc2:
-                st.metric("Top-Up Policy Cover", format_inr(topup_si))
+                st.metric(t["topup_cover"], format_inr(topup_si))
             with dc3:
-                st.metric("Combined Sum Insured", format_inr(total_combined))
+                st.metric(t["combined_si"], format_inr(total_combined))
             st.info(f"Claim Execution Order: Claims up to {format_inr(deductible_val)} will be paid by Base Policy ({st.session_state.policy_profile.insurer_name}). Excess claims above {format_inr(deductible_val)} trigger the Top-Up Policy ({st.session_state.topup_profile.insurer_name}).")
 
     if st.session_state.policy_profile:
         st.markdown("---")
-        st.subheader("Extracted Policy Summary")
+        st.subheader(t["extracted_summary"])
         profile = st.session_state.policy_profile
         topup_p = st.session_state.topup_profile
         
         sum_insured_str = format_inr(profile.sum_insured_inr)
         pre_auth_str = "Yes" if profile.pre_authorization_required else "No"
         
-        st.markdown("#### Base Policy Coverage")
+        st.markdown(f"#### {t['base_coverage']}")
         c1, c2, c3 = st.columns(3)
         with c1:
-            st.markdown(f"**Insurer Name:**\n{profile.insurer_name or 'N/A'}")
-            st.markdown(f"**Room Eligibility:**\n{profile.room_eligibility or 'N/A'}")
+            st.markdown(f"**{t['insurer_name']}:**\n{profile.insurer_name or 'N/A'}")
+            st.markdown(f"**{t['room_eligibility']}:**\n{profile.room_eligibility or 'N/A'}")
         with c2:
-            st.markdown(f"**Policy Name:**\n{profile.policy_name or 'N/A'}")
-            st.markdown(f"**Co-Pay Terms:**\n{profile.co_pay or 'N/A'}")
+            st.markdown(f"**{t['policy_name']}:**\n{profile.policy_name or 'N/A'}")
+            st.markdown(f"**{t['copay_terms']}:**\n{profile.co_pay or 'N/A'}")
         with c3:
-            st.markdown(f"**Sum Insured:**\n{sum_insured_str}")
-            st.markdown(f"**Pre-Auth Required:**\n{pre_auth_str}")
+            st.markdown(f"**{t['sum_insured']}:**\n{sum_insured_str}")
+            st.markdown(f"**{t['preauth_req']}:**\n{pre_auth_str}")
             
         # Super Top-Up Details Grid in Extracted Policy Summary
         if topup_p:
             st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("#### Secondary Super Top-Up Coverage")
+            st.markdown(f"#### {t['secondary_topup_coverage']}")
             base_si = profile.sum_insured_inr or 500000
             topup_si = topup_p.sum_insured_inr or 1500000
             
             tc1, tc2, tc3 = st.columns(3)
             with tc1:
-                st.markdown(f"**Top-Up Insurer:**\n{topup_p.insurer_name or 'N/A'}")
+                st.markdown(f"**Top-Up {t['insurer_name']}:**\n{topup_p.insurer_name or 'N/A'}")
                 st.markdown(f"**Deductible Threshold:**\n{format_inr(500000)}")
             with tc2:
-                st.markdown(f"**Top-Up Policy Name:**\n{topup_p.policy_name or 'N/A'}")
-                st.markdown(f"**Top-Up Co-Pay:**\n{topup_p.co_pay or 'Nil (0%)'}")
+                st.markdown(f"**Top-Up {t['policy_name']}:**\n{topup_p.policy_name or 'N/A'}")
+                st.markdown(f"**Top-Up {t['copay_terms']}:**\n{topup_p.co_pay or 'Nil (0%)'}")
             with tc3:
-                st.markdown(f"**Top-Up Cover Limit:**\n{format_inr(topup_si)}")
+                st.markdown(f"**Top-Up {t['sum_insured']}:**\n{format_inr(topup_si)}")
                 st.markdown(f"**Total Protection Cover:**\n{format_inr(base_si + topup_si)}")
             
         st.markdown("<br>", unsafe_allow_html=True)
@@ -379,7 +511,7 @@ with tab1:
         with col_pdf:
             pdf_bytes = generate_policy_pdf(profile, topup_profile=topup_p)
             st.download_button(
-                label="Download Extracted Policy Summary (PDF)",
+                label=t["dl_pdf_summary"],
                 data=pdf_bytes,
                 file_name="carecover_policy_summary.pdf",
                 mime="application/pdf"
@@ -387,7 +519,7 @@ with tab1:
         with col_preauth:
             preauth_pdf_bytes = generate_preauth_pdf(profile, topup_profile=topup_p)
             st.download_button(
-                label="Download Pre-Authorization TPA Form (PDF)",
+                label=t["dl_pdf_preauth"],
                 data=preauth_pdf_bytes,
                 file_name="carecover_pre_authorization_tpa_form.pdf",
                 mime="application/pdf"
