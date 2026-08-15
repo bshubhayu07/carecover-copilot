@@ -8,9 +8,10 @@ from src.embeddings import initialize_vector_store
 from src.policy_extractor import extract_policy_profile
 from src.retrieval import ask_policy_question
 from src.guardrails import check_medical_advice_query, get_guardrail_response
-from src.hospital_repository import get_hospitals_by_city
+from src.hospital_repository import get_hospitals_by_city, get_all_cities
 from src.eligibility_engine import match_hospitals
 from src.journey_guidance import get_journey_timeline
+from src.policy_schema import PolicyProfile
 
 st.set_page_config(page_title="CareCover Copilot", page_icon="🏥", layout="wide")
 
@@ -120,35 +121,42 @@ with tab2:
 # TAB 3: Find Hospital Options
 with tab3:
     st.header("Hospital Network Matching")
-    st.write("Match your policy constraints against our directory.")
+    st.write("Match your policy constraints against our directory across major Indian metropolitan cities.")
     
-    city = st.selectbox("Select City", ["Bengaluru", "Mumbai", "Delhi"])
+    available_cities = get_all_cities()
+    city = st.selectbox("Select City", available_cities)
     
     if st.button("Find Matching Hospitals"):
-        if not st.session_state.policy_profile:
-            st.warning("Please upload a policy first in the 'Upload & Extract' tab.")
+        profile_to_use = st.session_state.policy_profile
+        if not profile_to_use:
+            st.info("ℹ️ Showing hospital directory using default DemoCare policy parameters. (Load a custom policy in 'Upload & Extract' for personalized policy matching!)")
+            profile_to_use = PolicyProfile(
+                insurer_name="DemoCare",
+                room_eligibility="General, Twin Sharing",
+                pre_authorization_required=True
+            )
+            
+        df = get_hospitals_by_city(city)
+        if df.empty:
+            st.error(f"No hospitals found for '{city}' in directory.")
         else:
-            df = get_hospitals_by_city(city)
-            if df.empty:
-                st.error("No hospitals found for this city.")
-            else:
-                matches = match_hospitals(df, st.session_state.policy_profile, city)
-                
-                for m in matches:
-                    with st.container():
-                        st.markdown(f"### {m['name']}")
-                        col1, col2 = st.columns(2)
-                        with col1:
-                            status_color = "green" if m['network_status'] == "In Network" else "red"
-                            st.markdown(f"**Network Status:** :{status_color}[{m['network_status']}]")
-                            st.markdown(f"**Eligible Room:** {m['eligible_room']}")
-                        with col2:
-                            st.markdown(f"**Specialties:** {m['specialties']}")
-                            st.markdown(f"**Match Score:** {m['score']}")
-                        
-                        st.info(f"**Why this match?** {m['explanation']}")
-                        st.warning(f"**Notice:** {m['caveat']}")
-                        st.markdown("---")
+            matches = match_hospitals(df, profile_to_use, city)
+            st.subheader(f"Found {len(matches)} hospitals in {city}")
+            for m in matches:
+                with st.container():
+                    st.markdown(f"### {m['name']}")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        status_color = "green" if m['network_status'] == "In Network" else "red"
+                        st.markdown(f"**Network Status:** :{status_color}[{m['network_status']}]")
+                        st.markdown(f"**Eligible Room:** {m['eligible_room']}")
+                    with col2:
+                        st.markdown(f"**Specialties:** {m['specialties']}")
+                        st.markdown(f"**Match Score:** {m['score']}")
+                    
+                    st.info(f"**Why this match?** {m['explanation']}")
+                    st.warning(f"**Notice:** {m['caveat']}")
+                    st.markdown("---")
 
 # TAB 4: Care Journey
 with tab4:
