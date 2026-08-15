@@ -193,12 +193,12 @@ def generate_policy_pdf(profile: PolicyProfile, topup_profile: PolicyProfile = N
     
     if topup_profile:
         base_si = profile.sum_insured_inr or 500000
-        top_si = topup_profile.sum_insured_inr or 1500000
+        topup_si = topup_profile.sum_insured_inr or 1500000
         fields.extend([
             ("Super Top-Up Insurer", topup_profile.insurer_name or "N/A"),
             ("Super Top-Up Policy", topup_profile.policy_name or "N/A"),
             ("Top-Up Cover Limit", format_inr(topup_si)),
-            ("Total Protection Cover", format_inr(base_si + top_si))
+            ("Total Protection Cover", format_inr(base_si + topup_si))
         ])
     
     for label, val in fields:
