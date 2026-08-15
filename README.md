@@ -1,5 +1,5 @@
 # CareCover Copilot
-
+🚀 **Live Demo:** [https://carecover-copilot-keivlj6ggku4xesbfkyxkz.streamlit.app/](https://carecover-copilot-keivlj6ggku4xesbfkyxkz.streamlit.app/)
 > Built CareCover Copilot, a retrieval-augmented healthcare navigation platform that extracts insurance-policy clauses, generates evidence-grounded explanations, and matches coverage constraints to synthetic hospital and room options. Implemented structured LLM outputs, deterministic eligibility logic, citation-based RAG, and healthcare safety guardrails.
 
 ## Overview
