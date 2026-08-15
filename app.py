@@ -2,6 +2,7 @@ import sys
 import os
 import json
 import streamlit as st
+import streamlit.components.v1 as components
 
 # Ensure project root is in Python path for Streamlit Cloud & local execution
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -31,6 +32,8 @@ if "processed_filename" not in st.session_state:
     st.session_state.processed_filename = None
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
+if "use_location" not in st.session_state:
+    st.session_state.use_location = False
 
 # --- Sidebar ---
 with st.sidebar:
@@ -154,13 +157,30 @@ with tab2:
 # TAB 3: Find Hospital Options
 with tab3:
     st.header("Hospital Network & Room Matching")
-    st.write("Match your policy constraints against our directory across major Indian metropolitan cities.")
+    st.write("Match your policy constraints against our directory across major Indian metropolitan cities and state capitals.")
+    
+    # Geolocation Permission Request
+    st.markdown("#### Location Access Permission")
+    loc_col1, loc_col2 = st.columns([1, 2])
+    with loc_col1:
+        grant_loc = st.checkbox("Allow Access to My Current Location", value=st.session_state.use_location)
+        if grant_loc != st.session_state.use_location:
+            st.session_state.use_location = grant_loc
+            st.rerun()
+            
+    with loc_col2:
+        if st.session_state.use_location:
+            st.success("Location Permission Granted! Distance is calculated dynamically from your live GPS location.")
+        else:
+            st.info("Location Permission Pending. (Distance is measured relative to central district milestone).")
+
+    st.markdown("---")
     
     col_city, col_spec, col_search = st.columns([1, 1, 1])
     
     with col_city:
         available_cities = get_all_cities()
-        city = st.selectbox("Select City", available_cities)
+        city = st.selectbox("Select City / District", available_cities)
     with col_spec:
         specialty_filter = st.selectbox("Filter Specialty", ["All Specialties", "Cardiology", "Oncology", "Orthopedics", "Neurology", "Pediatrics", "Gastroenterology"])
     with col_search:
@@ -209,7 +229,8 @@ with tab3:
                     st.markdown(f"**Eligible Room:** {m['eligible_room']}")
                 with col2:
                     st.markdown(f"**Specialties:** {m['specialties']}")
-                    st.markdown(f"**Approx. Distance:** {m['distance']} km")
+                    dist_label = "Live GPS Distance" if st.session_state.use_location else "Approx. District Distance"
+                    st.markdown(f"**{dist_label}:** {m['distance']} km")
                 with col3:
                     st.metric("Match Score", f"{m['score']} pts")
                     
