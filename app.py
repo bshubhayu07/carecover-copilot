@@ -19,6 +19,7 @@ from src.eligibility_engine import match_hospitals
 from src.journey_guidance import get_journey_timeline
 from src.policy_schema import PolicyProfile
 from src.procedure_lookup import PROCEDURE_DATABASE, get_procedure_details
+from src.utils import format_inr
 
 st.set_page_config(page_title="CareCover Copilot", layout="wide")
 
@@ -176,19 +177,19 @@ with tab1:
             st.markdown("#### Dual-Policy Protection Breakdown:")
             dc1, dc2, dc3 = st.columns(3)
             with dc1:
-                st.metric("Primary Policy Cover", f"INR {base_si:,.0f}")
+                st.metric("Primary Policy Cover", format_inr(base_si))
             with dc2:
-                st.metric("Top-Up Policy Cover", f"INR {topup_si:,.0f}")
+                st.metric("Top-Up Policy Cover", format_inr(topup_si))
             with dc3:
-                st.metric("Combined Sum Insured", f"INR {total_combined:,.0f}")
-            st.info(f"Claim Execution Order: Claims up to INR {deductible_val:,.0f} will be paid by Base Policy ({st.session_state.policy_profile.insurer_name}). Excess claims above INR {deductible_val:,.0f} trigger the Top-Up Policy ({st.session_state.topup_profile.insurer_name}).")
+                st.metric("Combined Sum Insured", format_inr(total_combined))
+            st.info(f"Claim Execution Order: Claims up to {format_inr(deductible_val)} will be paid by Base Policy ({st.session_state.policy_profile.insurer_name}). Excess claims above {format_inr(deductible_val)} trigger the Top-Up Policy ({st.session_state.topup_profile.insurer_name}).")
 
     if st.session_state.policy_profile:
         st.markdown("---")
         st.subheader("Extracted Policy Summary")
         profile = st.session_state.policy_profile
         
-        sum_insured_str = f"INR {profile.sum_insured_inr:,.0f}" if profile.sum_insured_inr else "N/A"
+        sum_insured_str = format_inr(profile.sum_insured_inr)
         pre_auth_str = "Yes" if profile.pre_authorization_required else "No"
         
         c1, c2, c3 = st.columns(3)
@@ -222,7 +223,7 @@ with tab1:
 --------------------------------------------------------------
 Insurer Name: {profile.insurer_name}
 Policy Name: {profile.policy_name}
-Sum Insured: INR {profile.sum_insured_inr:,.0f}
+Sum Insured: {format_inr(profile.sum_insured_inr)}
 Room Category: {profile.room_eligibility}
 Pre-Auth Timeline Requirement: 48 Hours Prior (Planned) / 24 Hours (Emergency)
 
@@ -430,7 +431,7 @@ with tab4:
         if chosen_room_rate > allowed_room_rate:
             prop_ratio = allowed_room_rate / float(chosen_room_rate)
             prop_penalty_pct = round((1.0 - prop_ratio) * 100, 1)
-            st.error(f"Proportional Payment Warning: Chosen room exceeds limit by INR {chosen_room_rate - allowed_room_rate:,.0f}/day. Associated associate medical fees will face a {prop_penalty_pct}% proportional deduction penalty!")
+            st.error(f"Proportional Payment Warning: Chosen room exceeds limit by {format_inr(chosen_room_rate - allowed_room_rate)}/day. Associated associate medical fees will face a {prop_penalty_pct}% proportional deduction penalty!")
         else:
             prop_ratio = 1.0
             st.success("No Proportional Room Penalty: Chosen room rate is within policy limit.")
@@ -447,11 +448,11 @@ with tab4:
         st.markdown("#### Cost Breakdown Estimate:")
         m1, m2, m3 = st.columns(3)
         with m1:
-            st.metric("Estimated Approved Cashless", f"INR {estimated_cashless:,.0f}")
+            st.metric("Estimated Approved Cashless", format_inr(estimated_cashless))
         with m2:
-            st.metric("Proportional Penalty Loss", f"INR {prop_deduction_loss:,.0f}")
+            st.metric("Proportional Penalty Loss", format_inr(prop_deduction_loss))
         with m3:
-            st.metric("Estimated Out-of-Pocket Cost", f"INR {estimated_out_of_pocket:,.0f}")
+            st.metric("Estimated Out-of-Pocket Cost", format_inr(estimated_out_of_pocket))
             
         st.caption("Note: This is an indicative estimation model for decision support only. Final settlement is decided solely by your insurer/TPA.")
         

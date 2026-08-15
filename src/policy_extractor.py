@@ -7,6 +7,7 @@ from pydantic import ValidationError
 from fpdf import FPDF
 from .policy_schema import PolicyProfile
 from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME
+from .utils import format_inr
 
 def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     """
@@ -182,7 +183,7 @@ def generate_policy_pdf(profile: PolicyProfile) -> bytes:
     fields = [
         ("Insurer Name", profile.insurer_name or "N/A"),
         ("Policy Name", profile.policy_name or "N/A"),
-        ("Sum Insured", f"INR {profile.sum_insured_inr:,.0f}" if profile.sum_insured_inr else "N/A"),
+        ("Sum Insured", format_inr(profile.sum_insured_inr)),
         ("Room Eligibility", profile.room_eligibility or "N/A"),
         ("Room Rent Limit", profile.room_rent_limit or "N/A"),
         ("Co-Pay Terms", profile.co_pay or "N/A"),
