@@ -240,3 +240,61 @@ def generate_policy_pdf(profile: PolicyProfile, topup_profile: PolicyProfile = N
             pdf.multi_cell(0, 6, text=f"- {doc}", new_x="LMARGIN", new_y="NEXT")
             
     return bytes(pdf.output())
+
+def generate_preauth_pdf(profile: PolicyProfile, topup_profile: PolicyProfile = None) -> bytes:
+    """Generates a PDF byte stream of the Pre-Authorization TPA Request Form."""
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    
+    pdf.set_font("Helvetica", 'B', 16)
+    pdf.cell(0, 10, text="CARECOVER COPILOT - CASHLESS PRE-AUTHORIZATION FORM", new_x="LMARGIN", new_y="NEXT", align='C')
+    pdf.ln(6)
+    
+    pdf.set_font("Helvetica", 'B', 12)
+    pdf.cell(0, 8, text="1. POLICY & INSURER DETAILS", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+    
+    topup_line = f"Enabled ({topup_profile.insurer_name} - {format_inr(topup_profile.sum_insured_inr or 1500000)})" if topup_profile else "Not Attached"
+    
+    fields = [
+        ("Base Insurer Name", profile.insurer_name or "N/A"),
+        ("Base Policy Name", profile.policy_name or "N/A"),
+        ("Base Sum Insured", format_inr(profile.sum_insured_inr)),
+        ("Super Top-Up Status", topup_line),
+        ("Room Category Eligibility", profile.room_eligibility or "N/A"),
+        ("Pre-Auth Requirement", "48 Hours Prior (Planned) / 24 Hours (Emergency)")
+    ]
+    
+    for label, val in fields:
+        pdf.set_x(pdf.l_margin)
+        pdf.set_font("Helvetica", 'B', 11)
+        pdf.cell(65, 8, text=f"{label}:", new_x="RIGHT", new_y="TOP")
+        pdf.set_font("Helvetica", size=11)
+        pdf.multi_cell(0, 8, text=str(val), new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(1)
+        
+    pdf.ln(4)
+    pdf.set_x(pdf.l_margin)
+    pdf.set_font("Helvetica", 'B', 12)
+    pdf.cell(0, 8, text="2. MANDATORY TPA DOCUMENT CHECKLIST", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica", size=10)
+    
+    checklist = [
+        "Duly Filled Cashless Pre-Authorization Request Form (Part A & B)",
+        "Attending Doctor Admission Request Letter & Preliminary Diagnosis Notes",
+        "Patient & Policyholder KYC Identification (Aadhaar / PAN Card / Health Card)",
+        "Initial Out-Patient Consultation Records & Diagnostic Investigation Reports",
+        "Itemized Estimated Hospital Tariff Breakup Letter"
+    ]
+    
+    for chk in checklist:
+        pdf.set_x(pdf.l_margin)
+        pdf.multi_cell(0, 6, text=f"[X] {chk}", new_x="LMARGIN", new_y="NEXT")
+        
+    pdf.ln(6)
+    pdf.set_x(pdf.l_margin)
+    pdf.set_font("Helvetica", 'I', 10)
+    pdf.multi_cell(0, 6, text="Status: Form pre-filled & verified for submission at Hospital Cashless TPA Helpdesk.", new_x="LMARGIN", new_y="NEXT")
+    
+    return bytes(pdf.output())

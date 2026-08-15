@@ -12,7 +12,7 @@ from src.config import USE_DUMMY_MODE, CHROMA_DB_DIR
 from src.pdf_ingestion import ingest_pdf
 from src.chunking import chunk_text
 from src.embeddings import initialize_vector_store
-from src.policy_extractor import extract_policy_profile, generate_policy_pdf
+from src.policy_extractor import extract_policy_profile, generate_policy_pdf, generate_preauth_pdf
 from src.retrieval import ask_policy_question, stream_policy_question
 from src.guardrails import check_medical_advice_query, get_guardrail_response
 from src.hospital_repository import get_hospitals_by_city, get_all_cities
@@ -293,29 +293,12 @@ with tab1:
                 mime="application/pdf"
             )
         with col_preauth:
-            topup_line = f"Super Top-Up Protection: Enabled ({topup_p.insurer_name} - {format_inr(topup_p.sum_insured_inr or 1500000)})" if topup_p else "Super Top-Up: Not Attached"
-            preauth_text = f"""CARECOVER COPILOT - CASHLESS PRE-AUTHORIZATION REQUEST FORM
---------------------------------------------------------------
-Base Insurer Name: {profile.insurer_name}
-Base Policy Name: {profile.policy_name}
-Base Sum Insured: {format_inr(profile.sum_insured_inr)}
-{topup_line}
-Room Category: {profile.room_eligibility}
-Pre-Auth Timeline Requirement: 48 Hours Prior (Planned) / 24 Hours (Emergency)
-
-MANDATORY TPA DOCUMENT CHECKLIST:
-[X] Duly Filled Pre-Auth Form (Part A & B)
-[X] Doctor Admission Request Letter & Preliminary Diagnosis
-[X] KYC Documents (Aadhaar / PAN Card)
-[X] Initial Consultation Notes & Diagnostic Investigation Reports
---------------------------------------------------------------
-Status: Ready for Hospital TPA Desk Submission
-"""
+            preauth_pdf_bytes = generate_preauth_pdf(profile, topup_profile=topup_p)
             st.download_button(
-                label="Download Pre-Authorization TPA Form (TXT)",
-                data=preauth_text,
-                file_name="pre_authorization_tpa_form.txt",
-                mime="text/plain"
+                label="Download Pre-Authorization TPA Form (PDF)",
+                data=preauth_pdf_bytes,
+                file_name="carecover_pre_authorization_tpa_form.pdf",
+                mime="application/pdf"
             )
 
 # TAB 2: Ask Your Policy (With Real-Time Token Streaming & Audit Log Trace)
