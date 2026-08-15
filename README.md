@@ -27,6 +27,20 @@ CareCover Copilot is a healthcare insurance-navigation and hospital-admission in
    streamlit run app.py
    ```
 
+### Running with Docker
+
+You can also run the entire application using Docker or Docker Compose:
+
+```bash
+# Using Docker Compose (Recommended)
+docker-compose up --build
+
+# Or using plain Docker CLI:
+docker build -t carecover-copilot .
+docker run -p 8501:8501 carecover-copilot
+```
+Then navigate to `http://localhost:8501` in your browser.
+
 ## Architecture
 ```text
 Policy PDF + user context

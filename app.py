@@ -1,5 +1,8 @@
-import streamlit as st
+import sys
 import os
+
+# Ensure project root is in Python path for Streamlit Cloud & local execution
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.config import USE_DUMMY_MODE, CHROMA_DB_DIR
 from src.pdf_ingestion import ingest_pdf

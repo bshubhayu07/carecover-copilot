@@ -1,0 +1,1 @@
+# CareCover Copilot Package Initialization
