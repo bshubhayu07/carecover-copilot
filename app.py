@@ -66,7 +66,7 @@ st.error("EMERGENCY NOTICE: If you or a family member are experiencing a medical
 # --- Sidebar ---
 with st.sidebar:
     st.title("CareCover Copilot")
-    st.caption("Clinical and insurance decision-support navigation system.")
+    st.caption("Independent clinical & insurance decision-support navigation system.")
     
     # Production-facing status banner
     st.success("System Status: Online | Encrypted Local Session Scope")
@@ -126,6 +126,14 @@ Issued by CareCover Security & Compliance Systems
         - **Email:** `grievance@carecovercopilot.in`
         - **IRDAI Bima Bharosa Portal Ref:** `#IRDAI-GRV-2026-88192`
         - **Resolution SLA:** Within 72 business hours
+        """)
+
+    with st.expander("Security Audit & Architecture Specs"):
+        st.markdown("""
+        **System Architecture & Security Specification:**
+        - **Audit Document:** `SECURITY_AND_COMPLIANCE.md`
+        - **Data Source Disclaimer:** Sourced directly from individual insurer/TPA published cashless network feeds (*Niva Bupa, Star Health, ICICI Lombard, Medi Assist*) compliant with IRDAI Health Regulations 2024.
+        - **Non-Endorsement Notice:** CareCover Copilot is an independent software tool and is NOT affiliated with or endorsed by IRDAI.
         """)
         
     st.markdown("<br>", unsafe_allow_html=True)
@@ -367,7 +375,7 @@ with tab2:
 # TAB 3: Find Hospital Options (With Precise Insurer / TPA Citations & Data Freshness Timestamp)
 with tab3:
     st.header("Hospital Network & Room Matching")
-    st.caption("Data Verification Badge: Precise Insurer & TPA Network Registries | Niva Bupa Network (v2026.08), Star Health Network (v2026.08), ICICI Lombard TPA Network (v2026.08), Medi Assist Master Registry | Last Verified: August 16, 2026 03:16:30 IST | Source: IRDAI Health Dept Regulation (irdai.gov.in/health-dept)")
+    st.caption("Data Source Citation: Individual Insurer & TPA Published Cashless Directories (Niva Bupa, Star Health, ICICI Lombard, Medi Assist) compliant with IRDAI Health Insurance Regulations 2024. CareCover Copilot is an independent navigation tool and is NOT affiliated with or endorsed by IRDAI. | Directory Verification: August 16, 2026 03:16:30 IST")
     
     st.markdown("#### Admission Fast-Track Mode")
     adm_mode = st.radio(
@@ -468,7 +476,7 @@ with tab3:
                     
                 st.info(f"Matching Explanation: {m['explanation']}")
                 st.warning(f"Notice: {m['caveat']}")
-                st.caption(f"Record Source Registry: {profile_to_use.insurer_name} Cashless Provider Feed | Record Verification: Verified August 16, 2026 03:16:30 IST")
+                st.caption(f"Record Source Feed: {profile_to_use.insurer_name} Insurer Directory | Record Verification: Verified August 16, 2026 03:16:30 IST")
                 st.markdown("---")
 
 # TAB 4: Care Journey & Safety (With Proportional Penalty Simulator)
