@@ -45,7 +45,7 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
             ]
         )
 
-    kwargs = {"model": "gpt-4o-mini", "temperature": 0}
+    kwargs = {"model": OPENAI_MODEL_NAME, "temperature": 0}
     if OPENAI_BASE_URL:
         kwargs["base_url"] = OPENAI_BASE_URL
         

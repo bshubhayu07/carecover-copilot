@@ -1,5 +1,5 @@
 from langchain_openai import ChatOpenAI
-from .config import USE_DUMMY_MODE, OPENAI_BASE_URL
+from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME
 
 def ask_policy_question(query: str, collection, policy_profile) -> str:
     """
@@ -52,7 +52,7 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
     {query}
     """
     
-    kwargs = {"model": "gpt-4o-mini", "temperature": 0}
+    kwargs = {"model": OPENAI_MODEL_NAME, "temperature": 0}
     if OPENAI_BASE_URL:
         kwargs["base_url"] = OPENAI_BASE_URL
         
