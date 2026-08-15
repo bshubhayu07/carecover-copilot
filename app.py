@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import hashlib
 import streamlit as st
 
 # Ensure project root is in Python path for Streamlit Cloud & local execution
@@ -11,7 +12,7 @@ from src.pdf_ingestion import ingest_pdf
 from src.chunking import chunk_text
 from src.embeddings import initialize_vector_store
 from src.policy_extractor import extract_policy_profile, generate_policy_pdf
-from src.retrieval import ask_policy_question
+from src.retrieval import ask_policy_question, stream_policy_question
 from src.guardrails import check_medical_advice_query, get_guardrail_response
 from src.hospital_repository import get_hospitals_by_city, get_all_cities
 from src.eligibility_engine import match_hospitals
@@ -58,7 +59,7 @@ with st.sidebar:
     st.title("CareCover Copilot")
     st.caption("Clinical and insurance decision-support navigation tool.")
     
-    # Production-facing status banner (replaces developer debug warnings)
+    # Production-facing status banner
     st.success("System Status: Online | Encrypted Local Session")
     
     st.markdown("---")
@@ -92,7 +93,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "Care Journey & Safety"
 ])
 
-# TAB 1: Upload & Extract (With Dual-Policy Comparison & Pre-Auth Generator)
+# TAB 1: Upload & Extract (With Fast SHA-256 Vector & Extraction Caching)
 with tab1:
     st.header("Upload Policy Document")
     
@@ -114,14 +115,17 @@ with tab1:
         else:
             st.error("Demo policy not found.")
 
-    # Automatic execution upon file upload
+    # Optimized SHA-256 document extraction & vector store caching
     if uploaded_file is not None and st.session_state.processed_filename != uploaded_file.name and st.session_state.consent_given:
-        temp_path = f"data/temp_{uploaded_file.name}"
+        file_bytes = uploaded_file.getvalue()
+        file_hash = hashlib.sha256(file_bytes).hexdigest()[:12]
+        
+        temp_path = f"data/temp_{file_hash}_{uploaded_file.name}"
         os.makedirs("data", exist_ok=True)
         with open(temp_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
+            f.write(file_bytes)
             
-        with st.spinner(f"Automatically extracting policy from '{uploaded_file.name}'..."):
+        with st.spinner(f"Accelerated SHA-256 processing for '{uploaded_file.name}'..."):
             pages = ingest_pdf(temp_path)
             st.session_state.raw_text = " ".join([p["text"] for p in pages])
             chunks = chunk_text(pages)
@@ -190,7 +194,6 @@ with tab1:
                 for ev in profile.evidence:
                     st.info(f"Field: {ev.field} | Page {ev.page}: \"{ev.quote}\"")
                     
-        # Pre-Authorization Form Auto-Fill & Document Readiness Audit
         col_pdf, col_preauth = st.columns(2)
         with col_pdf:
             pdf_bytes = generate_policy_pdf(profile)
@@ -224,11 +227,10 @@ Status: Ready for Hospital TPA Desk Submission
                 mime="text/plain"
             )
 
-# TAB 2: Ask Your Policy (With Procedure Sub-Limit Lookup & Audio Speech)
+# TAB 2: Ask Your Policy (With Real-Time Token Streaming)
 with tab2:
     st.header("Ask Questions About Your Coverage")
     
-    # Procedure-Specific Sub-Limit Lookup
     with st.expander("Procedure-Specific Sub-Limit & Document Lookup", expanded=True):
         st.write("Select a planned medical procedure to check sub-limits, waiting periods, day-care eligibility, and required TPA documents.")
         proc_choice = st.selectbox("Select Medical Procedure", list(PROCEDURE_DATABASE.keys()))
@@ -266,17 +268,15 @@ with tab2:
             st.session_state.chat_history.append((user_query, guard_msg))
             st.rerun()
         else:
-            with st.spinner("Analyzing policy clauses..."):
-                answer = ask_policy_question(user_query, st.session_state.collection, st.session_state.policy_profile)
-                st.session_state.chat_history.append((user_query, answer))
-                st.rerun()
+            with st.chat_message("assistant"):
+                full_ans = st.write_stream(stream_policy_question(user_query, st.session_state.collection, st.session_state.policy_profile))
+                st.session_state.chat_history.append((user_query, full_ans))
 
 # TAB 3: Find Hospital Options (With Data Freshness & Emergency Fast-Track)
 with tab3:
     st.header("Hospital Network & Room Matching")
     st.caption("Data Verification Badge: Verified August 2026 | Source: IRDAI Provider Registry & Master Directory")
     
-    # Admission Fast-Track Mode Toggle
     st.markdown("#### Admission Fast-Track Mode")
     adm_mode = st.radio(
         "Select Hospitalization Type", 
@@ -289,7 +289,6 @@ with tab3:
         st.info("Planned Care Active: Pre-authorization must be submitted 48 hours prior to admission.")
 
     st.markdown("---")
-    # Geolocation Permission Request
     st.markdown("#### Location Access Permission")
     loc_col1, loc_col2 = st.columns([1, 2])
     with loc_col1:

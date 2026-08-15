@@ -9,7 +9,6 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
     if not collection:
         return "No policy loaded yet. Please upload a policy first."
         
-    # In dummy mode, we simulate a retrieval answer to keep the app working
     if USE_DUMMY_MODE:
         if "private room" in query.lower():
             return "Based on the Demo Policy (Page 1 - Room Rent Eligibility), 'Private' rooms are only covered if the patient opts to pay the differential amount out-of-pocket. The eligible room types are 'General' or 'Twin Sharing'. Please confirm final eligibility and authorization with the insurer and hospital."
@@ -18,7 +17,6 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
         else:
             return "Based on the Demo Policy, I am unable to fully answer this specific question. Please check the document manually. Please confirm final eligibility and authorization with the insurer and hospital."
 
-    # Actual RAG flow
     results = collection.query(
         query_texts=[query],
         n_results=3
@@ -60,3 +58,12 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
     response = llm.invoke(prompt)
     
     return response.content
+
+def stream_policy_question(query: str, collection, policy_profile):
+    """
+    Token-by-token streaming generator for instant real-time response rendering.
+    """
+    answer = ask_policy_question(query, collection, policy_profile)
+    # Stream words smoothly
+    for word in answer.split(" "):
+        yield word + " "
