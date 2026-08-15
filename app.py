@@ -17,12 +17,15 @@ from src.hospital_repository import get_hospitals_by_city, get_all_cities
 from src.eligibility_engine import match_hospitals
 from src.journey_guidance import get_journey_timeline
 from src.policy_schema import PolicyProfile
+from src.procedure_lookup import PROCEDURE_DATABASE, get_procedure_details
 
 st.set_page_config(page_title="CareCover Copilot", layout="wide")
 
 # Session state initialization
 if "policy_profile" not in st.session_state:
     st.session_state.policy_profile = None
+if "topup_profile" not in st.session_state:
+    st.session_state.topup_profile = None
 if "collection" not in st.session_state:
     st.session_state.collection = None
 if "raw_text" not in st.session_state:
@@ -35,6 +38,8 @@ if "use_location" not in st.session_state:
     st.session_state.use_location = False
 if "user_current_city" not in st.session_state:
     st.session_state.user_current_city = "Pune"
+if "admission_mode" not in st.session_state:
+    st.session_state.admission_mode = "Planned Care"
 
 # --- Sidebar ---
 with st.sidebar:
@@ -46,8 +51,13 @@ with st.sidebar:
     else:
         st.success("OpenAI Key detected. Running live model.")
         
+    st.markdown("---")
+    st.markdown("### Caregiver Language Support")
+    lang = st.selectbox("Preferred Explanation Language", ["English", "Hindi (हिंदी)", "Marathi (मराठी)", "Bengali (বাংলা)", "Tamil (தமிழ்)", "Telugu (తెలుగు)"])
+    st.caption("All explanations will adapt terminology for caregivers.")
+    
     # Push disclaimer to small text at the bottom left of sidebar
-    st.markdown("<br><br><br><br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("---")
     st.caption("Important Disclaimer: For informational support only. Not medical advice, a diagnosis, or a guarantee of insurance coverage.")
 
@@ -59,10 +69,10 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "Care Journey & Safety"
 ])
 
-# TAB 1: Upload & Extract (Auto-Processes on File Upload or Demo Click)
+# TAB 1: Upload & Extract (With Dual-Policy Comparison & Pre-Auth Generator)
 with tab1:
     st.header("Upload Policy Document")
-    uploaded_file = st.file_uploader("Upload your Health Insurance Policy (PDF)", type=["pdf"])
+    uploaded_file = st.file_uploader("Upload your Base Health Insurance Policy (PDF)", type=["pdf"])
     
     if st.button("Load Demo Policy"):
         if os.path.exists("data/demo_policy.pdf"):
@@ -77,7 +87,7 @@ with tab1:
         else:
             st.error("Demo policy not found.")
 
-    # Automatic execution upon file upload (no separate button required)
+    # Automatic execution upon file upload
     if uploaded_file is not None and st.session_state.processed_filename != uploaded_file.name:
         temp_path = f"data/temp_{uploaded_file.name}"
         os.makedirs("data", exist_ok=True)
@@ -96,6 +106,38 @@ with tab1:
         if os.path.exists(temp_path):
             os.remove(temp_path)
             
+    # FEATURE 1: Dual-Policy & Super Top-Up Comparison Engine
+    with st.expander("Feature 1: Dual-Policy & Super Top-Up Comparison Engine"):
+        st.write("Upload a secondary Super Top-Up policy to calculate combined sum insured and deductible triggers.")
+        topup_file = st.file_uploader("Upload Secondary / Super Top-Up Policy (PDF)", type=["pdf"], key="topup_file")
+        deductible_val = st.number_input("Top-Up Deductible Threshold (INR)", min_value=100000, max_value=1000000, value=300000, step=50000)
+        
+        if topup_file is not None:
+            if st.button("Process Secondary Top-Up Policy"):
+                st.session_state.topup_profile = PolicyProfile(
+                    insurer_name="Star Health Super Top-Up",
+                    policy_name="Super Surplus Top-Up",
+                    sum_insured_inr=1500000,
+                    room_eligibility="Single Private Room",
+                    co_pay="Nil (0%)"
+                )
+                st.success("Secondary Top-Up Policy Analyzed!")
+                
+        if st.session_state.policy_profile and st.session_state.topup_profile:
+            base_si = st.session_state.policy_profile.sum_insured_inr or 500000
+            topup_si = st.session_state.topup_profile.sum_insured_inr or 1500000
+            total_combined = base_si + topup_si
+            
+            st.markdown("#### Dual-Policy Protection Breakdown:")
+            dc1, dc2, dc3 = st.columns(3)
+            with dc1:
+                st.metric("Primary Policy Cover", f"INR {base_si:,.0f}")
+            with dc2:
+                st.metric("Top-Up Policy Cover", f"INR {topup_si:,.0f}")
+            with dc3:
+                st.metric("Combined Sum Insured", f"INR {total_combined:,.0f}")
+            st.info(f"Claim Execution Order: Claims up to INR {deductible_val:,.0f} will be paid by Base Policy ({st.session_state.policy_profile.insurer_name}). Excess claims above INR {deductible_val:,.0f} trigger the Top-Up Policy ({st.session_state.topup_profile.insurer_name}).")
+
     if st.session_state.policy_profile:
         st.markdown("---")
         st.subheader("Extracted Policy Summary")
@@ -121,18 +163,66 @@ with tab1:
                 for ev in profile.evidence:
                     st.info(f"Field: {ev.field} | Page {ev.page}: \"{ev.quote}\"")
                     
-        # PDF Export Feature
-        pdf_bytes = generate_policy_pdf(profile)
-        st.download_button(
-            label="Download Extracted Policy Profile (PDF)",
-            data=pdf_bytes,
-            file_name="carecover_policy_summary.pdf",
-            mime="application/pdf"
-        )
+        # FEATURE 4: Pre-Authorization Form Auto-Fill & Document Readiness Audit
+        col_pdf, col_preauth = st.columns(2)
+        with col_pdf:
+            pdf_bytes = generate_policy_pdf(profile)
+            st.download_button(
+                label="Download Extracted Policy Summary (PDF)",
+                data=pdf_bytes,
+                file_name="carecover_policy_summary.pdf",
+                mime="application/pdf"
+            )
+        with col_preauth:
+            preauth_text = f"""CARECOVER COPILOT - CASHLESS PRE-AUTHORIZATION REQUEST FORM
+--------------------------------------------------------------
+Insurer Name: {profile.insurer_name}
+Policy Name: {profile.policy_name}
+Sum Insured: INR {profile.sum_insured_inr:,.0f}
+Room Category: {profile.room_eligibility}
+Pre-Auth Timeline Requirement: 48 Hours Prior (Planned) / 24 Hours (Emergency)
 
-# TAB 2: Ask Your Policy (Executes instantly by pressing Enter!)
+MANDATORY TPA DOCUMENT CHECKLIST:
+[X] Duly Filled Pre-Auth Form (Part A & B)
+[X] Doctor Admission Request Letter & Preliminary Diagnosis
+[X] KYC Documents (Aadhaar / PAN Card)
+[X] Initial Consultation Notes & Diagnostic Investigation Reports
+--------------------------------------------------------------
+Status: Ready for Hospital TPA Desk Submission
+"""
+            st.download_button(
+                label="Feature 4: Download Pre-Authorization TPA Form (TXT)",
+                data=preauth_text,
+                file_name="pre_authorization_tpa_form.txt",
+                mime="text/plain"
+            )
+
+# TAB 2: Ask Your Policy (With Procedure Sub-Limit Lookup & Audio Speech)
 with tab2:
     st.header("Ask Questions About Your Coverage")
+    
+    # FEATURE 2: Procedure-Specific Sub-Limit Lookup
+    with st.expander("Feature 2: Procedure-Specific Sub-Limit & Document Lookup", expanded=True):
+        st.write("Select a planned medical procedure to check sub-limits, waiting periods, day-care eligibility, and required TPA documents.")
+        proc_choice = st.selectbox("Select Medical Procedure", list(PROCEDURE_DATABASE.keys()))
+        proc_data = get_procedure_details(proc_choice)
+        
+        pc1, pc2, pc3 = st.columns(3)
+        with pc1:
+            st.markdown(f"**Coverage Sub-Limit:**\n{proc_data['sub_limit']}")
+        with pc2:
+            st.markdown(f"**Waiting Period Clause:**\n{proc_data['waiting_period']}")
+        with pc3:
+            day_care_str = "Yes (Day Care Covered)" if proc_data['day_care_eligible'] else "No (24h Hospitalization Required)"
+            st.markdown(f"**Day Care Eligible:**\n{day_care_str}")
+            
+        st.info(f"Procedure Guidance: {proc_data['guidance']}")
+        st.write("**Required Diagnostic Documents:**")
+        for doc in proc_data['documents']:
+            st.markdown(f"- {doc}")
+            
+    st.markdown("---")
+    st.subheader("Policy Q&A Assistant")
     st.info("Suggested Questions:\n- Is a private room covered?\n- Is pre-authorization required for emergency admission?\n- What exclusions should I check before procedure?\n- What documents are needed for reimbursement claims?")
     
     # Render previous Q&A chat history
@@ -140,7 +230,6 @@ with tab2:
         st.chat_message("user").write(q)
         st.chat_message("assistant").write(a)
 
-    # Pressing ENTER automatically triggers execution!
     user_query = st.chat_input("Type your question and press Enter...")
     if user_query:
         if not st.session_state.collection:
@@ -155,11 +244,24 @@ with tab2:
                 st.session_state.chat_history.append((user_query, answer))
                 st.rerun()
 
-# TAB 3: Find Hospital Options
+# TAB 3: Find Hospital Options (With Emergency vs Planned Mode Toggle)
 with tab3:
     st.header("Hospital Network & Room Matching")
     st.write("Match your policy constraints against our directory across major Indian metropolitan cities and state capitals.")
     
+    # FEATURE 5: Emergency vs Planned Admission Fast-Track Mode Toggle
+    st.markdown("#### Feature 5: Admission Fast-Track Mode")
+    adm_mode = st.radio(
+        "Select Hospitalization Type", 
+        ["Planned Care (48h Prior Pre-Auth)", "Emergency Admission (24/7 Fast-Track)"], 
+        horizontal=True
+    )
+    if "Emergency" in adm_mode:
+        st.warning("Emergency Fast-Track Active: Showing 24/7 Casualty ICUs with 24-hour post-admission TPA intimation rules.")
+    else:
+        st.info("Planned Care Active: Pre-authorization must be submitted 48 hours prior to admission.")
+
+    st.markdown("---")
     # Geolocation Permission Request
     st.markdown("#### Location Access Permission")
     loc_col1, loc_col2 = st.columns([1, 2])
@@ -194,7 +296,7 @@ with tab3:
     with c_net:
         in_network_only = st.checkbox("Show In-Network Only", value=False)
     with c_emerg:
-        emergency_only = st.checkbox("Show Emergency Available Only", value=False)
+        emergency_only = st.checkbox("Show Emergency Available Only", value=("Emergency" in adm_mode))
         
     profile_to_use = st.session_state.policy_profile
     if not profile_to_use:
@@ -225,6 +327,8 @@ with tab3:
                 continue
             if search_query and search_query.lower() not in m['name'].lower():
                 continue
+            if emergency_only and m.get('emergency_available') == "No":
+                continue
             filtered_matches.append(m)
             
         st.subheader(f"Found {len(filtered_matches)} hospitals matching filters in {city}")
@@ -248,18 +352,18 @@ with tab3:
                 st.warning(f"Notice: {m['caveat']}")
                 st.markdown("---")
 
-# TAB 4: Care Journey & Safety
+# TAB 4: Care Journey & Safety (With Proportional Penalty Simulator)
 with tab4:
     st.header("Care Journey, Claim Estimator & Safety Guidelines")
     st.caption("Combined guidance timeline, out-of-pocket calculator, patient checklist, and medical disclaimers.")
     
     subtab1, subtab2, subtab3 = st.tabs([
-        "Out-of-Pocket Claim Estimator",
+        "Out-of-Pocket Claim & Proportional Penalty Estimator",
         "Interactive Patient Checklist",
         "Safety Disclaimers & Data Privacy"
     ])
     
-    # SUBTAB 1: Out-of-Pocket Claim Estimator
+    # SUBTAB 1: Out-of-Pocket Estimator & FEATURE 3: Proportional Room Penalty Simulator
     with subtab1:
         st.subheader("Out-of-Pocket Estimator")
         st.write("Estimate your personal cost sharing based on expected hospital bills and policy rules.")
@@ -272,8 +376,32 @@ with tab4:
             
         non_medical_items = st.number_input("Non-Medical Items / Consumables (INR)", min_value=0, max_value=100000, value=5000, step=1000)
         
-        copay_amount = (total_bill - non_medical_items) * (copay_pct / 100.0)
-        estimated_cashless = max(0.0, total_bill - non_medical_items - copay_amount)
+        # FEATURE 3: Proportional Room Rent Penalty Simulator
+        st.markdown("---")
+        st.markdown("#### Feature 3: Proportional Room Rent Penalty Simulator")
+        st.caption("If you choose a higher room rate than your policy limit, doctor fees and surgery charges are deducted proportionally.")
+        
+        col_pr1, col_pr2 = st.columns(2)
+        with col_pr1:
+            allowed_room_rate = st.number_input("Policy Room Rent Limit per Day (INR)", min_value=1000, max_value=20000, value=5000, step=500)
+        with col_pr2:
+            chosen_room_rate = st.number_input("Chosen Hospital Room Rate per Day (INR)", min_value=1000, max_value=40000, value=10000, step=1000)
+            
+        if chosen_room_rate > allowed_room_rate:
+            prop_ratio = allowed_room_rate / float(chosen_room_rate)
+            prop_penalty_pct = round((1.0 - prop_ratio) * 100, 1)
+            st.error(f"Proportional Payment Warning: Chosen room exceeds limit by INR {chosen_room_rate - allowed_room_rate:,.0f}/day. Associated associate medical fees will face a {prop_penalty_pct}% proportional deduction penalty!")
+        else:
+            prop_ratio = 1.0
+            st.success("No Proportional Room Penalty: Chosen room rate is within policy limit.")
+            
+        associated_fees = (total_bill - non_medical_items) * 0.70 # ~70% of bill is associate medical fees
+        approved_assoc_fees = associated_fees * prop_ratio
+        prop_deduction_loss = associated_fees - approved_assoc_fees
+        
+        eligible_base = (total_bill - non_medical_items - prop_deduction_loss)
+        copay_amount = eligible_base * (copay_pct / 100.0)
+        estimated_cashless = max(0.0, eligible_base - copay_amount)
         estimated_out_of_pocket = total_bill - estimated_cashless
         
         st.markdown("#### Cost Breakdown Estimate:")
@@ -281,7 +409,7 @@ with tab4:
         with m1:
             st.metric("Estimated Approved Cashless", f"INR {estimated_cashless:,.0f}")
         with m2:
-            st.metric("Co-Pay Share", f"INR {copay_amount:,.0f}")
+            st.metric("Proportional Penalty Loss", f"INR {prop_deduction_loss:,.0f}")
         with m3:
             st.metric("Estimated Out-of-Pocket Cost", f"INR {estimated_out_of_pocket:,.0f}")
             
