@@ -170,7 +170,7 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
             claim_documents=["Discharge Summary", "Final Hospital Bill", "Claim Form", "KYC"]
         )
 
-def generate_policy_pdf(profile: PolicyProfile) -> bytes:
+def generate_policy_pdf(profile: PolicyProfile, topup_profile: PolicyProfile = None) -> bytes:
     """Generates a PDF byte stream of the extracted policy profile safely."""
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
@@ -181,15 +181,25 @@ def generate_policy_pdf(profile: PolicyProfile) -> bytes:
     pdf.ln(6)
     
     fields = [
-        ("Insurer Name", profile.insurer_name or "N/A"),
-        ("Policy Name", profile.policy_name or "N/A"),
-        ("Sum Insured", format_inr(profile.sum_insured_inr)),
+        ("Base Insurer Name", profile.insurer_name or "N/A"),
+        ("Base Policy Name", profile.policy_name or "N/A"),
+        ("Base Sum Insured", format_inr(profile.sum_insured_inr)),
         ("Room Eligibility", profile.room_eligibility or "N/A"),
         ("Room Rent Limit", profile.room_rent_limit or "N/A"),
         ("Co-Pay Terms", profile.co_pay or "N/A"),
         ("Pre-Authorization Required", "Yes" if profile.pre_authorization_required else "No"),
         ("Network Hospital Terms", profile.network_hospital_terms or "N/A")
     ]
+    
+    if topup_profile:
+        base_si = profile.sum_insured_inr or 500000
+        top_si = topup_profile.sum_insured_inr or 1500000
+        fields.extend([
+            ("Super Top-Up Insurer", topup_profile.insurer_name or "N/A"),
+            ("Super Top-Up Policy", topup_profile.policy_name or "N/A"),
+            ("Top-Up Cover Limit", format_inr(topup_si)),
+            ("Total Protection Cover", format_inr(base_si + top_si))
+        ])
     
     for label, val in fields:
         pdf.set_x(pdf.l_margin)

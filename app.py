@@ -188,10 +188,12 @@ with tab1:
         st.markdown("---")
         st.subheader("Extracted Policy Summary")
         profile = st.session_state.policy_profile
+        topup_p = st.session_state.topup_profile
         
         sum_insured_str = format_inr(profile.sum_insured_inr)
         pre_auth_str = "Yes" if profile.pre_authorization_required else "No"
         
+        st.markdown("#### Base Policy Coverage")
         c1, c2, c3 = st.columns(3)
         with c1:
             st.markdown(f"**Insurer Name:**\n{profile.insurer_name or 'N/A'}")
@@ -203,6 +205,24 @@ with tab1:
             st.markdown(f"**Sum Insured:**\n{sum_insured_str}")
             st.markdown(f"**Pre-Auth Required:**\n{pre_auth_str}")
             
+        # Super Top-Up Details Grid in Extracted Policy Summary
+        if topup_p:
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("#### Secondary Super Top-Up Coverage")
+            base_si = profile.sum_insured_inr or 500000
+            topup_si = topup_p.sum_insured_inr or 1500000
+            
+            tc1, tc2, tc3 = st.columns(3)
+            with tc1:
+                st.markdown(f"**Top-Up Insurer:**\n{topup_p.insurer_name or 'N/A'}")
+                st.markdown(f"**Deductible Threshold:**\n{format_inr(500000)}")
+            with tc2:
+                st.markdown(f"**Top-Up Policy Name:**\n{topup_p.policy_name or 'N/A'}")
+                st.markdown(f"**Top-Up Co-Pay:**\n{topup_p.co_pay or 'Nil (0%)'}")
+            with tc3:
+                st.markdown(f"**Top-Up Cover Limit:**\n{format_inr(topup_si)}")
+                st.markdown(f"**Total Protection Cover:**\n{format_inr(base_si + topup_si)}")
+            
         st.markdown("<br>", unsafe_allow_html=True)
         if profile.evidence:
             with st.expander("View Policy Text Evidence & Quotes"):
@@ -211,7 +231,7 @@ with tab1:
                     
         col_pdf, col_preauth = st.columns(2)
         with col_pdf:
-            pdf_bytes = generate_policy_pdf(profile)
+            pdf_bytes = generate_policy_pdf(profile, topup_profile=topup_p)
             st.download_button(
                 label="Download Extracted Policy Summary (PDF)",
                 data=pdf_bytes,
@@ -219,11 +239,13 @@ with tab1:
                 mime="application/pdf"
             )
         with col_preauth:
+            topup_line = f"Super Top-Up Protection: Enabled ({topup_p.insurer_name} - {format_inr(topup_p.sum_insured_inr or 1500000)})" if topup_p else "Super Top-Up: Not Attached"
             preauth_text = f"""CARECOVER COPILOT - CASHLESS PRE-AUTHORIZATION REQUEST FORM
 --------------------------------------------------------------
-Insurer Name: {profile.insurer_name}
-Policy Name: {profile.policy_name}
-Sum Insured: {format_inr(profile.sum_insured_inr)}
+Base Insurer Name: {profile.insurer_name}
+Base Policy Name: {profile.policy_name}
+Base Sum Insured: {format_inr(profile.sum_insured_inr)}
+{topup_line}
 Room Category: {profile.room_eligibility}
 Pre-Auth Timeline Requirement: 48 Hours Prior (Planned) / 24 Hours (Emergency)
 
