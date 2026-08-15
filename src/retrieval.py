@@ -1,5 +1,5 @@
 from langchain_openai import ChatOpenAI
-from .config import USE_DUMMY_MODE
+from .config import USE_DUMMY_MODE, OPENAI_BASE_URL
 
 def ask_policy_question(query: str, collection, policy_profile) -> str:
     """
@@ -52,7 +52,11 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
     {query}
     """
     
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    kwargs = {"model": "gpt-4o-mini", "temperature": 0}
+    if OPENAI_BASE_URL:
+        kwargs["base_url"] = OPENAI_BASE_URL
+        
+    llm = ChatOpenAI(**kwargs)
     response = llm.invoke(prompt)
     
     return response.content

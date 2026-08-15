@@ -4,7 +4,7 @@ from typing import Dict, Any
 from pydantic import ValidationError
 from fpdf import FPDF
 from .policy_schema import PolicyProfile
-from .config import USE_DUMMY_MODE
+from .config import USE_DUMMY_MODE, OPENAI_BASE_URL
 
 def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     """
@@ -45,7 +45,11 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
             ]
         )
 
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    kwargs = {"model": "gpt-4o-mini", "temperature": 0}
+    if OPENAI_BASE_URL:
+        kwargs["base_url"] = OPENAI_BASE_URL
+        
+    llm = ChatOpenAI(**kwargs)
     structured_llm = llm.with_structured_output(PolicyProfile)
     
     prompt = f"""
