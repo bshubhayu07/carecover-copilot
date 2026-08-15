@@ -82,7 +82,6 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     profile_dict = {}
 
     try:
-        # Attempt 1: Direct JSON parsing
         res = llm.invoke(prompt)
         content = res.content.strip()
         if content.startswith("```"):
@@ -171,9 +170,11 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
         )
 
 def generate_policy_pdf(profile: PolicyProfile) -> bytes:
-    """Generates a PDF byte stream of the extracted policy profile."""
+    """Generates a PDF byte stream of the extracted policy profile safely."""
     pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
+    
     pdf.set_font("Helvetica", 'B', 16)
     pdf.cell(0, 10, text="CareCover Copilot - Extracted Policy Summary", new_x="LMARGIN", new_y="NEXT", align='C')
     pdf.ln(6)
@@ -190,34 +191,41 @@ def generate_policy_pdf(profile: PolicyProfile) -> bytes:
     ]
     
     for label, val in fields:
+        pdf.set_x(pdf.l_margin)
         pdf.set_font("Helvetica", 'B', 11)
-        pdf.cell(65, 8, text=f"{label}:")
+        pdf.cell(65, 8, text=f"{label}:", new_x="RIGHT", new_y="TOP")
         pdf.set_font("Helvetica", size=11)
-        pdf.multi_cell(0, 8, text=str(val))
+        pdf.multi_cell(0, 8, text=str(val), new_x="LMARGIN", new_y="NEXT")
         pdf.ln(1)
         
     if profile.waiting_periods:
         pdf.ln(4)
+        pdf.set_x(pdf.l_margin)
         pdf.set_font("Helvetica", 'B', 12)
         pdf.cell(0, 8, text="Waiting Periods:", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font("Helvetica", size=10)
         for wp in profile.waiting_periods:
-            pdf.multi_cell(0, 6, text=f"- {wp}")
+            pdf.set_x(pdf.l_margin)
+            pdf.multi_cell(0, 6, text=f"- {wp}", new_x="LMARGIN", new_y="NEXT")
             
     if profile.exclusions:
         pdf.ln(4)
+        pdf.set_x(pdf.l_margin)
         pdf.set_font("Helvetica", 'B', 12)
         pdf.cell(0, 8, text="Exclusions:", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font("Helvetica", size=10)
         for ex in profile.exclusions:
-            pdf.multi_cell(0, 6, text=f"- {ex}")
+            pdf.set_x(pdf.l_margin)
+            pdf.multi_cell(0, 6, text=f"- {ex}", new_x="LMARGIN", new_y="NEXT")
             
     if profile.claim_documents:
         pdf.ln(4)
+        pdf.set_x(pdf.l_margin)
         pdf.set_font("Helvetica", 'B', 12)
         pdf.cell(0, 8, text="Required Claim Documents:", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font("Helvetica", size=10)
         for doc in profile.claim_documents:
-            pdf.multi_cell(0, 6, text=f"- {doc}")
+            pdf.set_x(pdf.l_margin)
+            pdf.multi_cell(0, 6, text=f"- {doc}", new_x="LMARGIN", new_y="NEXT")
             
     return bytes(pdf.output())
