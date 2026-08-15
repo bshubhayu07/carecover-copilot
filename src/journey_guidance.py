@@ -7,7 +7,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
     return [
         {
             "stage": "Admission",
-            "icon": "🏥",
             "description": "Preparation and arrival at the hospital.",
             "checklist": [
                 "Carry Govt ID (Aadhaar/PAN) of patient and policyholder.",
@@ -19,7 +18,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         },
         {
             "stage": "Investigation & Treatment",
-            "icon": "🩺",
             "description": "During your stay at the hospital.",
             "checklist": [
                 "Save all pharmacy and consumable bills. Non-medical items (gloves, masks) are often excluded from coverage.",
@@ -29,7 +27,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         },
         {
             "stage": "Discharge & Claim",
-            "icon": "📝",
             "description": "Leaving the hospital and settling bills.",
             "checklist": [
                 "The hospital will send the final bill to the TPA. Approval takes 2-6 hours.",
