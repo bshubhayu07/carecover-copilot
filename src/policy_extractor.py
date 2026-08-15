@@ -4,7 +4,7 @@ from typing import Dict, Any
 from pydantic import ValidationError
 from fpdf import FPDF
 from .policy_schema import PolicyProfile
-from .config import USE_DUMMY_MODE, OPENAI_BASE_URL
+from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME
 
 def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     """
