@@ -7,7 +7,7 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
     Enforces strict RAG guardrails in the prompt.
     """
     if not collection:
-        return "No policy loaded yet. Please upload a policy first."
+        return "No policy loaded yet. Please upload a policy first in the 'Upload & Extract' tab or click 'Load Demo Base Policy'."
         
     if USE_DUMMY_MODE:
         if "private room" in query.lower():
@@ -17,10 +17,15 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
         else:
             return "Based on the Demo Policy, I am unable to fully answer this specific question. Please check the document manually. Please confirm final eligibility and authorization with the insurer and hospital."
 
-    results = collection.query(
-        query_texts=[query],
-        n_results=3
-    )
+    # Graceful ChromaDB query exception handling for session purges or collection resets
+    try:
+        results = collection.query(
+            query_texts=[query],
+            n_results=3
+        )
+    except Exception as e:
+        print(f"ChromaDB Query Exception: {e}")
+        return "The active policy vector collection session was purged or re-initialized. Please click 'Load Demo Base Policy' or re-upload your PDF policy document in Tab 1."
     
     retrieved_texts = results['documents'][0] if results['documents'] else []
     retrieved_meta = results['metadatas'][0] if results['metadatas'] else []
@@ -54,16 +59,18 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
     if OPENAI_BASE_URL:
         kwargs["base_url"] = OPENAI_BASE_URL
         
-    llm = ChatOpenAI(**kwargs)
-    response = llm.invoke(prompt)
-    
-    return response.content
+    try:
+        llm = ChatOpenAI(**kwargs)
+        response = llm.invoke(prompt)
+        return response.content
+    except Exception as e:
+        print(f"LLM Generation Exception: {e}")
+        return "Unable to connect to model engine. Please confirm final eligibility and authorization with the insurer and hospital."
 
 def stream_policy_question(query: str, collection, policy_profile):
     """
     Token-by-token streaming generator for instant real-time response rendering.
     """
     answer = ask_policy_question(query, collection, policy_profile)
-    # Stream words smoothly
     for word in answer.split(" "):
         yield word + " "
