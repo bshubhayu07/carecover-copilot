@@ -3,9 +3,9 @@ version: '3.8'
 services:
   carecover-copilot:
     build: .
-    container_name: carecover_copilot_app
+    container_name: carecover_copilot
     ports:
-      - "8501:8501"
+      - "8502:8501"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     restart: unless-stopped
