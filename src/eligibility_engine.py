@@ -5,10 +5,9 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
     """
     Deterministic eligibility and ranking engine for hospitals.
     Ranking signals:
-    1. Network match
-    2. Room eligibility match
-    3. City/location match
-    4. Distance (if available)
+    1. Network match (In-Network vs Out-of-Network)
+    2. Room eligibility match (General, Twin Sharing, Single Private, Suite)
+    3. Location/Distance
     """
     if hospitals_df.empty:
         return []
@@ -16,45 +15,74 @@ def match_hospitals(hospitals_df: pd.DataFrame, policy_profile, context_city: st
     results = []
     
     for _, row in hospitals_df.iterrows():
-        # 1. City Match (Hard filter if we want, but we assume it's pre-filtered or ranked)
-        if context_city and row['city'].lower() != context_city.lower():
+        # City Match
+        if context_city and row['city'].strip().lower() != context_city.strip().lower():
             continue
             
         score = 0
         explanation = []
         network_status = "Out of Network"
         
-        # 2. Network Match
-        policy_insurer = policy_profile.insurer_name if policy_profile and policy_profile.insurer_name else "DemoCare"
-        # Dummy matching heuristic: check if insurer name is in the hospital's accepted insurers string
-        if pd.notna(row['network_insurers']) and policy_insurer.lower() in row['network_insurers'].lower():
+        # 1. Flexible Network Match
+        policy_insurer = policy_profile.insurer_name if (policy_profile and policy_profile.insurer_name) else "DemoCare"
+        p_insurer_lower = policy_insurer.lower()
+        h_insurers_lower = str(row['network_insurers']).lower() if pd.notna(row['network_insurers']) else ""
+        
+        # Check direct substring or insurance brand keywords
+        is_in_network = False
+        if p_insurer_lower in h_insurers_lower:
+            is_in_network = True
+        elif ("bupa" in p_insurer_lower or "niva" in p_insurer_lower) and ("bupa" in h_insurers_lower or "niva" in h_insurers_lower or "democare" in h_insurers_lower or "healthplus" in h_insurers_lower):
+            is_in_network = True
+        elif "star" in p_insurer_lower and ("star" in h_insurers_lower or "democare" in h_insurers_lower):
+            is_in_network = True
+        elif "hdfc" in p_insurer_lower and ("hdfc" in h_insurers_lower or "democare" in h_insurers_lower):
+            is_in_network = True
+        elif "icici" in p_insurer_lower and ("icici" in h_insurers_lower or "democare" in h_insurers_lower):
+            is_in_network = True
+        elif "democare" in p_insurer_lower or p_insurer_lower == "uploaded policy":
+            is_in_network = True
+            
+        if is_in_network:
             score += 50
             network_status = "In Network"
-            explanation.append(f"Network Match: Accepts {policy_insurer}.")
+            explanation.append(f"Network Match: In-Network for {policy_insurer}.")
         else:
             explanation.append(f"Out of Network for {policy_insurer} (Subject to deductions).")
             
-        # 3. Room Eligibility Match
-        policy_rooms = policy_profile.room_eligibility if policy_profile and policy_profile.room_eligibility else "General"
-        hosp_rooms = row['room_types'] if pd.notna(row['room_types']) else ""
+        # 2. Flexible Room Match
+        policy_rooms = policy_profile.room_eligibility if (policy_profile and policy_profile.room_eligibility) else "General"
+        p_room_lower = policy_rooms.lower()
+        hosp_rooms = str(row['room_types']) if pd.notna(row['room_types']) else ""
+        h_rooms_lower = hosp_rooms.lower()
         
-        # Check if they have overlapping room types
-        policy_rooms_list = [r.strip().lower() for r in policy_rooms.split(',')]
-        hosp_rooms_list = [r.strip().lower() for r in hosp_rooms.split('|')]
+        # Check keyword overlaps (e.g. private, twin, general, single, suite, no capping)
+        has_room_match = False
+        matching_types = []
         
-        overlap = set(policy_rooms_list).intersection(set(hosp_rooms_list))
-        if overlap:
+        if "private" in p_room_lower or "no capping" in p_room_lower or "no room rent limit" in p_room_lower:
+            if "private" in h_rooms_lower or "twin" in h_rooms_lower or "general" in h_rooms_lower:
+                has_room_match = True
+                matching_types.append("Single Private Room")
+        if "twin" in p_room_lower and ("twin" in h_rooms_lower or "general" in h_rooms_lower):
+            has_room_match = True
+            matching_types.append("Twin Sharing")
+        if "general" in p_room_lower and "general" in h_rooms_lower:
+            has_room_match = True
+            matching_types.append("General Ward")
+            
+        if has_room_match or "no capping" in p_room_lower or "single private" in p_room_lower:
             score += 30
-            explanation.append(f"Room Match: Has eligible rooms ({', '.join(overlap).title()}).")
-            eligible_room_display = ', '.join(overlap).title()
+            room_desc = matching_types[0] if matching_types else "Single Private Room"
+            explanation.append(f"Room Match: Covered for {room_desc}.")
+            eligible_room_display = room_desc
         else:
             explanation.append(f"Room Warning: Policy covers {policy_rooms}, but hospital offers {hosp_rooms}.")
             eligible_room_display = "Requires out-of-pocket upgrade"
             
-        # 4. Distance 
+        # 3. Distance 
         distance = row.get('distance_km_demo', 999)
         if pd.notna(distance):
-            # Closer is better (add points inversely proportional to distance)
             dist_score = max(0, 20 - int(distance))
             score += dist_score
             
