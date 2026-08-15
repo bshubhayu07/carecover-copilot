@@ -38,6 +38,18 @@ div[data-testid="stToolbar"] {display: none !important;}
 div[data-testid="stHeader"] {display: none !important;}
 button[title="View app in Streamlit Cloud"] {display: none !important;}
 a[href*="streamlit.io"] {display: none !important;}
+
+/* Enforce file uploader displayed limit to match 25MB backend policy */
+[data-testid="stFileUploaderDropzoneInstructions"] small {
+    display: none !important;
+}
+[data-testid="stFileUploaderDropzoneInstructions"]::after {
+    content: "Limit 25MB per file • PDF (Max 50 pages)";
+    display: block;
+    font-size: 0.8rem;
+    color: #a3a8b4;
+    margin-top: 4px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -326,7 +338,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # TAB 1: Upload & Extract (With Strict PDF Upload Security Validation)
 with tab1:
     st.header(t["upload_header"])
-    st.caption("Upload Hardening Active: Max 25 MB file size | Max 50 pages | %PDF- Magic-Byte Validation")
+    st.caption("Upload Hardening Active: Enforced Limit 25 MB | Max 50 Pages | %PDF- Magic Bytes Verified")
     
     if not st.session_state.consent_given:
         st.warning("Please check 'I consent to temporary document processing' in the sidebar to enable policy upload.")

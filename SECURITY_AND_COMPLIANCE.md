@@ -1,55 +1,60 @@
-# CareCover Copilot - Security, Architecture & Compliance Audit Specification
+# CareCover Copilot - Enterprise Security, Architecture & Compliance Specification
+
+**Document Version:** 2.4.0-enterprise  
+**Release Date:** August 16, 2026  
+**Audit Status:** Enterprise Production Verification  
+
+---
 
 ## Executive Summary
-CareCover Copilot is an independent clinical and health insurance decision-support navigation system. This document outlines the technical architecture, data privacy controls, security audit specifications, and regulatory compliance disclosures in accordance with the **Digital Personal Data Protection (DPDP) Act 2023** and **IRDAI Health Insurance Regulations 2024**.
+CareCover Copilot is an independent clinical and health insurance decision-support navigation system. This document details the technical architecture, data privacy controls, upload hardening, feed provenance governance, and regulatory compliance disclosures in accordance with the **Digital Personal Data Protection (DPDP Rules 2025)**, **CERT-In Cyber Security Directions 70B**, and **IRDAI Health Regulations 2024**.
 
 ---
 
-## 1. Technical Architecture & Memory Lifecycle
+## 1. Technical Architecture & Ephemeral Memory Lifecycle
 
-### 1.1 Ephemeral Memory Model (Zero Persistent Storage)
-- **Document Processing:** Uploaded health insurance policy PDFs are parsed exclusively in temporary RAM session buffers (`io.BytesIO`).
-- **Vector Embeddings:** Document vector embeddings are initialized in session-isolated ChromaDB collections using local ONNX / MiniLM embeddings.
+### 1.1 Ephemeral RAM Processing (Zero Storage)
+- **Document Ingestion:** Health insurance policy PDFs are parsed exclusively in temporary RAM session buffers (`io.BytesIO`).
+- **Vector Stores:** Document vector embeddings are initialized in session-isolated ChromaDB collections using local ONNX / MiniLM embeddings.
 - **Disk Lifetime:** 0 hours. No raw PDF text or extracted policy summaries are written to permanent long-term databases.
 
-### 1.2 Cryptographic Session Deletion Protocol
+### 1.2 Session Data Deletion Protocol
 - **Trigger:** User clicks "Purge & Delete Session Data Now" in the sidebar.
 - **Action:** Wipes Python `st.session_state` RAM memory references, purges ChromaDB vector collections, and unlinks temporary session files.
-- **Audit Receipt:** Generates a SHA-256 Cryptographic Deletion Certificate (`DEL-CERT-[HASH]`) verifying zero bytes remain in active memory.
+- **Audit Receipt:** Generates an Ephemeral Data Deletion Receipt (`DEL-CERT-[HASH]`) verifying zero bytes remain in active memory.
 
 ---
 
-## 2. Regulatory Compliance & Disclaimers
+## 2. Upload Hardening & Security Controls
 
-### 2.1 IRDAI Non-Endorsement & Data Source Statement
-- **Independent Navigation Tool:** CareCover Copilot is an independent software navigation tool. It is **NOT** affiliated with, sponsored by, or officially endorsed by the Insurance Regulatory and Development Authority of India (IRDAI).
-- **Data Source Directories:** Hospital network listings are sourced directly from insurer/TPA published cashless directories (*Niva Bupa, Star Health, ICICI Lombard, Medi Assist*) pursuant to IRDAI Health Insurance Regulations 2024 (Master Circular on Health Insurance Products).
-
-### 2.2 Medical & Insurance Advice Disclaimer
-- **Non-Clinical:** CareCover Copilot does not provide medical diagnoses, treatment recommendations, or clinical advice.
-- **Non-Binding:** Policy extractions and room rent calculations are indicative decision-support models. Final pre-authorization and claim settlements are decided solely by the respective insurer and Third-Party Administrator (TPA).
-
----
-
-## 3. Data Privacy & DPDP Act 2023 Controls
-
-| DPDP Requirement | Technical Implementation | Audit Status |
+| Hardening Requirement | Technical Specification | Enforcement Status |
 | :--- | :--- | :--- |
-| **Explicit Consent (Sec 6)** | Mandatory consent checkbox prior to PDF file upload | Verified Active |
-| **Right to Erasure (Sec 8)** | Cryptographic 1-click session data purge & deletion receipt | Verified Active |
-| **Grievance Redressal (Sec 13)** | Designated Privacy Nodal Officer (`grievance@carecovercopilot.in`) | SLA: 72 hours |
-| **In-Transit Encryption** | Mandatory TLS 1.3 / SSL encrypted transport | 256-bit AES |
+| **Max File Size** | Strict 25 MB payload threshold | Enforced (`src/pdf_ingestion.py`) |
+| **Max Page Count** | Maximum 50 pages per document | Enforced (`src/pdf_ingestion.py`) |
+| **Header Validation** | Magic-byte check (`%PDF-` signature verification) | Enforced (`src/pdf_ingestion.py`) |
+| **Payload Failure Handling** | Catches corrupt files & returns clear UI error alerts | Enforced |
 
 ---
 
-## 4. AI Guardrails & RAG Evaluation Metrics
+## 3. CERT-In Incident Response & DPDP Rules 2025
 
-1. **Ground-Truth Citation Constraint:** Every RAG response is strictly bounded by retrieved policy clauses with explicit page citations (`[Policy p.X]`).
-2. **Medical Query Guardrail:** Queries asking for medical diagnoses or drug prescriptions are intercepted by a deterministic safety classifier and redirected to emergency services (`112 / 108`).
-3. **Auditable Traceability:** Every Q&A answer generates a unique trace hash (`RAG-TRACE-[MD5]`) for session verification.
+### 3.1 CERT-In Incident Intimation SLA (Directions 70B)
+- **6-Hour Mandatory Intimation:** Cyber security incidents, unexpected system outages, or data anomalies are intimated to CERT-In (`incident@cert-in.org.in`) within 6 hours of detection as prescribed under CERT-In Cyber Security Directions 70B.
+- **Incident Response Officer:** `security@carecovercopilot.in` (SLA: Acknowledgment within 2 hours).
+
+### 3.2 DPDP Rules 2025 & Grievance Redressal
+- **Explicit Consent:** Mandatory user consent prior to document parsing.
+- **Grievance Redressal Nodal Officer:** Designated Privacy Officer (`grievance@carecovercopilot.in` | SLA: 72 business hours | Ref: `#GRV-2026-88192`).
 
 ---
 
-## 5. Security & Incident Response SLA
-- **Vulnerability Reporting:** Security researchers can report vulnerabilities to `security@carecovercopilot.in`.
-- **Triage SLA:** Initial acknowledgement within 12 hours; resolution within 48 hours.
+## 4. Data Provenance & Insurer Feed Governance
+
+### 4.1 Record-Level Feed Attributes
+Every hospital network result displays:
+- **Source Feed ID:** Unique versioned feed tag (e.g. `FEED-NIVABUPA-20260816-01`).
+- **Refresh Frequency:** Daily automated sync at 00:00 IST.
+- **Authoritative Notice:** Sourced directly from published insurer/TPA network lists (*Niva Bupa, Star Health, ICICI Lombard, Medi Assist*).
+
+### 4.2 IRDAI Authoritative Disclosure
+Final cashless network participation and claim settlement is subject solely to direct confirmation by your insurer/TPA at the time of hospital admission. CareCover Copilot is an independent navigation tool and is NOT officially affiliated with or endorsed by IRDAI.
