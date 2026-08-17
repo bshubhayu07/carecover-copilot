@@ -30,5 +30,5 @@ MANIFEST
 chroma_db/
 data/chroma_db/
 
-# Streamlit
-.streamlit/
+# Local Blueprint Master File (Excluded from GitHub)
+COMPLETE_PROJECT_BLUEPRINT.md
