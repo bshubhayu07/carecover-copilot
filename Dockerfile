@@ -1,6 +1,6 @@
-# Multi-stage production container for CareCover Copilot (Backend & Frontend)
+# Production Container for CareCover Copilot (React Frontend & FastAPI Backend)
 
-# Stage 1: Build React Tailwind Frontend static assets
+# Stage 1: Build React Frontend static bundle
 FROM node:20-slim AS frontend-builder
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
@@ -8,7 +8,7 @@ RUN npm ci
 COPY frontend/ ./
 RUN npm run build
 
-# Stage 2: Production Python Runtime Environment
+# Stage 2: Production Python API Runtime
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -23,16 +23,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source code, Python modules, and backend files
+# Copy source code and backend files
 COPY . .
 
 # Copy compiled React frontend assets from Stage 1 into static docs/ distribution
 COPY --from=frontend-builder /app/docs ./docs
 
-# Expose Streamlit & API Ports
-EXPOSE 8501 5173
+# Expose API & Static Web Server Port
+EXPOSE 8000
 
 # Health Check Probe
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+HEALTHCHECK CMD curl --fail http://localhost:8000/api/health || exit 1
 
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

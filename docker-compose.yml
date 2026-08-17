@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: carecover_copilot
     ports:
-      - "8501:8501"
+      - "8000:8000"
     env_file:
       - .env
     environment:

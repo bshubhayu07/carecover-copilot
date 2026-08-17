@@ -20,7 +20,7 @@ CareCover Copilot is an independent clinical and health insurance decision-suppo
 
 ### 1.2 Session Data Deletion Protocol
 - **Trigger:** User clicks "Purge & Delete Session Data Now" in the sidebar.
-- **Action:** Wipes Python `st.session_state` RAM memory references, purges ChromaDB vector collections, and unlinks temporary session files.
+- **Action:** Wipes active application state memory references, purges ChromaDB vector collections, and unlinks temporary session files.
 - **Audit Receipt:** Generates an Ephemeral Data Deletion Receipt (`DEL-CERT-[HASH]`) verifying zero bytes remain in active memory.
 
 ---

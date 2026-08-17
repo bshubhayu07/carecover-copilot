@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Care Journey &amp; Proportional Rent Penalty Calculator - CareCover Copilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#dff4ff",
+                      "on-primary-fixed": "#001945",
+                      "on-secondary-container": "#217128",
+                      "surface-tint": "#2b5bb5",
+                      "on-secondary-fixed-variant": "#005312",
+                      "surface-container-highest": "#cfe6f2",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#c3c6d4",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#0d47a1",
+                      "outline": "#737783",
+                      "primary": "#003178",
+                      "surface-variant": "#cfe6f2",
+                      "status-warning": "#ED6C02",
+                      "on-surface-variant": "#434652",
+                      "inverse-surface": "#1e333c",
+                      "surface-gray": "#F8FAFC",
+                      "tertiary-fixed-dim": "#a9c7ff",
+                      "surface-dim": "#c7dde9",
+                      "tertiary": "#00356c",
+                      "on-primary-fixed-variant": "#00429c",
+                      "background": "#f3faff",
+                      "primary-fixed-dim": "#b0c6ff",
+                      "on-primary": "#ffffff",
+                      "status-error": "#D32F2F",
+                      "error": "#ba1a1a",
+                      "surface": "#f3faff",
+                      "tertiary-container": "#004b95",
+                      "on-secondary-fixed": "#002204",
+                      "secondary-fixed-dim": "#88d982",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed": "#d9e2ff",
+                      "inverse-primary": "#b0c6ff",
+                      "secondary": "#1b6d24",
+                      "on-tertiary-fixed": "#001b3d",
+                      "on-surface": "#071e27",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#a1bbff",
+                      "secondary-container": "#a0f399",
+                      "border-subtle": "#E2E8F0",
+                      "surface-container-high": "#d5ecf8",
+                      "on-error": "#ffffff",
+                      "indian-rupee-accent": "#1B5E20",
+                      "surface-container-low": "#e6f6ff",
+                      "tertiary-fixed": "#d6e3ff",
+                      "clinical-white": "#FFFFFF",
+                      "on-tertiary-container": "#99beff",
+                      "surface-container": "#dbf1fe",
+                      "secondary-fixed": "#a3f69c",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed-variant": "#00468c",
+                      "on-background": "#071e27",
+                      "surface-bright": "#f3faff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-max-width": "1200px",
+                      "margin-mobile": "16px",
+                      "base": "4px",
+                      "gutter-sm": "16px",
+                      "gutter-md": "24px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "data-mono": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "headline-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .donut-chart {
+            background: conic-gradient(
+                theme('colors.secondary') var(--approved-percentage, 0%),
+                theme('colors.status-warning') var(--approved-percentage, 0%) 100%
+            );
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-surface-gray text-on-surface font-body-md h-screen flex overflow-hidden">
+<!-- SideNavBar (from JSON) -->
+<nav class="bg-surface-container-low dark:bg-surface-dim docked left-0 h-screen w-64 fixed left-0 top-0 h-full flex flex-col p-4 gap-2 border-r border-border-subtle dark:border-outline-variant hidden md:flex z-40">
+<div class="mb-8 px-2 mt-4">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">CareCover Copilot</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Enterprise Healthcare</p>
+</div>
+<button class="bg-primary text-on-primary w-full py-2 px-4 rounded-lg font-headline-sm text-body-md mb-6 flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+            New Analysis
+        </button>
+<div class="flex flex-col gap-1 flex-1">
+<a class="text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-highest dark:hover:bg-surface-variant flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined">description</span>
+                Policy Extractor
+            </a>
+<a class="text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-highest dark:hover:bg-surface-variant flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined">chat_paste_go</span>
+                Q&amp;A Assistant
+            </a>
+<a class="text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-highest dark:hover:bg-surface-variant flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined">local_hospital</span>
+                Hospital Match
+            </a>
+<!-- Active State -->
+<a class="bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl font-bold Active: scale-[0.98] transition-transform duration-200 flex items-center gap-3 px-3 py-2.5 text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
+                Care Journey
+            </a>
+</div>
+<div class="mt-auto border-t border-border-subtle pt-4 flex flex-col gap-1">
+<a class="text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined">help</span>
+                Support
+            </a>
+<a class="text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<div class="mt-4 px-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div class="text-sm">
+<p class="font-body-md text-on-surface font-semibold">Dr. A. Sharma</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Admin</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col h-screen overflow-y-auto bg-surface-gray">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-clinical-white dark:bg-surface-container-lowest flex justify-between items-center w-full px-gutter-md md:px-margin-desktop h-16 sticky top-0 z-50 border-b border-border-subtle dark:border-outline-variant flat no shadows">
+<div class="flex items-center gap-4">
+<span class="md:hidden font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">CareCover</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-gray dark:hover:bg-surface-container transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">translate</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-gray dark:hover:bg-surface-container transition-colors p-2 rounded-full flex items-center justify-center relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-status-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-gray dark:hover:bg-surface-container transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<div class="p-gutter-md md:p-margin-desktop max-w-container-max-width mx-auto w-full flex flex-col gap-gutter-md pb-24">
+<!-- Page Header -->
+<div class="flex flex-col gap-1 mb-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Journey &amp; Estimates</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Track patient progress and simulate out-of-pocket expenses based on policy limits.</p>
+</div>
+<!-- Patient Journey Progress Stepper -->
+<div class="bg-clinical-white border border-border-subtle rounded-xl p-6 mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6">Patient Journey Tracking</h3>
+<div class="relative flex items-center justify-between w-full">
+<!-- Connecting Lines -->
+<div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-1 bg-surface-container-high -z-10 rounded-full"></div>
+<div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-[45%] h-1 bg-secondary -z-10 rounded-full"></div>
+<!-- Steps -->
+<div class="flex flex-col items-center gap-2 group relative">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center z-10 border-4 border-clinical-white shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary absolute -bottom-6 whitespace-nowrap">Pre-admission</span>
+</div>
+<div class="flex flex-col items-center gap-2 group relative">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center z-10 border-4 border-clinical-white shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary absolute -bottom-6 whitespace-nowrap">Admission</span>
+</div>
+<div class="flex flex-col items-center gap-2 group relative">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center z-10 border-4 border-clinical-white shadow-sm ring-4 ring-primary-container">
+<span class="material-symbols-outlined">healing</span>
+</div>
+<span class="font-label-caps text-label-caps text-primary absolute -bottom-6 whitespace-nowrap font-bold">Surgery</span>
+</div>
+<div class="flex flex-col items-center gap-2 group relative">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center z-10 border-4 border-clinical-white">
+<span class="material-symbols-outlined">logout</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant absolute -bottom-6 whitespace-nowrap">Discharge</span>
+</div>
+<div class="flex flex-col items-center gap-2 group relative">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center z-10 border-4 border-clinical-white">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant absolute -bottom-6 whitespace-nowrap">Reimbursement</span>
+</div>
+</div>
+</div>
+<!-- Main Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-md items-start">
+<!-- Left Column (Calculators) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter-md">
+<!-- Proportional Penalty Simulator -->
+<div class="bg-clinical-white border border-border-subtle rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded bg-primary-container text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">calculate</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Proportional Penalty Simulator</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Calculate the deduction on doctor and surgery fees if a room is chosen above the policy's eligible limit.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<!-- Inputs -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface">Policy Room Rent Limit (₹)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant font-data-mono">₹</span>
+<input class="w-full pl-8 pr-3 py-2 border border-outline-variant rounded-lg font-data-mono text-data-mono text-on-surface focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow bg-surface-gray" id="policyLimit" type="number" value="5000"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface">Chosen Room Rate (₹)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant font-data-mono">₹</span>
+<input class="w-full pl-8 pr-3 py-2 border border-outline-variant rounded-lg font-data-mono text-data-mono text-on-surface focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow bg-surface-gray" id="chosenRate" type="number" value="8000"/>
+</div>
+</div>
+</div>
+<!-- Results Area -->
+<div class="bg-surface-gray rounded-lg p-5 border border-surface-container-high">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Calculated Penalty on Related Fees</span>
+<span class="font-headline-md text-headline-md text-status-error font-bold" id="penaltyPercent">37.5%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2 mb-2 overflow-hidden">
+<div class="bg-status-error h-2 rounded-full transition-all duration-500" id="penaltyBar" style="width: 37.5%"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-3 flex items-start gap-2">
+<span class="material-symbols-outlined text-status-warning text-[16px] mt-0.5">info</span>
+                                If the total surgeon/doctor fees are ₹100,000, the patient will bear an out-of-pocket cost of <strong class="font-data-mono text-on-surface" id="examplePenalty">₹37,500</strong> for those specific line items due to room rent capping.
+                            </p>
+</div>
+</div>
+<!-- Out-of-Pocket Estimator -->
+<div class="bg-clinical-white border border-border-subtle rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Out-of-Pocket Estimator</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+<!-- Visual Chart -->
+<div class="md:col-span-5 flex flex-col items-center justify-center">
+<div class="w-48 h-48 donut-chart relative flex items-center justify-center" style="--approved-percentage: 65%;">
+<div class="w-36 h-36 bg-clinical-white rounded-full flex flex-col items-center justify-center shadow-inner">
+<span class="font-label-caps text-label-caps text-on-surface-variant">User Share</span>
+<span class="font-headline-md text-headline-md text-status-warning font-bold" id="userShareDisplay">35%</span>
+</div>
+</div>
+<div class="flex gap-4 mt-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Approved</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-status-warning"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">User Share</span>
+</div>
+</div>
+</div>
+<!-- Data Breakdown -->
+<div class="md:col-span-7 flex flex-col gap-4">
+<div class="flex justify-between items-center pb-3 border-b border-border-subtle">
+<span class="font-body-md text-body-md text-on-surface">Total Estimated Bill</span>
+<span class="font-data-mono text-data-mono text-on-surface font-bold">₹2,50,000</span>
+</div>
+<div class="flex justify-between items-center pb-3 border-b border-border-subtle">
+<span class="font-body-md text-body-md text-secondary">Cashless Approved (Initial)</span>
+<span class="font-data-mono text-data-mono text-secondary font-bold">₹1,62,500</span>
+</div>
+<div class="pt-2 flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Estimated Deductions Breakdown</span>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant pl-2 border-l-2 border-status-warning">Non-Medical Items (Consumables)</span>
+<span class="font-data-mono text-data-mono text-on-surface">₹15,000</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant pl-2 border-l-2 border-status-warning">Co-pay (10% standard)</span>
+<span class="font-data-mono text-data-mono text-on-surface">₹25,000</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant pl-2 border-l-2 border-status-error">Rent Penalty Impact</span>
+<span class="font-data-mono text-data-mono text-status-error">₹47,500</span>
+</div>
+</div>
+<div class="mt-2 bg-error-container text-on-error-container p-3 rounded-lg flex justify-between items-center font-bold">
+<span class="font-body-md text-body-md">Estimated Out-of-Pocket</span>
+<span class="font-data-mono text-headline-sm">₹87,500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Checklist) -->
+<div class="lg:col-span-4 bg-clinical-white border border-border-subtle rounded-xl flex flex-col h-full shadow-sm overflow-hidden">
+<div class="p-4 border-b border-border-subtle bg-surface-gray">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">fact_check</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Patient Checklist</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Active Stage: Surgery</p>
+</div>
+<div class="p-4 flex flex-col gap-4 overflow-y-auto flex-1">
+<!-- Section: Completed -->
+<div class="flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-secondary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Pre-admission &amp; Admission
+                            </span>
+<label class="flex items-start gap-3 p-2 rounded hover:bg-surface-gray cursor-pointer opacity-70">
+<input checked="" class="mt-1 w-4 h-4 text-secondary rounded border-outline-variant focus:ring-secondary" disabled="" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface line-through">Collect KYC &amp; Insurance ID</span>
+</label>
+<label class="flex items-start gap-3 p-2 rounded hover:bg-surface-gray cursor-pointer opacity-70">
+<input checked="" class="mt-1 w-4 h-4 text-secondary rounded border-outline-variant focus:ring-secondary" disabled="" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface line-through">Submit Initial Pre-Auth Request</span>
+</label>
+</div>
+<!-- Section: Active -->
+<div class="flex flex-col gap-2 mt-2">
+<span class="font-label-caps text-label-caps text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">play_circle</span> Surgery (Current)
+                            </span>
+<label class="flex items-start gap-3 p-2 rounded bg-surface-container-low border border-primary-fixed-dim cursor-pointer transition-colors hover:bg-surface-container">
+<input class="mt-1 w-4 h-4 text-primary rounded border-outline focus:ring-primary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Verify OT Notes alignment with approved procedure</span>
+</label>
+<label class="flex items-start gap-3 p-2 rounded hover:bg-surface-gray cursor-pointer transition-colors">
+<input class="mt-1 w-4 h-4 text-primary rounded border-outline focus:ring-primary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Log consumable usage for final bill estimation</span>
+</label>
+</div>
+<!-- Section: Upcoming -->
+<div class="flex flex-col gap-2 mt-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> Discharge &amp; Reimbursement
+                            </span>
+<label class="flex items-start gap-3 p-2 rounded hover:bg-surface-gray cursor-pointer transition-colors">
+<input class="mt-1 w-4 h-4 text-outline rounded border-outline focus:ring-primary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Compile final discharge summary</span>
+</label>
+<label class="flex items-start gap-3 p-2 rounded hover:bg-surface-gray cursor-pointer transition-colors">
+<input class="mt-1 w-4 h-4 text-outline rounded border-outline focus:ring-primary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Submit Final Bill for Cashless Settlement</span>
+</label>
+<label class="flex items-start gap-3 p-2 rounded hover:bg-surface-gray cursor-pointer transition-colors">
+<input class="mt-1 w-4 h-4 text-outline rounded border-outline focus:ring-primary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Provide patient with out-of-pocket invoice</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple JS for Proportional Penalty Interactivity
+        const policyLimitInput = document.getElementById('policyLimit');
+        const chosenRateInput = document.getElementById('chosenRate');
+        const penaltyPercentDisplay = document.getElementById('penaltyPercent');
+        const penaltyBar = document.getElementById('penaltyBar');
+        const examplePenaltyDisplay = document.getElementById('examplePenalty');
+
+        function calculatePenalty() {
+            const limit = parseFloat(policyLimitInput.value) || 0;
+            const actual = parseFloat(chosenRateInput.value) || 0;
+
+            if (actual > limit && actual > 0) {
+                const penalty = ((actual - limit) / actual) * 100;
+                const formattedPenalty = penalty.toFixed(1);
+                
+                penaltyPercentDisplay.textContent = `${formattedPenalty}%`;
+                penaltyBar.style.width = `${formattedPenalty}%`;
+                
+                // Example calculation based on 100k fees
+                const exampleAmount = (100000 * (penalty / 100)).toLocaleString('en-IN');
+                examplePenaltyDisplay.textContent = `₹${exampleAmount}`;
+
+                // Update colors based on severity
+                if (penalty > 50) {
+                    penaltyPercentDisplay.className = "font-headline-md text-headline-md text-status-error font-bold";
+                    penaltyBar.className = "bg-status-error h-2 rounded-full transition-all duration-500";
+                } else {
+                    penaltyPercentDisplay.className = "font-headline-md text-headline-md text-status-warning font-bold";
+                    penaltyBar.className = "bg-status-warning h-2 rounded-full transition-all duration-500";
+                }
+
+            } else {
+                penaltyPercentDisplay.textContent = `0%`;
+                penaltyPercentDisplay.className = "font-headline-md text-headline-md text-secondary font-bold";
+                penaltyBar.style.width = `0%`;
+                penaltyBar.className = "bg-secondary h-2 rounded-full transition-all duration-500";
+                examplePenaltyDisplay.textContent = `₹0`;
+            }
+        }
+
+        policyLimitInput.addEventListener('input', calculatePenalty);
+        chosenRateInput.addEventListener('input', calculatePenalty);
+    </script>
+</body></html>

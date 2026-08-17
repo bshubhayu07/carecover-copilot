@@ -4,8 +4,8 @@
 **Version:** 2.4.0-enterprise  
 **Category:** Healthcare & Insurance Decision-Support System  
 **Repository:** `https://github.com/bshubhayu07/carecover-copilot.git`  
-**Live Application:** `https://carecover-copilot-keivlj6ggku4xesbfkyxkz.streamlit.app/`  
-**Target Platform / Deployment:** Stitch / GCP Cloud Run / Streamlit Enterprise  
+**Live Application:** `https://bshubhayu07.github.io/carecover-copilot/`  
+**Target Platform / Deployment:** GCP Cloud Run / GitHub Pages / Docker Container  
 
 ---
 
@@ -27,7 +27,7 @@ It enables patients and policyholders to upload complex insurance policy contrac
 
 ### 2.2 Tab 2: Policy Q&A Assistant (RAG Engine)
 - **RAG Architecture:** PyMuPDF text chunking + ChromaDB local vector store indexing + Groq Llama-3.3-70B LLM inference engine.
-- **Real-Time Token Streaming:** Zero-perceived latency text generation (`st.write_stream`).
+- **Real-Time Token Streaming:** Zero-perceived latency text generation.
 - **Medical Advice Safety Guardrail:** Intercepts medical treatment/prescription queries and redirects to emergency services (`112 / 108`).
 - **Auditable Traceability:** Appends unique RAG audit hashes (`RAG-TRACE-[MD5]`) to every assistant response.
 - **Feedback & Escalation Loop:** Built-in user reporting widget generating support tickets (`#TKT-SUPP-[HASH]`).
@@ -46,8 +46,8 @@ It enables patients and policyholders to upload complex insurance policy contrac
 
 ## 3. Technology Stack & Infrastructure
 
-- **Language & Runtime:** Python 3.10+
-- **User Interface Framework:** Streamlit (Custom styled with responsive CSS)
+- **Language & Runtime:** Python 3.11+ / Node.js 20+
+- **User Interface Framework:** React 19 + Tailwind CSS v4
 - **PDF Parsing Engine:** PyMuPDF (`fitz`)
 - **Vector Database:** ChromaDB (Ephemeral session-isolated collection instances)
 - **Embeddings:** Local ONNX / SentenceTransformers (`all-MiniLM-L6-v2`)
@@ -103,18 +103,18 @@ CareCover Copilot natively supports **all 22 officially recognized Scheduled Lan
 git clone https://github.com/bshubhayu07/carecover-copilot.git
 cd carecover-copilot
 
-# 2. Install dependencies
+# 2. Install backend dependencies
 pip install -r requirements.txt
 
-# 3. Configure environment variables (.env)
-GROQ_API_KEY=your_groq_api_key_here
+# 3. Install frontend dependencies & build static bundle
+cd frontend
+npm install
+npm run build
+cd ..
 
-# 4. Run automated test suite
-python -m pytest tests/
-
-# 5. Launch local application
-streamlit run app.py
+# 4. Run backend FastAPI server
+python main.py
 ```
 
 ---
-*Generated for Stitch Integration & GCP Deployment Pipeline | CareCover Copilot Systems*
+*Generated for Integration & Deployment Pipeline | CareCover Copilot Systems*
