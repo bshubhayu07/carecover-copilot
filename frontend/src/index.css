@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    background-color: #0b132b;
+    background-color: #080d1a;
     color: #0f172a;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -10,31 +10,31 @@
 
   h1, h2, h3, h4, .font-display {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 }
 
 .bg-app-ambient {
-  background-image: radial-gradient(circle at 50% 0%, rgba(27, 43, 84, 0.75), rgba(11, 19, 43, 0.94)), url('/bg-soothing.jpg');
+  background-image: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.75), rgba(8, 13, 26, 0.96)), url('/bg-soothing.jpg');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
 }
 
-/* Impeccable Design System Component Tokens */
-.impeccable-card {
-  background-color: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  box-shadow: 0 10px 30px -5px rgba(11, 19, 43, 0.12), 0 4px 6px -2px rgba(11, 19, 43, 0.04);
-  border-radius: 1rem;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+/* Impeccable & Taste-Skill Combined Anti-Slop Components */
+.taste-card-anti-slop {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 12px 36px -6px rgba(8, 13, 26, 0.14), 0 4px 8px -2px rgba(8, 13, 26, 0.05);
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.impeccable-card:hover {
-  box-shadow: 0 20px 40px -10px rgba(11, 19, 43, 0.18);
-  border-color: rgba(191, 219, 254, 0.9);
+.taste-card-anti-slop:hover {
+  box-shadow: 0 24px 48px -12px rgba(8, 13, 26, 0.22);
+  border-color: rgba(147, 197, 253, 0.95);
 }
 
 .impeccable-badge-emerald {
@@ -43,20 +43,20 @@
   border: 1px solid rgba(167, 243, 208, 0.9);
 }
 
-.impeccable-button-primary {
+.taste-button-anti-slop {
   background-color: #0f172a;
   color: #ffffff;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  border-radius: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
 }
-.impeccable-button-primary:hover {
+.taste-button-anti-slop:hover {
   background-color: #1e293b;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
 }
-.impeccable-button-primary:active {
-  transform: scale(0.98);
+.taste-button-anti-slop:active {
+  transform: scale(0.97);
 }
