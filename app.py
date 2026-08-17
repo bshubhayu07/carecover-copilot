@@ -298,6 +298,15 @@ Issued by CareCover Security & Compliance Systems
                 file_name="SECURITY_AND_COMPLIANCE.md",
                 mime="text/markdown"
             )
+        if os.path.exists("STITCH_PROJECT_SPEC.md"):
+            with open("STITCH_PROJECT_SPEC.md", "r", encoding="utf-8") as stitch_f:
+                stitch_md_content = stitch_f.read()
+            st.download_button(
+                label="Download STITCH_PROJECT_SPEC.md",
+                data=stitch_md_content,
+                file_name="STITCH_PROJECT_SPEC.md",
+                mime="text/markdown"
+            )
 
     with st.expander("Admin & CERT-In Incident Console"):
         admin_pin = st.text_input("Enter Compliance Access PIN", type="password", key="admin_pin")
