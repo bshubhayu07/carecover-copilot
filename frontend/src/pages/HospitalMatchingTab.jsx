@@ -13,8 +13,6 @@ export default function HospitalMatchingTab() {
   const [userGps, setUserGps] = useState(null);
   const [gpsActive, setGpsActive] = useState(false);
 
-  const cities = ['Pune', 'Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Kolkata', 'Ahmedabad'];
-
   const handleRequestGps = () => {
     if (!navigator.geolocation) {
       showToast('Geolocation is not supported by your browser.', 'error');
@@ -32,7 +30,7 @@ export default function HospitalMatchingTab() {
       },
       (err) => {
         setLoading(false);
-        showToast('GPS permission denied. Using standard landmark distances.', 'info');
+        showToast('GPS permission denied. Calculating distance relative to city center.', 'info');
       },
       { timeout: 8000 }
     );
@@ -89,16 +87,126 @@ export default function HospitalMatchingTab() {
             <select
               value={city}
               onChange={(e) => {
-                setCity(e.target.value);
-                if (setCurrentCity) setCurrentCity(e.target.value);
+                const newCity = e.target.value;
+                setCity(newCity);
+                if (setCurrentCity) setCurrentCity(newCity);
               }}
               className="bg-white border border-slate-300 text-xs font-bold rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-600 cursor-pointer"
             >
-              {cities.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
+              <optgroup label="Maharashtra">
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Nagpur">Nagpur</option>
+                <option value="Nashik">Nashik</option>
+                <option value="Thane">Thane</option>
+                <option value="Chhatrapati Sambhajinagar">Chhatrapati Sambhajinagar (Aurangabad)</option>
+                <option value="Kolhapur">Kolhapur</option>
+                <option value="Solapur">Solapur</option>
+                <option value="Amravati">Amravati</option>
+              </optgroup>
+
+              <optgroup label="Gujarat">
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Rajkot">Rajkot</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+                <option value="Jamnagar">Jamnagar</option>
+                <option value="Gandhinagar">Gandhinagar</option>
+              </optgroup>
+
+              <optgroup label="Karnataka">
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Mysuru">Mysuru</option>
+                <option value="Mangaluru">Mangaluru</option>
+                <option value="Hubballi-Dharwad">Hubballi-Dharwad</option>
+                <option value="Belagavi">Belagavi</option>
+                <option value="Kalaburagi">Kalaburagi</option>
+              </optgroup>
+
+              <optgroup label="Tamil Nadu">
+                <option value="Chennai">Chennai</option>
+                <option value="Coimbatore">Coimbatore</option>
+                <option value="Madurai">Madurai</option>
+                <option value="Tiruchirappalli">Tiruchirappalli</option>
+                <option value="Salem">Salem</option>
+                <option value="Vellore">Vellore</option>
+              </optgroup>
+
+              <optgroup label="Telangana & Andhra Pradesh">
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Warangal">Warangal</option>
+                <option value="Nizamabad">Nizamabad</option>
+                <option value="Visakhapatnam">Visakhapatnam</option>
+                <option value="Vijayawada">Vijayawada</option>
+                <option value="Guntur">Guntur</option>
+                <option value="Tirupati">Tirupati</option>
+              </optgroup>
+
+              <optgroup label="Delhi NCR & North India">
+                <option value="Delhi">Delhi</option>
+                <option value="Noida">Noida</option>
+                <option value="Gurugram">Gurugram</option>
+                <option value="Faridabad">Faridabad</option>
+                <option value="Ghaziabad">Ghaziabad</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Ludhiana">Ludhiana</option>
+                <option value="Amritsar">Amritsar</option>
+                <option value="Jalandhar">Jalandhar</option>
+                <option value="Lucknow">Lucknow</option>
+                <option value="Kanpur">Kanpur</option>
+                <option value="Varanasi">Varanasi</option>
+                <option value="Agra">Agra</option>
+                <option value="Prayagraj">Prayagraj</option>
+                <option value="Dehradun">Dehradun</option>
+                <option value="Shimla">Shimla</option>
+                <option value="Srinagar">Srinagar</option>
+                <option value="Jammu">Jammu</option>
+              </optgroup>
+
+              <optgroup label="Rajasthan & Central India">
+                <option value="Jaipur">Jaipur</option>
+                <option value="Jodhpur">Jodhpur</option>
+                <option value="Udaipur">Udaipur</option>
+                <option value="Kota">Kota</option>
+                <option value="Bhopal">Bhopal</option>
+                <option value="Indore">Indore</option>
+                <option value="Jabalpur">Jabalpur</option>
+                <option value="Gwalior">Gwalior</option>
+                <option value="Raipur">Raipur</option>
+              </optgroup>
+
+              <optgroup label="East & North-East India">
+                <option value="Kolkata">Kolkata</option>
+                <option value="Howrah">Howrah</option>
+                <option value="Siliguri">Siliguri</option>
+                <option value="Patna">Patna</option>
+                <option value="Gaya">Gaya</option>
+                <option value="Bhubaneswar">Bhubaneswar</option>
+                <option value="Cuttack">Cuttack</option>
+                <option value="Rourkela">Rourkela</option>
+                <option value="Ranchi">Ranchi</option>
+                <option value="Jamshedpur">Jamshedpur</option>
+                <option value="Guwahati">Guwahati</option>
+                <option value="Silchar">Silchar</option>
+                <option value="Agartala">Agartala</option>
+                <option value="Shillong">Shillong</option>
+                <option value="Imphal">Imphal</option>
+                <option value="Aizawl">Aizawl</option>
+                <option value="Kohima">Kohima</option>
+                <option value="Gangtok">Gangtok</option>
+                <option value="Itanagar">Itanagar</option>
+              </optgroup>
+
+              <optgroup label="Kerala & Goa & Union Territories">
+                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                <option value="Kochi">Kochi</option>
+                <option value="Kozhikode">Kozhikode</option>
+                <option value="Thrissur">Thrissur</option>
+                <option value="Panaji">Panaji</option>
+                <option value="Margao">Margao</option>
+                <option value="Puducherry">Puducherry</option>
+              </optgroup>
             </select>
           </div>
         </div>
@@ -143,13 +251,13 @@ export default function HospitalMatchingTab() {
             Found {hospitals.length} Verified Cashless Network Hospitals in {city}
           </h3>
           <span className="text-[11px] font-semibold text-slate-500 bg-white/80 px-2.5 py-1 rounded border border-slate-200">
-            {gpsActive ? 'Sorted by Real-Time Haversine GPS Distance' : 'Sorted by Relevance Score & Proximity'}
+            {gpsActive ? 'Sorted by Real-Time Haversine GPS Distance' : `Sorted by Proximity to ${city}`}
           </span>
         </div>
 
         {loading ? (
           <div className="p-8 text-center text-xs text-slate-500 taste-card-anti-slop rounded-xl">
-            Calculating distance metrics and fetching cashless provider directory...
+            Calculating Haversine GPS distance metrics and fetching cashless provider directory...
           </div>
         ) : (
           hospitals.map((hosp) => (
