@@ -4,7 +4,7 @@ import { purgeSessionDataApi } from '../services/api';
 import { ShieldCheck, Lock, Trash2, Download, ChevronDown, KeyRound, ShieldAlert } from 'lucide-react';
 
 export default function Sidebar() {
-  const { consentGiven, setConsentGiven, setPolicyProfile, setTopupProfile, setChatHistory, setDeletionReceipt, deletionReceipt } = useApp();
+  const { consentGiven, setConsentGiven, setPolicyProfile, setTopupProfile, setChatHistory, setDeletionReceipt, deletionReceipt, showToast } = useApp();
   const [adminPin, setAdminPin] = useState('');
   const [adminAuth, setAdminAuth] = useState(false);
   const [expandedSection, setExpandedSection] = useState(null);
@@ -15,6 +15,7 @@ export default function Sidebar() {
     setTopupProfile(null);
     setChatHistory([]);
     setDeletionReceipt(res.receiptText);
+    showToast('Ephemeral RAM session data purged successfully (DPDP Rules 2025 compliant)', 'success');
   };
 
   const toggleExpand = (sec) => {
@@ -22,12 +23,15 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-full md:w-80 glass-panel-light rounded-xl p-5 space-y-6 text-xs shrink-0 shadow-lg">
+    <aside className="w-full md:w-80 taste-card-anti-slop p-5 space-y-6 text-xs shrink-0">
       {/* Active Security Telemetry Status */}
-      <div className="bg-emerald-50/90 border border-emerald-200 text-emerald-900 px-3.5 py-2.5 rounded-lg flex items-center gap-2.5 font-medium shadow-xs">
-        <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+      <div className="impeccable-badge-emerald px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 font-medium">
+        <span className="relative flex h-2.5 w-2.5 shrink-0">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600"></span>
+        </span>
         <div>
-          <span className="font-bold block text-[11px] uppercase tracking-wider text-emerald-800">Operational Telemetry</span>
+          <span className="font-bold block text-[11px] uppercase tracking-wider text-emerald-900">Operational Telemetry</span>
           <span className="text-[11px] text-emerald-700">Encrypted Ephemeral Session Scope</span>
         </div>
       </div>
@@ -51,7 +55,7 @@ export default function Sidebar() {
 
         <button
           onClick={handlePurge}
-          className="w-full flex items-center justify-center gap-2 bg-rose-700 hover:bg-rose-800 text-white px-3.5 py-2.5 rounded-lg font-semibold transition shadow-xs"
+          className="w-full flex items-center justify-center gap-2 bg-rose-700 hover:bg-rose-800 active:scale-[0.98] text-white px-3.5 py-2.5 rounded-xl font-semibold transition-all duration-200 shadow-xs"
         >
           <Trash2 className="w-4 h-4" />
           <span>Purge & Delete Session Data Now</span>
@@ -61,7 +65,8 @@ export default function Sidebar() {
           <a
             href={`data:text/plain;charset=utf-8,${encodeURIComponent(deletionReceipt)}`}
             download="carecover_deletion_receipt.txt"
-            className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-2 rounded-lg font-medium border border-slate-300 transition"
+            onClick={() => showToast('Audit Deletion Receipt downloaded (.txt)', 'info')}
+            className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-2 rounded-xl font-medium border border-slate-300 transition"
           >
             <Download className="w-4 h-4 text-slate-600" />
             <span>Download Deletion Receipt (.txt)</span>
@@ -80,10 +85,10 @@ export default function Sidebar() {
             className="w-full p-3 text-left font-semibold text-slate-800 bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between"
           >
             <span>Privacy Policy & Retention Schedule</span>
-            <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${expandedSection === 'privacy' ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${expandedSection === 'privacy' ? 'rotate-180' : ''}`} />
           </button>
           {expandedSection === 'privacy' && (
-            <div className="p-3 text-[11px] text-slate-600 space-y-1.5 bg-white border-t border-slate-200">
+            <div className="p-3 text-[11px] text-slate-600 space-y-1.5 bg-white border-t border-slate-200 animate-in fade-in duration-200">
               <p>• <strong>Ephemeral Processing:</strong> In-memory RAM storage only.</p>
               <p>• <strong>Retention Limit:</strong> 0 hours persistent database storage.</p>
               <p>• <strong>Transmission Security:</strong> TLS 1.3 encrypted web socket.</p>
@@ -98,10 +103,10 @@ export default function Sidebar() {
             className="w-full p-3 text-left font-semibold text-slate-800 bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between"
           >
             <span>Grievance Redressal & Support</span>
-            <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${expandedSection === 'grievance' ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${expandedSection === 'grievance' ? 'rotate-180' : ''}`} />
           </button>
           {expandedSection === 'grievance' && (
-            <div className="p-3 text-[11px] text-slate-600 space-y-1 bg-white border-t border-slate-200">
+            <div className="p-3 text-[11px] text-slate-600 space-y-1 bg-white border-t border-slate-200 animate-in fade-in duration-200">
               <p><strong>Nodal Officer:</strong> CareCover Privacy Officer</p>
               <p><strong>Email:</strong> grievance@carecovercopilot.in</p>
               <p><strong>Bima Bharosa Portal Ref:</strong> #GRV-2026-88192</p>
@@ -120,10 +125,10 @@ export default function Sidebar() {
               <KeyRound className="w-3.5 h-3.5 text-blue-700" />
               Admin & CERT-In Console
             </span>
-            <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${expandedSection === 'admin' ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${expandedSection === 'admin' ? 'rotate-180' : ''}`} />
           </button>
           {expandedSection === 'admin' && (
-            <div className="p-3 text-[11px] text-slate-600 space-y-2 bg-white border-t border-slate-200">
+            <div className="p-3 text-[11px] text-slate-600 space-y-2 bg-white border-t border-slate-200 animate-in fade-in duration-200">
               {!adminAuth ? (
                 <div className="space-y-2">
                   <input
@@ -134,8 +139,12 @@ export default function Sidebar() {
                     className="w-full p-2 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-blue-600"
                   />
                   <button
-                    onClick={() => setAdminAuth(adminPin === '2026')}
-                    className="w-full bg-slate-900 text-white py-1.5 rounded font-semibold text-xs hover:bg-slate-800 transition"
+                    onClick={() => {
+                      const pass = adminPin === '2026';
+                      setAdminAuth(pass);
+                      showToast(pass ? 'Admin Authorization Verified' : 'Invalid Access PIN', pass ? 'success' : 'error');
+                    }}
+                    className="w-full bg-slate-900 text-white py-1.5 rounded font-semibold text-xs hover:bg-slate-800 transition active:scale-[0.98]"
                   >
                     Authenticate (Demo PIN: 2026)
                   </button>

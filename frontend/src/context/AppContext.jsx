@@ -1,74 +1,58 @@
 import React, { createContext, useContext, useState } from 'react';
-import { TRANSLATIONS } from '../utils/formatters';
+import { en } from '../utils/formatters';
+import SonnerToast from '../components/SonnerToast';
 
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [activeTab, setActiveTab] = useState('tab1');
+  const [language, setLanguage] = useState('en');
+  const [policyProfile, setPolicyProfile] = useState(null);
+  const [topupProfile, setTopupProfile] = useState(null);
+  const [chatHistory, setChatHistory] = useState([]);
   const [consentGiven, setConsentGiven] = useState(true);
-  
-  // Policy & Extraction Data
-  const [policyProfile, setPolicyProfile] = useState({
-    insurer_name: 'Niva Bupa Health Insurance',
-    policy_name: 'ReAssure 2.0 Titanium Plan',
-    sum_insured_inr: 500000,
-    room_eligibility: 'Single Private Air-Conditioned Room (No Capping)',
-    co_pay: 'Nil (0% Co-Pay)',
-    pre_authorization_required: true,
-    evidence: [
-      { field: 'Sum Insured', page: 1, quote: 'Sum Insured under ReAssure Plan: ₹5,00,000' },
-      { field: 'Room Rent', page: 3, quote: 'Single Private AC Room without daily cap.' }
-    ]
-  });
-
-  const [topupProfile, setTopupProfile] = useState({
-    insurer_name: 'Star Health Insurance',
-    policy_name: 'Super Surplus Extra Plan',
-    sum_insured_inr: 1500000,
-    co_pay: 'Nil (0%)',
-    deductible_inr: 500000
-  });
-
-  // Chat & Location State
-  const [chatHistory, setChatHistory] = useState([
-    {
-      role: 'assistant',
-      content: 'Hello! I am your CareCover Copilot. Ask me any question about your policy terms, room rent limits, pre-authorization, or claim procedures.',
-      trace_id: 'RAG-TRACE-SYSTEM-INIT'
-    }
-  ]);
-  const [currentCity, setCurrentCity] = useState('Pune');
-  const [useLocation, setUseLocation] = useState(false);
   const [deletionReceipt, setDeletionReceipt] = useState(null);
+  const [toast, setToast] = useState({ message: '', type: 'success' });
 
-  const t = TRANSLATIONS[selectedLanguage] || TRANSLATIONS['English'];
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+  };
+
+  const clearToast = () => {
+    setToast({ message: '', type: 'success' });
+  };
+
+  const t = en;
 
   return (
     <AppContext.Provider
       value={{
-        selectedLanguage,
-        setSelectedLanguage,
         activeTab,
         setActiveTab,
-        consentGiven,
-        setConsentGiven,
+        language,
+        setLanguage,
         policyProfile,
         setPolicyProfile,
         topupProfile,
         setTopupProfile,
         chatHistory,
         setChatHistory,
-        currentCity,
-        setCurrentCity,
-        useLocation,
-        setUseLocation,
+        consentGiven,
+        setConsentGiven,
         deletionReceipt,
         setDeletionReceipt,
-        t
+        t,
+        showToast
       }}
     >
       {children}
+      {toast.message && (
+        <SonnerToast
+          message={toast.message}
+          type={toast.type}
+          onClose={clearToast}
+        />
+      )}
     </AppContext.Provider>
   );
 }

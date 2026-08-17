@@ -121,7 +121,7 @@ export const TRANSLATIONS = {
     upload_header: "পলিসি নথি আপলোড করুন",
     upload_sub: "আপনার মূল স্বাস্থ্য বীমা পলিসি (PDF) আপলোড করুন",
     load_demo_base: "ডেমো মূল পলিসি লোড করুন",
-    topup_expander: "দ্বৈত-পলিসি ও সুপার টপ-अप তুলনা ইঞ্জিন",
+    topup_expander: "দ্বৈত-পলিসি ও সুপার টপ-আপ তুলনা ইঞ্জিন",
     topup_desc: "একত্রিত বীমা রাশি এবং ডিডাক্টিবল ট্রিগার গণনা করার জন্য দ্বিতীয় পলিসি লোড করুন।",
     upload_topup_label: "দ্বিতীয় সুপার টপ-আপ পলিসি (PDF)",
     load_demo_topup: "ডেমো সুপার টপ-আপ পলিসি লোড করুন",
@@ -146,3 +146,5 @@ export const TRANSLATIONS = {
     journey_header: "কেয়ার যাত্রা ও দাবি হিসাবক"
   }
 };
+
+export const en = TRANSLATIONS.English;
