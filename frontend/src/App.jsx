@@ -13,7 +13,7 @@ function MainContent() {
 
   return (
     <div className="flex-1 p-4 md:p-6 overflow-y-auto">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto space-y-6">
         {activeTab === 'tab1' && <PolicyExtractorTab />}
         {activeTab === 'tab2' && <PolicyAskTab />}
         {activeTab === 'tab3' && <HospitalMatchingTab />}
@@ -26,11 +26,11 @@ function MainContent() {
 export default function App() {
   return (
     <AppProvider>
-      <div className="min-h-screen flex flex-col bg-slate-50">
+      <div className="min-h-screen flex flex-col bg-app-ambient text-slate-900 font-sans">
         <Header />
         <EmergencyBanner />
 
-        <div className="flex-1 flex flex-col md:flex-row max-w-7xl w-full mx-auto">
+        <div className="flex-1 flex flex-col md:flex-row max-w-7xl w-full mx-auto p-2 md:p-4 gap-4">
           <Sidebar />
           <MainContent />
         </div>

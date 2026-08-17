@@ -22,9 +22,9 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-full md:w-80 bg-white border-r border-slate-200/80 p-5 space-y-6 text-xs shrink-0">
+    <aside className="w-full md:w-80 glass-panel-light rounded-xl p-5 space-y-6 text-xs shrink-0 shadow-lg">
       {/* Active Security Telemetry Status */}
-      <div className="bg-emerald-50/80 border border-emerald-200 text-emerald-900 px-3.5 py-2.5 rounded-lg flex items-center gap-2.5 font-medium shadow-xs">
+      <div className="bg-emerald-50/90 border border-emerald-200 text-emerald-900 px-3.5 py-2.5 rounded-lg flex items-center gap-2.5 font-medium shadow-xs">
         <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
         <div>
           <span className="font-bold block text-[11px] uppercase tracking-wider text-emerald-800">Operational Telemetry</span>
@@ -34,19 +34,19 @@ export default function Sidebar() {
 
       {/* DPDP Rules 2025 Privacy Controls */}
       <div className="space-y-3.5">
-        <div className="flex items-center gap-1.5 font-bold text-slate-900 text-xs uppercase tracking-wider border-b border-slate-100 pb-2">
+        <div className="flex items-center gap-1.5 font-bold text-slate-900 text-xs uppercase tracking-wider border-b border-slate-200 pb-2">
           <Lock className="w-3.5 h-3.5 text-blue-700" />
           <span>Privacy & DPDP Rules 2025</span>
         </div>
 
-        <label className="flex items-start gap-2.5 cursor-pointer text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200/80 hover:bg-slate-100/50 transition">
+        <label className="flex items-start gap-2.5 cursor-pointer text-slate-800 bg-white/80 p-3 rounded-lg border border-slate-200 hover:bg-white transition">
           <input
             type="checkbox"
             checked={consentGiven}
             onChange={(e) => setConsentGiven(e.target.checked)}
             className="mt-0.5 rounded text-blue-700 focus:ring-blue-500"
           />
-          <span className="leading-normal">I consent to temporary document processing for this session.</span>
+          <span className="leading-normal font-medium">I consent to temporary document processing for this session.</span>
         </label>
 
         <button
@@ -74,7 +74,7 @@ export default function Sidebar() {
       {/* Accordion Privacy Specifications */}
       <div className="space-y-2">
         {/* Retention Schedule */}
-        <div className="border border-slate-200 rounded-lg overflow-hidden">
+        <div className="border border-slate-200 rounded-lg overflow-hidden bg-white/70">
           <button
             onClick={() => toggleExpand('privacy')}
             className="w-full p-3 text-left font-semibold text-slate-800 bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between"
@@ -92,7 +92,7 @@ export default function Sidebar() {
         </div>
 
         {/* Grievance Officer */}
-        <div className="border border-slate-200 rounded-lg overflow-hidden">
+        <div className="border border-slate-200 rounded-lg overflow-hidden bg-white/70">
           <button
             onClick={() => toggleExpand('grievance')}
             className="w-full p-3 text-left font-semibold text-slate-800 bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between"
@@ -111,7 +111,7 @@ export default function Sidebar() {
         </div>
 
         {/* Admin Console */}
-        <div className="border border-slate-200 rounded-lg overflow-hidden">
+        <div className="border border-slate-200 rounded-lg overflow-hidden bg-white/70">
           <button
             onClick={() => toggleExpand('admin')}
             className="w-full p-3 text-left font-semibold text-slate-800 bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between"
@@ -154,7 +154,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <div className="pt-3 border-t border-slate-200 text-[11px] text-slate-400 text-center space-y-1">
+      <div className="pt-3 border-t border-slate-200 text-[11px] text-slate-500 text-center space-y-1">
         <ShieldAlert className="w-4 h-4 mx-auto text-slate-400" />
         <p>Independent navigation system. Not medical advice or an insurance guarantee.</p>
       </div>
