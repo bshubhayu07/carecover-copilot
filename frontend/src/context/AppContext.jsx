@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState } from 'react';
-import { en } from '../utils/formatters';
+import { getTranslation } from '../utils/formatters';
 import SonnerToast from '../components/SonnerToast';
 
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
   const [activeTab, setActiveTab] = useState('tab1');
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('English');
   const [policyProfile, setPolicyProfile] = useState(null);
   const [topupProfile, setTopupProfile] = useState(null);
   const [chatHistory, setChatHistory] = useState([]);
@@ -22,7 +22,7 @@ export function AppProvider({ children }) {
     setToast({ message: '', type: 'success' });
   };
 
-  const t = en;
+  const t = getTranslation(language);
 
   return (
     <AppContext.Provider

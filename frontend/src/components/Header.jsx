@@ -4,7 +4,7 @@ import { INDIAN_22_LANGUAGES } from '../utils/formatters';
 import { ShieldCheck, Globe, FileText, MessageSquare, Building2, Activity } from 'lucide-react';
 
 export default function Header() {
-  const { selectedLanguage, setSelectedLanguage, activeTab, setActiveTab, t } = useApp();
+  const { language, setLanguage, activeTab, setActiveTab, t } = useApp();
 
   const tabs = [
     { id: 'tab1', label: t.tab1 || 'Upload & Extract', icon: FileText },
@@ -14,7 +14,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-slate-950 border-b border-slate-800 text-white sticky top-0 z-50">
+    <header className="bg-slate-950/90 border-b border-slate-800 text-white sticky top-0 z-50 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
         {/* Brand Header */}
         <div className="flex items-center gap-3">
@@ -23,7 +23,7 @@ export default function Header() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-extrabold tracking-tight text-slate-100">CareCover Copilot</h1>
+              <h1 className="text-lg font-extrabold tracking-tight text-slate-100 font-display">CareCover Copilot</h1>
               <span className="bg-slate-800 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded border border-blue-500/20 uppercase tracking-widest">
                 Enterprise
               </span>
@@ -39,8 +39,8 @@ export default function Header() {
           <Globe className="w-4 h-4 text-blue-400" />
           <span className="text-xs text-slate-400 font-medium">Site Language:</span>
           <select
-            value={selectedLanguage}
-            onChange={(e) => setSelectedLanguage(e.target.value)}
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
             className="bg-transparent text-xs text-slate-100 font-semibold focus:outline-none cursor-pointer pr-1"
           >
             {INDIAN_22_LANGUAGES.map((lang) => (
