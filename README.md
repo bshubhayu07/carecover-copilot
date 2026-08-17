@@ -1,68 +1,77 @@
-# CareCover Copilot
-**Live Demo:** [https://carecover-copilot-keivlj6ggku4xesbfkyxkz.streamlit.app/](https://carecover-copilot-keivlj6ggku4xesbfkyxkz.streamlit.app/)
-> Built CareCover Copilot, a retrieval-augmented healthcare navigation platform that extracts insurance-policy clauses, generates evidence-grounded explanations, and matches coverage constraints to synthetic hospital and room options. Implemented structured LLM outputs, deterministic eligibility logic, citation-based RAG, and healthcare safety guardrails.
+# CareCover Copilot - Healthcare & Policy Navigation System
+
+**Live Web Application:** [https://bshubhayu07.github.io/carecover-copilot/](https://bshubhayu07.github.io/carecover-copilot/)  
+**Document Version:** 2.4.0-enterprise  
+
+> CareCover Copilot is an enterprise-grade retrieval-augmented healthcare navigation platform. It parses health insurance policy contracts (PDF format), extracts coverage clauses (Sum Insured, Room Limits, Co-Pay, Pre-Auth rules), compares secondary Super Top-Up policies, queries policy terms in real time, and matches cashless network hospitals with real-time GPS distance calculation and record-level feed provenance.
+
+---
 
 ## Overview
-CareCover Copilot is a healthcare insurance-navigation and hospital-admission information tool for India. It is designed as a **clinical and insurance decision-support information tool only**. It does not diagnose, recommend treatment, guarantee insurance coverage, or make binding insurance decisions.
 
-## Setup and Running
+CareCover Copilot is designed as an **independent clinical and insurance decision-support navigation system**. It does not diagnose medical conditions, recommend clinical treatment, or guarantee binding insurance claim settlement.
 
-1. **Install Python 3.11+**
-2. **Clone and navigate to the project directory:**
-   ```bash
-   cd carecover-copilot
-   ```
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Environment Variables:**
-   Copy `.env.example` to `.env` and provide your API keys.
-   ```bash
-   cp .env.example .env
-   ```
-   Provide your `OPENAI_API_KEY`. If this key is missing, the application will still launch and gracefully fallback or warn you.
-5. **Run the application:**
-   ```bash
-   streamlit run app.py
-   ```
+---
 
-### Running with Docker
+## Tech Stack & Architecture
 
-You can also run the entire application using Docker or Docker Compose:
+- **Frontend UI:** React 19 + Tailwind CSS v4 (Multi-page glassmorphism interface supporting all 22 official Scheduled Languages of India).
+- **Backend API:** Python 3.11+ FastAPI & Uvicorn.
+- **Document Processing:** PyMuPDF (`fitz`) text extraction & SHA-256 caching.
+- **Vector Engine:** ChromaDB local vector store indexing.
+- **LLM Inference:** Groq API (`llama-3.3-70b-versatile`).
+
+---
+
+## Quick Start & Running Locally
+
+### 1. Frontend Development Server
+```bash
+# Navigate to frontend folder
+cd frontend
+
+# Install Node.js dependencies
+npm install
+
+# Start local React development server
+npm run dev
+```
+Open `http://localhost:5173` in your browser.
+
+### 2. Backend FastAPI Server
+```bash
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Configure environment variables (.env)
+GROQ_API_KEY=your_groq_api_key_here
+
+# Run FastAPI backend server
+python main.py
+```
+Backend API will run at `http://localhost:8000`.
+
+---
+
+## Running with Docker
+
+You can run the entire system in a multi-stage production container:
 
 ```bash
 # Using Docker Compose (Recommended)
-docker-compose up --build
+docker-compose up --build -d
 
-# Or using plain Docker CLI:
+# Using Docker CLI:
 docker build -t carecover-copilot .
-docker run -p 8501:8501 carecover-copilot
+docker run -p 8000:8000 carecover-copilot
 ```
-Then navigate to `http://localhost:8501` in your browser.
+Navigate to `http://localhost:8000` in your browser.
 
-## Architecture
-```text
-Policy PDF + user context
-        |
-        v
-Text extraction and cleanup
-        |
-        +--> Chunking + embeddings --> vector store
-        |
-        +--> LLM JSON extraction --> normalized policy profile --> SQLite
-                                                        |
-Synthetic hospital directory --------------------------+
-                                                        |
-                                                        v
-                                  deterministic eligibility and ranking engine
-                                                        |
-User question --> retrieve policy clauses --> safety guardrails --> LLM explanation
-                                                        |
-                                                        v
-                             cited answer, hospital matches, and care-journey checklist
-```
+---
 
-## Safety Notes
-- **Informational Only**: Not medical advice, a diagnosis, or a guarantee of insurance coverage.
-- **Privacy**: Do not upload real patient data, credentials, or proprietary insurance info. Use only synthetic or public demo data.
+## Safety & Compliance Disclaimers
+
+- **Informational Only:** Not medical advice or a binding guarantee of insurance coverage.
+- **DPDP Rules 2025:** Ephemeral in-memory RAM document processing with 0-hour database storage. Users can trigger an instant session RAM purge and generate an auditable deletion certificate (`carecover_deletion_receipt.txt`).
+- **CERT-In Directions 70B:** Mandatory 6-hour intimation SLA for cyber security incidents.
+- **IRDAI Disclosure:** Independent navigation system. Not officially affiliated with or endorsed by IRDAI. Final cashless settlement is subject solely to direct insurer/TPA confirmation.
