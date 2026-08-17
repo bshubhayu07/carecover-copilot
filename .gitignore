@@ -30,5 +30,6 @@ MANIFEST
 chroma_db/
 data/chroma_db/
 
-# Local Blueprint Master File (Excluded from GitHub)
+# Local Blueprint Master Files (Excluded from GitHub)
 COMPLETE_PROJECT_BLUEPRINT.md
+MASTER_REPLICABLE_BLUEPRINT.md

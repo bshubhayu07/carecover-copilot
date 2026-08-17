@@ -8,6 +8,7 @@ CITY_COORDINATES = {
     'bengaluru': (12.9716, 77.5946),
     'mumbai': (19.0760, 72.8777),
     'delhi': (28.6139, 77.2090),
+    'delhi ncr': (28.6139, 77.2090),
     'chennai': (13.0827, 80.2707),
     'kolkata': (22.5726, 88.3639),
     'hyderabad': (17.3850, 78.4867),
@@ -47,56 +48,36 @@ def match_hospitals(
     
     for _, row in hospitals_df.iterrows():
         hosp_city = str(row['city']).strip()
-        
-        score = 0
+        score = 50 # Base score
         explanation = []
-        network_status = "Out of Network"
         
-        # 1. Flexible Network Match
-        policy_insurer = policy_profile.insurer_name if (policy_profile and policy_profile.insurer_name) else "DemoCare"
-        p_insurer_lower = policy_insurer.lower()
-        h_insurers_lower = str(row['network_insurers']).lower() if pd.notna(row['network_insurers']) else ""
+        # 1. Network Matching
+        network_insurers = [i.strip().lower() for i in str(row['network_insurers']).split('|')]
+        insurer_name = policy_profile.insurer_name if policy_profile else "Niva Bupa"
         
-        is_in_network = False
-        if p_insurer_lower in h_insurers_lower:
-            is_in_network = True
-        elif ("bupa" in p_insurer_lower or "niva" in p_insurer_lower) and ("bupa" in h_insurers_lower or "niva" in h_insurers_lower):
-            is_in_network = True
-        elif "star" in p_insurer_lower and "star" in h_insurers_lower:
-            is_in_network = True
-        elif "hdfc" in p_insurer_lower and "hdfc" in h_insurers_lower:
-            is_in_network = True
-        elif "icici" in p_insurer_lower and "icici" in h_insurers_lower:
-            is_in_network = True
-        elif "democare" in p_insurer_lower and "democare" in h_insurers_lower:
-            is_in_network = True
-            
-        if is_in_network:
-            score += 50
+        if any(ins in insurer_name.lower() for ins in network_insurers) or "all" in network_insurers:
+            score += 30
             network_status = "In Network"
-            explanation.append(f"Network Match: In-Network for {policy_insurer}.")
+            explanation.append(f"Direct cashless network partner with {insurer_name}.")
         else:
-            explanation.append(f"Out of Network for {policy_insurer} (Subject to deductions).")
+            score -= 20
+            network_status = "Out of Network"
+            explanation.append(f"Not in direct cashless network for {insurer_name}. Reimbursement claim required.")
             
-        # 2. Flexible Room Match
-        policy_rooms = policy_profile.room_eligibility if (policy_profile and policy_profile.room_eligibility) else "General"
-        p_room_lower = policy_rooms.lower()
-        hosp_rooms = str(row['room_types']) if pd.notna(row['room_types']) else ""
-        h_rooms_lower = hosp_rooms.lower()
+        # 2. Room Eligibility Matching
+        policy_room = policy_profile.room_eligibility if policy_profile else "Single Private Room"
+        policy_rooms = [r.strip().lower() for r in policy_room.split('/')]
+        hosp_rooms = [r.strip().lower() for r in str(row['room_types']).split('|')]
         
         has_room_match = False
         matching_types = []
+        p_room_lower = policy_room.lower()
         
-        if "private" in p_room_lower or "no capping" in p_room_lower or "no room rent limit" in p_room_lower:
-            if "private" in h_rooms_lower or "twin" in h_rooms_lower or "general" in h_rooms_lower:
-                has_room_match = True
-                matching_types.append("Single Private Room")
-        if "twin" in p_room_lower and ("twin" in h_rooms_lower or "general" in h_rooms_lower):
-            has_room_match = True
-            matching_types.append("Twin Sharing")
-        if "general" in p_room_lower and "general" in h_rooms_lower:
-            has_room_match = True
-            matching_types.append("General Ward")
+        for pr in policy_rooms:
+            for hr in hosp_rooms:
+                if pr in hr or hr in pr:
+                    has_room_match = True
+                    matching_types.append(hr.title())
             
         if has_room_match or "no capping" in p_room_lower or "single private" in p_room_lower:
             score += 30
@@ -107,7 +88,7 @@ def match_hospitals(
             explanation.append(f"Room Warning: Policy covers {policy_rooms}, but hospital offers {hosp_rooms}.")
             eligible_room_display = "Requires out-of-pocket upgrade"
             
-        # 3. Dynamic Distance Calculation (Inter-city vs Intra-city)
+        # 3. Dynamic Distance Calculation
         local_demo_dist = float(row.get('distance_km_demo', 5.0))
         
         if use_live_location and user_city:
@@ -119,10 +100,8 @@ def match_hospitals(
                 h_lat, h_lon = CITY_COORDINATES[h_city_clean]
                 
                 if u_city_clean == h_city_clean:
-                    # Same city: use intra-city landmark distance
                     computed_dist = local_demo_dist
                 else:
-                    # Inter-city distance calculation using Haversine formula
                     inter_city_km = calculate_haversine(u_lat, u_lon, h_lat, h_lon)
                     computed_dist = round(inter_city_km + local_demo_dist, 1)
             else:
@@ -130,7 +109,6 @@ def match_hospitals(
         else:
             computed_dist = local_demo_dist
             
-        # Add distance scoring
         dist_score = max(0, 20 - int(computed_dist / 10 if computed_dist > 50 else computed_dist))
         score += dist_score
             
@@ -138,6 +116,8 @@ def match_hospitals(
         if policy_profile and policy_profile.pre_authorization_required:
             caveat += " Pre-authorization required."
             
+        feed_id = f"FEED-{(policy_profile.insurer_name if policy_profile else 'NIVABUPA').upper().replace(' ', '')}-20260816-01"
+
         results.append({
             "id": row['hospital_id'],
             "name": row['hospital_name'],
@@ -148,9 +128,9 @@ def match_hospitals(
             "eligible_room": eligible_room_display,
             "distance": computed_dist,
             "explanation": " | ".join(explanation),
-            "caveat": caveat
+            "caveat": caveat,
+            "feed_id": feed_id
         })
         
-    # Sort by score descending
     results.sort(key=lambda x: x['score'], reverse=True)
     return results
