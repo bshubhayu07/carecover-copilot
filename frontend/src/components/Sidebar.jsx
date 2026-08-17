@@ -4,7 +4,7 @@ import { purgeSessionDataApi } from '../services/api';
 import { ShieldCheck, Lock, Trash2, Download, ChevronDown, KeyRound, ShieldAlert } from 'lucide-react';
 
 export default function Sidebar() {
-  const { consentGiven, setConsentGiven, setPolicyProfile, setTopupProfile, setChatHistory, setDeletionReceipt, deletionReceipt, showToast } = useApp();
+  const { consentGiven, setConsentGiven, setPolicyProfile, setTopupProfile, setChatHistory, setDeletionReceipt, deletionReceipt, showToast, t } = useApp();
   const [adminPin, setAdminPin] = useState('');
   const [adminAuth, setAdminAuth] = useState(false);
   const [expandedSection, setExpandedSection] = useState(null);
@@ -31,8 +31,8 @@ export default function Sidebar() {
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600"></span>
         </span>
         <div>
-          <span className="font-bold block text-[11px] uppercase tracking-wider text-emerald-900">Operational Telemetry</span>
-          <span className="text-[11px] text-emerald-700">Encrypted Ephemeral Session Scope</span>
+          <span className="font-bold block text-[11px] uppercase tracking-wider text-emerald-900">{t.telemetry || "Operational Telemetry"}</span>
+          <span className="text-[11px] text-emerald-700">{t.telemetry_sub || "Encrypted Ephemeral Session Scope"}</span>
         </div>
       </div>
 
@@ -40,7 +40,7 @@ export default function Sidebar() {
       <div className="space-y-3.5">
         <div className="flex items-center gap-1.5 font-bold text-slate-900 text-xs uppercase tracking-wider border-b border-slate-200 pb-2">
           <Lock className="w-3.5 h-3.5 text-blue-700" />
-          <span>Privacy & DPDP Rules 2025</span>
+          <span>{t.dpdp_header || "Privacy & DPDP Rules 2025"}</span>
         </div>
 
         <label className="flex items-start gap-2.5 cursor-pointer text-slate-800 bg-white/80 p-3 rounded-lg border border-slate-200 hover:bg-white transition">
@@ -50,7 +50,7 @@ export default function Sidebar() {
             onChange={(e) => setConsentGiven(e.target.checked)}
             className="mt-0.5 rounded text-blue-700 focus:ring-blue-500"
           />
-          <span className="leading-normal font-medium">I consent to temporary document processing for this session.</span>
+          <span className="leading-normal font-medium">{t.dpdp_consent || "I consent to temporary document processing for this session."}</span>
         </label>
 
         <button
@@ -58,7 +58,7 @@ export default function Sidebar() {
           className="w-full flex items-center justify-center gap-2 bg-rose-700 hover:bg-rose-800 active:scale-[0.98] text-white px-3.5 py-2.5 rounded-xl font-semibold transition-all duration-200 shadow-xs"
         >
           <Trash2 className="w-4 h-4" />
-          <span>Purge & Delete Session Data Now</span>
+          <span>{t.purge_btn || "Purge & Delete Session Data Now"}</span>
         </button>
 
         {deletionReceipt && (
@@ -84,7 +84,7 @@ export default function Sidebar() {
             onClick={() => toggleExpand('privacy')}
             className="w-full p-3 text-left font-semibold text-slate-800 bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between"
           >
-            <span>Privacy Policy & Retention Schedule</span>
+            <span>{t.privacy_accordion || "Privacy Policy & Retention Schedule"}</span>
             <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${expandedSection === 'privacy' ? 'rotate-180' : ''}`} />
           </button>
           {expandedSection === 'privacy' && (
@@ -102,7 +102,7 @@ export default function Sidebar() {
             onClick={() => toggleExpand('grievance')}
             className="w-full p-3 text-left font-semibold text-slate-800 bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between"
           >
-            <span>Grievance Redressal & Support</span>
+            <span>{t.grievance_accordion || "Grievance Redressal & Support"}</span>
             <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${expandedSection === 'grievance' ? 'rotate-180' : ''}`} />
           </button>
           {expandedSection === 'grievance' && (
@@ -123,7 +123,7 @@ export default function Sidebar() {
           >
             <span className="flex items-center gap-1.5">
               <KeyRound className="w-3.5 h-3.5 text-blue-700" />
-              Admin & CERT-In Console
+              {t.admin_accordion || "Admin & CERT-In Console"}
             </span>
             <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${expandedSection === 'admin' ? 'rotate-180' : ''}`} />
           </button>
@@ -165,7 +165,7 @@ export default function Sidebar() {
 
       <div className="pt-3 border-t border-slate-200 text-[11px] text-slate-500 text-center space-y-1">
         <ShieldAlert className="w-4 h-4 mx-auto text-slate-400" />
-        <p>Independent navigation system. Not medical advice or an insurance guarantee.</p>
+        <p>{t.disclaimer_footer || "Independent navigation system. Not medical advice or an insurance guarantee."}</p>
       </div>
     </aside>
   );
