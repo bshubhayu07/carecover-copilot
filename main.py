@@ -21,6 +21,8 @@ from src.guardrails import validate_query_safety, apply_response_guardrails
 from src.hospital_repository import get_hospitals_by_city
 from src.eligibility_engine import match_hospitals
 from src.policy_schema import PolicyProfile
+from src.procedure_lookup import get_procedure_details, PROCEDURE_DATABASE
+from src.journey_guidance import get_journey_timeline
 
 app = FastAPI(
     title="CareCover Copilot Python Enterprise API",
@@ -62,7 +64,19 @@ def health_check():
         "cors_enforced": True,
         "active_policy_loaded": active_policy_profile is not None,
         "vector_store_initialized": active_vector_collection is not None,
-        "upload_hardening": "25MB Limit | %PDF- Validated"
+        "upload_hardening": "25MB Limit | %PDF- Validated",
+        "python_modules_active": [
+            "pdf_ingestion",
+            "chunking",
+            "embeddings",
+            "policy_extractor",
+            "retrieval",
+            "guardrails",
+            "hospital_repository",
+            "eligibility_engine",
+            "procedure_lookup",
+            "journey_guidance"
+        ]
     }
 
 @app.post("/api/extract-policy")
@@ -160,6 +174,16 @@ def get_hospitals_endpoint(
         filtered.append(m)
 
     return filtered
+
+@app.get("/api/procedures")
+def get_procedures_endpoint(name: Optional[str] = None):
+    if name:
+        return get_procedure_details(name)
+    return PROCEDURE_DATABASE
+
+@app.get("/api/journey")
+def get_journey_endpoint():
+    return get_journey_timeline()
 
 @app.post("/api/purge-session")
 def purge_session_endpoint():

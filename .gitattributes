@@ -1,0 +1,7 @@
+# GitHub Linguist Language Stats Configuration
+# Exclude compiled minified JavaScript/CSS assets in docs/ from repository language statistics
+docs/** linguist-vendored
+docs/assets/* linguist-generated
+docs/assets/*.js linguist-generated
+docs/assets/*.css linguist-generated
+frontend/dist/** linguist-vendored
