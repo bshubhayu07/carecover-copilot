@@ -78,7 +78,7 @@ export default function PolicyAskTab() {
             <h3 className="font-bold text-gray-900">{t.ask_header}</h3>
           </div>
           <span className="text-xs bg-blue-100 text-blue-800 font-semibold px-2.5 py-0.5 rounded-full">
-            Real-Time Token Streaming Active
+            CareCover AI Engine Active
           </span>
         </div>
 
@@ -99,7 +99,7 @@ export default function PolicyAskTab() {
                 <p className="leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                 {msg.trace_id && (
                   <div className="text-[10px] text-blue-600 font-mono pt-1 border-t border-blue-200/50">
-                    RAG Audit Trace ID: {msg.trace_id} | Groq Llama-3.3-70B Engine
+                    Audit Trace ID: {msg.trace_id.replace('RAG-TRACE', 'CC-TRACE')} | CareCover Decision Navigation Engine
                   </div>
                 )}
               </div>
@@ -109,7 +109,7 @@ export default function PolicyAskTab() {
           {loading && (
             <div className="flex items-center gap-2 text-xs text-blue-800 font-medium p-3 bg-blue-50 rounded">
               <Sparkles className="w-4 h-4 animate-spin text-blue-700" />
-              <span>Searching policy vector chunks and streaming answer...</span>
+              <span>Analyzing policy clauses and generating answer...</span>
             </div>
           )}
         </div>
@@ -126,7 +126,7 @@ export default function PolicyAskTab() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#003178] hover:bg-blue-900 text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-xs"
+            className="bg-[#003178] hover:bg-blue-900 text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-xs cursor-pointer active:scale-[0.98]"
           >
             <span>Send</span>
             <Send className="w-4 h-4" />
@@ -151,7 +151,7 @@ export default function PolicyAskTab() {
           <div className="flex items-center justify-between flex-wrap gap-2">
             <button
               type="submit"
-              className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded text-xs font-semibold"
+              className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded text-xs font-semibold cursor-pointer"
             >
               Submit Feedback Ticket
             </button>
