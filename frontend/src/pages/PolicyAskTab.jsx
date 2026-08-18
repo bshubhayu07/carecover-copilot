@@ -52,20 +52,20 @@ export default function PolicyAskTab() {
       <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
         <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
           <FileSearch className="w-5 h-5 text-[#003178]" />
-          Procedure-Specific Sub-Limit & Document Lookup
+          {t.proc_lookup_header || "Procedure-Specific Sub-Limit & Document Lookup"}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div className="p-3 bg-gray-50 rounded border border-gray-200">
-            <span className="font-semibold text-gray-500 block">Cataract Surgery Sub-Limit</span>
-            <span className="text-sm font-bold text-gray-900">₹40,000 per eye</span>
+            <span className="font-semibold text-gray-500 block">{t.cataract_sublimit || "Cataract Surgery Sub-Limit"}</span>
+            <span className="text-sm font-bold text-gray-900">{t.cataract_val || "₹40,000 per eye"}</span>
           </div>
           <div className="p-3 bg-gray-50 rounded border border-gray-200">
-            <span className="font-semibold text-gray-500 block">Joint Replacement Waiting Period</span>
-            <span className="text-sm font-bold text-gray-900">24 Months Specific Exclusion</span>
+            <span className="font-semibold text-gray-500 block">{t.knee_waiting || "Joint Replacement Waiting Period"}</span>
+            <span className="text-sm font-bold text-gray-900">{t.knee_val || "24 Months Specific Exclusion"}</span>
           </div>
           <div className="p-3 bg-gray-50 rounded border border-gray-200">
-            <span className="font-semibold text-gray-500 block">Day Care Procedure Eligibility</span>
-            <span className="text-sm font-bold text-emerald-700">Covered (No 24h Mandatory Stay)</span>
+            <span className="font-semibold text-gray-500 block">{t.daycare_eligibility || "Day Care Procedure Eligibility"}</span>
+            <span className="text-sm font-bold text-emerald-700">{t.daycare_val || "Covered (No 24h Mandatory Stay)"}</span>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function PolicyAskTab() {
         <div className="p-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MessageSquare className="w-5 h-5 text-blue-800" />
-            <h3 className="font-bold text-gray-900">{t.ask_header}</h3>
+            <h3 className="font-bold text-gray-900">{t.ask_header || "Ask Questions About Your Coverage"}</h3>
           </div>
           <span className="text-xs bg-blue-100 text-blue-800 font-semibold px-2.5 py-0.5 rounded-full">
             CareCover AI Engine Active
@@ -118,7 +118,7 @@ export default function PolicyAskTab() {
         <form onSubmit={handleSend} className="p-3 border-t border-gray-200 flex gap-2">
           <input
             type="text"
-            placeholder="Type your policy question (e.g., Is ICU room capped? What is pre-hospitalization limit?)..."
+            placeholder={t.ask_input_placeholder || "Type your policy question (e.g., Is ICU room capped? What is pre-hospitalization limit?)..."}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -128,7 +128,7 @@ export default function PolicyAskTab() {
             disabled={loading}
             className="bg-[#003178] hover:bg-blue-900 text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-xs cursor-pointer active:scale-[0.98]"
           >
-            <span>Send</span>
+            <span>{t.send_btn || "Send"}</span>
             <Send className="w-4 h-4" />
           </button>
         </form>
@@ -138,7 +138,7 @@ export default function PolicyAskTab() {
       <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
         <h4 className="font-bold text-gray-900 text-sm flex items-center gap-2">
           <Flag className="w-4 h-4 text-amber-600" />
-          Report Incorrect Guidance / Submit Feedback Ticket
+          {t.report_ticket || "Report Incorrect Guidance / Submit Feedback Ticket"}
         </h4>
         <form onSubmit={handleTicketSubmit} className="space-y-3">
           <textarea
@@ -153,7 +153,7 @@ export default function PolicyAskTab() {
               type="submit"
               className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded text-xs font-semibold cursor-pointer"
             >
-              Submit Feedback Ticket
+              {t.submit_ticket_btn || "Submit Feedback Ticket"}
             </button>
             {ticketCreated && (
               <span className="text-xs font-bold text-emerald-700 flex items-center gap-1">
