@@ -7,7 +7,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL")
 OPENAI_MODEL_NAME = os.getenv("OPENAI_MODEL_NAME")
 
-# Fallback to Streamlit Cloud Secrets if os.getenv is not set
+# Streamlit secrets fallback configuration
 try:
     import streamlit as st
     if not OPENAI_API_KEY and "OPENAI_API_KEY" in st.secrets:
@@ -25,8 +25,8 @@ if not OPENAI_MODEL_NAME:
     else:
         OPENAI_MODEL_NAME = "gpt-4o-mini"
 
-# Dummy mode if no API key is provided
+# Fallback mode flag
 USE_DUMMY_MODE = not bool(OPENAI_API_KEY)
 
-# Vector DB location
+# Local vector store directory
 CHROMA_DB_DIR = "carecover-copilot/data/chroma_db"
