@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { extractPolicyApi } from '../services/api';
 import { formatINR } from '../utils/formatters';
-import { Upload, FileCheck, Layers, Download, CheckCircle, ShieldAlert, Sparkles } from 'lucide-react';
+import { generatePolicySummaryPDF, generatePreAuthFormPDF } from '../utils/pdfGenerator';
+import { Upload, FileCheck, Download, CheckCircle, ShieldAlert } from 'lucide-react';
 
 export default function PolicyExtractorTab() {
-  const { policyProfile, setPolicyProfile, topupProfile, setTopupProfile, consentGiven, t } = useApp();
+  const { policyProfile, setPolicyProfile, topupProfile, setTopupProfile, consentGiven, showToast, t } = useApp();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [deductible, setDeductible] = useState(500000);
@@ -25,10 +26,57 @@ export default function PolicyExtractorTab() {
     try {
       const extracted = await extractPolicyApi(file);
       setPolicyProfile(extracted);
+      showToast('Policy document processed & extracted successfully!', 'success');
     } catch (err) {
       setErrorMsg('Extraction error: ' + err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleLoadDemoBase = () => {
+    const demo = {
+      insurer_name: 'Niva Bupa Health Insurance',
+      policy_name: 'ReAssure 2.0 Titanium Plan',
+      sum_insured_inr: 500000,
+      room_eligibility: 'Single Private Air-Conditioned Room (No Capping)',
+      co_pay: 'Nil (0% Co-Pay)',
+      pre_authorization_required: true,
+      evidence: [
+        { field: 'Sum Insured', page: 1, quote: 'Sum Insured under ReAssure Plan: ₹5,00,000' },
+        { field: 'Room Rent', page: 3, quote: 'Single Private AC Room without daily limit.' }
+      ]
+    };
+    setPolicyProfile(demo);
+    showToast('Loaded Demo Base Health Policy (Niva Bupa ReAssure 2.0)', 'info');
+  };
+
+  const handleLoadDemoTopup = () => {
+    const demoTopup = {
+      insurer_name: 'Star Health Insurance',
+      policy_name: 'Super Surplus Extra Top-Up Plan',
+      sum_insured_inr: 1500000,
+      deductible_inr: 500000
+    };
+    setTopupProfile(demoTopup);
+    showToast('Loaded Demo Super Top-Up Policy (Star Health ₹15 Lakhs)', 'info');
+  };
+
+  const handleDownloadSummary = () => {
+    try {
+      generatePolicySummaryPDF(policyProfile, topupProfile);
+      showToast('Policy Summary PDF downloaded successfully!', 'success');
+    } catch (err) {
+      showToast('Error generating PDF: ' + err.message, 'error');
+    }
+  };
+
+  const handleDownloadPreAuth = () => {
+    try {
+      generatePreAuthFormPDF(policyProfile);
+      showToast('Pre-Authorization TPA Form PDF downloaded successfully!', 'success');
+    } catch (err) {
+      showToast('Error generating TPA Form PDF: ' + err.message, 'error');
     }
   };
 
@@ -68,8 +116,8 @@ export default function PolicyExtractorTab() {
             consentGiven ? 'border-blue-400 hover:border-blue-600 bg-blue-50/60' : 'border-slate-300 bg-slate-100/50 cursor-not-allowed'
           }`}>
             <Upload className="w-10 h-10 text-blue-700 mx-auto mb-2" />
-            <span className="text-sm font-bold text-slate-900 block">{t.upload_sub}</span>
-            <span className="text-xs text-slate-500 mt-1 block">Limit 25MB per file • PDF (Max 50 pages)</span>
+            <span className="text-sm font-bold text-slate-800 block">{t.upload_sub}</span>
+            <span className="text-xs text-slate-500 block mt-1">{t.upload_limit_note}</span>
             <input
               type="file"
               accept=".pdf"
@@ -78,35 +126,40 @@ export default function PolicyExtractorTab() {
               className="hidden"
             />
           </label>
-        </div>
 
-        {loading && (
-          <div className="flex items-center gap-2 text-xs text-blue-800 font-medium bg-blue-50 p-3 rounded-lg">
-            <Sparkles className="w-4 h-4 animate-spin text-blue-600" />
-            <span>Running validated SHA-256 extraction and vector embedding...</span>
-          </div>
-        )}
+          <button
+            onClick={handleLoadDemoBase}
+            className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-3 rounded-xl text-xs font-semibold shadow-xs transition active:scale-[0.98]"
+          >
+            {t.load_demo_base}
+          </button>
+        </div>
       </div>
 
-      {/* Dual-Policy & Super Top-Up Comparison Engine */}
+      {/* Dual Policy & Top-Up Expander */}
       <div className="glass-panel-light p-6 rounded-xl space-y-4">
-        <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <Layers className="w-5 h-5 text-emerald-700" />
-          {t.topup_expander}
-        </h3>
-        <p className="text-xs text-slate-600">{t.topup_desc}</p>
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">{t.topup_expander}</h3>
+            <p className="text-xs text-slate-500 mt-0.5">{t.topup_desc}</p>
+          </div>
+          <button
+            onClick={handleLoadDemoTopup}
+            className="bg-blue-700 hover:bg-blue-800 text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition active:scale-[0.98]"
+          >
+            {t.load_demo_topup}
+          </button>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50/80 p-4 rounded-xl border border-slate-200">
-          <div className="p-4 bg-white/90 rounded-lg border border-slate-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div className="p-4 bg-slate-50/90 border border-slate-200 rounded-lg">
             <span className="text-xs font-semibold text-slate-500 uppercase block">{t.primary_cover}</span>
-            <span className="text-2xl font-bold text-emerald-800 mt-1 block">{formatINR(baseSI)}</span>
-            <span className="text-xs text-slate-500 block mt-1">{policyProfile?.insurer_name || 'Niva Bupa Health Insurance'}</span>
+            <span className="text-lg font-bold text-slate-900 mt-1 block">{formatINR(baseSI)}</span>
           </div>
 
-          <div className="p-4 bg-white/90 rounded-lg border border-slate-200">
+          <div className="p-4 bg-slate-50/90 border border-slate-200 rounded-lg">
             <span className="text-xs font-semibold text-slate-500 uppercase block">{t.topup_cover}</span>
-            <span className="text-2xl font-bold text-emerald-800 mt-1 block">{formatINR(topupSI)}</span>
-            <span className="text-xs text-slate-500 block mt-1">{topupProfile?.insurer_name || 'Star Health Insurance'}</span>
+            <span className="text-lg font-bold text-emerald-700 mt-1 block">{formatINR(topupSI)}</span>
           </div>
 
           <div className="p-4 bg-blue-50/90 border border-blue-200 rounded-lg">
@@ -127,11 +180,18 @@ export default function PolicyExtractorTab() {
             </h3>
 
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition">
+              <button
+                onClick={handleDownloadSummary}
+                className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition cursor-pointer shadow-xs"
+              >
                 <Download className="w-3.5 h-3.5" />
                 <span>{t.dl_pdf_summary}</span>
               </button>
-              <button className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition">
+
+              <button
+                onClick={handleDownloadPreAuth}
+                className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.98] text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition cursor-pointer shadow-xs"
+              >
                 <Download className="w-3.5 h-3.5" />
                 <span>{t.dl_pdf_preauth}</span>
               </button>
