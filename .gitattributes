@@ -1,7 +1,14 @@
-# GitHub Linguist Language Stats Configuration
-# Exclude compiled minified JavaScript/CSS assets in docs/ from repository language statistics
-docs/** linguist-vendored
-docs/assets/* linguist-generated
-docs/assets/*.js linguist-generated
-docs/assets/*.css linguist-generated
-frontend/dist/** linguist-vendored
+# GitHub Linguist Language Statistics Configuration
+# Enforce Python as the primary repository language by excluding frontend JS & compiled docs assets
+
+docs/** linguist-vendored=true
+docs/** linguist-documentation=true
+docs/assets/* linguist-generated=true
+docs/assets/*.js linguist-generated=true
+docs/assets/*.css linguist-generated=true
+frontend/** linguist-vendored=true
+frontend/src/** linguist-vendored=true
+frontend/src/*.js linguist-vendored=true
+frontend/src/*.jsx linguist-vendored=true
+
+*.py linguist-detectable=true
