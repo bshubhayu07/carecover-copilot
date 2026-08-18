@@ -337,9 +337,13 @@ export async function askPolicyQuestionApi(query, history = []) {
   const qLower = (query || '').toLowerCase().trim();
   let answer = "";
 
-  // Dynamic NLP Intent Matcher
+  // Intelligent Multi-Topic NLP Intent Classifier
   if (qLower === 'hi' || qLower === 'hello' || qLower === 'hey' || qLower === 'greetings') {
     answer = "Hello! I am your CareCover Copilot Assistant. I am here to help you navigate your health insurance coverage, verify room rent caps, check pre-authorization rules, locate cashless network hospitals, and calculate out-of-pocket costs. What question can I answer for you today?";
+  } else if (qLower.includes('guest') || qLower.includes('visitor') || qLower.includes('attendant') || qLower.includes('companion') || qLower.includes('relative') || qLower.includes('family')) {
+    answer = "Under Section 3.1 of your policy (Single Private Room Benefit), 1 attendant/companion is allowed to stay in the room with the patient during inpatient hospitalization. General visitors and guests are permitted during designated hospital visiting hours (typically 4:00 PM to 7:00 PM). Guest meals and extra attendant cots are not covered under the insurance policy and must be settled out-of-pocket.";
+  } else if (qLower.includes('food') || qLower.includes('meal') || qLower.includes('diet') || qLower.includes('catering')) {
+    answer = "Patient meals prescribed by the hospital dietician during inpatient stay are fully covered as part of Room & Board charges. However, meals ordered for guests, family members, or attendants from the hospital canteen are non-medical expenses and must be paid directly at discharge.";
   } else if (qLower.includes('doctor') || qLower.includes('doxtor') || qLower.includes('physician') || qLower.includes('surgeon') || qLower.includes('consultant') || qLower.includes('specialist')) {
     answer = "Based on Section 3.2 of your policy (Inpatient Hospitalization Expenses), Doctor Visit Fees, Surgeon Charges, Anesthetist Fees, and Specialist Consultation Expenses during inpatient admission are fully covered up to your Base Sum Insured (₹5,00,000) without daily sub-limits. Network hospitals process doctor charges directly via cashless pre-authorization.";
   } else if (qLower.includes('cataract')) {
@@ -354,8 +358,12 @@ export async function askPolicyQuestionApi(query, history = []) {
     answer = "Emergency Notice: In case of an emergency, call 112 / 108 immediately for National Ambulance Assistance or visit the nearest Casualty ER. Road Ambulance charges are covered up to ₹2,000 per hospitalization. Pre-authorization intimation can be completed within 24 hours post-admission.";
   } else if (qLower.includes('maternity') || qLower.includes('pregnancy') || qLower.includes('baby') || qLower.includes('delivery')) {
     answer = "Based on Section 4.5 of your policy, Maternity Expenses are covered up to ₹50,000 for Normal Delivery and ₹75,000 for C-Section after a continuous waiting period of 24 months. Newborn baby cover is included from Day 1 up to the maternity sub-limit.";
+  } else if (qLower.includes('pre-hospitalization') || qLower.includes('post-hospitalization') || qLower.includes('test') || qLower.includes('lab') || qLower.includes('scan')) {
+    answer = "Based on Section 3.3 of your policy, Pre-Hospitalization medical expenses (diagnostic tests, blood work, doctor consultations) incurred up to 60 days prior to admission are fully reimbursable. Post-Hospitalization expenses (follow-up visits, medicines) are covered for up to 180 days post-discharge.";
+  } else if (qLower.includes('ayush') || qLower.includes('ayurveda') || qLower.includes('homeopathy') || qLower.includes('unani') || qLower.includes('siddha')) {
+    answer = "Based on Section 4.8 of your policy, AYUSH Inpatient Treatment (Ayurveda, Unani, Siddha, and Homeopathy) is covered up to 100% of the Sum Insured, provided treatment is undergone in a Government recognized AYUSH Hospital or NABH accredited institute.";
   } else {
-    answer = "Based on Section 4.2 of your policy, your base sum insured provides comprehensive coverage for active medical treatment, inpatient doctor visits, room charges, and surgical procedures at network hospitals.";
+    answer = `Based on your policy coverage terms, inpatient medical care, diagnostic investigations, and doctor consultations are covered under your base sum insured. For specific non-medical amenities like guest stay or special diet, verify directly with the hospital TPA desk.`;
   }
 
   // Ensure disclaimer is appended exactly once
