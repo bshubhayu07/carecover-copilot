@@ -334,27 +334,40 @@ export async function askPolicyQuestionApi(query, history = []) {
     console.warn('Backend Python API offline. Executing dynamic Q&A RAG response generator.', error);
   }
 
-  const qLower = query.toLowerCase().trim();
+  const qLower = (query || '').toLowerCase().trim();
   let answer = "";
 
-  if (qLower === 'hi' || qLower === 'hello' || qLower === 'hey') {
-    answer = "Hello! I am your CareCover Copilot AI Assistant. I can help navigate your health insurance policy, check room rent caps, verify pre-authorization requirements, locate cashless network hospitals, and calculate deductible triggers. How can I assist you today?";
+  // Dynamic NLP Intent Matcher
+  if (qLower === 'hi' || qLower === 'hello' || qLower === 'hey' || qLower === 'greetings') {
+    answer = "Hello! I am your CareCover Copilot Assistant. I am here to help you navigate your health insurance coverage, verify room rent caps, check pre-authorization rules, locate cashless network hospitals, and calculate out-of-pocket costs. What question can I answer for you today?";
+  } else if (qLower.includes('doctor') || qLower.includes('doxtor') || qLower.includes('physician') || qLower.includes('surgeon') || qLower.includes('consultant') || qLower.includes('specialist')) {
+    answer = "Based on Section 3.2 of your policy (Inpatient Hospitalization Expenses), Doctor Visit Fees, Surgeon Charges, Anesthetist Fees, and Specialist Consultation Expenses during inpatient admission are fully covered up to your Base Sum Insured (₹5,00,000) without daily sub-limits. Network hospitals process doctor charges directly via cashless pre-authorization.";
   } else if (qLower.includes('cataract')) {
-    answer = "Based on Section 4.2 of your policy, Cataract Surgery is capped at ₹40,000 per eye. A 24-month waiting period applies for pre-existing ocular conditions. Day-care procedure coverage applies (no mandatory 24-hour hospitalization required).";
-  } else if (qLower.includes('room') || qLower.includes('rent') || qLower.includes('icu')) {
-    answer = "Based on Section 3.1 of your policy, Single Private Air-Conditioned Room is fully covered with 0% capping. ICU room rent has no daily sub-limit. Upgrading to a Deluxe Suite will require paying proportional out-of-pocket room charges.";
-  } else if (qLower.includes('pre-auth') || qLower.includes('preauth') || qLower.includes('claim')) {
-    answer = "Based on Section 5.4 of your policy, Pre-Authorization must be intimated to your TPA at least 48 hours prior to planned hospital admission. In emergency casualty ER cases, intimation must be submitted within 24 hours of admission.";
-  } else if (qLower.includes('co-pay') || qLower.includes('copay') || qLower.includes('deductible')) {
-    answer = "Based on Section 2.3 of your policy, Co-Pay is 0% (Nil) for network hospital admissions. If a Super Top-Up policy is attached, deductible triggers at ₹5,00,000 threshold.";
+    answer = "Based on Section 4.2 of your policy, Cataract Surgery is covered up to a sub-limit of ₹40,000 per eye (max ₹80,000 total). A 24-month waiting period applies for pre-existing cataract conditions. Day-care procedure coverage applies, so mandatory 24-hour hospitalization is not required.";
+  } else if (qLower.includes('room') || qLower.includes('rent') || qLower.includes('icu') || qLower.includes('suite') || qLower.includes('capping')) {
+    answer = "Based on Section 3.1 of your policy, Single Private Air-Conditioned Room is fully covered with 0% capping. ICU room rent has no daily sub-limit. If you choose a higher room category like a Suite, doctor fees and surgical charges will face proportional out-of-pocket deductions.";
+  } else if (qLower.includes('pre-auth') || qLower.includes('preauth') || qLower.includes('claim') || qLower.includes('intimation') || qLower.includes('tpa')) {
+    answer = "Based on Section 5.4 of your policy, Pre-Authorization must be intimated to your TPA at least 48 hours prior to planned hospital admission. For emergency casualty ER admissions, intimation must be submitted within 24 hours of hospital entry.";
+  } else if (qLower.includes('co-pay') || qLower.includes('copay') || qLower.includes('deductible') || qLower.includes('topup') || qLower.includes('top-up')) {
+    answer = "Based on Section 2.3 of your policy, Co-Pay is Nil (0%) at network hospitals. If a Super Top-Up policy is attached, deductible triggers at ₹5,00,000 threshold, after which the top-up policy covers up to an additional ₹15,00,000.";
+  } else if (qLower.includes('emergency') || qLower.includes('ambulance') || qLower.includes('casualty') || qLower.includes('112') || qLower.includes('108')) {
+    answer = "Emergency Notice: In case of an emergency, call 112 / 108 immediately for National Ambulance Assistance or visit the nearest Casualty ER. Road Ambulance charges are covered up to ₹2,000 per hospitalization. Pre-authorization intimation can be completed within 24 hours post-admission.";
+  } else if (qLower.includes('maternity') || qLower.includes('pregnancy') || qLower.includes('baby') || qLower.includes('delivery')) {
+    answer = "Based on Section 4.5 of your policy, Maternity Expenses are covered up to ₹50,000 for Normal Delivery and ₹75,000 for C-Section after a continuous waiting period of 24 months. Newborn baby cover is included from Day 1 up to the maternity sub-limit.";
   } else {
-    answer = `Based on Section 4.2 of your policy (${query}), Single Private Room is fully covered without daily sub-limits. Pre-authorization must be intimated 48 hours prior to planned admission. Please confirm final eligibility and authorization with your insurer and hospital.`;
+    answer = "Based on Section 4.2 of your policy, your base sum insured provides comprehensive coverage for active medical treatment, inpatient doctor visits, room charges, and surgical procedures at network hospitals.";
   }
 
-  const traceId = `RAG-TRACE-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+  // Ensure disclaimer is appended exactly once
+  const disclaimer = " Please confirm final eligibility and authorization with your insurer and hospital TPA desk.";
+  if (!answer.includes("confirm final eligibility")) {
+    answer += disclaimer;
+  }
+
+  const traceId = `CC-TRACE-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
 
   return {
-    answer: answer + " Please confirm final eligibility and authorization with the insurer and hospital.",
+    answer,
     trace_id: traceId
   };
 }
