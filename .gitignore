@@ -26,8 +26,7 @@ MANIFEST
 
 # Node & Frontend Exclusions
 node_modules/
-frontend/
-docs/
+frontend/node_modules/
 .vercel/
 
 # Environment Variables
