@@ -1,14 +1,21 @@
 # GitHub Linguist Language Override
-# Force Python as the primary language by excluding JavaScript, HTML, CSS, and compiled distribution assets
+*.js linguist-detectable=false
+*.jsx linguist-detectable=false
+*.css linguist-detectable=false
+*.html linguist-detectable=false
+*.json linguist-detectable=false
 
-*.js linguist-vendored
-*.jsx linguist-vendored
-*.css linguist-vendored
-*.html linguist-vendored
-*.json linguist-vendored
+*.js linguist-vendored=true
+*.jsx linguist-vendored=true
+*.css linguist-vendored=true
+*.html linguist-vendored=true
 
-docs/** linguist-vendored
-frontend/** linguist-vendored
+docs/** linguist-detectable=false
+docs/** linguist-vendored=true
+docs/** linguist-generated=true
 
-*.py linguist-vendored=false
+frontend/** linguist-detectable=false
+frontend/** linguist-vendored=true
+
 *.py linguist-detectable=true
+*.py linguist-vendored=false
