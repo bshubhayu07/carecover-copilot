@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 # Ensure project root is in Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -52,12 +53,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount static frontend assets if docs directory exists
+if os.path.exists("docs/assets"):
+    app.mount("/assets", StaticFiles(directory="docs/assets"), name="assets")
+
 class QARequest(BaseModel):
     query: str
     history: Optional[List[Dict[str, str]]] = []
 
 @app.get("/")
 def root():
+    if os.path.exists("docs/index.html"):
+        return FileResponse("docs/index.html")
     return {
         "status": "online",
         "system": "CareCover Copilot Enterprise Python API Engine",
@@ -72,6 +79,18 @@ def root():
             "/api/purge-session"
         ]
     }
+
+@app.get("/bg-soothing.jpg")
+def get_bg_soothing():
+    if os.path.exists("docs/bg-soothing.jpg"):
+        return FileResponse("docs/bg-soothing.jpg")
+    raise HTTPException(status_code=404, detail="Asset not found")
+
+@app.get("/favicon.svg")
+def get_favicon():
+    if os.path.exists("docs/favicon.svg"):
+        return FileResponse("docs/favicon.svg")
+    raise HTTPException(status_code=404, detail="Asset not found")
 
 @app.get("/api/health")
 def health_check():
