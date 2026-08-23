@@ -5,6 +5,7 @@ __pycache__/
 *.so
 .Python
 env/
+venv/
 build/
 develop-eggs/
 dist/
@@ -23,13 +24,20 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# Node & Frontend Exclusions
+node_modules/
+frontend/
+docs/
+.vercel/
+
 # Environment Variables
 .env
 
-# ChromaDB
+# ChromaDB & Temp Data
 chroma_db/
 data/chroma_db/
+data/temp_*
 
-# Local Blueprint Master Files (Excluded from GitHub)
+# Local Blueprint Master Files
 COMPLETE_PROJECT_BLUEPRINT.md
 MASTER_REPLICABLE_BLUEPRINT.md
