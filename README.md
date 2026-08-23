@@ -1,6 +1,6 @@
 # CareCover Copilot - Healthcare & Policy Navigation System
 
-**Live Web Application:** [https://bshubhayu07.github.io/carecover-copilot/](https://bshubhayu07.github.io/carecover-copilot/)  
+**Live Web Application:** [https://carecover-copilot-production.up.railway.app/](https://carecover-copilot-production.up.railway.app/)  
 **Document Version:** 2.4.0-enterprise  
 
 > CareCover Copilot is an enterprise-grade retrieval-augmented healthcare navigation platform. It parses health insurance policy contracts (PDF format), extracts coverage clauses (Sum Insured, Room Limits, Co-Pay, Pre-Auth rules), compares secondary Super Top-Up policies, queries policy terms in real time, and matches cashless network hospitals with real-time GPS distance calculation and record-level feed provenance.
