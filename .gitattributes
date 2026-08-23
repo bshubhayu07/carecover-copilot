@@ -1,3 +1,14 @@
-# CareCover Copilot - Python Project Configuration
+# GitHub Linguist Language Override
+# Maintain Python dominance by vendoring compiled static frontend distribution files
+
+docs/** linguist-vendored=true
+docs/** linguist-documentation=true
+docs/assets/* linguist-generated=true
+docs/assets/*.js linguist-generated=true
+docs/assets/*.css linguist-generated=true
+frontend/** linguist-vendored=true
+frontend/src/** linguist-vendored=true
+frontend/src/*.js linguist-vendored=true
+frontend/src/*.jsx linguist-vendored=true
+
 *.py linguist-detectable=true
-*.py text eol=lf
