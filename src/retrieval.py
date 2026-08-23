@@ -1,9 +1,10 @@
-from langchain_openai import ChatOpenAI
-from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME
+import os
+import openai
+from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME, OPENAI_API_KEY
 
 def ask_policy_question(query: str, collection, policy_profile) -> str:
     """
-    Queries ChromaDB for relevant chunks and uses LLM to synthesize an answer.
+    Queries vector collection for relevant chunks and uses OpenAI API to synthesize an answer.
     Enforces strict RAG guardrails in the prompt.
     """
     if not collection:
@@ -17,52 +18,55 @@ def ask_policy_question(query: str, collection, policy_profile) -> str:
         else:
             return "Based on the Demo Policy, I am unable to fully answer this specific question. Please check the document manually. Please confirm final eligibility and authorization with the insurer and hospital."
 
-    # Graceful ChromaDB query exception handling for session purges or collection resets
     try:
         results = collection.query(
             query_texts=[query],
             n_results=3
         )
     except Exception as e:
-        print(f"ChromaDB Query Exception: {e}")
-        return "The active policy vector collection session was purged or re-initialized. Please click 'Load Demo Base Policy' or re-upload your PDF policy document in Tab 1."
+        print(f"Vector Store Query Exception: {e}")
+        return "The active policy vector collection session was purged or re-initialized. Please click 'Load Demo Base Policy' or re-upload your PDF policy document."
     
-    retrieved_texts = results['documents'][0] if results['documents'] else []
-    retrieved_meta = results['metadatas'][0] if results['metadatas'] else []
+    retrieved_texts = results['documents'][0] if results.get('documents') else []
+    retrieved_meta = results['metadatas'][0] if results.get('metadatas') else []
     
     context = ""
     for text, meta in zip(retrieved_texts, retrieved_meta):
         context += f"[Policy p.{meta.get('page_number', '?')}] {text}\n\n"
         
-    profile_summary = policy_profile.model_dump_json(indent=2) if policy_profile else "No profile extracted."
+    profile_summary = policy_profile.model_dump_json(indent=2) if (policy_profile and hasattr(policy_profile, 'model_dump_json')) else "No profile extracted."
 
-    prompt = f"""
-    You are a healthcare navigation assistant helping a stressed caregiver.
-    Answer the user's question using ONLY the retrieved policy clauses and the normalized policy profile below.
-    If the evidence is insufficient, explicitly say that the document does not establish the answer.
-    Do not give medical advice, treatment advice, a diagnosis, or a guarantee of insurance coverage.
-    Use plain, empathetic language.
-    Include citations in the form [Policy p.X].
-    End the response with: “Please confirm final eligibility and authorization with the insurer and hospital.”
-    
-    --- Retrieved Policy Clauses ---
-    {context}
-    
-    --- Policy Profile Summary ---
-    {profile_summary}
-    
-    --- User Question ---
-    {query}
-    """
-    
-    kwargs = {"model": OPENAI_MODEL_NAME, "temperature": 0}
-    if OPENAI_BASE_URL:
-        kwargs["base_url"] = OPENAI_BASE_URL
-        
+    prompt = f"""You are a healthcare navigation assistant helping a stressed caregiver.
+Answer the user's question using ONLY the retrieved policy clauses and the normalized policy profile below.
+If the evidence is insufficient, explicitly say that the document does not establish the answer.
+Do not give medical advice, treatment advice, a diagnosis, or a guarantee of insurance coverage.
+Use plain, empathetic language.
+Include citations in the form [Policy p.X].
+End the response with: “Please confirm final eligibility and authorization with the insurer and hospital.”
+
+--- Retrieved Policy Clauses ---
+{context}
+
+--- Policy Profile Summary ---
+{profile_summary}
+
+--- User Question ---
+{query}"""
+
     try:
-        llm = ChatOpenAI(**kwargs)
-        response = llm.invoke(prompt)
-        return response.content
+        client_kwargs = {}
+        if OPENAI_API_KEY:
+            client_kwargs["api_key"] = OPENAI_API_KEY
+        if OPENAI_BASE_URL:
+            client_kwargs["base_url"] = OPENAI_BASE_URL
+
+        client = openai.OpenAI(**client_kwargs)
+        response = client.chat.completions.create(
+            model=OPENAI_MODEL_NAME or "llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0
+        )
+        return response.choices[0].message.content
     except Exception as e:
         print(f"LLM Generation Exception: {e}")
         return "Unable to connect to model engine. Please confirm final eligibility and authorization with the insurer and hospital."
