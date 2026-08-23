@@ -1,5 +1,4 @@
 import math
-import pandas as pd
 from typing import Dict, Any, List
 
 CITY_COORDINATES = {
@@ -31,7 +30,7 @@ def calculate_haversine(lat1, lon1, lat2, lon2):
     return R * c
 
 def match_hospitals(
-    hospitals_df: pd.DataFrame, 
+    hospitals: Any, 
     policy_profile, 
     context_city: str, 
     user_city: str = None, 
@@ -39,16 +38,25 @@ def match_hospitals(
 ) -> List[Dict[str, Any]]:
     """
     Deterministic eligibility and ranking engine for hospitals.
-    Calculates exact inter-city and intra-city distances when user location permission is enabled.
+    Accepts List of Dicts or DataFrames.
     """
-    if hospitals_df.empty:
+    if hospitals is None:
+        return []
+
+    if hasattr(hospitals, 'empty') and hospitals.empty:
+        return []
+
+    if not hasattr(hospitals, 'empty') and len(hospitals) == 0:
         return []
         
     results = []
     
-    for _, row in hospitals_df.iterrows():
+    # Handle both List[Dict] and DataFrame inputs
+    rows = hospitals.to_dict('records') if hasattr(hospitals, 'to_dict') else hospitals
+
+    for row in rows:
         hosp_city = str(row['city']).strip()
-        score = 50 # Base score
+        score = 50
         explanation = []
         
         # 1. Network Matching

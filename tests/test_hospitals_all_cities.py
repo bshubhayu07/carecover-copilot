@@ -20,11 +20,11 @@ def test_every_city_returns_hospitals(city):
     Integration Test: Assert that every supported metro city returns
     at least one valid network hospital from the repository.
     """
-    df = get_hospitals_by_city(city)
-    assert not df.empty, f"Hospital repository returned zero results for city: {city}"
+    hospitals = get_hospitals_by_city(city)
+    assert len(hospitals) > 0, f"Hospital repository returned zero results for city: {city}"
     
     demo_profile = PolicyProfile(insurer_name="Niva Bupa", room_eligibility="Single Room")
-    matches = match_hospitals(df, demo_profile, context_city=city, user_city=city, use_live_location=False)
+    matches = match_hospitals(hospitals, demo_profile, context_city=city, user_city=city, use_live_location=False)
     
     assert len(matches) > 0, f"Match engine returned 0 hospital matches for city: {city}"
     assert 'network_status' in matches[0]

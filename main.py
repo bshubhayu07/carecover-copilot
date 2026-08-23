@@ -36,6 +36,7 @@ active_vector_collection = None
 
 # Enforce CORS whitelist
 ALLOWED_ORIGINS = [
+    "*",
     "https://bshubhayu07.github.io",
     "http://localhost:5173",
     "http://localhost:8000",
@@ -54,6 +55,23 @@ app.add_middleware(
 class QARequest(BaseModel):
     query: str
     history: Optional[List[Dict[str, str]]] = []
+
+@app.get("/")
+def root():
+    return {
+        "status": "online",
+        "system": "CareCover Copilot Enterprise Python API Engine",
+        "version": "2.5.0-enterprise",
+        "endpoints": [
+            "/api/health",
+            "/api/extract-policy",
+            "/api/qa",
+            "/api/hospitals",
+            "/api/procedures",
+            "/api/journey",
+            "/api/purge-session"
+        ]
+    }
 
 @app.get("/api/health")
 def health_check():
@@ -105,7 +123,7 @@ async def extract_policy_endpoint(file: UploadFile = File(...)):
         raw_text = " ".join([p["text"] for p in pages])
         profile = extract_policy_profile(raw_text)
         
-        # Chunk text & index into Python ChromaDB vector store
+        # Chunk text & index into Python vector store
         chunks = chunk_text(pages)
         collection = initialize_vector_store(chunks, persist_directory=CHROMA_DB_DIR, use_dummy_mode=USE_DUMMY_MODE)
         
@@ -156,14 +174,14 @@ def get_hospitals_endpoint(
     user_lat: Optional[float] = Query(None),
     user_lon: Optional[float] = Query(None)
 ):
-    df = get_hospitals_by_city(city)
-    if df.empty:
-        df = get_hospitals_by_city("Pune")
+    hospitals = get_hospitals_by_city(city)
+    if not hospitals:
+        hospitals = get_hospitals_by_city("Pune")
 
     p_profile = active_policy_profile if active_policy_profile else PolicyProfile(insurer_name="Niva Bupa", room_eligibility="Single Room")
     
     use_live = (user_lat is not None and user_lon is not None)
-    matches = match_hospitals(df, p_profile, context_city=city, user_city=city, use_live_location=use_live)
+    matches = match_hospitals(hospitals, p_profile, context_city=city, user_city=city, use_live_location=use_live)
 
     filtered = []
     for m in matches:
@@ -215,10 +233,6 @@ Issued by CareCover Security & Compliance Systems"""
         "timestamp": ts,
         "receiptText": receipt_text
     }
-
-# Serve static frontend files if available in docs/
-if os.path.exists("docs"):
-    app.mount("/", StaticFiles(directory="docs", html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn
