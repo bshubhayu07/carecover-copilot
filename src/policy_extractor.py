@@ -1,12 +1,12 @@
 import json
 import os
 import re
-from langchain_openai import ChatOpenAI
+import openai
 from typing import Dict, Any
 from pydantic import ValidationError
 from fpdf import FPDF
 from .policy_schema import PolicyProfile
-from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME
+from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME, OPENAI_API_KEY
 from .utils import format_inr
 
 def extract_policy_profile(text_chunks: str) -> PolicyProfile:
@@ -50,12 +50,6 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     # Safely truncate prompt text to fit LLM context limits (~14,000 chars)
     sample_text = text_chunks[:14000] if len(text_chunks) > 14000 else text_chunks
 
-    kwargs = {"model": OPENAI_MODEL_NAME, "temperature": 0}
-    if OPENAI_BASE_URL:
-        kwargs["base_url"] = OPENAI_BASE_URL
-        
-    llm = ChatOpenAI(**kwargs)
-
     prompt = f"""
     You are an expert insurance analyst. Extract the policy details from the following policy text into a valid JSON object matching this EXACT schema:
     {{
@@ -83,8 +77,19 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     profile_dict = {}
 
     try:
-        res = llm.invoke(prompt)
-        content = res.content.strip()
+        client_kwargs = {}
+        if OPENAI_API_KEY:
+            client_kwargs["api_key"] = OPENAI_API_KEY
+        if OPENAI_BASE_URL:
+            client_kwargs["base_url"] = OPENAI_BASE_URL
+
+        client = openai.OpenAI(**client_kwargs)
+        response = client.chat.completions.create(
+            model=OPENAI_MODEL_NAME or "llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0
+        )
+        content = response.choices[0].message.content.strip()
         if content.startswith("```"):
             content = content.split("```")[1]
             if content.startswith("json"):
@@ -118,88 +123,102 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     if not profile_dict.get("room_eligibility"):
         if "single private room" in text_lower or "reassure" in text_lower:
             profile_dict["room_eligibility"] = "Single Private Room (No Room Rent Capping)"
-        elif "twin sharing" in text_lower:
-            profile_dict["room_eligibility"] = "Twin Sharing"
+        elif "shared room" in text_lower or "twin sharing" in text_lower:
+            profile_dict["room_eligibility"] = "Twin Sharing Room"
         else:
-            profile_dict["room_eligibility"] = "Single Private Room / Shared"
-
-    if not profile_dict.get("room_rent_limit"):
-        if "no capping" in text_lower or "reassure" in text_lower:
-            profile_dict["room_rent_limit"] = "No Capping on Room Rent (Up to Sum Insured)"
-        else:
-            profile_dict["room_rent_limit"] = "1% of Sum Insured per day"
-
-    if not profile_dict.get("co_pay"):
-        if "nil" in text_lower or "no co-pay" in text_lower or "reassure" in text_lower:
-            profile_dict["co_pay"] = "Nil (0% Co-payment)"
-        else:
-            profile_dict["co_pay"] = "10% mandatory co-payment"
+            profile_dict["room_eligibility"] = "Single Private Room"
 
     if not profile_dict.get("sum_insured_inr"):
-        profile_dict["sum_insured_inr"] = 500000.0
+        numbers = re.findall(r'(\d+[\d,]*\d+)', text_chunks)
+        valid_sums = []
+        for n in numbers:
+            try:
+                val = int(n.replace(',', ''))
+                if 100000 <= val <= 100000000:
+                    valid_sums.append(val)
+            except ValueError:
+                pass
+        if valid_sums:
+            profile_dict["sum_insured_inr"] = valid_sums[0]
+        else:
+            profile_dict["sum_insured_inr"] = 500000
+
+    if not profile_dict.get("room_rent_limit"):
+        profile_dict["room_rent_limit"] = "No capping on room rent for Single Private Room"
+
+    if not profile_dict.get("co_pay"):
+        profile_dict["co_pay"] = "No Co-payment applicable for age < 60"
+
+    if not profile_dict.get("waiting_periods"):
+        profile_dict["waiting_periods"] = [
+            "Initial Waiting Period: 30 Days for non-accidental hospitalizations",
+            "Specific Disease Waiting Period: 24 Months (Cataract, Hernia, Joint Replacements)",
+            "Pre-existing Disease (PED) Waiting Period: 36 Months"
+        ]
+
+    if not profile_dict.get("exclusions"):
+        profile_dict["exclusions"] = [
+            "Outpatient (OPD) expenses not leading to 24-hour hospitalization",
+            "Cosmetic and plastic surgery procedures",
+            "Hazardous sports and unproven medical treatments"
+        ]
 
     if profile_dict.get("pre_authorization_required") is None:
         profile_dict["pre_authorization_required"] = True
 
     if not profile_dict.get("network_hospital_terms"):
-        profile_dict["network_hospital_terms"] = "Cashless available at Insurer Designated Network Hospitals"
-
-    if not profile_dict.get("waiting_periods"):
-        profile_dict["waiting_periods"] = ["30 days initial waiting period", "24 months for specific illnesses", "36-48 months pre-existing diseases"]
-
-    if not profile_dict.get("exclusions"):
-        profile_dict["exclusions"] = ["Cosmetic & aesthetic surgeries", "Treatment for alcoholism/drug abuse", "OPD consultation not leading to admission"]
+        profile_dict["network_hospital_terms"] = "100% cashless settlement available at all network hospitals upon pre-authorization."
 
     if not profile_dict.get("claim_documents"):
-        profile_dict["claim_documents"] = ["Duly filled Claim Form", "Original Discharge Summary", "Itemized Bills & Payment Receipts", "KYC Documents"]
+        profile_dict["claim_documents"] = [
+            "Duly filled and signed Cashless Claim Pre-Authorization Form",
+            "Original hospital discharge summary and attending doctor consultation notes",
+            "Itemized hospital final bill with payment receipts",
+            "Diagnostic test reports, X-rays, and laboratory investigation findings",
+            "KYC documentation (Aadhaar / PAN card) and canceled bank cheque"
+        ]
 
     try:
         return PolicyProfile(**profile_dict)
-    except Exception:
+    except ValidationError as ve:
+        print(f"Validation Error: {ve}")
         return PolicyProfile(
-            insurer_name="Niva Bupa Health Insurance",
-            policy_name="ReAssure Policy",
-            sum_insured_inr=500000.0,
-            room_eligibility="Single Private Room",
-            room_rent_limit="No Capping on Room Rent",
-            co_pay="Nil (0% Co-pay)",
+            insurer_name=profile_dict.get("insurer_name", "Niva Bupa Health Insurance"),
+            policy_name=profile_dict.get("policy_name", "ReAssure Policy"),
+            sum_insured_inr=profile_dict.get("sum_insured_inr", 500000),
+            room_eligibility=profile_dict.get("room_eligibility", "Single Private Room"),
+            room_rent_limit=profile_dict.get("room_rent_limit", "No capping"),
+            co_pay=profile_dict.get("co_pay", "No Co-pay"),
+            waiting_periods=profile_dict.get("waiting_periods", ["30 days initial"]),
+            exclusions=profile_dict.get("exclusions", ["OPD expenses"]),
             pre_authorization_required=True,
-            network_hospital_terms="Cashless available at Network Hospitals",
-            waiting_periods=["30 days initial waiting period", "24 months specific illnesses"],
-            exclusions=["Cosmetic surgery", "Self-inflicted injuries"],
-            claim_documents=["Discharge Summary", "Final Hospital Bill", "Claim Form", "KYC"]
+            network_hospital_terms=profile_dict.get("network_hospital_terms", "100% Cashless at Network"),
+            claim_documents=profile_dict.get("claim_documents", ["Discharge summary", "Bills"]),
+            evidence=[]
         )
 
 def generate_policy_pdf(profile: PolicyProfile, topup_profile: PolicyProfile = None) -> bytes:
-    """Generates a PDF byte stream of the extracted policy profile safely."""
+    """Generates a downloadable PDF summary using PyFPDF."""
     pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-    
     pdf.set_font("Helvetica", 'B', 16)
-    pdf.cell(0, 10, text="CareCover Copilot - Extracted Policy Summary", new_x="LMARGIN", new_y="NEXT", align='C')
-    pdf.ln(6)
+    pdf.cell(0, 10, text="CARECOVER COPILOT - POLICY EXTRACT SUMMARY", new_x="LMARGIN", new_y="NEXT", align='C')
+    pdf.ln(5)
+    
+    pdf.set_font("Helvetica", 'B', 12)
+    pdf.cell(0, 8, text="1. BASE POLICY PROFILE", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
     
     fields = [
-        ("Base Insurer Name", profile.insurer_name or "N/A"),
-        ("Base Policy Name", profile.policy_name or "N/A"),
+        ("Insurer Name", profile.insurer_name or "N/A"),
+        ("Policy Name", profile.policy_name or "N/A"),
         ("Base Sum Insured", format_inr(profile.sum_insured_inr)),
-        ("Room Eligibility", profile.room_eligibility or "N/A"),
-        ("Room Rent Limit", profile.room_rent_limit or "N/A"),
-        ("Co-Pay Terms", profile.co_pay or "N/A"),
-        ("Pre-Authorization Required", "Yes" if profile.pre_authorization_required else "No"),
+        ("Room Category Eligibility", profile.room_eligibility or "N/A"),
+        ("Room Rent Capping Limit", profile.room_rent_limit or "N/A"),
+        ("Co-Pay Requirement", profile.co_pay or "N/A"),
+        ("Pre-Authorization Required", "Yes (Mandatory)" if profile.pre_authorization_required else "No"),
         ("Network Hospital Terms", profile.network_hospital_terms or "N/A")
     ]
-    
-    if topup_profile:
-        base_si = profile.sum_insured_inr or 500000
-        topup_si = topup_profile.sum_insured_inr or 1500000
-        fields.extend([
-            ("Super Top-Up Insurer", topup_profile.insurer_name or "N/A"),
-            ("Super Top-Up Policy", topup_profile.policy_name or "N/A"),
-            ("Top-Up Cover Limit", format_inr(topup_si)),
-            ("Total Protection Cover", format_inr(base_si + topup_si))
-        ])
     
     for label, val in fields:
         pdf.set_x(pdf.l_margin)
@@ -209,44 +228,41 @@ def generate_policy_pdf(profile: PolicyProfile, topup_profile: PolicyProfile = N
         pdf.multi_cell(0, 8, text=str(val), new_x="LMARGIN", new_y="NEXT")
         pdf.ln(1)
         
-    if profile.waiting_periods:
+    if topup_profile:
         pdf.ln(4)
         pdf.set_x(pdf.l_margin)
         pdf.set_font("Helvetica", 'B', 12)
-        pdf.cell(0, 8, text="Waiting Periods:", new_x="LMARGIN", new_y="NEXT")
-        pdf.set_font("Helvetica", size=10)
-        for wp in profile.waiting_periods:
+        pdf.cell(0, 8, text="2. SUPER TOP-UP POLICY PROFILE", new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(2)
+        topup_fields = [
+            ("Top-Up Insurer Name", topup_profile.insurer_name or "N/A"),
+            ("Top-Up Sum Insured", format_inr(topup_profile.sum_insured_inr)),
+            ("Combined Total Sum Insured", format_inr((profile.sum_insured_inr or 500000) + (topup_profile.sum_insured_inr or 1500000))),
+            ("Deductible Trigger", format_inr(profile.sum_insured_inr or 500000))
+        ]
+        for label, val in topup_fields:
             pdf.set_x(pdf.l_margin)
-            pdf.multi_cell(0, 6, text=f"- {wp}", new_x="LMARGIN", new_y="NEXT")
-            
-    if profile.exclusions:
-        pdf.ln(4)
+            pdf.set_font("Helvetica", 'B', 11)
+            pdf.cell(65, 8, text=f"{label}:", new_x="RIGHT", new_y="TOP")
+            pdf.set_font("Helvetica", size=11)
+            pdf.multi_cell(0, 8, text=str(val), new_x="LMARGIN", new_y="NEXT")
+            pdf.ln(1)
+
+    pdf.ln(4)
+    pdf.set_x(pdf.l_margin)
+    pdf.set_font("Helvetica", 'B', 12)
+    pdf.cell(0, 8, text="3. WAITING PERIODS & CLAUSE DETAILS", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica", size=10)
+    for wp in (profile.waiting_periods or []):
         pdf.set_x(pdf.l_margin)
-        pdf.set_font("Helvetica", 'B', 12)
-        pdf.cell(0, 8, text="Exclusions:", new_x="LMARGIN", new_y="NEXT")
-        pdf.set_font("Helvetica", size=10)
-        for ex in profile.exclusions:
-            pdf.set_x(pdf.l_margin)
-            pdf.multi_cell(0, 6, text=f"- {ex}", new_x="LMARGIN", new_y="NEXT")
-            
-    if profile.claim_documents:
-        pdf.ln(4)
-        pdf.set_x(pdf.l_margin)
-        pdf.set_font("Helvetica", 'B', 12)
-        pdf.cell(0, 8, text="Required Claim Documents:", new_x="LMARGIN", new_y="NEXT")
-        pdf.set_font("Helvetica", size=10)
-        for doc in profile.claim_documents:
-            pdf.set_x(pdf.l_margin)
-            pdf.multi_cell(0, 6, text=f"- {doc}", new_x="LMARGIN", new_y="NEXT")
-            
+        pdf.multi_cell(0, 6, text=f"- {wp}", new_x="LMARGIN", new_y="NEXT")
+        
     return bytes(pdf.output())
 
 def generate_preauth_pdf(profile: PolicyProfile, topup_profile: PolicyProfile = None) -> bytes:
-    """Generates a PDF byte stream of the Pre-Authorization TPA Request Form."""
+    """Generates a downloadable Pre-Auth TPA Form PDF using PyFPDF."""
     pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-    
     pdf.set_font("Helvetica", 'B', 16)
     pdf.cell(0, 10, text="CARECOVER COPILOT - CASHLESS PRE-AUTHORIZATION FORM", new_x="LMARGIN", new_y="NEXT", align='C')
     pdf.ln(6)
