@@ -64,7 +64,14 @@ class QARequest(BaseModel):
 @app.get("/")
 def root():
     if os.path.exists("docs/index.html"):
-        return FileResponse("docs/index.html")
+        return FileResponse(
+            "docs/index.html",
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
     return {
         "status": "online",
         "system": "CareCover Copilot Enterprise Python API Engine",
