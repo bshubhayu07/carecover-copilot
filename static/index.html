@@ -266,6 +266,7 @@
   <script>
     let currentBaseSI = 500000;
     let currentTopupSI = 1500000;
+    let activePolicyName = "Niva Bupa Health Insurance";
     let userLat = null;
     let userLon = null;
 
@@ -347,6 +348,7 @@
         const data = await res.json();
         
         currentBaseSI = data.sum_insured_inr || 500000;
+        activePolicyName = data.insurer_name || "Uploaded Health Policy";
         updateCombinedSI();
 
         document.getElementById('resInsurer').innerText = data.insurer_name || "Extracted Policy";
@@ -416,7 +418,7 @@
         const res = await fetch('/api/qa', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: query, history: [] })
+          body: JSON.stringify({ query: query, history: [], insurer_name: activePolicyName })
         });
         const data = await res.json();
         chatBox.innerHTML += `<div class="bg-slate-900 border border-slate-800 p-3 rounded-lg max-w-[80%] text-slate-200"><strong>CareCover Bot:</strong> ${data.answer}<div class="text-[10px] text-slate-500 mt-1">${data.trace_id || ''}</div></div>`;

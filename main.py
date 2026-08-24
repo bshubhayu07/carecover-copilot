@@ -60,6 +60,7 @@ if os.path.exists("static"):
 class QARequest(BaseModel):
     query: str
     history: Optional[List[Dict[str, str]]] = []
+    insurer_name: Optional[str] = None
 
 @app.get("/")
 def root():
@@ -181,8 +182,14 @@ async def policy_qa_endpoint(request: QARequest):
         except Exception:
             active_vector_collection = None
 
+    profile_to_use = active_policy_profile
+    if request.insurer_name:
+        profile_to_use = PolicyProfile(insurer_name=request.insurer_name)
+    elif not profile_to_use:
+        profile_to_use = PolicyProfile(insurer_name="Niva Bupa Health Insurance")
+
     # 3. Execute RAG retrieval & LLM synthesis via Python RAG chain
-    raw_answer = ask_policy_question(request.query, active_vector_collection, active_policy_profile)
+    raw_answer = ask_policy_question(request.query, active_vector_collection, profile_to_use)
     guarded_answer = apply_response_guardrails(raw_answer)
 
     trace_id = f"RAG-TRACE-{hashlib.sha256((request.query + str(time.time())).encode()).hexdigest()[:10].upper()}"
