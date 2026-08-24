@@ -1,4 +1,4 @@
-# Production Container for CareCover Copilot (Pure Python Streamlit Application)
+# Production Container for CareCover Copilot (FastAPI Production Runtime)
 
 FROM python:3.11-slim
 
@@ -17,11 +17,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code and application files
 COPY . .
 
-# Expose API & Web Server Port
+# Default PORT fallback
 ENV PORT=8000
 EXPOSE 8000
 
 # Health Check Probe
-HEALTHCHECK CMD curl --fail http://localhost:8000/_stcore/health || exit 1
+HEALTHCHECK CMD curl --fail http://localhost:8000/api/health || exit 1
 
-CMD ["sh", "-c", "streamlit run app.py --server.port=${PORT:-8000} --server.address=0.0.0.0 --server.headless=true --server.enableCORS=false"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
