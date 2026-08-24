@@ -53,9 +53,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount static frontend assets if docs directory exists
-if os.path.exists("docs/assets"):
-    app.mount("/assets", StaticFiles(directory="docs/assets"), name="assets")
+# Mount static directory if it exists
+if os.path.exists("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
 
 class QARequest(BaseModel):
     query: str
@@ -63,9 +63,9 @@ class QARequest(BaseModel):
 
 @app.get("/")
 def root():
-    if os.path.exists("docs/index.html"):
+    if os.path.exists("static/index.html"):
         return FileResponse(
-            "docs/index.html",
+            "static/index.html",
             headers={
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Pragma": "no-cache",

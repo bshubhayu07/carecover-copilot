@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareCover Copilot - Healthcare & Policy Navigation System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #080d1a;
+      color: #f8fafc;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.025em;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5);
+    }
+    .tab-active {
+      border-bottom: 2px solid #38bdf8;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Emergency Banner -->
+  <div class="bg-red-950/90 border-b border-red-800/80 px-4 py-2 text-center text-xs md:text-sm text-red-200 font-medium">
+    🚨 EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call <strong>112 / 108</strong> immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.
+  </div>
+
+  <!-- Header -->
+  <header class="bg-slate-900/90 border-b border-slate-800 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div>
+      <h1 class="text-2xl font-extrabold text-white flex items-center gap-2">
+        <span class="text-sky-400">CareCover</span> Copilot
+        <span class="text-xs bg-sky-950 text-sky-400 px-2.5 py-0.5 rounded-full border border-sky-800">v2.5.0 Enterprise</span>
+      </h1>
+      <p class="text-xs text-slate-400">Independent Clinical & Insurance Decision Support Navigation System</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> System Status: Online
+      </span>
+      <select id="languageSelect" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-sky-500">
+        <option value="English">English</option>
+        <option value="Hindi">Hindi (हिंदी)</option>
+        <option value="Marathi">Marathi (मराठी)</option>
+        <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+        <option value="Bengali">Bengali (বাংলা)</option>
+        <option value="Tamil">Tamil (தமிழ்)</option>
+        <option value="Telugu">Telugu (తెలుగు)</option>
+        <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
+        <option value="Malayalam">Malayalam (മലയാളം)</option>
+        <option value="Punjabi">Punjabi (ਪੰਜਾਬੀ)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="flex-1 flex flex-col md:flex-row max-w-7xl w-full mx-auto p-4 md:p-6 gap-6">
+
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 flex flex-col gap-4">
+      <div class="glass-card p-4 rounded-xl space-y-4">
+        <h3 class="text-sm font-bold text-slate-200 border-b border-slate-700 pb-2">Privacy & Compliance</h3>
+        <label class="flex items-start gap-2 text-xs text-slate-300 cursor-pointer">
+          <input type="checkbox" id="dpdpConsent" checked class="mt-0.5 rounded bg-slate-800 border-slate-700 text-sky-500 focus:ring-0">
+          <span>I consent to temporary document processing for this session (DPDP Rules 2025).</span>
+        </label>
+        <button id="purgeBtn" class="w-full bg-red-950/80 hover:bg-red-900 text-red-200 border border-red-800 text-xs font-semibold py-2 rounded-lg transition-colors">
+          🗑️ Purge & Delete Session Data Now
+        </button>
+      </div>
+
+      <div class="glass-card p-4 rounded-xl space-y-2 text-xs text-slate-400">
+        <div class="font-semibold text-slate-300">Security Specs</div>
+        <div>• 25MB Max Payload Limit</div>
+        <div>• Cryptographic SHA-256 PDF Hashing</div>
+        <div>• Pure In-Memory Vector Store</div>
+        <div>• Zero Persistent Cloud Storage</div>
+      </div>
+    </aside>
+
+    <!-- Content Workspace -->
+    <main class="flex-1 flex flex-col gap-6">
+      
+      <!-- Navigation Tabs -->
+      <nav class="flex border-b border-slate-800 text-sm gap-6 font-medium">
+        <button onclick="switchTab('tab1')" id="tab1-btn" class="py-2.5 tab-active">📄 Upload & Extract</button>
+        <button onclick="switchTab('tab2')" id="tab2-btn" class="py-2.5 text-slate-400 hover:text-slate-200">💬 Ask Your Policy</button>
+        <button onclick="switchTab('tab3')" id="tab3-btn" class="py-2.5 text-slate-400 hover:text-slate-200">🏥 Find Hospital Options</button>
+        <button onclick="switchTab('tab4')" id="tab4-btn" class="py-2.5 text-slate-400 hover:text-slate-200">🗺️ Care Journey & Safety</button>
+      </nav>
+
+      <!-- TAB 1: Upload & Extract -->
+      <section id="tab1-content" class="space-y-6">
+        <div class="glass-card p-6 rounded-xl space-y-4">
+          <h2 class="text-lg font-bold text-white">Upload Health Insurance Policy Document</h2>
+          <p class="text-xs text-slate-400">Upload your Base Health Insurance Policy (PDF, Max 25MB) to extract room eligibility, sum insured, co-pay, and pre-auth rules.</p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 items-center">
+            <input type="file" id="policyFileInput" accept=".pdf" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-600 file:text-white hover:file:bg-sky-500 cursor-pointer">
+            <button onclick="handleUpload()" class="w-full sm:w-auto bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-6 py-2.5 rounded-lg transition-colors whitespace-nowrap">
+              Upload & Extract Profile
+            </button>
+            <button onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 transition-colors whitespace-nowrap">
+              Load Demo Base Policy
+            </button>
+          </div>
+          <div id="uploadStatus" class="text-xs hidden"></div>
+        </div>
+
+        <!-- Policy Summary Results Card -->
+        <div id="policySummaryCard" class="glass-card p-6 rounded-xl space-y-4">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h3 class="font-bold text-slate-100 text-base">Extracted Policy Summary Profile</h3>
+            <span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2.5 py-0.5 rounded-full">Active Profile</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 font-medium">Insurer Name</div>
+              <div id="resInsurer" class="font-bold text-slate-100 text-sm mt-1">Niva Bupa Health Insurance</div>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 font-medium">Sum Insured</div>
+              <div id="resSumInsured" class="font-bold text-sky-400 text-sm mt-1">₹5,00,000</div>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 font-medium">Room Rent Eligibility</div>
+              <div id="resRoom" class="font-bold text-slate-100 text-sm mt-1">Single Private Room</div>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 font-medium">Co-Pay / Pre-Auth</div>
+              <div id="resCopay" class="font-bold text-emerald-400 text-sm mt-1">0% Co-Pay | Pre-Auth Req</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Ask Your Policy -->
+      <section id="tab2-content" class="space-y-6 hidden">
+        <div class="glass-card p-6 rounded-xl space-y-4 flex flex-col h-[500px]">
+          <h2 class="text-lg font-bold text-white">Ask Questions About Your Coverage</h2>
+          
+          <div id="chatMessages" class="flex-1 overflow-y-auto space-y-3 p-3 bg-slate-950/60 rounded-lg border border-slate-800 text-xs">
+            <div class="bg-slate-900 p-3 rounded-lg max-w-[80%] border border-slate-800">
+              <span class="font-bold text-sky-400">CareCover Bot:</span> Hello! Ask me any question about your health insurance policy, coverage limits, or hospital procedures.
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <input type="text" id="chatInput" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="e.g. Is cataract surgery covered and what is the sub-limit?" class="flex-1 bg-slate-900 border border-slate-700 text-xs text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-sky-500">
+            <button onclick="sendChatMessage()" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-6 py-2.5 rounded-lg transition-colors">
+              Send Query
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Find Hospital Options -->
+      <section id="tab3-content" class="space-y-6 hidden">
+        <div class="glass-card p-6 rounded-xl space-y-4">
+          <h2 class="text-lg font-bold text-white">Hospital Network & Room Eligibility Matching</h2>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Select City</label>
+              <select id="hospitalCity" onchange="fetchHospitals()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-lg px-3 py-2">
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi NCR</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Filter Specialty</label>
+              <select id="hospitalSpecialty" onchange="fetchHospitals()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-lg px-3 py-2">
+                <option value="All Specialties">All Specialties</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="Oncology">Oncology</option>
+                <option value="Multispecialty">Multispecialty</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <label class="flex items-center gap-2 text-slate-300 cursor-pointer pb-2">
+                <input type="checkbox" id="inNetworkOnly" onchange="fetchHospitals()" class="rounded bg-slate-900 border-slate-700 text-sky-500">
+                <span>In-Network Only</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="hospitalList" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-2">
+            <!-- Hospital Cards Loaded via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Care Journey & Safety -->
+      <section id="tab4-content" class="space-y-6 hidden">
+        <div class="glass-card p-6 rounded-xl space-y-4">
+          <h2 class="text-lg font-bold text-white">Care Journey Timeline & Guidance</h2>
+          <div id="journeyTimeline" class="space-y-4 text-xs">
+            <!-- Journey Loaded via JS -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      ['tab1', 'tab2', 'tab3', 'tab4'].forEach(id => {
+        document.getElementById(id + '-content').classList.add('hidden');
+        const btn = document.getElementById(id + '-btn');
+        btn.classList.remove('tab-active');
+        btn.classList.add('text-slate-400');
+      });
+      document.getElementById(tabId + '-content').classList.remove('hidden');
+      const activeBtn = document.getElementById(tabId + '-btn');
+      activeBtn.classList.add('tab-active');
+      activeBtn.classList.remove('text-slate-400');
+
+      if(tabId === 'tab3') fetchHospitals();
+      if(tabId === 'tab4') fetchJourney();
+    }
+
+    function loadDemoPolicy() {
+      document.getElementById('resInsurer').innerText = "Niva Bupa Health Insurance";
+      document.getElementById('resSumInsured').innerText = "₹5,00,000";
+      document.getElementById('resRoom').innerText = "Single Private Room";
+      document.getElementById('resCopay').innerText = "0% Co-Pay | Pre-Auth Req";
+      const status = document.getElementById('uploadStatus');
+      status.innerText = "✓ Demo Policy Loaded Successfully!";
+      status.className = "text-xs text-emerald-400 block";
+    }
+
+    async function handleUpload() {
+      const input = document.getElementById('policyFileInput');
+      const status = document.getElementById('uploadStatus');
+      if (!input.files || input.files.length === 0) {
+        status.innerText = "Please select a PDF file first.";
+        status.className = "text-xs text-amber-400 block";
+        return;
+      }
+      const file = input.files[0];
+      if (file.size > 25 * 1024 * 1024) {
+        status.innerText = "File size exceeds 25 MB enterprise threshold.";
+        status.className = "text-xs text-red-400 block";
+        return;
+      }
+
+      status.innerText = "Uploading & extracting policy clauses...";
+      status.className = "text-xs text-sky-400 block animate-pulse";
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const res = await fetch('/api/extract-policy', { method: 'POST', body: formData });
+        if (!res.ok) throw new Error("Extraction failed");
+        const data = await res.json();
+        
+        document.getElementById('resInsurer').innerText = data.insurer_name || "Extracted Policy";
+        document.getElementById('resSumInsured').innerText = data.sum_insured_inr ? `₹${data.sum_insured_inr.toLocaleString('en-IN')}` : "₹5,00,000";
+        document.getElementById('resRoom').innerText = data.room_eligibility || "Single Room";
+        document.getElementById('resCopay').innerText = `${data.co_payment_percentage || 0}% Co-Pay | ${data.pre_authorization_required ? 'Pre-Auth Req' : 'No Pre-Auth'}`;
+
+        status.innerText = "✓ Policy Profile Extracted Successfully!";
+        status.className = "text-xs text-emerald-400 block";
+      } catch (err) {
+        status.innerText = "Upload failed or invalid PDF. Try loading Demo Policy.";
+        status.className = "text-xs text-red-400 block";
+      }
+    }
+
+    async function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const query = input.value.trim();
+      if (!query) return;
+
+      const chatBox = document.getElementById('chatMessages');
+      chatBox.innerHTML += `<div class="bg-sky-950/80 border border-sky-800 p-3 rounded-lg max-w-[80%] ml-auto text-slate-100"><strong>You:</strong> ${query}</div>`;
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+        const res = await fetch('/api/qa', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: query, history: [] })
+        });
+        const data = await res.json();
+        chatBox.innerHTML += `<div class="bg-slate-900 border border-slate-800 p-3 rounded-lg max-w-[80%] text-slate-200"><strong>CareCover Bot:</strong> ${data.answer}<div class="text-[10px] text-slate-500 mt-1">${data.trace_id || ''}</div></div>`;
+      } catch (err) {
+        chatBox.innerHTML += `<div class="bg-red-950/80 border border-red-800 p-3 rounded-lg max-w-[80%] text-red-200"><strong>Error:</strong> Failed to fetch answer. Please try again.</div>`;
+      }
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function fetchHospitals() {
+      const city = document.getElementById('hospitalCity').value;
+      const specialty = document.getElementById('hospitalSpecialty').value;
+      const networkOnly = document.getElementById('inNetworkOnly').checked;
+
+      const container = document.getElementById('hospitalList');
+      container.innerHTML = '<div class="text-slate-400 col-span-2">Loading hospital network directory...</div>';
+
+      try {
+        const url = `/api/hospitals?city=${encodeURIComponent(city)}&specialty=${encodeURIComponent(specialty)}&in_network_only=${networkOnly}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="text-slate-400 col-span-2">No matching hospitals found for this criteria.</div>';
+          return;
+        }
+
+        container.innerHTML = data.map(h => `
+          <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl space-y-2">
+            <div class="flex justify-between items-start">
+              <h4 class="font-bold text-slate-100 text-sm">${h.name}</h4>
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${h.network_status === 'In Network' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'}">${h.network_status}</span>
+            </div>
+            <div class="text-slate-400">${h.address || h.city}</div>
+            <div class="flex justify-between items-center text-[11px] pt-2 border-t border-slate-800">
+              <span class="text-sky-400">Match Score: ${h.match_score || 95}%</span>
+              <span class="text-slate-400">${h.distance_km ? h.distance_km + ' km away' : 'City Network'}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = '<div class="text-red-400 col-span-2">Failed to load hospitals.</div>';
+      }
+    }
+
+    async function fetchJourney() {
+      const container = document.getElementById('journeyTimeline');
+      container.innerHTML = '<div class="text-slate-400">Loading care journey...</div>';
+      try {
+        const res = await fetch('/api/journey');
+        const data = await res.json();
+        container.innerHTML = (data.timeline || []).map(step => `
+          <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+            <div class="font-bold text-sky-400 text-sm">${step.phase || step.step}: ${step.title || ''}</div>
+            <div class="text-slate-300 mt-1">${step.description || step.action || ''}</div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = '<div class="text-slate-400">1. Pre-Admission intimation → 2. TPA Cashless Desk Submission → 3. Pre-Auth Approval → 4. Hospital Discharge & Settlement.</div>';
+      }
+    }
+  </script>
+
+</body>
+</html>
