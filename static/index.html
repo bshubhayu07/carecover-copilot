@@ -216,9 +216,9 @@
             <div>
               <label class="block text-slate-400 mb-1">Select City</label>
               <select id="hospitalCity" onchange="fetchHospitals()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-lg px-3 py-2">
+                <option value="Delhi">Delhi NCR</option>
                 <option value="Pune">Pune</option>
                 <option value="Mumbai">Mumbai</option>
-                <option value="Delhi">Delhi NCR</option>
                 <option value="Bengaluru">Bengaluru</option>
                 <option value="Hyderabad">Hyderabad</option>
                 <option value="Chennai">Chennai</option>
@@ -271,9 +271,9 @@
     let userLon = null;
 
     const CITY_COORDS = {
+      'Delhi': { lat: 28.6139, lon: 77.2090 },
       'Pune': { lat: 18.5204, lon: 73.8567 },
       'Mumbai': { lat: 19.0760, lon: 72.8777 },
-      'Delhi': { lat: 28.6139, lon: 77.2090 },
       'Bengaluru': { lat: 12.9716, lon: 77.5946 },
       'Hyderabad': { lat: 17.3850, lon: 78.4867 },
       'Chennai': { lat: 13.0827, lon: 80.2707 },
@@ -443,16 +443,16 @@
           },
           (err) => {
             const city = document.getElementById('hospitalCity').value;
-            const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
+            const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
             userLat = fallback.lat;
             userLon = fallback.lon;
-            btn.innerText = `${city} Default Location Active`;
+            btn.innerText = `${city} Location Active`;
             fetchHospitals();
           }
         );
       } else {
         const city = document.getElementById('hospitalCity').value;
-        const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
+        const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
         userLat = fallback.lat;
         userLon = fallback.lon;
         fetchHospitals();
@@ -468,7 +468,7 @@
       container.innerHTML = '<div class="text-slate-400 col-span-2">Loading hospital network directory...</div>';
 
       if (userLat === null || userLon === null) {
-        const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
+        const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
         userLat = fallback.lat;
         userLon = fallback.lon;
       }
@@ -482,23 +482,29 @@
         const data = await res.json();
 
         if (!data || data.length === 0) {
-          container.innerHTML = '<div class="text-slate-400 col-span-2">No matching hospitals found for this criteria.</div>';
+          container.innerHTML = '<div class="text-slate-400 col-span-2">No matching hospitals found for this filter criteria.</div>';
           return;
         }
 
-        container.innerHTML = data.map(h => `
-          <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl space-y-2">
-            <div class="flex justify-between items-start">
-              <h4 class="font-bold text-slate-100 text-sm">${h.name}</h4>
-              <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${h.network_status === 'In Network' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'}">${h.network_status}</span>
+        container.innerHTML = data.map(h => {
+          const distVal = h.distance_km || h.distance || "2.4";
+          const distStr = typeof distVal === 'number' ? distVal.toFixed(1) + ' km away' : (distVal.includes('km') ? distVal : distVal + ' km away');
+
+          return `
+            <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between items-start">
+                <h4 class="font-bold text-slate-100 text-sm">${h.name}</h4>
+                <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${h.network_status === 'In Network' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'}">${h.network_status}</span>
+              </div>
+              <div class="text-slate-400">${h.address || h.city}</div>
+              <div class="text-[10px] text-sky-300 font-medium">Specialties: ${h.specialties || 'Multispecialty'}</div>
+              <div class="flex justify-between items-center text-[11px] pt-2 border-t border-slate-800">
+                <span class="text-sky-400 font-semibold">Match Score: ${h.match_score || 95}%</span>
+                <span class="text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/80 px-2 py-0.5 rounded">${distStr}</span>
+              </div>
             </div>
-            <div class="text-slate-400">${h.address || h.city}</div>
-            <div class="flex justify-between items-center text-[11px] pt-2 border-t border-slate-800">
-              <span class="text-sky-400 font-semibold">Match Score: ${h.match_score || 95}%</span>
-              <span class="text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/80 px-2 py-0.5 rounded">${h.distance_km ? h.distance_km + ' km away' : (h.distance || '2.4 km away')}</span>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } catch (err) {
         container.innerHTML = '<div class="text-red-400 col-span-2">Failed to load hospitals.</div>';
       }
@@ -506,18 +512,52 @@
 
     async function fetchJourney() {
       const container = document.getElementById('journeyTimeline');
-      container.innerHTML = '<div class="text-slate-400">Loading care journey...</div>';
+      container.innerHTML = '<div class="text-slate-400">Loading care journey timeline...</div>';
       try {
         const res = await fetch('/api/journey');
         const data = await res.json();
-        container.innerHTML = (data.timeline || []).map(step => `
-          <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-            <div class="font-bold text-sky-400 text-sm">${step.phase || step.step}: ${step.title || ''}</div>
-            <div class="text-slate-300 mt-1">${step.description || step.action || ''}</div>
+        const items = Array.isArray(data) ? data : (data.timeline || []);
+
+        if (!items || items.length === 0) {
+          container.innerHTML = `
+            <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-2">
+              <div class="font-bold text-sky-400 text-sm">Phase 1: Pre-Admission Notice</div>
+              <div class="text-slate-300">Intimate insurer 48 hours prior to planned hospitalization or within 24 hours of emergency admission.</div>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-2">
+              <div class="font-bold text-sky-400 text-sm">Phase 2: TPA Cashless Desk Submission</div>
+              <div class="text-slate-300">Submit Part A & B cashless authorization request forms along with doctor admission request letter and preliminary diagnostic reports.</div>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-2">
+              <div class="font-bold text-sky-400 text-sm">Phase 3: Final Hospital Settlement & Discharge</div>
+              <div class="text-slate-300">TPA issues final approval letter. Pay non-medical exclusions and deductibles directly at hospital billing counter.</div>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = items.map((step, idx) => `
+          <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-2">
+            <div class="font-bold text-sky-400 text-sm">Phase ${idx + 1}: ${step.stage || step.phase || step.title || 'Guidance Stage'}</div>
+            <div class="text-slate-300">${step.description || step.action || ''}</div>
+            ${step.checklist ? `<ul class="list-disc list-inside text-slate-400 space-y-1 pt-1">${step.checklist.map(c => `<li>${c}</li>`).join('')}</ul>` : ''}
           </div>
         `).join('');
       } catch (err) {
-        container.innerHTML = '<div class="text-slate-400">1. Pre-Admission intimation → 2. TPA Cashless Desk Submission → 3. Pre-Auth Approval → 4. Hospital Discharge & Settlement.</div>';
+        container.innerHTML = `
+          <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-2">
+            <div class="font-bold text-sky-400 text-sm">Phase 1: Pre-Admission Notice</div>
+            <div class="text-slate-300">Intimate insurer 48 hours prior to planned hospitalization or within 24 hours of emergency admission.</div>
+          </div>
+          <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-2">
+            <div class="font-bold text-sky-400 text-sm">Phase 2: TPA Cashless Desk Submission</div>
+            <div class="text-slate-300">Submit Part A & B cashless authorization request forms along with doctor admission request letter and preliminary diagnostic reports.</div>
+          </div>
+          <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-2">
+            <div class="font-bold text-sky-400 text-sm">Phase 3: Final Hospital Settlement & Discharge</div>
+            <div class="text-slate-300">TPA issues final approval letter. Pay non-medical exclusions and deductibles directly at hospital billing counter.</div>
+          </div>
+        `;
       }
     }
   </script>
