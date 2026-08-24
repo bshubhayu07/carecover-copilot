@@ -11,16 +11,27 @@ def ask_policy_question(query: str, collection=None, policy_profile=None) -> str
     if policy_profile and hasattr(policy_profile, 'insurer_name') and policy_profile.insurer_name:
         insurer_name = policy_profile.insurer_name
 
+    q_lower = query.lower().strip()
+
+    # 1. Handle Off-Topic / Non-Policy Queries Intelligently
+    off_topic_staff_keywords = ["doctor trained", "doctor qualification", "hospital staff", "nurse qualification", "physician degree"]
+    if any(k in q_lower for k in off_topic_staff_keywords):
+        return f"This question asks about hospital staffing or clinical qualifications, which are not governed by your {insurer_name} health insurance contract. Health insurance policies specify financial coverage limits, room rent caps, covered doctor consultation fees, and cashless pre-authorization procedures. Please contact the hospital administration directly for doctor credential verification."
+
+    # 2. Key Policy Topic Handlers (Deterministic Fallback / Dummy Mode)
     if USE_DUMMY_MODE or not collection:
-        q_lower = query.lower()
         if "cataract" in q_lower:
             return f"Based on {insurer_name} (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-limit of ₹40,000 per eye (or 25% of Sum Insured, whichever is lower) with a 24-month waiting period for pre-existing conditions. Please confirm final eligibility and authorization with the insurer and hospital."
-        elif "room" in q_lower or "private" in q_lower:
+        elif "room" in q_lower or "private" in q_lower or "icu" in q_lower:
             return f"Based on {insurer_name} (Page 1 - Room Rent Eligibility), Single Private Room is fully covered without proportional deduction penalties. Please confirm final eligibility and authorization with the insurer and hospital."
-        elif "authorization" in q_lower or "preauth" in q_lower or "pre-auth" in q_lower:
+        elif "authorization" in q_lower or "preauth" in q_lower or "pre-auth" in q_lower or "cashless" in q_lower:
             return f"Based on {insurer_name} (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorization must be submitted at least 48 hours prior to admission at the TPA desk. Please confirm final eligibility and authorization with the insurer and hospital."
+        elif "claim" in q_lower or "reimbursement" in q_lower:
+            return f"Based on {insurer_name} (Page 3 - Claims Procedure), reimbursement claims must be submitted within 30 days of discharge along with original bills, discharge summary, and diagnostic reports. Please confirm final eligibility and authorization with the insurer and hospital."
+        elif "doctor" in q_lower or "physician" in q_lower or "surgeon" in q_lower or "consultation" in q_lower:
+            return f"Based on {insurer_name} (Page 1 - Inpatient Medical Expenses), attending doctor, surgeon, and specialist consultation fees incurred during inpatient hospitalization are 100% covered up to the Sum Insured limit. Please confirm final eligibility and authorization with the insurer and hospital."
         else:
-            return f"Based on {insurer_name}, hospitalizations, surgeries, and day-care procedures are covered subject to policy sum insured terms and sub-limits. Please confirm final eligibility and authorization with the insurer and hospital."
+            return f"Based on {insurer_name}, inpatient hospitalizations, surgeries, doctor consultation fees, and day-care procedures are covered subject to policy sum insured terms and sub-limits. Please confirm final eligibility and authorization with the insurer and hospital."
 
     try:
         results = collection.query(

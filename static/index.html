@@ -35,7 +35,7 @@
 
   <!-- Emergency Banner -->
   <div class="bg-red-950/90 border-b border-red-800/80 px-4 py-2 text-center text-xs md:text-sm text-red-200 font-medium">
-    🚨 EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call <strong>112 / 108</strong> immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.
+    EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call <strong>112 / 108</strong> immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.
   </div>
 
   <!-- Header -->
@@ -78,13 +78,13 @@
           <span>I consent to temporary document processing for this session (DPDP Rules 2025).</span>
         </label>
         <button id="purgeBtn" onclick="purgeSession()" class="w-full bg-red-950/80 hover:bg-red-900 text-red-200 border border-red-800 text-xs font-semibold py-2 rounded-lg transition-colors">
-          🗑️ Purge & Delete Session Data Now
+          Purge & Delete Session Data Now
         </button>
       </div>
 
       <div class="glass-card p-4 rounded-xl space-y-2 text-xs text-slate-300 border border-emerald-900/40">
         <div class="font-bold text-emerald-400 flex items-center gap-1.5 text-xs">
-          🔒 Your Data Privacy Guarantees
+          Your Data Privacy Guarantees
         </div>
         <div class="text-slate-300">• <strong>Full Privacy Protection:</strong> Your policy document is processed safely for this session only.</div>
         <div class="text-slate-300">• <strong>Zero File Storage:</strong> Your personal PDF is never permanently saved, stored, or shared.</div>
@@ -97,10 +97,10 @@
       
       <!-- Navigation Tabs -->
       <nav class="flex border-b border-slate-800 text-sm gap-6 font-medium">
-        <button onclick="switchTab('tab1')" id="tab1-btn" class="py-2.5 tab-active">📄 Upload & Extract</button>
-        <button onclick="switchTab('tab2')" id="tab2-btn" class="py-2.5 text-slate-400 hover:text-slate-200">💬 Ask Your Policy</button>
-        <button onclick="switchTab('tab3')" id="tab3-btn" class="py-2.5 text-slate-400 hover:text-slate-200">🏥 Find Hospital Options</button>
-        <button onclick="switchTab('tab4')" id="tab4-btn" class="py-2.5 text-slate-400 hover:text-slate-200">🗺️ Care Journey & Safety</button>
+        <button onclick="switchTab('tab1')" id="tab1-btn" class="py-2.5 tab-active">Upload & Extract</button>
+        <button onclick="switchTab('tab2')" id="tab2-btn" class="py-2.5 text-slate-400 hover:text-slate-200">Ask Your Policy</button>
+        <button onclick="switchTab('tab3')" id="tab3-btn" class="py-2.5 text-slate-400 hover:text-slate-200">Find Hospital Options</button>
+        <button onclick="switchTab('tab4')" id="tab4-btn" class="py-2.5 text-slate-400 hover:text-slate-200">Care Journey & Safety</button>
       </nav>
 
       <!-- TAB 1: Upload & Extract -->
@@ -124,7 +124,7 @@
         <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50">
           <div class="flex justify-between items-center border-b border-slate-800 pb-3">
             <div>
-              <h3 class="font-bold text-sky-400 text-base">⚡ Dual-Policy & Super Top-Up Comparison Engine</h3>
+              <h3 class="font-bold text-sky-400 text-base">Dual-Policy & Super Top-Up Comparison Engine</h3>
               <p class="text-xs text-slate-400">Combine a secondary Super Top-Up policy to calculate total protection coverage and deductible triggers.</p>
             </div>
             <span class="text-xs bg-sky-950 text-sky-400 border border-sky-800 px-2.5 py-0.5 rounded-full">Top-Up Active</span>
@@ -208,7 +208,7 @@
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 pb-3">
             <h2 class="text-lg font-bold text-white">Hospital Network & Room Eligibility Matching</h2>
             <button onclick="requestGPSLocation()" id="gpsBtn" class="bg-slate-800 hover:bg-slate-700 text-sky-400 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 transition-colors">
-              📍 Use Live GPS Location
+              Use Live GPS Location
             </button>
           </div>
           
@@ -306,13 +306,14 @@
 
     function loadDemoPolicy() {
       currentBaseSI = 500000;
+      activePolicyName = "Niva Bupa Health Insurance";
       updateCombinedSI();
       document.getElementById('resInsurer').innerText = "Niva Bupa Health Insurance";
       document.getElementById('resSumInsured').innerText = "₹5,00,000";
       document.getElementById('resRoom').innerText = "Single Private Room";
       document.getElementById('resCopay').innerText = "0% Co-Pay | Pre-Auth Req";
       const status = document.getElementById('uploadStatus');
-      status.innerText = "✓ Demo Base Policy Loaded Successfully!";
+      status.innerText = "Demo Base Policy Loaded Successfully!";
       status.className = "text-xs text-emerald-400 block";
     }
 
@@ -320,7 +321,7 @@
       currentTopupSI = 1500000;
       updateCombinedSI();
       const status = document.getElementById('topupUploadStatus');
-      status.innerText = "✓ Demo Super Top-Up Policy (₹15,00,000) Loaded Successfully!";
+      status.innerText = "Demo Super Top-Up Policy (₹15,00,000) Loaded Successfully!";
       status.className = "text-xs text-emerald-400 block mt-2";
     }
 
@@ -356,7 +357,7 @@
         document.getElementById('resRoom').innerText = data.room_eligibility || "Single Room";
         document.getElementById('resCopay').innerText = `${data.co_payment_percentage || 0}% Co-Pay | ${data.pre_authorization_required ? 'Pre-Auth Req' : 'No Pre-Auth'}`;
 
-        status.innerText = `✓ Extracted '${file.name}' Successfully!`;
+        status.innerText = `Extracted '${file.name}' Successfully!`;
         status.className = "text-xs text-emerald-400 block mt-2";
       } catch (err) {
         status.innerText = "Upload failed or invalid PDF. Try loading Demo Base Policy.";
@@ -384,7 +385,7 @@
         currentTopupSI = data.sum_insured_inr || 1500000;
         updateCombinedSI();
 
-        status.innerText = `✓ Extracted Super Top-Up '${file.name}' (₹${currentTopupSI.toLocaleString('en-IN')}) Successfully!`;
+        status.innerText = `Extracted Super Top-Up '${file.name}' (₹${currentTopupSI.toLocaleString('en-IN')}) Successfully!`;
         status.className = "text-xs text-emerald-400 block mt-2";
       } catch (err) {
         status.innerText = "Top-Up upload failed. Using Demo Super Top-Up baseline.";
@@ -431,12 +432,12 @@
     function requestGPSLocation() {
       const btn = document.getElementById('gpsBtn');
       if (navigator.geolocation) {
-        btn.innerText = "⏳ Acquiring GPS Location...";
+        btn.innerText = "Acquiring GPS Location...";
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             userLat = pos.coords.latitude;
             userLon = pos.coords.longitude;
-            btn.innerText = "📍 GPS Active";
+            btn.innerText = "GPS Active";
             btn.className = "bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5";
             fetchHospitals();
           },
@@ -445,7 +446,7 @@
             const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
             userLat = fallback.lat;
             userLon = fallback.lon;
-            btn.innerText = `📍 ${city} Default Location Active`;
+            btn.innerText = `${city} Default Location Active`;
             fetchHospitals();
           }
         );
@@ -466,7 +467,6 @@
       const container = document.getElementById('hospitalList');
       container.innerHTML = '<div class="text-slate-400 col-span-2">Loading hospital network directory...</div>';
 
-      // Always supply lat/lon (either live GPS or city center coordinates) to trigger distance calculation
       if (userLat === null || userLon === null) {
         const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
         userLat = fallback.lat;
@@ -495,7 +495,7 @@
             <div class="text-slate-400">${h.address || h.city}</div>
             <div class="flex justify-between items-center text-[11px] pt-2 border-t border-slate-800">
               <span class="text-sky-400 font-semibold">Match Score: ${h.match_score || 95}%</span>
-              <span class="text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/80 px-2 py-0.5 rounded">📍 ${h.distance_km ? h.distance_km + ' km away' : (h.distance || '2.4 km away')}</span>
+              <span class="text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/80 px-2 py-0.5 rounded">${h.distance_km ? h.distance_km + ' km away' : (h.distance || '2.4 km away')}</span>
             </div>
           </div>
         `).join('');
