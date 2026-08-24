@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import os
 import json
 import hashlib
@@ -625,12 +625,12 @@ with tab3:
             pre_authorization_required=True
         )
         
-    df = get_hospitals_by_city(city)
-    if df.empty:
+    hospitals_list = get_hospitals_by_city(city)
+    if not hospitals_list:
         st.error(f"No hospitals found for '{city}' in directory.")
     else:
         matches = match_hospitals(
-            df, 
+            hospitals_list, 
             profile_to_use, 
             context_city=city, 
             user_city=st.session_state.user_current_city, 
