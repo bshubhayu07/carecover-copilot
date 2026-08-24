@@ -24,11 +24,6 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# Node & Frontend Exclusions
-node_modules/
-frontend/node_modules/
-.vercel/
-
 # Environment Variables
 .env
 
