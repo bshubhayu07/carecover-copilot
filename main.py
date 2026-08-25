@@ -32,8 +32,15 @@ app = FastAPI(
     version="2.5.0-enterprise"
 )
 
-# Global active state in Python backend
-active_policy_profile: Optional[PolicyProfile] = None
+# Global active state in Python backend (Default initialized to Demo Base Policy)
+active_policy_profile: Optional[PolicyProfile] = PolicyProfile(
+    insurer_name="Niva Bupa Health Insurance",
+    policy_name="Health Companion Policy",
+    sum_insured_inr=500000,
+    room_eligibility="Single Private Room",
+    co_pay="0% Co-Pay",
+    waiting_periods=["24 Months Specific Illness"]
+)
 active_vector_collection = None
 
 # Enforce CORS whitelist
