@@ -236,14 +236,20 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
     # 1. Live Date / Time & Basic Temporal Queries (Calculated in IST UTC+5:30)
     temporal_phrases = [
         "what is today", "what is the date", "what time", "current date", "current time", "what day", "todays date", "today date",
-        "आज की तारीख", "आज का समय", "आज क्या तारीख है", "आज काय तारीख आहे",
-        "aaj ka tarik", "aaj ki tarik", "aaj ka tarikh", "aaj ki tarikh", "aaj kya tarik", "aaj kya tarikh", "aaj ka samay", "kya tarik hai", "kya tarikh hai", "tarik kya", "tarikh kya"
+        "आज की तारीख", "आज का समय", "आज क्या तारीख है", "आज काय तारीख आहे", "আজকের তারিখ", "আজকের সময়", "આજની તારીખ", "આજનો સમય",
+        "இன்றைய தேதி", "இன்றைய நேரம்", "ఈరోజు తేదీ", "ప్రస్తుత సమయం", "ಇಂದಿನ ದಿನಾಂಕ", "ಇಂದಿನ ಸಮಯ", "ഇന്നത്തെ തീയതി", "ഇപ്പോഴത്തെ സമയം",
+        "ਅੱਜ ਦੀ ਤਾਰੀਖ", "ਅੱਜ ਦਾ ਸਮਾਂ", "ଆଜିର ତାରିଖ", "ବର୍ତ୍ତମାନର ସମୟ", "আজিৰ তাৰিখ", "آج کی تاریخ", "آج کا وقت", "अद्यतन दिनांकः",
+        "aaj ka tarik", "aaj ki tarik", "aaj ka tarikh", "aaj ki tarikh", "aaj kya tarik", "aaj kya tarikh", "aaj ka samay", "kya tarik hai", "kya tarikh hai", "tarik kya", "tarikh kya",
+        "indraya thethi", "eroju thedi", "indina dinanka", "innathe thiyathi", "ajj di tarik", "ajira tarik", "aaj ki tareeq"
     ]
-    if any(p in q_clean for p in temporal_phrases) or (any(tok in q_norm.split() for tok in ["date", "time", "clock", "tarik", "tarikh", "samay", "तारीख", "समय"]) and not any(pk in q_clean for pk in ["waiting period", "pre-auth", "claim", "cover", "policy", "प्रतीक्षा"])):
+    if any(p in q_clean for p in temporal_phrases) or (any(tok in q_norm.split() for tok in ["date", "time", "clock", "tarik", "tarikh", "samay", "tareeq", "thethi", "thedi", "dinanka", "thiyathi", "तारीख", "समय", "তারিখ", "તારીખ", "தேதி", "తేదీ", "ದಿನಾಂಕ", "തീയതി", "ਤਾਰੀਖ", "ତାରିଖ"]) and not any(pk in q_clean for pk in ["waiting period", "pre-auth", "claim", "cover", "policy", "प्रतीक्षा"])):
         ist = timezone(timedelta(hours=5, minutes=30))
         now = datetime.now(ist)
         day_str = now.strftime("%A, %d %B %Y")
         time_str = now.strftime("%H:%M:%S")
+        
+        base_temp_ans = f"Today is {day_str} and the current time is {time_str} (24hr). How can I assist you with your health policy or network hospital search today?"
+
         if lang == "Hindi":
             return f"आज की तारीख {day_str} है और वर्तमान समय {time_str} (24 घंटे) है। आज मैं आपकी स्वास्थ्य बीमा या अस्पताल खोज में कैसे सहायता कर सकता हूँ?"
         elif lang == "Marathi":
@@ -252,7 +258,23 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
             return f"আজকের তারিখ {day_str} এবং বর্তমান সময় {time_str} (২৪ ঘন্টা)। আমি আপনাকে কীভাবে সাহায্য করতে পারি?"
         elif lang == "Gujarati":
             return f"આજની તારીખ {day_str} છે અને વર્તમાન સમય {time_str} (24 કલાક) છે. હું તમને કેવી રીતે મદદ કરી શકું?"
-        return f"Today is {day_str} and the current time is {time_str} (24hr). How can I assist you with your health policy or network hospital search today?"
+        elif lang == "Tamil":
+            return f"இன்றைய தேதி {day_str} மற்றும் தற்போதைய நேரம் {time_str} (24 மணிநேரம்). இன்று உங்கள் சுகாதார காப்பீடு அல்லது மருத்துவமனை தேடலில் நான் எவ்வாறு உதவ முடியும்?"
+        elif lang == "Telugu":
+            return f"ఈరోజు తేదీ {day_str} మరియు ప్రస్తుత సమయం {time_str} (24 గంటలు). ఈరోజు మీ ఆరోగ్య బీమా లేదా ఆసుపత్రి శోధనలో నేను మీకు ఎలా సహాయపడగలను?"
+        elif lang == "Kannada":
+            return f"ಇಂದಿನ ದಿನಾಂಕ {day_str} ಮತ್ತು ಪ್ರಸ್ತುತ ಸಮಯ {time_str} (24 ಗಂಟೆಗಳು). ಇಂದು ನಿಮ್ಮ ಆರೋಗ್ಯ ವಿಮೆ அல்லது ಆಸ್ಪತ್ರೆ ಹುಡುಕಾಟದಲ್ಲಿ ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಲಿ?"
+        elif lang == "Malayalam":
+            return f"ഇന്നത്തെ തീയതി {day_str} മത്തെ സമയം {time_str} (24 മണിക്കൂർ). ഇന്ന് നിങ്ങളുടെ ഹെൽത്ത് ഇൻഷുറൻസ് അല്ലെങ്കിൽ ആശുപത്രി തിരച്ചിലിൽ ഞാൻ നിങ്ങളെ എങ്ങനെ സഹായിക്കും?"
+        elif lang == "Punjabi":
+            return f"ਅੱਜ ਦੀ ਤਾਰੀਖ {day_str} ਅਤੇ ਮੌਜੂਦਾ ਸਮਾਂ {time_str} (24 ਘੰਟੇ) ਹੈ। ਅੱਜ ਮੈਂ ਤੁਹਾਡੀ ਸਿਹਤ ਬੀਮਾ ਜਾਂ ਹਸਪਤਾਲ ਦੀ ਖੋਜ ਵਿੱਚ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?"
+        elif lang == "Odia":
+            return f"ଆଜିର ତାରିଖ {day_str} ଏବଂ ବର୍ତ୍ତମାନର ସମୟ {time_str} (୨୪ ଘଣ୍ଟା) ଅଟେ | ଆଜି ମୁଁ ଆପଣଙ୍କୁ କିପରି ସାହାଯ୍ୟ କରିପାରିବି?"
+        elif lang != "English":
+            translated_temp = translate_with_bhashini(base_temp_ans, target_language=lang)
+            if translated_temp:
+                return translated_temp
+        return base_temp_ans
 
     # 2. Greeting Intent
     is_greeting = any(q_clean == g or q_clean.startswith(g + " ") or q_clean.startswith(g + ",") or q_clean.endswith(" " + g) for g in GREETING_KEYWORDS)
