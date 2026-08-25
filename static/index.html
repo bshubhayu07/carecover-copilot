@@ -88,29 +88,29 @@
   <div id="consentModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5">
       <div class="border-b border-slate-800 light:border-slate-200 pb-3">
-        <h3 id="modalTitle" class="text-lg font-extrabold text-white light:text-slate-900">Privacy & Data Compliance</h3>
-        <p id="modalSub" class="text-xs text-slate-400 light:text-slate-500 mt-1">DPDP Rules 2025 Consent Verification</p>
+        <h3 data-i18n="modal_title" class="text-lg font-extrabold text-white light:text-slate-900">Privacy & Data Compliance</h3>
+        <p data-i18n="modal_sub" class="text-xs text-slate-400 light:text-slate-500 mt-1">DPDP Rules 2025 Consent Verification</p>
       </div>
 
       <div class="space-y-3 text-xs text-slate-300 light:text-slate-700">
         <div class="bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-50 p-3.5 rounded-xl border border-slate-800 light:border-slate-200 space-y-2">
-          <div id="modalGuaranteesHeading" class="font-bold text-emerald-400 light:text-emerald-700">Your Data Privacy Guarantees</div>
-          <div id="modalG1">• <strong>Full Privacy Protection:</strong> Policy documents are processed safely for this session only.</div>
-          <div id="modalG2">• <strong>Zero File Storage:</strong> Personal PDFs are never saved, stored, or shared.</div>
-          <div id="modalG3">• <strong>Instant Data Deletion:</strong> Clicking "Purge Data" wipes all session memory immediately.</div>
+          <div data-i18n="modal_guarantees" class="font-bold text-emerald-400 light:text-emerald-700">Your Data Privacy Guarantees</div>
+          <div data-i18n="modal_g1">• <strong>Full Privacy Protection:</strong> Policy documents are processed safely for this session only.</div>
+          <div data-i18n="modal_g2">• <strong>Zero File Storage:</strong> Personal PDFs are never saved, stored, or shared.</div>
+          <div data-i18n="modal_g3">• <strong>Instant Data Deletion:</strong> Clicking "Purge Data" wipes all session memory immediately.</div>
         </div>
 
         <label class="flex items-start gap-2.5 cursor-pointer pt-2">
           <input type="checkbox" id="modalConsentCheckbox" class="mt-0.5 rounded bg-slate-800 light:bg-slate-200 border-slate-700 light:border-slate-300 text-sky-500 focus:ring-0">
-          <span id="modalConsentLabel" class="text-xs font-medium text-slate-200 light:text-slate-800">I consent to temporary document processing for this session (DPDP Rules 2025).</span>
+          <span data-i18n="modal_consent_label" class="text-xs font-medium text-slate-200 light:text-slate-800">I consent to temporary document processing for this session (DPDP Rules 2025).</span>
         </label>
       </div>
 
       <div class="flex gap-3 pt-2">
-        <button id="declineBtn" onclick="declineConsent()" class="w-1/2 bg-red-950/80 hover:bg-red-900 light:bg-red-100 light:hover:bg-red-200 text-red-200 light:text-red-800 font-semibold text-xs py-2.5 rounded-xl border border-red-800 light:border-red-300 transition-colors cursor-pointer">
+        <button data-i18n="decline_btn" onclick="declineConsent()" class="w-1/2 bg-red-950/80 hover:bg-red-900 light:bg-red-100 light:hover:bg-red-200 text-red-200 light:text-red-800 font-semibold text-xs py-2.5 rounded-xl border border-red-800 light:border-red-300 transition-colors cursor-pointer">
           Decline & Exit
         </button>
-        <button id="acceptBtn" onclick="acceptConsent()" class="w-1/2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs py-2.5 rounded-xl transition-colors shadow-md cursor-pointer">
+        <button data-i18n="accept_btn" onclick="acceptConsent()" class="w-1/2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs py-2.5 rounded-xl transition-colors shadow-md cursor-pointer">
           Accept & Proceed
         </button>
       </div>
@@ -121,13 +121,13 @@
   <div id="emergencyBanner" class="bg-red-950/90 dark:bg-red-950/90 light:bg-red-100 border-b border-red-800/80 light:border-red-300 px-4 py-3 transition-colors">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs md:text-sm">
       <div class="text-red-200 light:text-red-900 font-medium text-center md:text-left">
-        EMERGENCY NOTICE: <span id="helplineText">Call <strong id="helplineNumbers" class="text-white light:text-red-950 underline decoration-red-400 font-bold">National Emergency 112 | Medical Ambulance 108</strong></span>
+        <span data-i18n="emergency_prefix">EMERGENCY NOTICE: Call</span> <strong id="helplineNumbers" class="text-white light:text-red-950 underline decoration-red-400 font-bold">National Emergency 112 | Medical Ambulance 108</strong>
       </div>
       
       <!-- Interactive User Location Input Box -->
       <div class="flex items-center gap-2 w-full md:w-auto">
         <input type="text" id="userLocationInput" oninput="handleUserLocationInput()" placeholder="Enter your city/state (e.g. Pune, Mumbai, Delhi, Patna)..." class="bg-red-900/60 light:bg-white text-white light:text-slate-900 placeholder-red-300 light:placeholder-slate-400 border border-red-700 light:border-red-300 rounded-lg px-3 py-1.5 text-xs w-full md:w-64 focus:outline-none focus:ring-1 focus:ring-red-400">
-        <button onclick="requestGPSLocation()" id="gpsBtn" title="Detect GPS Location" class="bg-red-800 hover:bg-red-700 light:bg-red-600 light:hover:bg-red-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-red-600 transition-colors whitespace-nowrap cursor-pointer">
+        <button data-i18n="detect_btn" onclick="requestGPSLocation()" id="gpsBtn" title="Detect GPS Location" class="bg-red-800 hover:bg-red-700 light:bg-red-600 light:hover:bg-red-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-red-600 transition-colors whitespace-nowrap cursor-pointer">
           Detect Location
         </button>
       </div>
@@ -141,24 +141,24 @@
         <span class="text-sky-400 light:text-sky-600">CareCover</span> Copilot
         <span class="text-xs bg-sky-950 dark:bg-sky-950 light:bg-sky-50 text-sky-400 light:text-sky-700 px-2.5 py-0.5 rounded-full border border-sky-800 light:border-sky-200">v2.5.0 Enterprise</span>
       </h1>
-      <p id="headerSubtitle" class="text-xs text-slate-400 light:text-slate-500">Independent Clinical & Insurance Decision Support Navigation System</p>
+      <p data-i18n="header_subtitle" class="text-xs text-slate-400 light:text-slate-500">Independent Clinical & Insurance Decision Support Navigation System</p>
     </div>
 
     <!-- Right Header Tools -->
     <div class="flex items-center gap-3">
       
       <!-- Purge Session Data Button -->
-      <button id="purgeBtnHeader" onclick="purgeSession()" class="bg-red-950/80 hover:bg-red-900 light:bg-red-600 light:hover:bg-red-700 text-red-200 light:text-white border border-red-800 light:border-red-600 font-bold text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap">
+      <button data-i18n="purge_btn" id="purgeBtnHeader" onclick="purgeSession()" class="bg-red-950/80 hover:bg-red-900 light:bg-red-600 light:hover:bg-red-700 text-red-200 light:text-white border border-red-800 light:border-red-600 font-bold text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap">
         Purge & Delete Session Data
       </button>
 
       <!-- LIGHT / DARK MODE TOGGLE SWITCH -->
       <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1.5 cursor-pointer">
-        <span id="themeBtnSpan">Switch to Light Mode</span>
+        <span data-i18n="theme_btn">Switch to Light Mode</span>
       </button>
 
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span> <span id="systemStatusSpan">System: Online</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span> <span data-i18n="system_online">System: Online</span>
       </span>
 
       <!-- 22 OFFICIAL SCHEDULED LANGUAGES OF INDIA SELECTION -->
@@ -195,10 +195,10 @@
     
     <!-- Navigation Tabs -->
     <nav class="flex border-b border-slate-800 light:border-slate-200 text-sm gap-6 font-medium">
-      <button onclick="switchTab('tab1')" id="tab1-btn" class="py-2.5 tab-active">Upload & Extract</button>
-      <button onclick="switchTab('tab2')" id="tab2-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Ask Your Policy</button>
-      <button onclick="switchTab('tab3')" id="tab3-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Find Hospital Options</button>
-      <button onclick="switchTab('tab4')" id="tab4-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Care Journey & Safety</button>
+      <button data-i18n="tab1" onclick="switchTab('tab1')" id="tab1-btn" class="py-2.5 tab-active">Upload & Extract</button>
+      <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Ask Your Policy</button>
+      <button data-i18n="tab3" onclick="switchTab('tab3')" id="tab3-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Find Hospital Options</button>
+      <button data-i18n="tab4" onclick="switchTab('tab4')" id="tab4-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Care Journey & Safety</button>
     </nav>
 
     <!-- TAB 1: Upload & Extract -->
@@ -206,15 +206,15 @@
       
       <!-- Base Policy Upload Card -->
       <div class="glass-card p-6 rounded-xl space-y-4">
-        <h2 id="uploadCardTitle" class="text-lg font-bold text-white light:text-slate-900">Upload Base Health Insurance Policy Document</h2>
-        <p id="uploadCardDesc" class="text-xs text-slate-400 light:text-slate-600">Selecting a PDF file automatically extracts room eligibility, sum insured, co-pay, and pre-auth rules without requiring extra clicks.</p>
+        <h2 data-i18n="upload_title" class="text-lg font-bold text-white light:text-slate-900">Upload Base Health Insurance Policy Document</h2>
+        <p data-i18n="upload_desc" class="text-xs text-slate-400 light:text-slate-600">Selecting a PDF file automatically extracts room eligibility, sum insured, co-pay, and pre-auth rules without requiring extra clicks.</p>
         
         <div class="flex flex-col sm:flex-row gap-3 items-center">
           <input type="file" id="policyFileInput" accept=".pdf" onchange="handleUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-600 file:text-white hover:file:bg-sky-500 cursor-pointer">
-          <button id="loadDemoBaseBtn" onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
+          <button data-i18n="demo_base_btn" id="loadDemoBaseBtn" onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
             Load Demo Base Policy
           </button>
-          <a id="downloadDemoBaseBtn" href="/data/demo_base_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-sky-950 dark:bg-sky-950 light:bg-sky-50 hover:bg-sky-900 light:hover:bg-sky-100 text-sky-300 light:text-sky-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-sky-800 light:border-sky-300 transition-colors whitespace-nowrap text-center cursor-pointer">
+          <a data-i18n="demo_base_dl" id="downloadDemoBaseBtn" href="/data/demo_base_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-sky-950 dark:bg-sky-950 light:bg-sky-50 hover:bg-sky-900 light:hover:bg-sky-100 text-sky-300 light:text-sky-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-sky-800 light:border-sky-300 transition-colors whitespace-nowrap text-center cursor-pointer">
             Download Demo PDF
           </a>
         </div>
@@ -225,33 +225,33 @@
       <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-200">
         <div class="flex justify-between items-center border-b border-slate-800 light:border-slate-200 pb-3">
           <div>
-            <h3 id="topupCardTitle" class="font-bold text-sky-400 light:text-sky-700 text-base">Dual-Policy & Super Top-Up Comparison Engine</h3>
-            <p id="topupCardDesc" class="text-xs text-slate-400 light:text-slate-600">Combine a secondary Super Top-Up policy to calculate total protection coverage and deductible triggers.</p>
+            <h3 data-i18n="topup_title" class="font-bold text-sky-400 light:text-sky-700 text-base">Dual-Policy & Super Top-Up Comparison Engine</h3>
+            <p data-i18n="topup_desc" class="text-xs text-slate-400 light:text-slate-600">Combine a secondary Super Top-Up policy to calculate total protection coverage and deductible triggers.</p>
           </div>
           <span id="topupBadge" class="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full">Top-Up Optional</span>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-3 items-center">
           <input type="file" id="topupFileInput" accept=".pdf" onchange="handleTopupUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
-          <button id="loadDemoTopupBtn" onclick="loadDemoTopup()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
+          <button data-i18n="demo_topup_btn" id="loadDemoTopupBtn" onclick="loadDemoTopup()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
             Load Demo Super Top-Up
           </button>
-          <a id="downloadDemoTopupBtn" href="/data/demo_super_topup_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-indigo-950 dark:bg-indigo-950 light:bg-indigo-50 hover:bg-indigo-900 light:hover:bg-indigo-100 text-indigo-300 light:text-indigo-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-indigo-800 light:border-indigo-300 transition-colors whitespace-nowrap text-center cursor-pointer">
+          <a data-i18n="demo_topup_dl" id="downloadDemoTopupBtn" href="/data/demo_super_topup_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-indigo-950 dark:bg-indigo-950 light:bg-indigo-50 hover:bg-indigo-900 light:hover:bg-indigo-100 text-indigo-300 light:text-indigo-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-indigo-800 light:border-indigo-300 transition-colors whitespace-nowrap text-center cursor-pointer">
             Download Top-Up PDF
           </a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
           <div class="bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
-            <div id="labelPrimaryBase" class="text-slate-400 light:text-slate-500">Primary Base Policy Cover</div>
+            <div data-i18n="primary_base_label" class="text-slate-400 light:text-slate-500">Primary Base Policy Cover</div>
             <div id="summaryBaseSI" class="font-bold text-slate-200 light:text-slate-800 text-sm mt-1">₹0</div>
           </div>
           <div class="bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
-            <div id="labelSuperTopup" class="text-slate-400 light:text-slate-500">Super Top-Up Policy Cover</div>
+            <div data-i18n="super_topup_label" class="text-slate-400 light:text-slate-500">Super Top-Up Policy Cover</div>
             <div id="summaryTopupSI" class="font-bold text-indigo-400 light:text-indigo-700 text-sm mt-1">₹0</div>
           </div>
           <div class="bg-slate-900/80 dark:bg-slate-900/80 light:bg-sky-50 p-3 rounded-lg border border-sky-800/80 light:border-sky-300">
-            <div id="labelCombinedSI" class="text-sky-300 light:text-sky-800 font-semibold">Combined Sum Insured Protection</div>
+            <div data-i18n="combined_si_label" class="text-sky-300 light:text-sky-800 font-semibold">Combined Sum Insured Protection</div>
             <div id="summaryCombinedSI" class="font-bold text-sky-400 light:text-sky-700 text-sm mt-1">₹0</div>
           </div>
         </div>
@@ -262,12 +262,12 @@
       <div id="policySummaryCard" class="glass-card p-6 rounded-xl space-y-4">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-800 light:border-slate-200 pb-3">
           <div>
-            <h3 id="summaryCardTitle" class="font-bold text-slate-100 light:text-slate-900 text-base">Extracted Policy Summary Profile</h3>
-            <p id="summaryCardSub" class="text-xs text-slate-400 light:text-slate-500">Structured policy clauses and financial coverage limits</p>
+            <h3 data-i18n="summary_title" class="font-bold text-slate-100 light:text-slate-900 text-base">Extracted Policy Summary Profile</h3>
+            <p data-i18n="summary_sub" class="text-xs text-slate-400 light:text-slate-500">Structured policy clauses and financial coverage limits</p>
           </div>
           <div class="flex items-center gap-3">
             <!-- EXPORT POLICY INFORMATION AS PDF BUTTON -->
-            <button id="exportPdfBtn" onclick="downloadPolicyPDF()" title="Export Extracted Policy Summary as PDF Report" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg border border-sky-400 flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm">
+            <button data-i18n="export_pdf_btn" onclick="downloadPolicyPDF()" title="Export Extracted Policy Summary as PDF Report" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg border border-sky-400 flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm">
               Export Summary as PDF
             </button>
             <span id="profileStatusBadge" class="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full">Upload PDF or Load Demo</span>
@@ -276,19 +276,19 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
-            <div id="labelInsurer" class="text-slate-400 light:text-slate-500 font-medium">Insurer Name</div>
+            <div data-i18n="insurer_label" class="text-slate-400 light:text-slate-500 font-medium">Insurer Name</div>
             <div id="resInsurer" class="font-bold text-slate-100 light:text-slate-800 text-sm mt-1">No Policy Uploaded</div>
           </div>
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
-            <div id="labelSI" class="text-slate-400 light:text-slate-500 font-medium">Sum Insured</div>
+            <div data-i18n="si_label" class="text-slate-400 light:text-slate-500 font-medium">Sum Insured</div>
             <div id="resSumInsured" class="font-bold text-amber-400 light:text-amber-700 text-sm mt-1">₹0 (Pending Upload)</div>
           </div>
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
-            <div id="labelRoom" class="text-slate-400 light:text-slate-500 font-medium">Room Rent Eligibility</div>
+            <div data-i18n="room_label" class="text-slate-400 light:text-slate-500 font-medium">Room Rent Eligibility</div>
             <div id="resRoom" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">Pending Upload</div>
           </div>
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
-            <div id="labelCopay" class="text-slate-400 light:text-slate-500 font-medium">Co-Pay / Pre-Auth</div>
+            <div data-i18n="copay_label" class="text-slate-400 light:text-slate-500 font-medium">Co-Pay / Pre-Auth</div>
             <div id="resCopay" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">Pending Upload</div>
           </div>
         </div>
@@ -298,17 +298,17 @@
     <!-- TAB 2: Ask Your Policy -->
     <section id="tab2-content" class="space-y-6 hidden">
       <div class="glass-card p-6 rounded-xl space-y-4 flex flex-col h-[500px]">
-        <h2 id="askTitle" class="text-lg font-bold text-white light:text-slate-900">Ask Questions About Your Coverage</h2>
+        <h2 data-i18n="ask_title" class="text-lg font-bold text-white light:text-slate-900">Ask Questions About Your Coverage</h2>
         
         <div id="chatMessages" class="flex-1 overflow-y-auto space-y-3 p-3 bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-50 rounded-lg border border-slate-800 light:border-slate-200 text-xs">
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg max-w-[80%] border border-slate-800 light:border-slate-200 text-slate-200 light:text-slate-800">
-            <span class="font-bold text-sky-400 light:text-sky-700">CareCover Bot:</span> <span id="chatIntro">Hello! I am CareCover Copilot. Ask me any question about your health insurance policy, room rent limits, cataract sub-limits, cashless pre-authorization, or hospital procedures.</span>
+            <span class="font-bold text-sky-400 light:text-sky-700">CareCover Bot:</span> <span data-i18n="chat_intro">Hello! I am CareCover Copilot. Ask me any question about your health insurance policy, room rent limits, cataract sub-limits, cashless pre-authorization, or hospital procedures.</span>
           </div>
         </div>
 
         <div class="flex gap-2">
           <input type="text" id="chatInput" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="e.g. Is cataract surgery covered and what is the sub-limit?" class="flex-1 bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-xs text-white light:text-slate-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-sky-500">
-          <button id="sendQueryBtn" onclick="sendChatMessage()" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-6 py-2.5 rounded-lg transition-colors">
+          <button data-i18n="send_btn" id="sendQueryBtn" onclick="sendChatMessage()" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-6 py-2.5 rounded-lg transition-colors">
             Send Query
           </button>
         </div>
@@ -320,14 +320,14 @@
       <div class="glass-card p-6 rounded-xl space-y-4">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
           <div>
-            <h2 id="hospitalTitle" class="text-lg font-bold text-white light:text-slate-900">Hospital Network & Room Eligibility Matching</h2>
-            <p id="hospitalDesc" class="text-xs text-slate-400 light:text-slate-600">Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.</p>
+            <h2 data-i18n="hospital_title" class="text-lg font-bold text-white light:text-slate-900">Hospital Network & Room Eligibility Matching</h2>
+            <p data-i18n="hospital_desc" class="text-xs text-slate-400 light:text-slate-600">Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.</p>
           </div>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
-            <label id="labelCitySelect" class="block text-slate-400 light:text-slate-600 mb-1">Select Your City</label>
+            <label data-i18n="city_label" class="block text-slate-400 light:text-slate-600 mb-1">Select Your City</label>
             <select id="hospitalCity" onchange="handleCityDropdownChange()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
               <option value="" disabled selected>Select Your City</option>
               <option value="Delhi">Delhi NCR</option>
@@ -355,7 +355,7 @@
             </select>
           </div>
           <div>
-            <label id="labelSpecialtySelect" class="block text-slate-400 light:text-slate-600 mb-1">Filter Specialty</label>
+            <label data-i18n="specialty_label" class="block text-slate-400 light:text-slate-600 mb-1">Filter Specialty</label>
             <select id="hospitalSpecialty" onchange="fetchHospitals()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2">
               <option value="All Specialties">All Specialties</option>
               <option value="Cardiology">Cardiology</option>
@@ -367,7 +367,7 @@
           <div class="flex items-end">
             <label class="flex items-center gap-2 text-slate-300 light:text-slate-700 cursor-pointer pb-2">
               <input type="checkbox" id="inNetworkOnly" onchange="fetchHospitals()" class="rounded bg-slate-900 light:bg-slate-100 border-slate-700 light:border-slate-300 text-sky-500">
-              <span id="labelInNetwork">In-Network Only</span>
+              <span data-i18n="in_network_label">In-Network Only</span>
             </label>
           </div>
         </div>
@@ -381,7 +381,7 @@
     <!-- TAB 4: Care Journey & Safety -->
     <section id="tab4-content" class="space-y-6 hidden">
       <div class="glass-card p-6 rounded-xl space-y-4">
-        <h2 id="journeyTitle" class="text-lg font-bold text-white light:text-slate-900">Care Journey Timeline & Guidance</h2>
+        <h2 data-i18n="journey_title" class="text-lg font-bold text-white light:text-slate-900">Care Journey Timeline & Guidance</h2>
         <div id="journeyTimeline" class="space-y-4 text-xs">
           <!-- Journey Loaded via JS -->
         </div>
@@ -398,128 +398,207 @@
     let userLon = null;
     let selectedLanguage = "English";
 
-    // Client-side i18n Translation Dictionary for UI Elements
+    // Complete Comprehensive i18n Dictionary for ALL English Baselines & Translations
     const UI_I18N = {
+      "English": {
+        emergency_prefix: "EMERGENCY NOTICE: Call",
+        detect_btn: "Detect Location",
+        header_subtitle: "Independent Clinical & Insurance Decision Support Navigation System",
+        purge_btn: "Purge & Delete Session Data",
+        theme_btn: "Switch to Light Mode",
+        system_online: "System: Online",
+        tab1: "Upload & Extract",
+        tab2: "Ask Your Policy",
+        tab3: "Find Hospital Options",
+        tab4: "Care Journey & Safety",
+        upload_title: "Upload Base Health Insurance Policy Document",
+        upload_desc: "Selecting a PDF file automatically extracts room eligibility, sum insured, co-pay, and pre-auth rules without requiring extra clicks.",
+        demo_base_btn: "Load Demo Base Policy",
+        demo_base_dl: "Download Demo PDF",
+        topup_title: "Dual-Policy & Super Top-Up Comparison Engine",
+        topup_desc: "Combine a secondary Super Top-Up policy to calculate total protection coverage and deductible triggers.",
+        demo_topup_btn: "Load Demo Super Top-Up",
+        demo_topup_dl: "Download Top-Up PDF",
+        primary_base_label: "Primary Base Policy Cover",
+        super_topup_label: "Super Top-Up Policy Cover",
+        combined_si_label: "Combined Sum Insured Protection",
+        summary_title: "Extracted Policy Summary Profile",
+        summary_sub: "Structured policy clauses and financial coverage limits",
+        export_pdf_btn: "Export Summary as PDF",
+        insurer_label: "Insurer Name",
+        si_label: "Sum Insured",
+        room_label: "Room Rent Eligibility",
+        copay_label: "Co-Pay / Pre-Auth",
+        ask_title: "Ask Questions About Your Coverage",
+        chat_intro: "Hello! I am CareCover Copilot. Ask me any question about your health insurance policy, room rent limits, cataract sub-limits, cashless pre-authorization, or hospital procedures.",
+        chat_placeholder: "e.g. Is cataract surgery covered and what is the sub-limit?",
+        send_btn: "Send Query",
+        hospital_title: "Hospital Network & Room Eligibility Matching",
+        hospital_desc: "Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.",
+        city_label: "Select Your City",
+        specialty_label: "Filter Specialty",
+        in_network_label: "In-Network Only",
+        journey_title: "Care Journey Timeline & Guidance"
+      },
       "Hindi": {
-        subtitle: "स्वतंत्र नैदानिक एवं बीमा निर्णय सहायता प्रणाली",
-        purge: "सत्र डेटा हटाएँ",
+        emergency_prefix: "आपातकालीन सूचना: कॉल करें",
+        detect_btn: "स्थान का पता लगाएं",
+        header_subtitle: "स्वतंत्र नैदानिक एवं बीमा निर्णय सहायता प्रणाली",
+        purge_btn: "सत्र डेटा हटाएं",
+        theme_btn: "लाइट मोड पर स्विच करें",
+        system_online: "सिस्टम: ऑनलाइन",
         tab1: "अपलोड एवं एक्सट्रैक्ट",
         tab2: "नीति प्रश्न पूछें",
         tab3: "अस्पताल खोजें",
         tab4: "देखभाल यात्रा",
-        uploadTitle: "मूल स्वास्थ्य बीमा नीति दस्तावेज़ अपलोड करें",
-        demoBaseBtn: "डेमो नीति लोड करें",
-        downloadDemoBaseBtn: "डेमो पीडीएफ डाउनलोड करें",
-        topupTitle: "सुपर टॉप-अप तुलना इंजन",
-        demoTopupBtn: "डेमो टॉप-अप लोड करें",
-        downloadDemoTopupBtn: "टॉप-अप पीडीएफ डाउनलोड करें",
-        summaryTitle: "एक्सट्रैक्ट की गई नीति प्रोफ़ाइल",
-        exportPdfBtn: "पीडीएफ के रूप में निर्यात करें",
-        askTitle: "अपनी नीति के बारे में प्रश्न पूछें",
-        sendBtn: "प्रश्न भेजें",
-        chatIntro: "नमस्ते! मैं केयरकवर कॉपायलट हूँ। बीमा नीति के बारे में कोई भी प्रश्न पूछें।",
-        placeholder: "उदा. मोतियाबिंद सर्जरी की सीमा क्या है?"
+        upload_title: "मूल स्वास्थ्य बीमा नीति दस्तावेज़ अपलोड करें",
+        upload_desc: "पीडीएफ फाइल चुनने पर कमरा पात्रता, बीमा राशि और प्री-ऑथ नियम स्वतः निष्कर्षण होते हैं।",
+        demo_base_btn: "डेमो नीति लोड करें",
+        demo_base_dl: "डेमो पीडीएफ डाउनलोड करें",
+        topup_title: "सुपर टॉप-अप तुलना इंजन",
+        topup_desc: "कुल सुरक्षा और कटौती योग्य ट्रिगर्स की गणना के लिए द्वितीयक सुपर टॉप-अप नीति जोड़ें।",
+        demo_topup_btn: "डेमो टॉप-अप लोड करें",
+        demo_topup_dl: "टॉप-अप पीडीएफ डाउनलोड करें",
+        primary_base_label: "प्राथमिक मूल नीति कवर",
+        super_topup_label: "सुपर टॉप-अप नीति कवर",
+        combined_si_label: "संयुक्त बीमा राशि सुरक्षा",
+        summary_title: "एक्सट्रैक्ट की गई नीति प्रोफ़ाइल",
+        summary_sub: "संरचित नीति खंड और वित्तीय कवरेज सीमाएं",
+        export_pdf_btn: "पीडीएफ के रूप में निर्यात करें",
+        insurer_label: "बीमाकर्ता का नाम",
+        si_label: "बीमा राशि",
+        room_label: "कमरा किराया पात्रता",
+        copay_label: "सह-भुगतान / प्री-ऑथ",
+        ask_title: "अपनी नीति के बारे में प्रश्न पूछें",
+        chat_intro: "नमस्ते! मैं केयरकवर कॉपायलट हूँ। स्वास्थ्य बीमा नीति के बारे में प्रश्न पूछें।",
+        chat_placeholder: "उदा. मोतियाबिंद सर्जरी की सीमा क्या है?",
+        send_btn: "प्रश्न भेजें",
+        hospital_title: "अस्पताल नेटवर्क एवं कमरा पात्रता मिलान",
+        hospital_desc: "निकटतम कैशलेस नेटवर्क अस्पताल खोजने के लिए अपना शहर चुनें।",
+        city_label: "अपना शहर चुनें",
+        specialty_label: "विशेषज्ञता फ़िल्टर करें",
+        in_network_label: "केवल इन-नेटवर्क",
+        journey_title: "देखभाल यात्रा समयरेखा एवं मार्गदर्शन"
       },
       "Marathi": {
-        subtitle: "स्वतंत्र वैद्यकीय व विमा निर्णय सहाय्य प्रणाली",
-        purge: "सत्राचा डेटा हटवा",
+        emergency_prefix: "आणीबाणी सूचना: कॉल करा",
+        detect_btn: "स्थान शोधा",
+        header_subtitle: "स्वतंत्र वैद्यकीय व विमा निर्णय सहाय्य प्रणाली",
+        purge_btn: "सत्राचा डेटा हटवा",
+        theme_btn: "लाइट मोडवर जा",
+        system_online: "सिस्टम: ऑनलाइन",
         tab1: "अपलोड आणि अर्क",
         tab2: "धोरण प्रश्न विचारा",
         tab3: "रुग्णालय शोधा",
         tab4: "काळजी प्रवास",
-        uploadTitle: "मूळ आरोग्य विमा धोरण दस्तऐवज अपलोड करा",
-        demoBaseBtn: "डेमो धोरण लोड करा",
-        downloadDemoBaseBtn: "डेमो पीडीएफ डाउनलोड करा",
-        topupTitle: "सुपर टॉप-अप तुलना इंजिन",
-        demoTopupBtn: "डेमो टॉप-अप लोड करा",
-        downloadDemoTopupBtn: "टॉप-अप पीडीएफ डाउनलोड करा",
-        summaryTitle: "काढलेले धोरण प्रोफाइल",
-        exportPdfBtn: "पीडीएफ म्हणून निर्यात करा",
-        askTitle: "आपल्या धोरणाबद्दल प्रश्न विचारा",
-        sendBtn: "प्रश्न पाठवा",
-        chatIntro: "नमस्कार! मी केअरकव्हर कॉपायलट आहे. विम्याविषयी कोणताही प्रश्न विचारा.",
-        placeholder: "उदा. मोतीबिंदू शस्त्रक्रियेची मर्यादा काय आहे?"
+        upload_title: "मूळ आरोग्य विमा धोरण दस्तऐवज अपलोड करा",
+        upload_desc: "पीडीएफ फाइल निवडल्यास खोलीची पात्रता आणि विमा रक्कम आपोआप काढली जाते.",
+        demo_base_btn: "डेमो धोरण लोड करा",
+        demo_base_dl: "डेमो पीडीएफ डाउनलोड करा",
+        topup_title: "सुपर टॉप-अप तुलना इंजिन",
+        topup_desc: "एकूण संरक्षणाची गणना करण्यासाठी दुय्यम सुपर टॉप-अप धोरण जोडा.",
+        demo_topup_btn: "डेमो टॉप-अप लोड करा",
+        demo_topup_dl: "टॉप-अप पीडीएफ डाउनलोड करा",
+        primary_base_label: "प्राथमिक मूळ धोरण कव्हर",
+        super_topup_label: "सुपर टॉप-अप धोरण कव्हर",
+        combined_si_label: "एकत्रित विमा रक्कम संरक्षण",
+        summary_title: "काढलेले धोरण प्रोफाइल",
+        summary_sub: "संरचित धोरण अटी आणि आर्थिक कव्हरेज मर्यादा",
+        export_pdf_btn: "पीडीएफ म्हणून निर्यात करा",
+        insurer_label: "विमा कंपनीचे नाव",
+        si_label: "विमा रक्कम",
+        room_label: "खोली भाडे पात्रता",
+        copay_label: "सह-देयक / पूर्व-प्राधिकृत",
+        ask_title: "आपल्या धोरणाबद्दल प्रश्न विचारा",
+        chat_intro: "नमस्कार! मी केअरकव्हर कॉपायलट आहे. विम्याविषयी कोणताही प्रश्न विचारा.",
+        chat_placeholder: "उदा. मोतीबिंदू शस्त्रक्रियेची मर्यादा काय आहे?",
+        send_btn: "प्रश्न पाठवा",
+        hospital_title: "रुग्णालय नेटवर्क आणि खोली पात्रता जुळणी",
+        hospital_desc: "जवळचे कॅशलेस रुग्णालय शोधण्यासाठी तुमचे शहर निवडा.",
+        city_label: "तुमचे शहर निवडा",
+        specialty_label: "विशेषज्ञता फिल्टर करा",
+        in_network_label: "फक्त इन-नेटवर्क",
+        journey_title: "काळजी प्रवास टाइमलाइन आणि मार्गदर्शन"
       },
       "Bengali": {
-        subtitle: "স্বাধীন ক্লিনিকাল এবং বীমা সিদ্ধান্ত সহায়তা সিস্টেম",
-        purge: "সেশনের ডেটা মুছুন",
+        emergency_prefix: "জরুরি বিজ্ঞপ্তি: কল করুন",
+        detect_btn: "অবস্থান সনাক্ত করুন",
+        header_subtitle: "স্বাধীন ক্লিনিকাল এবং বীমা সিদ্ধান্ত সহায়তা সিস্টেম",
+        purge_btn: "সেশনের ডেটা মুছুন",
+        theme_btn: "লাইট মোডে যান",
+        system_online: "সিস্টেম: অনলাইন",
         tab1: "আপলোড ও এক্সট্র্যাক্ট",
         tab2: "নীতি প্রশ্ন জিজ্ঞাসা করুন",
         tab3: "হাসপাতাল খুঁজুন",
         tab4: "কেয়ার জার্নি",
-        uploadTitle: "মূল স্বাস্থ্য বীমা পলিসি নথি আপলোড করুন",
-        demoBaseBtn: "ডেমো পলিসি লোড করুন",
-        downloadDemoBaseBtn: "ডেমো পিডিএফ ডাউনলোড করুন",
-        topupTitle: "সুপার টপ-আপ তুলনা ইঞ্জিন",
-        demoTopupBtn: "ডেমো টপ-আপ লোড করুন",
-        downloadDemoTopupBtn: "টপ-আপ পিডিএফ ডাউনলোড করুন",
-        summaryTitle: "এক্সট্র্যাক্ট করা পলিসি প্রোফাইল",
-        exportPdfBtn: "পিডিএফ হিসাবে এক্সপোর্ট করুন",
-        askTitle: "আপনার বীমা কভারেজ সম্পর্কে প্রশ্ন জিজ্ঞাসা করুন",
-        sendBtn: "প্রশ্ন পাঠান",
-        chatIntro: "নমস্কার! আমি কেয়ারকভার ক পাইলট। বীমা পলিসি সম্পর্কে প্রশ্ন জিজ্ঞাসা করুন।",
-        placeholder: "যেমন ছানি অস্ত্রোপচারের সীমা কত?"
+        upload_title: "মূল স্বাস্থ্য বীমা পলিসি নথি আপলোড করুন",
+        upload_desc: "পিডিএফ নির্বাচন করলে রুমের যোগ্যতা ও বীমার পরিমাণ স্বয়ংক্রিয়ভাবে নিষ্কাশিত হয়।",
+        demo_base_btn: "ডেমো পলিসি লোড করুন",
+        demo_base_dl: "ডেমো পিডিএফ ডাউনলোড করুন",
+        topup_title: "সুপার টপ-আপ তুলনা ইঞ্জিন",
+        demo_topup_btn: "ডেমো টপ-আপ লোড করুন",
+        demo_topup_dl: "টপ-আপ পিডিএফ ডাউনলোড করুন",
+        summary_title: "এক্সট্র্যাক্ট করা পলিসি প্রোফাইল",
+        export_pdf_btn: "পিডিএফ হিসাবে এক্সপোর্ট করুন",
+        ask_title: "আপনার বীমা কভারেজ সম্পর্কে প্রশ্ন জিজ্ঞাসা করুন",
+        send_btn: "প্রশ্ন পাঠান",
+        chat_intro: "নমস্কার! আমি কেয়ারকভার ক পাইলট। বীমা পলিসি সম্পর্কে প্রশ্ন জিজ্ঞাসা করুন।",
+        chat_placeholder: "যেমন ছানি অস্ত্রোপচারের সীমা কত?"
       },
       "Gujarati": {
-        subtitle: "સ્વતંત્ર તબીબી અને વીમા નિર્ણય સહાય સિસ્ટમ",
-        purge: "સત્ર ડેટા કાઢી નાખો",
+        emergency_prefix: "ઇમરજન્સી નોટિસ: કોલ કરો",
+        detect_btn: "સ્થાન શોધો",
+        header_subtitle: "સ્વતંત્ર તબીબી અને વીમા નિર્ણય સહાય સિસ્ટમ",
+        purge_btn: "સત્ર ડેટા કાઢી નાખો",
+        theme_btn: "લાઇટ મોડ પર સ્વિચ કરો",
         tab1: "અપલોડ કરો",
         tab2: "પ્રશ્ન પૂછો",
         tab3: "હોસ્પિટલ શોધો",
         tab4: "સંભાળ યાત્રા",
-        uploadTitle: "મુખ્ય હેલ્થ ઇન્સ્યોરન્સ પોલિસી દસ્તાવેજ અપલોડ કરો",
-        demoBaseBtn: "ડેમો પોલિસી લોડ કરો",
+        upload_title: "મુખ્ય હેલ્થ ઇન્સ્યોરન્સ પોલિસી દસ્તાવેજ અપલોડ કરો",
+        demo_base_btn: "ડેમો પોલિસી લોડ કરો",
         downloadDemoBaseBtn: "ડેમો પીડીએફ ડાઉનલોડ કરો",
-        summaryTitle: "એક્સટ્રેક્ટ કરેલ પોલિસી પ્રોફાઇલ",
-        exportPdfBtn: "પીડીએફ તરીકે નિકાસ કરો",
-        sendBtn: "મોકલો",
-        chatIntro: "નમસ્તે! હું કેરકવર કોપાયલોટ છું. પોલિસી વિશે પ્રશ્ન પૂછો."
+        summary_title: "એક્સટ્રેક્ટ કરેલ પોલિસી પ્રોફાઇલ",
+        export_pdf_btn: "પીડીએફ તરીકે નિકાસ કરો",
+        send_btn: "મોકલો"
       },
-      "Tamil": {
-        subtitle: "சுயாதீன மருத்துவ மற்றும் காப்பீட்டு முடிவு உதவி அமைப்பு",
-        purge: "தரவை நீக்கு",
-        tab1: "பதிவேற்றம்",
-        tab2: "கேள்வி கேள்",
-        tab3: "மருத்துவமனை காண்க",
-        tab4: "பராமரிப்பு பயணம்",
-        uploadTitle: "சுகாதார காப்பீட்டு ஆவணத்தை பதிவேற்றவும்",
-        exportPdfBtn: "PDF ஆக ஏற்றுமதி செய்",
-        sendBtn: "அனுப்பு"
-      },
-      "Telugu": {
-        subtitle: "స్వతంత్ర వైద్య మరియు బీమా నిర్ణయ సహాయ వ్యవస్థ",
-        purge: "డేటాను తొలగించు",
-        tab1: "అప్‌లోడ్ చేయండి",
-        tab2: "ప్రశ్న అడగండి",
-        tab3: "ఆసుపత్రిని కనుగొనండి",
-        exportPdfBtn: "PDF గా ఎగుమతి చేయండి",
-        sendBtn: "పంపండి"
+      "Urdu": {
+        emergency_prefix: "ہنگامی اطلاع: کال کریں",
+        detect_btn: "مقام کا پتہ لگائیں",
+        header_subtitle: "خودمختار طبی اور انشورنس فیصلہ سازی کا نظام",
+        purge_btn: "سیشن کا ڈیٹا حذف کریں",
+        theme_btn: "لائٹ موڈ پر منتقل ہوں",
+        system_online: "نظام: آن لائن",
+        tab1: "اپ لوڈ اور استخراج",
+        tab2: "پالیسی سے متعلق سوال کریں",
+        tab3: "ہسپتال تلاش کریں",
+        tab4: "نگہداشت کا سفر",
+        upload_title: "بنیادی ہیلتھ انشورنس پالیسی کی دستاویز اپ لوڈ کریں",
+        upload_desc: "پی ڈی ایف فائل منتخب کرنے سے کمرے کی اہلیت اور بیمہ رقم خود بخود نکل آتی ہے۔",
+        demo_base_btn: "ڈیمو پالیسی لوڈ کریں",
+        demo_base_dl: "ڈیمو پی ڈی ایف ڈاؤن لوڈ کریں",
+        topup_title: "سپر ٹاپ اپ موازنہ انجن",
+        summary_title: "استخراج شدہ پالیسی پروفائل",
+        export_pdf_btn: "پی ڈی ایف برآمد کریں",
+        ask_title: "اپنی انشورنس کے بارے میں سوالات پوچھیں",
+        send_btn: "سوال بھیجیں",
+        chat_intro: "سلام! میں کیئر کور کو پائلٹ ہوں۔ انشورنس پالیسی سے متعلق سوالات پوچھیں۔",
+        chat_placeholder: "مثال کے طور پر: کیا موتیابند سرجری شامل ہے؟"
       }
     };
 
     function changeLanguage() {
       selectedLanguage = document.getElementById('languageSelect').value;
-      const t = UI_I18N[selectedLanguage];
-      if (!t) return;
 
-      if (t.subtitle) document.getElementById('headerSubtitle').innerText = t.subtitle;
-      if (t.purge) document.getElementById('purgeBtnHeader').innerText = t.purge;
-      if (t.tab1) document.getElementById('tab1-btn').innerText = t.tab1;
-      if (t.tab2) document.getElementById('tab2-btn').innerText = t.tab2;
-      if (t.tab3) document.getElementById('tab3-btn').innerText = t.tab3;
-      if (t.tab4) document.getElementById('tab4-btn').innerText = t.tab4;
-      if (t.uploadTitle) document.getElementById('uploadCardTitle').innerText = t.uploadTitle;
-      if (t.demoBaseBtn) document.getElementById('loadDemoBaseBtn').innerText = t.demoBaseBtn;
-      if (t.downloadDemoBaseBtn) document.getElementById('downloadDemoBaseBtn').innerText = t.downloadDemoBaseBtn;
-      if (t.topupTitle) document.getElementById('topupCardTitle').innerText = t.topupTitle;
-      if (t.demoTopupBtn) document.getElementById('loadDemoTopupBtn').innerText = t.demoTopupBtn;
-      if (t.downloadDemoTopupBtn) document.getElementById('downloadDemoTopupBtn').innerText = t.downloadDemoTopupBtn;
-      if (t.summaryTitle) document.getElementById('summaryCardTitle').innerText = t.summaryTitle;
-      if (t.exportPdfBtn) document.getElementById('exportPdfBtn').innerText = t.exportPdfBtn;
-      if (t.askTitle) document.getElementById('askTitle').innerText = t.askTitle;
-      if (t.sendBtn) document.getElementById('sendQueryBtn').innerText = t.sendBtn;
-      if (t.chatIntro) document.getElementById('chatIntro').innerText = t.chatIntro;
-      if (t.placeholder) document.getElementById('chatInput').placeholder = t.placeholder;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        
+        if (UI_I18N[selectedLanguage] && UI_I18N[selectedLanguage][key]) {
+          el.innerText = UI_I18N[selectedLanguage][key];
+        } else if (UI_I18N["English"][key]) {
+          el.innerText = UI_I18N["English"][key]; // CLEAN FALLBACK TO ENGLISH BASELINE
+        }
+      });
     }
 
     // Site-opening DPDP consent handler
@@ -763,16 +842,13 @@
 
     function toggleTheme() {
       const htmlEl = document.documentElement;
-      const themeBtnSpan = document.getElementById('themeBtnSpan');
       if (htmlEl.classList.contains('dark')) {
         htmlEl.classList.remove('dark');
         htmlEl.classList.add('light');
-        if (themeBtnSpan) themeBtnSpan.innerText = "Switch to Dark Mode";
         localStorage.setItem('theme', 'light');
       } else {
         htmlEl.classList.remove('light');
         htmlEl.classList.add('dark');
-        if (themeBtnSpan) themeBtnSpan.innerText = "Switch to Light Mode";
         localStorage.setItem('theme', 'dark');
       }
     }
@@ -781,13 +857,9 @@
     if (localStorage.getItem('theme') === 'light') {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
-      const themeBtnSpan = document.getElementById('themeBtnSpan');
-      if (themeBtnSpan) themeBtnSpan.innerText = "Switch to Dark Mode";
     } else {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
-      const themeBtnSpan = document.getElementById('themeBtnSpan');
-      if (themeBtnSpan) themeBtnSpan.innerText = "Switch to Light Mode";
     }
 
     function updateCombinedSI() {
