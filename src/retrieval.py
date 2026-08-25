@@ -9,25 +9,31 @@ GREETING_KEYWORDS = [
     "hello", "hi", "hey", "good morning", "good afternoon", "good evening", "greetings",
     "who are you", "what can you do", "how are you", "how r u", "how are u", "how do you do",
     "who r u", "what is your name", "what's your name", "tell me about yourself", "how's it going",
-    "how are things", "nice to meet you", "thanks", "thank you",
+    "how are things", "nice to meet you", "thanks", "thank you", "bye", "goodbye",
     # Hindi / Marathi
-    "नमस्ते", "नमस्कार", "कैसे हो", "कैसे हैं", "आप कैसे हैं", "तुम कैसे हो", "कसे आहात", "काय चाललंय", "राम राम", "केसे हो", "kaise ho", "kase aahat", "namaste", "namaskar",
+    "नमस्ते", "नमस्कार", "कैसे हो", "कैसे हैं", "आप कैसे हैं", "तुम कैसे हो", "कसे आहात", "काय चाललंय", "राम राम", "केसे हो", "धन्यवाद", "शुक्रिया", "kaise ho", "kase aahat", "namaste", "namaskar", "shukriya", "dhanyavad",
     # Gujarati
-    "નમસ્તે", "કેમ છો", "કેમ છો તમે", "kem cho", "kem chho",
-    # Bengali
-    "নমস্কার", "কেমন আছেন", "কেমন আছো", "হ্যালো", "kemon achen",
+    "નમસ્તે", "કેમ છો", "કેમ છો તમે", "આભાર", "kem cho", "kem chho", "aabhar",
+    # Bengali / Assamese
+    "নমস্কার", "কেমন আছেন", "কেমন আছো", "হ্যালো", "ধন্যবাদ", "kemon achen", "kemon acho", "nomoshkar", "dhornobad",
     # Tamil
-    "வணக்கம்", "எப்படி இருக்கீங்க", "எப்படி இருக்கிறீர்கள்", "vanakkam",
+    "வணக்கம்", "எப்படி இருக்கீங்க", "எப்படி இருக்கிறீர்கள்", "நன்றி", "vanakkam", "eppadi irukkinga", "nandri",
     # Telugu
-    "నమస్కారం", "ఎలా ఉన్నారు", "ఎలా ఉన్నావు", "namaskaram",
+    "నమస్కారం", "ఎలా ఉన్నారు", "ఎలా ఉన్నావు", "ధన్యవాదాలు", "namaskaram", "ela unnaru", "dhanyavadalu",
     # Kannada
-    "ನಮಸ್ಕಾರ", "ಹೇಗಿದ್ದೀರ", "ಹೇಗಿದ್ದೀಯಾ", "namaskara",
+    "ನಮಸ್ಕಾರ", "ಹೇಗಿದ್ದೀರ", "ಹೇಗಿದ್ದೀಯಾ", "ಧನ್ಯವಾದಗಳು", "namaskara", "hegiddira", "dhanyavadagalu",
     # Malayalam
-    "നമസ്കാരം", "സുഖമാണോ",
+    "നമസ്കാരം", "സുഖമാണോ", "നന്ദി", "namaskaram", "sukhamano", "nandi",
     # Punjabi
-    "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "ਕਿਵੇਂ ਹੋ", "sat sri akal",
+    "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "ਕਿਵੇਂ ਹੋ", "ਧੰਨਵਾਦ", "sat sri akal", "kiven ho", "dhanwad",
     # Odia
-    "ନମସ୍କାର", "କେମିତି ଅଛନ୍ତି"
+    "ନମସ୍କାର", "କେମିତି ଅଛନ୍ତି", "ଧନ୍ୟବାଦ", "namaskara", "kemiti achanti", "dhanyabada",
+    # Urdu / Kashmiri / Sindhi
+    "السلام علیکم", "کیسے ہیں", "شکریہ", "آداب", "assalam alaikum", "aadaab", "shukriya",
+    # Sanskrit
+    "नमो नमः", "कथम् अस्ति", "धन्यवादः", "namo namah",
+    # Konkani / Maithili / Nepali / Bodo / Dogri / Santali / Manipuri
+    "कसो आसा", "केहन छी", "सञ्चै हुनुहुन्छ", "खुमसिबाय", "केह् हाल ऐ", "জোহার", "খুরুমজরী", "johar", "khurumjari", "khumbsibay"
 ]
 
 OUT_OF_DOMAIN_KEYWORDS = [
@@ -37,15 +43,21 @@ OUT_OF_DOMAIN_KEYWORDS = [
 ]
 
 def detect_query_language(query: str, default_lang: str = "English") -> str:
-    """Detects script language of user query automatically based on Unicode ranges & keywords."""
+    """Detects script language of user query automatically based on Unicode ranges & keywords across all 22 Indian scheduled languages."""
     q_low = query.lower().strip()
     for char in query:
         cp = ord(char)
-        if 0x0900 <= cp <= 0x097F:  # Devanagari (Hindi / Marathi)
-            if any(w in q_low for w in ["आहात", "आहे", "चाललंय", "नाही", "काय"]):
+        if 0x0900 <= cp <= 0x097F:  # Devanagari (Hindi / Marathi / Sanskrit / Konkani / Maithili / Nepali / Bodo / Dogri)
+            if any(w in q_low for w in ["आहात", "आहे", "चाललंय", "नाही", "काय", "कसो"]):
                 return "Marathi"
+            elif any(w in q_low for w in ["अस्ति", "नमः", "भवतः"]):
+                return "Sanskrit"
+            elif any(w in q_low for w in ["छी", "कहाँ"]):
+                return "Maithili"
             return "Hindi"
-        elif 0x0980 <= cp <= 0x09FF:  # Bengali
+        elif 0x0980 <= cp <= 0x09FF:  # Bengali / Assamese / Manipuri
+            if any(w in q_low for w in ["আছোঁ", "আহে", "ধন্যবাদ"]):
+                return "Assamese"
             return "Bengali"
         elif 0x0A80 <= cp <= 0x0AFF:  # Gujarati
             return "Gujarati"
@@ -57,18 +69,40 @@ def detect_query_language(query: str, default_lang: str = "English") -> str:
             return "Kannada"
         elif 0x0D00 <= cp <= 0x0D7F:  # Malayalam
             return "Malayalam"
-        elif 0x0A00 <= cp <= 0x0A7F:  # Punjabi
+        elif 0x0A00 <= cp <= 0x0A7F:  # Gurmukhi (Punjabi)
             return "Punjabi"
         elif 0x0B00 <= cp <= 0x0B7F:  # Odia
             return "Odia"
+        elif 0x0600 <= cp <= 0x06FF or 0x0750 <= cp <= 0x077F:  # Perso-Arabic (Urdu / Kashmiri / Sindhi)
+            return "Urdu"
+        elif 0x1C50 <= cp <= 0x1C7F:  # Ol Chiki (Santali)
+            return "Santali"
+        elif 0xABC0 <= cp <= 0xABFF:  # Meitei Mayek (Manipuri)
+            return "Manipuri"
 
     # Check Romanized Hindi / regional keywords if Latin script
-    if any(w in q_low for w in ["kaise ho", "kise ho", "kese ho", "kaise hain", "namaste", "aap kaise", "kya haal"]):
+    if any(w in q_low for w in ["kaise ho", "kise ho", "kese ho", "kaise hain", "namaste", "aap kaise", "kya haal", "dhanyavad", "shukriya"]):
         return "Hindi"
-    if any(w in q_low for w in ["kem cho", "kem chho"]):
+    if any(w in q_low for w in ["kem cho", "kem chho", "aabhar"]):
         return "Gujarati"
-    if any(w in q_low for w in ["kase aahat", "kay chalalay"]):
+    if any(w in q_low for w in ["kase aahat", "kay chalalay", "kaso asa"]):
         return "Marathi"
+    if any(w in q_low for w in ["kemon achen", "kemon acho", "nomoshkar"]):
+        return "Bengali"
+    if any(w in q_low for w in ["vanakkam", "eppadi irukkinga", "nandri"]):
+        return "Tamil"
+    if any(w in q_low for w in ["namaskaram", "ela unnaru"]):
+        return "Telugu"
+    if any(w in q_low for w in ["namaskara", "hegiddira"]):
+        return "Kannada"
+    if any(w in q_low for w in ["sukhamano", "nandi"]):
+        return "Malayalam"
+    if any(w in q_low for w in ["sat sri akal", "kiven ho"]):
+        return "Punjabi"
+    if any(w in q_low for w in ["kemiti achanti", "dhanyabada"]):
+        return "Odia"
+    if any(w in q_low for w in ["assalam alaikum", "aadaab"]):
+        return "Urdu"
 
     return default_lang if default_lang else "English"
 
