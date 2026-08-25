@@ -17,7 +17,7 @@ from src.pdf_ingestion import ingest_pdf
 from src.chunking import chunk_text
 from src.embeddings import initialize_vector_store, get_chroma_client
 from src.policy_extractor import extract_policy_profile
-from src.retrieval import ask_policy_question
+from src.retrieval import ask_policy_question, ask_policy_question_detailed
 from src.guardrails import validate_query_safety, apply_response_guardrails
 from src.hospital_repository import get_hospitals_by_city
 from src.eligibility_engine import match_hospitals
@@ -210,11 +210,12 @@ async def policy_qa_endpoint(request: QARequest):
         profile_to_use = PolicyProfile(insurer_name="Niva Bupa Health Insurance")
 
     # 3. Execute RAG retrieval & LLM synthesis via Python RAG chain with multilingual support
-    raw_answer = ask_policy_question(request.query, active_vector_collection, profile_to_use, language=request.language or "English")
-    guarded_answer = apply_response_guardrails(raw_answer)
+    detailed_res = ask_policy_question_detailed(request.query, active_vector_collection, profile_to_use, language=request.language or "English")
+    guarded_answer = apply_response_guardrails(detailed_res["answer"])
 
     return {
-        "answer": guarded_answer
+        "answer": guarded_answer,
+        "intelligence": detailed_res["intelligence"]
     }
 
 @app.get("/api/hospitals")

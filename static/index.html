@@ -227,6 +227,32 @@
     </div>
   </div>
 
+  <!-- Explainable AI Traceability Chain Modal -->
+  <div id="traceabilityModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
+    <div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5">
+      <div class="flex justify-between items-center border-b border-slate-800 light:border-slate-200 pb-3">
+        <div>
+          <h3 class="text-base font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+            <span>Explainable AI Traceability Chain</span>
+            <span class="text-[10px] bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2 py-0.5 rounded-full font-bold">Trace Audit</span>
+          </h3>
+          <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">End-to-end evidence breakdown: Document → Clause → Rule → Conclusion</p>
+        </div>
+        <button onclick="closeTraceabilityModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div id="traceabilityContent" class="space-y-3 text-xs">
+        <!-- Loaded dynamically via showTraceabilityModal(traceId) -->
+      </div>
+
+      <div class="pt-2 border-t border-slate-800 light:border-slate-200 flex justify-end">
+        <button onclick="closeTraceabilityModal()" class="bg-slate-800 light:bg-slate-200 hover:bg-slate-700 light:hover:bg-slate-300 text-slate-200 light:text-slate-800 font-bold text-xs px-4 py-2 rounded-lg cursor-pointer">
+          Close Audit Trace
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Location-Aware Emergency Banner with Instant Location Search -->
   <div id="emergencyBanner" class="bg-red-950/90 dark:bg-red-950/90 light:bg-red-100 border-b border-red-800/80 light:border-red-300 px-4 py-3 transition-colors">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs md:text-sm">
@@ -971,11 +997,112 @@
           body: JSON.stringify({ query: query, history: [], insurer_name: activePolicyName, language: selectedLanguage })
         });
         const data = await res.json();
-        chatBox.innerHTML += `<div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 p-3 rounded-lg max-w-[80%] text-slate-200 light:text-slate-800"><strong>CareCover Bot:</strong> ${data.answer}</div>`;
+
+        let intelHtml = '';
+        if (data.intelligence) {
+          const intel = data.intelligence;
+          const trace = intel.traceability || {};
+          const traceId = 'trace_' + Date.now();
+          window[traceId] = trace;
+
+          intelHtml = `
+            <div class="mt-3 p-3.5 bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 rounded-xl border border-slate-800 light:border-slate-300 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between border-b border-slate-800 light:border-slate-200 pb-2">
+                <span class="font-extrabold text-sky-400 light:text-sky-700 flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-sky-400 light:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  Structured Policy Intelligence
+                </span>
+                <span class="bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
+                  Confidence: ${intel.confidence_score}
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
+                <div><strong class="text-slate-400 light:text-slate-600">Coverage:</strong> <span class="font-bold text-slate-100 light:text-slate-900">${intel.coverage_status}</span></div>
+                <div><strong class="text-slate-400 light:text-slate-600">Room Eligibility:</strong> <span class="font-bold text-slate-100 light:text-slate-900">${intel.room_eligibility}</span></div>
+                <div><strong class="text-slate-400 light:text-slate-600">Co-Pay:</strong> <span class="font-bold text-emerald-400 light:text-emerald-700">${intel.co_pay}</span></div>
+                <div><strong class="text-slate-400 light:text-slate-600">Pre-Auth:</strong> <span class="font-bold text-amber-400 light:text-amber-700">${intel.pre_auth}</span></div>
+                <div><strong class="text-slate-400 light:text-slate-600">Est. Out-of-Pocket:</strong> <span class="font-bold text-sky-400 light:text-sky-700">${intel.estimated_out_of_pocket}</span></div>
+                <div><strong class="text-slate-400 light:text-slate-600">Clause:</strong> <span class="font-bold text-slate-100 light:text-slate-900">${intel.relevant_clause}</span></div>
+              </div>
+
+              <div class="pt-2 border-t border-slate-800 light:border-slate-200 flex justify-end">
+                <button onclick="showTraceabilityModal('${traceId}')" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-[11px] px-3.5 py-1.5 rounded-lg border border-sky-400 flex items-center gap-1.5 shadow-sm cursor-pointer transition-all">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  Why did you say this? (Traceability Chain)
+                </button>
+              </div>
+            </div>
+          `;
+        }
+
+        chatBox.innerHTML += `<div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 p-4 rounded-xl max-w-[85%] text-slate-200 light:text-slate-800 shadow-md"><strong>CareCover Bot:</strong> ${data.answer}${intelHtml}</div>`;
       } catch (err) {
         chatBox.innerHTML += `<div class="bg-red-950/80 dark:bg-red-950/80 light:bg-red-100 border border-red-800 light:border-red-200 p-3 rounded-lg max-w-[80%] text-red-200 light:text-red-800"><strong>Error:</strong> Failed to fetch answer. Please try again.</div>`;
       }
       chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function showTraceabilityModal(traceId) {
+      const trace = window[traceId] || {};
+      const container = document.getElementById('traceabilityContent');
+      
+      container.innerHTML = `
+        <div class="relative pl-6 space-y-3 border-l-2 border-sky-500 light:border-sky-600 ml-2">
+          
+          <!-- Step 1: Policy Document -->
+          <div class="relative">
+            <span class="absolute -left-[31px] top-0 bg-sky-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">1</span>
+            <div class="bg-slate-950 dark:bg-slate-950 light:bg-slate-50 p-3 rounded-xl border border-slate-800 light:border-slate-200">
+              <div class="text-[10px] text-sky-400 light:text-sky-700 font-extrabold uppercase">Source Policy PDF</div>
+              <div class="font-bold text-slate-100 light:text-slate-900 mt-0.5">${trace.policy_document || "Policy Contract PDF"}</div>
+            </div>
+          </div>
+
+          <!-- Step 2: Section -->
+          <div class="relative">
+            <span class="absolute -left-[31px] top-0 bg-sky-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">2</span>
+            <div class="bg-slate-950 dark:bg-slate-950 light:bg-slate-50 p-3 rounded-xl border border-slate-800 light:border-slate-200">
+              <div class="text-[10px] text-sky-400 light:text-sky-700 font-extrabold uppercase">Extracted Section</div>
+              <div class="font-bold text-slate-100 light:text-slate-900 mt-0.5">${trace.section || "Section Clause"}</div>
+            </div>
+          </div>
+
+          <!-- Step 3: Specific Clause -->
+          <div class="relative">
+            <span class="absolute -left-[31px] top-0 bg-sky-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
+            <div class="bg-slate-950 dark:bg-slate-950 light:bg-slate-50 p-3 rounded-xl border border-slate-800 light:border-slate-200">
+              <div class="text-[10px] text-sky-400 light:text-sky-700 font-extrabold uppercase">Target Clause</div>
+              <div class="font-bold text-slate-100 light:text-slate-900 mt-0.5">${trace.clause || "Clause Terms"}</div>
+            </div>
+          </div>
+
+          <!-- Step 4: Extracted Rule -->
+          <div class="relative">
+            <span class="absolute -left-[31px] top-0 bg-sky-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">4</span>
+            <div class="bg-slate-950 dark:bg-slate-950 light:bg-slate-50 p-3 rounded-xl border border-slate-800 light:border-slate-200">
+              <div class="text-[10px] text-amber-400 light:text-amber-700 font-extrabold uppercase">Extracted Rule & Sub-limit</div>
+              <div class="font-medium text-slate-200 light:text-slate-800 mt-0.5">${trace.extracted_rule || "Clause rule details"}</div>
+            </div>
+          </div>
+
+          <!-- Step 5: Final AI Conclusion -->
+          <div class="relative">
+            <span class="absolute -left-[31px] top-0 bg-emerald-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">5</span>
+            <div class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-50 p-3 rounded-xl border border-emerald-800 light:border-emerald-300">
+              <div class="text-[10px] text-emerald-400 light:text-emerald-700 font-extrabold uppercase">Synthesized AI Conclusion</div>
+              <div class="font-bold text-emerald-200 light:text-emerald-900 mt-0.5">${trace.conclusion || "Final AI Verdict"}</div>
+            </div>
+          </div>
+
+        </div>
+      `;
+
+      document.getElementById('traceabilityModal').classList.remove('hidden');
+    }
+
+    function closeTraceabilityModal() {
+      document.getElementById('traceabilityModal').classList.add('hidden');
     }
 
     function detectCityFromCoords(lat, lon) {
