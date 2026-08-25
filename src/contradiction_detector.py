@@ -7,9 +7,9 @@ def detect_policy_contradictions(policy_profile: PolicyProfile) -> Dict[str, Any
     """
     contradictions = []
     
-    room = (policy_profile.room_eligibility or "").lower()
-    copay = policy_profile.co_payment_percentage or 0.0
-    si = policy_profile.sum_insured_inr or 0.0
+    room = (getattr(policy_profile, 'room_eligibility', "") or "").lower()
+    copay = getattr(policy_profile, 'co_payment_percentage', getattr(policy_profile, 'co_pay', 0.0)) or 0.0
+    si = getattr(policy_profile, 'sum_insured_inr', 0.0) or 0.0
     
     # Check 1: Room Rent Capping vs Single Room
     if "single" in room and ("1%" in room or "2%" in room or "capping" in room):
@@ -22,7 +22,8 @@ def detect_policy_contradictions(policy_profile: PolicyProfile) -> Dict[str, Any
         })
         
     # Check 2: Zero Co-Pay vs Senior Citizen Age Co-Pay
-    if copay == 0 and policy_profile.policy_features and any("co-pay" in f.lower() for f in policy_profile.policy_features):
+    features = getattr(policy_profile, 'policy_features', []) or []
+    if copay == 0 and features and any("co-pay" in str(f).lower() for f in features):
         contradictions.append({
             "title": "Conditional Co-Pay Conflict",
             "clause_a": "Summary Schedule: 0% Co-Payment",
@@ -32,13 +33,14 @@ def detect_policy_contradictions(policy_profile: PolicyProfile) -> Dict[str, Any
         })
         
     # Check 3: High Sum Insured with Low Cataract Sub-limit
-    if si >= 500000 and policy_profile.cataract_sublimit_inr and policy_profile.cataract_sublimit_inr <= 25000:
+    cataract_cap = getattr(policy_profile, 'cataract_sublimit_inr', None)
+    if si >= 500000 and cataract_cap and cataract_cap <= 25000:
         contradictions.append({
             "title": "Sub-Limit Capping Discrepancy",
             "clause_a": f"Base Coverage: ₹{si:,.0f} Sum Insured",
-            "clause_b": f"Specific Illness Cap: ₹{policy_profile.cataract_sublimit_inr:,.0f} per eye Cataract limit",
+            "clause_b": f"Specific Illness Cap: ₹{cataract_cap:,.0f} per eye Cataract limit",
             "severity": "Medium",
-            "explanation": f"Despite high total coverage of ₹{si:,.0f}, Cataract claims are severely capped at ₹{policy_profile.cataract_sublimit_inr:,.0f} per eye."
+            "explanation": f"Despite high total coverage of ₹{si:,.0f}, Cataract claims are severely capped at ₹{cataract_cap:,.0f} per eye."
         })
         
     is_clean = len(contradictions) == 0

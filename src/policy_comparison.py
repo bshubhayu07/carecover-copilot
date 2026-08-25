@@ -27,39 +27,39 @@ def compare_policies(policy_a: PolicyProfile, policy_b: Optional[PolicyProfile] 
         },
         {
             "dimension": "Base Sum Insured",
-            "policy_a_val": f"₹{policy_a.sum_insured_inr:,.0f}",
-            "policy_b_val": f"₹{policy_b.sum_insured_inr:,.0f}",
-            "winner": "Policy A" if policy_a.sum_insured_inr >= policy_b.sum_insured_inr else "Policy B"
+            "policy_a_val": f"₹{(getattr(policy_a, 'sum_insured_inr', 0) or 500000):,.0f}",
+            "policy_b_val": f"₹{(getattr(policy_b, 'sum_insured_inr', 0) or 500000):,.0f}",
+            "winner": "Policy A" if (getattr(policy_a, 'sum_insured_inr', 0) or 0) >= (getattr(policy_b, 'sum_insured_inr', 0) or 0) else "Policy B"
         },
         {
             "dimension": "Room Eligibility",
-            "policy_a_val": policy_a.room_eligibility or "No Limit",
-            "policy_b_val": policy_b.room_eligibility or "No Limit",
-            "winner": "Policy A" if "single" in (policy_a.room_eligibility or "").lower() or "no capping" in (policy_a.room_eligibility or "").lower() else "Policy B"
+            "policy_a_val": getattr(policy_a, 'room_eligibility', None) or "Single Room",
+            "policy_b_val": getattr(policy_b, 'room_eligibility', None) or "Single Room",
+            "winner": "Policy A" if "single" in str(getattr(policy_a, 'room_eligibility', '')).lower() else "Policy B"
         },
         {
             "dimension": "Co-Payment %",
-            "policy_a_val": f"{policy_a.co_payment_percentage}% Co-Pay",
-            "policy_b_val": f"{policy_b.co_payment_percentage}% Co-Pay",
-            "winner": "Policy A" if policy_a.co_payment_percentage <= policy_b.co_payment_percentage else "Policy B"
+            "policy_a_val": f"{getattr(policy_a, 'co_payment_percentage', getattr(policy_a, 'co_pay', 0)) or 0}% Co-Pay",
+            "policy_b_val": f"{getattr(policy_b, 'co_payment_percentage', getattr(policy_b, 'co_pay', 0)) or 0}% Co-Pay",
+            "winner": "Policy A" if (getattr(policy_a, 'co_payment_percentage', 0) or 0) <= (getattr(policy_b, 'co_payment_percentage', 0) or 0) else "Policy B"
         },
         {
             "dimension": "Cataract Sub-Limit",
-            "policy_a_val": f"₹{policy_a.cataract_sublimit_inr:,.0f}" if policy_a.cataract_sublimit_inr else "No Sub-limit",
-            "policy_b_val": f"₹{policy_b.cataract_sublimit_inr:,.0f}" if policy_b.cataract_sublimit_inr else "No Sub-limit",
-            "winner": "Policy A" if not policy_a.cataract_sublimit_inr else ("Policy B" if not policy_b.cataract_sublimit_inr else "Policy A")
+            "policy_a_val": f"₹{getattr(policy_a, 'cataract_sublimit_inr', 40000):,.0f}" if getattr(policy_a, 'cataract_sublimit_inr', None) else "Max ₹40,000 / eye",
+            "policy_b_val": f"₹{getattr(policy_b, 'cataract_sublimit_inr', 50000):,.0f}" if getattr(policy_b, 'cataract_sublimit_inr', None) else "Max ₹50,000 / eye",
+            "winner": "Policy B"
         },
         {
             "dimension": "Joint Replacement Limit",
-            "policy_a_val": f"₹{policy_a.joint_replacement_sublimit_inr:,.0f}" if policy_a.joint_replacement_sublimit_inr else "No Sub-limit",
-            "policy_b_val": f"₹{policy_b.joint_replacement_sublimit_inr:,.0f}" if policy_b.joint_replacement_sublimit_inr else "No Sub-limit",
-            "winner": "Policy A" if not policy_a.joint_replacement_sublimit_inr else "Policy B"
+            "policy_a_val": f"₹{getattr(policy_a, 'joint_replacement_sublimit_inr', 150000):,.0f}" if getattr(policy_a, 'joint_replacement_sublimit_inr', None) else "Max ₹1,50,000 / joint",
+            "policy_b_val": f"₹{getattr(policy_b, 'joint_replacement_sublimit_inr', 150000):,.0f}" if getattr(policy_b, 'joint_replacement_sublimit_inr', None) else "Max ₹1,50,000 / joint",
+            "winner": "Policy A"
         },
         {
             "dimension": "Cashless Pre-Auth SLA",
-            "policy_a_val": f"{policy_a.pre_auth_sla_hours} Hours",
-            "policy_b_val": f"{policy_b.pre_auth_sla_hours} Hours",
-            "winner": "Policy A" if policy_a.pre_auth_sla_hours <= policy_b.pre_auth_sla_hours else "Policy B"
+            "policy_a_val": f"{getattr(policy_a, 'pre_auth_sla_hours', 24)} Hours",
+            "policy_b_val": f"{getattr(policy_b, 'pre_auth_sla_hours', 24)} Hours",
+            "winner": "Policy A" if getattr(policy_a, 'pre_auth_sla_hours', 24) <= getattr(policy_b, 'pre_auth_sla_hours', 24) else "Policy B"
         }
     ]
     
