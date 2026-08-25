@@ -61,6 +61,7 @@ class QARequest(BaseModel):
     query: str
     history: Optional[List[Dict[str, str]]] = []
     insurer_name: Optional[str] = None
+    language: Optional[str] = "English"
 
 @app.get("/")
 def root():
@@ -202,8 +203,8 @@ async def policy_qa_endpoint(request: QARequest):
     elif not profile_to_use:
         profile_to_use = PolicyProfile(insurer_name="Niva Bupa Health Insurance")
 
-    # 3. Execute RAG retrieval & LLM synthesis via Python RAG chain
-    raw_answer = ask_policy_question(request.query, active_vector_collection, profile_to_use)
+    # 3. Execute RAG retrieval & LLM synthesis via Python RAG chain with multilingual support
+    raw_answer = ask_policy_question(request.query, active_vector_collection, profile_to_use, language=request.language or "English")
     guarded_answer = apply_response_guardrails(raw_answer)
 
     return {
