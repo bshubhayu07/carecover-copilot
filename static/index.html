@@ -833,9 +833,8 @@
           <div>
             <label data-i18n="city_label" class="block text-slate-400 light:text-slate-600 mb-1">Select Your City</label>
             <select id="hospitalCity" onchange="handleCityDropdownChange()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
-              <option value="" disabled selected>Select Your City</option>
+              <option value="Pune" selected>Pune</option>
               <option value="Delhi">Delhi NCR</option>
-              <option value="Pune">Pune</option>
               <option value="Mumbai">Mumbai</option>
               <option value="Bengaluru">Bengaluru</option>
               <option value="Hyderabad">Hyderabad</option>
@@ -2316,13 +2315,49 @@
       }
     }
 
+    function handleCityDropdownChange() {
+      const citySelect = document.getElementById('hospitalCity');
+      if (citySelect && citySelect.value) {
+        const selectedCity = citySelect.value;
+        const inputEl = document.getElementById('userLocationInput');
+        if (inputEl) inputEl.value = selectedCity;
+        if (CITY_COORDS[selectedCity]) {
+          userLat = CITY_COORDS[selectedCity].lat;
+          userLon = CITY_COORDS[selectedCity].lon;
+        }
+        updateHelplineNumbers(selectedCity);
+        fetchHospitals();
+      }
+    }
+
+    function handleUserLocationInput() {
+      const inputVal = document.getElementById('userLocationInput').value.trim();
+      if (!inputVal) return;
+      const matched = formatCityName(inputVal);
+      const citySelect = document.getElementById('hospitalCity');
+      if (citySelect) {
+        for (let opt of citySelect.options) {
+          if (opt.value.toLowerCase() === matched.toLowerCase()) {
+            citySelect.value = opt.value;
+            break;
+          }
+        }
+      }
+      if (CITY_COORDS[matched]) {
+        userLat = CITY_COORDS[matched].lat;
+        userLon = CITY_COORDS[matched].lon;
+      }
+      updateHelplineNumbers(matched);
+      fetchHospitals();
+    }
+
     async function fetchHospitals() {
       const citySelect = document.getElementById('hospitalCity');
       let city = citySelect ? citySelect.value : '';
       if (!city) {
         const inputVal = document.getElementById('userLocationInput').value.trim();
         if (inputVal) city = inputVal;
-        else city = 'Delhi';
+        else city = 'Pune';
       }
 
       const specialty = document.getElementById('hospitalSpecialty').value;
@@ -2333,10 +2368,9 @@
       const container = document.getElementById('hospitalList');
       container.innerHTML = '<div class="text-slate-400 light:text-slate-600 col-span-2">Loading hospital network directory...</div>';
 
-      if (userLat === null || userLon === null) {
-        const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
-        userLat = fallback.lat;
-        userLon = fallback.lon;
+      if (CITY_COORDS[city]) {
+        userLat = CITY_COORDS[city].lat;
+        userLon = CITY_COORDS[city].lon;
       }
 
       try {
