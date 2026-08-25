@@ -1915,11 +1915,8 @@
       }
     }
 
-    // Auto Initialize Demo Base Policy & Location Detection on Load
+    // Auto Location Detection on Load
     window.addEventListener('DOMContentLoaded', () => {
-      // Auto load demo policy out-of-the-box so AI Chatbot and all features are immediately ready
-      loadDemoPolicy();
-
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {
