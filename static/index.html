@@ -509,8 +509,8 @@
             <p data-i18n="summary_sub" class="text-xs text-slate-400 light:text-slate-500">Structured policy clauses and financial coverage limits</p>
           </div>
           <div class="flex items-center gap-3">
-            <!-- EXPORT POLICY INFORMATION AS PDF BUTTON -->
-            <button data-i18n="export_pdf_btn" onclick="downloadPolicyPDF()" title="Export Extracted Policy Summary as PDF Report" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg border border-sky-400 flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm">
+            <!-- EXPORT POLICY INFORMATION AS PDF BUTTON (Only Visible When Policy is Loaded) -->
+            <button id="exportPdfBtn" data-i18n="export_pdf_btn" onclick="downloadPolicyPDF()" title="Export Extracted Policy Summary as PDF Report" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg border border-sky-400 flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm hidden">
               Export Summary as PDF
             </button>
             <span id="profileStatusBadge" class="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full">Upload PDF or Load Demo</span>
@@ -1107,6 +1107,23 @@
       document.getElementById('summaryBaseSI').innerText = currentBaseSI > 0 ? `₹${currentBaseSI.toLocaleString('en-IN')}` : "₹0";
       document.getElementById('summaryTopupSI').innerText = currentTopupSI > 0 ? `₹${currentTopupSI.toLocaleString('en-IN')}` : "₹0";
       document.getElementById('summaryCombinedSI').innerText = combined > 0 ? `₹${combined.toLocaleString('en-IN')}` : "₹0";
+
+      const exportBtn = document.getElementById('exportPdfBtn');
+      if (exportBtn) {
+        if (currentBaseSI > 0 || currentTopupSI > 0 || (activePolicyName && activePolicyName.length > 0)) {
+          exportBtn.classList.remove('hidden');
+        } else {
+          exportBtn.classList.add('hidden');
+        }
+      }
+    }
+
+    function downloadPolicyPDF() {
+      if (currentBaseSI <= 0 && currentTopupSI <= 0 && (!activePolicyName || activePolicyName.length === 0)) {
+        alert("No active health policy is loaded. Please upload a policy PDF or load a demo policy first before exporting a summary PDF.");
+        return;
+      }
+      window.print();
     }
 
     function switchTab(tabId) {
