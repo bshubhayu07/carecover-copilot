@@ -605,16 +605,16 @@
 
         <!-- Quick Action Prompt Chips -->
         <div class="flex flex-wrap gap-2 text-[11px]">
-          <span onclick="askPill('Is cataract surgery covered and what is the sub-limit?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
+          <span data-i18n="pill_cataract" onclick="askPill(this)" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
             Is cataract surgery covered?
           </span>
-          <span onclick="askPill('What is my room rent eligibility limit?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
+          <span data-i18n="pill_room" onclick="askPill(this)" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
             What is my room rent limit?
           </span>
-          <span onclick="askPill('How do I submit cashless pre-authorization?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
+          <span data-i18n="pill_preauth" onclick="askPill(this)" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
             Pre-authorization rules?
           </span>
-          <span onclick="askPill('Is knee joint replacement surgery covered?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
+          <span data-i18n="pill_joint" onclick="askPill(this)" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
             Joint replacement cover?
           </span>
         </div>
@@ -2110,7 +2110,9 @@
       `;
     }
 
-    function askPill(promptText) {
+    function askPill(promptArg) {
+      let promptText = typeof promptArg === 'string' ? promptArg : (promptArg && promptArg.innerText ? promptArg.innerText.trim() : '');
+      if (!promptText) return;
       document.getElementById('chatInput').value = promptText;
       sendChatMessage();
     }

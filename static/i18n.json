@@ -37,7 +37,11 @@
     "city_label": "Select Your City",
     "specialty_label": "Filter Specialty",
     "in_network_label": "In-Network Only",
-    "journey_title": "Care Journey Timeline & Guidance"
+    "journey_title": "Care Journey Timeline & Guidance",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Hindi": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करें",
@@ -77,7 +81,11 @@
     "city_label": "अपना शहर चुनें",
     "specialty_label": "विशेषज्ञता फ़िल्टर करें",
     "in_network_label": "केवल इन-नेटवर्क",
-    "journey_title": "देखभाल यात्रा समयरेखा एवं मार्गदर्शन"
+    "journey_title": "देखभाल यात्रा समयरेखा एवं मार्गदर्शन",
+    "pill_cataract": "क्या मोतियाबिंद सर्जरी कवर है?",
+    "pill_room": "कमरा किराया सीमा क्या है?",
+    "pill_preauth": "प्री-ऑथराइजेशन नियम क्या हैं?",
+    "pill_joint": "जोड़ प्रत्यारोपण कवरेज?"
   },
   "Marathi": {
     "emergency_prefix": "आणीबाणी सूचना: कॉल करा",
@@ -117,7 +125,11 @@
     "city_label": "तुमचे शहर निवडा",
     "specialty_label": "विशेषज्ञता फिल्टर करा",
     "in_network_label": "फक्त इन-नेटवर्क",
-    "journey_title": "काळजी प्रवास टाइमलाइन आणि मार्गदर्शन"
+    "journey_title": "काळजी प्रवास टाइमलाइन आणि मार्गदर्शन",
+    "pill_cataract": "मोतीबिंदू शस्त्रक्रिया समाविष्ट आहे का?",
+    "pill_room": "खोली भाडे मर्यादा काय आहे?",
+    "pill_preauth": "पूर्व-प्राधिकृत नियम काय आहेत?",
+    "pill_joint": "सांधे बदल शस्त्रक्रिया कव्हर?"
   },
   "Bengali": {
     "emergency_prefix": "জরুরি বিজ্ঞপ্তি: কল করুন",
@@ -157,7 +169,11 @@
     "city_label": "আপনার শহর বেছে নিন",
     "specialty_label": "বিশেষজ্ঞতা ফিল্টার",
     "in_network_label": "শুধু ইন-নেটওয়ার্ক",
-    "journey_title": "কেয়ার জার্নি টাইমলাইন ও নির্দেশিকা"
+    "journey_title": "কেয়ার জার্নি টাইমলাইন ও নির্দেশিকা",
+    "pill_cataract": "ছানি অপারেশন কভার করা হয়?",
+    "pill_room": "রুম ভাড়ার সীমা কত?",
+    "pill_preauth": "প্রাক-অনুমোদনের নিয়ম কি?",
+    "pill_joint": "জয়েন্ট প্রতিস্থাপন কভারেজ?"
   },
   "Gujarati": {
     "emergency_prefix": "ઇમરજન્સી નોટિસ: કોલ કરો",
@@ -197,7 +213,11 @@
     "city_label": "તમારું શહેર પસંદ કરો",
     "specialty_label": "વિશેષતા ફિલ્ટર કરો",
     "in_network_label": "માત્ર ઇન-નેટવર્ક",
-    "journey_title": "સંભાળ યાત્રા ટાઇમલાઇન અને માર્ગદર્શન"
+    "journey_title": "સંભાળ યાત્રા ટાઇમલાઇન અને માર્ગદર્શન",
+    "pill_cataract": "શું મોતિયાની સર્જરી કવર થાય છે?",
+    "pill_room": "રૂમ ભાડાની મર્યાદા શું છે?",
+    "pill_preauth": "પૂર્વ-મંજૂરીના નિયમો શું છે?",
+    "pill_joint": "સાંધા બદલવાનું કવરેજ?"
   },
   "Punjabi": {
     "emergency_prefix": "ਐਮਰਜੈਂਸੀ ਨੋਟਿਸ: ਕਾਲ ਕਰੋ",
@@ -237,7 +257,11 @@
     "city_label": "ਆਪਣਾ ਸ਼ਹਿਰ ਚੁਣੋ",
     "specialty_label": "ਮਾਹਰਤਾ ਫਿਲਟਰ ਕਰੋ",
     "in_network_label": "ਕੇਵਲ ਇਨ-ਨੈੱਟਵਰਕ",
-    "journey_title": "ਦੇਖਭਾਲ ਯਾਤਰਾ ਸਮਾਂਰੇਖਾ ਅਤੇ ਮਾਰਗਦਰਸ਼ਨ"
+    "journey_title": "ਦੇਖਭਾਲ ਯਾਤਰਾ ਸਮਾਂਰੇਖਾ ਅਤੇ ਮਾਰਗਦਰਸ਼ਨ",
+    "pill_cataract": "ਕੀ ਮੋਤੀਆਬਿੰਦ ਸਰਜਰੀ ਕਵਰ ਹੈ?",
+    "pill_room": "ਕਮਰੇ ਦੇ ਕਿਰਾਏ ਦੀ ਸੀਮਾ ਕੀ ਹੈ?",
+    "pill_preauth": "ਪੂਰਵ-ਮਨਜ਼ੂਰੀ ਦੇ ਨਿਯਮ ਕੀ ਹਨ?",
+    "pill_joint": "ਜੋੜ ਬਦਲਣ ਦੀ ਕਵਰੇਜ?"
   },
   "Tamil": {
     "emergency_prefix": "அவசர அறிவிப்பு: அழைக்கவும்",
@@ -277,7 +301,11 @@
     "city_label": "உங்கள் நகரத்தைத் தேர்ந்தெடுக்கவும்",
     "specialty_label": "சிறப்புப் பிரிவை வடிகட்டு",
     "in_network_label": "நெட்வொர்க்கில் உள்ளவை மட்டும்",
-    "journey_title": "பராமரிப்புப் பயண காலவரிசை வழிகாட்டுதல்"
+    "journey_title": "பராமரிப்புப் பயண காலவரிசை வழிகாட்டுதல்",
+    "pill_cataract": "கண்புரை அறுவை சிகிச்சை காப்பீடு உள்ளதா?",
+    "pill_room": "அறை வாடகை வரம்பு என்ன?",
+    "pill_preauth": "முன் அனுமதி விதிகள் என்ன?",
+    "pill_joint": "மூட்டு மாற்று அறுவை சிகிச்சை?"
   },
   "Telugu": {
     "emergency_prefix": "అత్యవసర నోటీసు: కాల్ చేయండి",
@@ -317,7 +345,11 @@
     "city_label": "మీ నగరాన్ని ఎంచుకోండి",
     "specialty_label": "స్పెషాలిటీ ఫిల్టర్",
     "in_network_label": "నెట్‌వర్క్ లో ఉన్నవి మాత్రమే",
-    "journey_title": "సంరక్షణ ప్రయాణ కాలక్రమం మార్గదర్శకత్వం"
+    "journey_title": "సంరక్షణ ప్రయాణ కాలక్రమం మార్గదర్శకత్వం",
+    "pill_cataract": "క్యాటరాక్ట్ శస్త్రచికిత్స కవర్ అవుతుందా?",
+    "pill_room": "గది అద్దె పరిమితి ఎంత?",
+    "pill_preauth": "ముందస్తు అనుమతి నిబంధనలు ఏమిటి?",
+    "pill_joint": "కీళ్ల మార్పిడి కవరేజ్?"
   },
   "Kannada": {
     "emergency_prefix": "ತುರ್ತು ಸೂಚನೆ: ಕರೆ ಮಾಡಿ",
@@ -357,7 +389,11 @@
     "city_label": "ನಿಮ್ಮ ನಗರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
     "specialty_label": "ವಿಶೇಷತೆ ಫಿಲ್ಟರ್ ಮಾಡಿ",
     "in_network_label": "ನೆಟ್‌ವರ್ಕ್‌ನಲ್ಲಿರುವವು ಮಾತ್ರ",
-    "journey_title": "ಆರೈಕೆ ಪ್ರಯಾಣದ ಸಮಯರೇಖೆ ಮಾರ್ಗದರ್ಶನ"
+    "journey_title": "ಆರೈಕೆ ಪ್ರಯಾಣದ ಸಮಯರೇಖೆ ಮಾರ್ಗದರ್ಶನ",
+    "pill_cataract": "ಕಣ್ಣಿನ ಪೋರೆ ಶಸ್ತ್ರಚಿಕಿತ್ಸೆ ರಕ್ಷಣೆ ಇದೆಯೇ?",
+    "pill_room": "ಕೊಠಡಿ ಬಾಡಿಗೆ ಮಿತಿ ಎಷ್ಟು?",
+    "pill_preauth": "ಮುಂಗಡ ಅನುಮೋದನೆ ನಿಯಮಗಳು யಾವುವು?",
+    "pill_joint": "ಜಂಟಿ ಮರುಜೋಡಣೆ ರಕ್ಷಣೆ?"
   },
   "Malayalam": {
     "emergency_prefix": "അടിയന്തിര അറിയിപ്പ്: വിളിക്കുക",
@@ -397,7 +433,11 @@
     "city_label": "നിങ്ങളുടെ നഗരം തിരഞ്ഞെടുക്കുക",
     "specialty_label": "സ്പെഷ്യാലിറ്റി ഫിൽട്ടർ",
     "in_network_label": "നെറ്റ്‌വർക്കിൽ ഉള്ളവ മാത്രം",
-    "journey_title": "പരിപാലന യാത്രാ സമയരേഖയും മാർഗ്ഗനിർദ്ദേശവും"
+    "journey_title": "പരിപാലന യാത്രാ സമയരേഖയും മാർഗ്ഗനിർദ്ദേശവും",
+    "pill_cataract": "തിമിര ശസ്ത്രക്രിയ കവർ ചെയ്യപ്പെടുമോ?",
+    "pill_room": "റൂം വാടക പരിധി എത്രയാണ്?",
+    "pill_preauth": "മുൻകൂട്ടി അനുമതി നിയമങ്ങൾ എന്തൊക്കെയാണ്?",
+    "pill_joint": "ജോയിന്റ് മാറ്റിവെക്കൽ കവറേജ്?"
   },
   "Odia": {
     "emergency_prefix": "ଜରୁରୀ ସୂଚନା: କଲ୍ କରନ୍ତୁ",
@@ -437,7 +477,11 @@
     "city_label": "ଆପଣଙ୍କ ସହର ଚୟନ କରନ୍ତୁ",
     "specialty_label": "ବିଶେଷଜ୍ଞତା ଫିଲ୍ଟର୍ କରନ୍ତୁ",
     "in_network_label": "କେବଳ ଇନ୍-ନେଟୱାର୍କ",
-    "journey_title": "ଯତ୍ନ ଯାତ୍ରା ସମୟସୀମା ଏବଂ ମାର୍ଗଦର୍ଶନ"
+    "journey_title": "ଯତ୍ନ ଯାତ୍ରା ସମୟସୀମା ଏବଂ ମାର୍ଗଦର୍ଶନ",
+    "pill_cataract": "ମୋତିଆବିନ୍ଦୁ ଅସ୍ତ୍ରୋପଚାର କଭର କରାଯାଏ କି?",
+    "pill_room": "ରୁମ୍ ଭଡା ସୀମା କେତେ?",
+    "pill_preauth": "ପୂର୍ବ-ଅନୁମୋଦନ ନିୟମ କ’ଣ?",
+    "pill_joint": "ଗଣ୍ଠି ପ୍ରତିସ୍ଥାପନ କଭରେଜ୍?"
   },
   "Assamese": {
     "emergency_prefix": "জৰুৰী সূচনা: কল কৰক",
@@ -477,7 +521,11 @@
     "city_label": "আপোনাৰ চহৰ বাছক",
     "specialty_label": "বিশেষজ্ঞতা ফিল্টাৰ কৰক",
     "in_network_label": "কেৱল ইন-নেটৱৰ্ক",
-    "journey_title": "সেৱা যাত্ৰা সময়ৰেখা আৰু নিৰ্দেশনা"
+    "journey_title": "সেৱা যাত্ৰা সময়ৰেখা আৰু নিৰ্দেশনা",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Urdu": {
     "emergency_prefix": "ہنگامی اطلاع: کال کریں",
@@ -517,7 +565,11 @@
     "city_label": "اپنا شہر منتخب کریں",
     "specialty_label": "تخصیص کی فلٹرنگ",
     "in_network_label": "صرف ان نیٹ ورک",
-    "journey_title": "نگہداشت کے سفر کی ٹائم لائن اور رہنمائی"
+    "journey_title": "نگہداشت کے سفر کی ٹائم لائن اور رہنمائی",
+    "pill_cataract": "کیا موتیا بند سرجری کور ہے؟",
+    "pill_room": "کمرے کے کرائے کی حد کیا ہے؟",
+    "pill_preauth": "قبل از منظوری کے قواعد کیا ہیں؟",
+    "pill_joint": "جوڑ کی تبدیلی کی کوریج؟"
   },
   "Sanskrit": {
     "emergency_prefix": "आपत्कालीनसूचना: आह्वयन्तु",
@@ -557,7 +609,11 @@
     "city_label": "स्वनगरं वृणोतु",
     "specialty_label": "विशेषज्ञतां शोधयन्तु",
     "in_network_label": "केवलम् जालान्तर्गतम्",
-    "journey_title": "रक्षणयात्रायाः समयरेखा मार्गदर्शनं च"
+    "journey_title": "रक्षणयात्रायाः समयरेखा मार्गदर्शनं च",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Kashmiri": {
     "emergency_prefix": "ایمرجنسی نوٹس: کال کریو",
@@ -597,7 +653,11 @@
     "city_label": "پانون شہر چنو",
     "specialty_label": "خاص شعبہ فلٹر",
     "in_network_label": "صرف نیٹ ورک اندر",
-    "journey_title": "صحت سفر ٹائم لائن"
+    "journey_title": "صحت سفر ٹائم لائن",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Nepali": {
     "emergency_prefix": "आपतकालीन सूचना: कल गर्नुहोस्",
@@ -637,7 +697,11 @@
     "city_label": "आफ्नो शहर छान्नुहोस्",
     "specialty_label": "विशेषज्ञता फिल्टर",
     "in_network_label": "केवल इन-नेटवर्क",
-    "journey_title": "हेरचाह यात्रा कार्यतालिका र मार्गदर्शन"
+    "journey_title": "हेरचाह यात्रा कार्यतालिका र मार्गदर्शन",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Sindhi": {
     "emergency_prefix": "هنگامي نوٽيس: ڪال ڪريو",
@@ -677,7 +741,11 @@
     "city_label": "پنهنجو شهر چونڊيو",
     "specialty_label": "خاص شعبو فلٽر ڪريو",
     "in_network_label": "صرف نيٽ ورڪ اندر",
-    "journey_title": "سنڀال سفر جي ٽائم لائين"
+    "journey_title": "سنڀال سفر جي ٽائم لائين",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Konkani": {
     "emergency_prefix": "आणीबाणी सूचना: फोन करा",
@@ -717,7 +785,11 @@
     "city_label": "तुमचें शहर निवडाात",
     "specialty_label": "खाशेलपण फिल्टर करात",
     "in_network_label": "फकत इन-नेटवर्क",
-    "journey_title": "काळजी प्रवास टाइमलाईन"
+    "journey_title": "काळजी प्रवास टाइमलाईन",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Maithili": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करू",
@@ -757,7 +829,11 @@
     "city_label": "अपन शहर चुनू",
     "specialty_label": "विशेषज्ञता फ़िल्टर करू",
     "in_network_label": "केवल इन-नेटवर्क",
-    "journey_title": "देखभाल यात्रा समयरेखा आ मार्गदर्शन"
+    "journey_title": "देखभाल यात्रा समयरेखा आ मार्गदर्शन",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Dogri": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करो",
@@ -797,7 +873,11 @@
     "city_label": "अपना शहर चुनो",
     "specialty_label": "विशेषज्ञता फ़िल्टर करो",
     "in_network_label": "सिर्फ इन-नेटवर्क",
-    "journey_title": "संभाल यात्रा समांरेखा"
+    "journey_title": "संभाल यात्रा समांरेखा",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Manipuri": {
     "emergency_prefix": "ইমার্জেন্সী নোটিস: কোল তৌবীয়ু",
@@ -837,7 +917,11 @@
     "city_label": "নাকোগী শহর খনবীয়ু",
     "specialty_label": "অখন্নবা ফিল্তর",
     "in_network_label": "নেত্বর্ক মনুংদা খক্তা",
-    "journey_title": "লাইয়েং খোংচৎ লম্বী"
+    "journey_title": "লাইয়েং খোংচৎ লম্বী",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Bodo": {
     "emergency_prefix": "इमार्जेन्सी नोतिस: कल खालाम",
@@ -877,7 +961,11 @@
     "city_label": "नोंनि नगर साइख'",
     "specialty_label": "आलादा फिलथार खालाम",
     "in_network_label": "नेथवर्कसिंआव ल'",
-    "journey_title": "फाहामथाय दावबायनाय लामा"
+    "journey_title": "फाहामथाय दावबायनाय लामा",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   },
   "Santhali": {
     "emergency_prefix": "ᱟᱯᱟᱛᱠᱟᱞᱤᱱ ᱱᱚᱴᱤᱥ: ᱠᱚᱞ ᱢᱮ",
@@ -917,6 +1005,10 @@
     "city_label": "ᱟᱢᱟᱜ ᱵᱟᱡᱟᱨ ᱪᱷᱟᱸᱴᱟᱣ ᱢᱮ",
     "specialty_label": "ᱵᱤᱥᱮᱥ ᱯᱷᱤᱞᱴᱚᱨ",
     "in_network_label": "ᱱᱮᱴᱣᱚᱨᱠ ᱵᱷᱤᱛᱨᱤ ᱨᱮ ᱜᱮ",
-    "journey_title": "ᱠᱮᱭᱟᱨ ᱥᱟᱸᱜᱟᱲ ᱦᱚᱨ"
+    "journey_title": "ᱠᱮᱭᱟᱨ ᱥᱟᱸᱜᱟᱲ ᱦᱚᱨ",
+    "pill_cataract": "Is cataract surgery covered?",
+    "pill_room": "What is my room rent limit?",
+    "pill_preauth": "Pre-authorization rules?",
+    "pill_joint": "Joint replacement cover?"
   }
 }
