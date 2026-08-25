@@ -419,6 +419,256 @@ class ClassifyDocRequest(BaseModel):
 def classify_document_endpoint(req: ClassifyDocRequest):
     return classify_document(req.text_content, req.filename or "")
 
+SAMPLE_POLICIES_DATABASE = [
+    {
+        "id": "sample_1",
+        "title": "Niva Bupa Health Companion",
+        "insurer_name": "Niva Bupa Health Insurance",
+        "policy_name": "Health Companion Variant 2",
+        "sum_insured": "₹5,00,000",
+        "sum_insured_inr": 500000.0,
+        "filename": "niva_bupa_health_companion.pdf",
+        "room_eligibility": "Single Private Room",
+        "room_limit": "Single Private Room (No Cap)",
+        "room_capping_type": "no_limit",
+        "proportional_deduction_clause": "No proportional deduction on doctor/surgery fees if admitted in Single Private Room.",
+        "copay": "0% Co-Pay (100% Payout)",
+        "copay_percent": 0,
+        "pre_auth": {
+            "emergency": "Intimation within 24 hours of emergency admission",
+            "elective": "48 hours prior pre-authorization notice to TPA desk"
+        },
+        "waiting_periods": {
+            "initial": "30 Days for non-accidental hospitalizations",
+            "specific_diseases": "24 Months for Cataract, Joint Replacement, Hernia, Stone Surgery",
+            "pre_existing": "36 Months for Pre-Existing Conditions (PED)"
+        },
+        "restoration_benefit": "100% Automatic Sum Restoration once per policy year",
+        "topup_details": {
+            "deductible": "₹5,00,000 threshold for Super Top-Up trigger"
+        },
+        "pre_post_hospitalization": "60 Days Pre-Hospitalization & 180 Days Post-Hospitalization",
+        "exclusions": [
+            "Cosmetics & LASIK unless refractive error > 7.5 diopters",
+            "OPD consultations & routine pharmacy unless day-care surgery",
+            "Non-medical consumables (gloves, PPE kits, admission fees)",
+            "Intentional self-injury, alcohol/substance abuse treatments"
+        ]
+    },
+    {
+        "id": "sample_2",
+        "title": "Star Comprehensive Health Plan",
+        "insurer_name": "Star Health & Allied Insurance",
+        "policy_name": "Star Comprehensive Health Insurance",
+        "sum_insured": "₹10,00,000",
+        "sum_insured_inr": 1000000.0,
+        "filename": "star_comprehensive_policy.pdf",
+        "room_eligibility": "Single Private Room",
+        "room_limit": "Single Private Room",
+        "room_capping_type": "no_limit",
+        "proportional_deduction_clause": "No room rent capping penalty.",
+        "copay": "0% Co-Pay up to age 60",
+        "copay_percent": 0,
+        "pre_auth": {
+            "emergency": "Within 24 hours of casualty admission",
+            "elective": "24 to 48 hours prior notice"
+        },
+        "waiting_periods": {
+            "initial": "30 Days",
+            "specific_diseases": "24 Months",
+            "pre_existing": "36 Months"
+        },
+        "restoration_benefit": "100% Automatic Restoration for un-related illnesses",
+        "topup_details": {
+            "deductible": "₹10,00,000 threshold"
+        },
+        "pre_post_hospitalization": "60 Days Pre & 90 Days Post",
+        "exclusions": [
+            "Non-payable administrative consumable charges",
+            "Unproven/experimental therapies",
+            "Weight control & bariatric surgery"
+        ]
+    },
+    {
+        "id": "sample_3",
+        "title": "HDFC ERGO Optima Secure",
+        "insurer_name": "HDFC ERGO General Insurance",
+        "policy_name": "Optima Secure Individual Plan",
+        "sum_insured": "₹15,00,000",
+        "sum_insured_inr": 1500000.0,
+        "filename": "hdfc_ergo_optima_secure.pdf",
+        "room_eligibility": "Any Room Category",
+        "room_limit": "Any Room Category (No Capping)",
+        "room_capping_type": "no_limit",
+        "proportional_deduction_clause": "No capping or proportional deduction across all room tiers.",
+        "copay": "0% Mandatory Co-Pay",
+        "copay_percent": 0,
+        "pre_auth": {
+            "emergency": "Within 24 hours",
+            "elective": "48 hours prior intimation"
+        },
+        "waiting_periods": {
+            "initial": "30 Days",
+            "specific_diseases": "24 Months",
+            "pre_existing": "24 Months"
+        },
+        "restoration_benefit": "Secure Benefit doubling sum insured instantly",
+        "topup_details": {
+            "deductible": "₹15,00,000 deductible"
+        },
+        "pre_post_hospitalization": "60 Days Pre & 180 Days Post",
+        "exclusions": [
+            "Non-medical hygiene items & toiletries",
+            "External durable medical equipment",
+            "Cosmetic procedures"
+        ]
+    },
+    {
+        "id": "sample_4",
+        "title": "Care Supreme Health Plan",
+        "insurer_name": "Care Health Insurance",
+        "policy_name": "Care Supreme Classic",
+        "sum_insured": "₹7,50,000",
+        "sum_insured_inr": 750000.0,
+        "filename": "care_supreme_policy.pdf",
+        "room_eligibility": "Single Private Room",
+        "room_limit": "Single Private Room",
+        "room_capping_type": "no_limit",
+        "proportional_deduction_clause": "Standard single room covered. Higher suite upgrades trigger proportional deduction.",
+        "copay": "0% Co-Pay",
+        "copay_percent": 0,
+        "pre_auth": {
+            "emergency": "Within 24 hours",
+            "elective": "48 hours prior notice"
+        },
+        "waiting_periods": {
+            "initial": "30 Days",
+            "specific_diseases": "24 Months",
+            "pre_existing": "36 Months"
+        },
+        "restoration_benefit": "Unlimited Automatic Restoration",
+        "topup_details": {
+            "deductible": "₹7,50,000 threshold"
+        },
+        "pre_post_hospitalization": "60 Days Pre & 90 Days Post",
+        "exclusions": [
+            "Non-payable items list under IRDAI guidelines",
+            "Genetic disorder treatments",
+            "Hazardous sports injuries"
+        ]
+    }
+]
+
+@app.get("/api/sample-policies")
+def get_sample_policies_endpoint():
+    return {"policies": SAMPLE_POLICIES_DATABASE}
+
+@app.post("/api/select-sample-policy")
+def select_sample_policy_endpoint(policy_id: str = Query("sample_1")):
+    global active_policy_profile
+    found = next((p for p in SAMPLE_POLICIES_DATABASE if p["id"] == policy_id), SAMPLE_POLICIES_DATABASE[0])
+    active_policy_profile = PolicyProfile(
+        insurer_name=found["insurer_name"],
+        policy_name=found["policy_name"],
+        sum_insured_inr=found["sum_insured_inr"],
+        room_eligibility=found["room_eligibility"],
+        co_pay=found["copay"],
+        exclusions=found["exclusions"]
+    )
+    return {"status": "success", "summary": found}
+
+@app.get("/api/care-journey/{stage_key}")
+def get_care_journey_stage_endpoint(stage_key: str):
+    stages = {
+        "admission": {
+            "stage_info": {
+                "title": "1. Hospital Admission & Cashless Pre-Authorization",
+                "description": "Pre-auth submission, TPA intimation SLAs, and network desk verification.",
+                "key_actions": [
+                    "Present Health Insurance Card and patient Aadhaar/PAN ID at TPA Desk.",
+                    "Submit TPA Pre-Authorization Form with Doctor Admission Slip & Diagnosis.",
+                    "Verify room category eligibility (Single Private Room) before signing admission sheet.",
+                    "Obtain TPA Initial Approval Letter (Standard SLA: 2 to 4 hours)."
+                ],
+                "required_documents": [
+                    "Health Insurance Card / Policy Schedule Copy",
+                    "Patient Government Photo ID (Aadhaar / PAN / Passport)",
+                    "Doctor Admission Advice & Prescription Slip",
+                    "TPA Pre-Authorization Request Form (Filled & Signed)"
+                ],
+                "cost_warning": "Warning: Choosing a Deluxe Suite when policy limits to Single Private Room triggers 15%-25% proportional deductions on all doctor and surgical fees."
+            },
+            "customized_policy_notes": [
+                "Planned Admission SLA: Require 48 hours prior notice to TPA desk.",
+                "Emergency Admission SLA: Require intimation within 24 hours of casualty admission."
+            ]
+        },
+        "investigation": {
+            "stage_info": {
+                "title": "2. Inpatient Diagnostics & Clinical Care",
+                "description": "Daily doctor visits, diagnostic imaging, and pharmacy billing during stay.",
+                "key_actions": [
+                    "Ensure diagnostic imaging (MRI, CT Scan, Sonography) has doctor's written prescription.",
+                    "Keep track of daily hospital pharmacy bills & consumable issues.",
+                    "Verify doctor consultation notes are logged daily in hospital inpatient chart."
+                ],
+                "required_documents": [
+                    "Diagnostic Investigation Reports (Laboratory, X-Ray, CT, MRI)",
+                    "Doctor Daily Consultation Notes",
+                    "Itemized Pharmacy Receipts & Drug Requisitions"
+                ],
+                "cost_warning": "Non-payable items alert: Disposables like PPE kits, gloves, tissue boxes, and dietitian fees are non-reimbursable consumables."
+            },
+            "customized_policy_notes": [
+                "Diagnostic tests covered 100% up to active Base Sum Insured.",
+                "Pre-hospitalization diagnostic test reports dated up to 60 days prior are eligible for reimbursement."
+            ]
+        },
+        "procedure": {
+            "stage_info": {
+                "title": "3. Surgical Operation & Procedure Execution",
+                "description": "Surgical procedures, OT charges, ICU stay, and sub-limit capping verification.",
+                "key_actions": [
+                    "Confirm surgical procedure name matches pre-authorization approval letter.",
+                    "Check if procedure has specific sub-limits (e.g., Cataract ₹40,000/eye, Joint Replacement ₹1.5L/joint).",
+                    "Ensure ICU/CCU charges are covered without capping penalties."
+                ],
+                "required_documents": [
+                    "Operation Theatre (OT) Notes & Anesthesia Record",
+                    "Implant Invoice & Barcode Sticker (Stents, Cataract Lens, Joint Prosthesis)",
+                    "Surgeon & Specialist Consultation Certificates"
+                ],
+                "cost_warning": "Implant Sub-limit Notice: High-end premium implants exceeding policy sub-limits require patient out-of-pocket payment."
+            },
+            "customized_policy_notes": [
+                "Day Care procedures (Cataract, Dialysis, Chemo) covered without 24h hospitalization requirement."
+            ]
+        },
+        "discharge": {
+            "stage_info": {
+                "title": "4. Hospital Discharge & Final Claim Settlement",
+                "description": "Final bill submission, TPA final approval letter, and post-op claims guidance.",
+                "key_actions": [
+                    "Request hospital TPA desk to send Final Itemized Bill to insurer 4 hours before expected discharge.",
+                    "Obtain Discharge Summary, Final Bill, Payment Receipts, and Investigation Reports.",
+                    "Review non-payable consumable line items before paying out-of-pocket balance at counter.",
+                    "Retain all original bills for 60-day post-hospitalization reimbursement claims."
+                ],
+                "required_documents": [
+                    "Original Hospital Discharge Summary (Signed by Attending Doctor)",
+                    "Detailed Itemized Final Bill & Breakup Statement",
+                    "Original Payment Receipts / Cashless Final Approval Letter",
+                    "All Diagnostic Test Reports & Post-Discharge Doctor Prescriptions"
+                ],
+                "cost_warning": "Final Settlement SLA: TPA final claim audit takes 2 to 4 hours on discharge day."
+            },
+            "customized_policy_notes": [
+                "Post-hospitalization claims (follow-up consults, medicines) eligible up to 90 to 180 days post-discharge."
+            ]
+        }
+    }
+    return stages.get(stage_key, stages["admission"])
+
 @app.get("/api/eval-rag")
 def eval_rag_endpoint():
     return evaluate_rag_performance()

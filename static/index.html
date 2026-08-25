@@ -372,6 +372,50 @@
     </div>
   </div>
 
+  <!-- Disclaimer Notification Bar -->
+  <div class="bg-amber-950/90 dark:bg-amber-950/90 light:bg-amber-50 border-b border-amber-800/80 light:border-amber-200 px-4 py-1.5 text-xs text-amber-200 light:text-amber-900 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto flex items-center justify-between w-full">
+      <div class="flex items-center gap-2 truncate">
+        <span class="font-bold text-amber-400 light:text-amber-700">DISCLAIMER:</span>
+        <span class="truncate">CareCover Copilot is an informational decision-support platform. It does not provide medical diagnoses, treatment recommendations, or binding insurance claim approvals.</span>
+      </div>
+      <button onclick="openDisclaimerModal()" class="text-amber-400 light:text-amber-800 underline font-semibold hover:text-amber-300 light:hover:text-amber-950 ml-3 flex-shrink-0 cursor-pointer">
+        Details
+      </button>
+    </div>
+  </div>
+
+  <!-- Disclaimer Modal -->
+  <div id="disclaimerModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 light:bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 dark:bg-slate-900 light:bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-800 light:border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 light:border-slate-100 pb-3">
+        <div class="flex items-center gap-2 text-amber-500 light:text-amber-600 font-bold text-base">
+          <span>Important System Disclaimer & Scope</span>
+        </div>
+        <button onclick="closeDisclaimerModal()" class="text-slate-400 hover:text-slate-200 light:hover:text-slate-600 text-xl font-bold cursor-pointer">&times;</button>
+      </div>
+      <div class="space-y-3 text-xs text-slate-300 light:text-slate-700 leading-relaxed">
+        <div class="p-3 bg-amber-950/40 light:bg-amber-50 border border-amber-800/60 light:border-amber-200 text-amber-200 light:text-amber-900 rounded-xl space-y-1 font-medium">
+          <p class="font-bold">Non-Medical & Non-Binding Insurance Platform</p>
+          <p>CareCover Copilot is an informational decision-support and policy parsing tool designed to assist patients and caregivers during hospital admission and treatment planning.</p>
+        </div>
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-100 light:text-slate-900">Key Operating Constraints:</h4>
+          <ul class="space-y-1.5 list-disc pl-4 text-slate-400 light:text-slate-600">
+            <li><strong>No Medical Diagnosis or Treatment Advice:</strong> This tool does not evaluate clinical symptoms or provide clinical medical treatment recommendations.</li>
+            <li><strong>No Binding Insurance Claim Guarantees:</strong> Actual claim approval, pre-authorization decisions, and payout amounts are strictly subject to your insurer's official Third Party Administrator (TPA) audit and terms.</li>
+            <li><strong>Informational Decision Support Only:</strong> Room rent capping calculations and network hospital status are provided for guidance based on public/simulated datasets.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-3 border-t border-slate-800 light:border-slate-100 flex justify-end">
+        <button onclick="closeDisclaimerModal()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer">
+          I Understand & Agree
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <header class="bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border-b border-slate-800 light:border-slate-200 px-6 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4 transition-colors">
     <div class="flex items-center gap-2.5">
@@ -614,6 +658,31 @@
           </button>
         </div>
         <div id="uploadStatus" class="text-xs hidden"></div>
+
+        <div class="pt-3 border-t border-slate-800 light:border-slate-200">
+          <div class="text-xs font-bold text-slate-300 light:text-slate-700 mb-2 flex items-center gap-1.5">
+            <span class="text-amber-400">⚡</span>
+            <span>Or Test Instantly with Sample Indian Policies:</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <button onclick="selectSamplePolicy('sample_1')" class="text-left text-xs p-2.5 rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900/60 light:bg-slate-50 hover:border-sky-500 hover:bg-sky-950/40 text-slate-200 light:text-slate-800 transition-all font-medium cursor-pointer">
+              <div class="font-bold text-sky-400 light:text-sky-700 truncate">Niva Bupa</div>
+              <div class="text-[10px] text-slate-400 light:text-slate-500">₹5 Lakhs Cover</div>
+            </button>
+            <button onclick="selectSamplePolicy('sample_2')" class="text-left text-xs p-2.5 rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900/60 light:bg-slate-50 hover:border-sky-500 hover:bg-sky-950/40 text-slate-200 light:text-slate-800 transition-all font-medium cursor-pointer">
+              <div class="font-bold text-sky-400 light:text-sky-700 truncate">Star Comprehensive</div>
+              <div class="text-[10px] text-slate-400 light:text-slate-500">₹10 Lakhs Cover</div>
+            </button>
+            <button onclick="selectSamplePolicy('sample_3')" class="text-left text-xs p-2.5 rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900/60 light:bg-slate-50 hover:border-sky-500 hover:bg-sky-950/40 text-slate-200 light:text-slate-800 transition-all font-medium cursor-pointer">
+              <div class="font-bold text-sky-400 light:text-sky-700 truncate">HDFC ERGO</div>
+              <div class="text-[10px] text-slate-400 light:text-slate-500">₹15 Lakhs Cover</div>
+            </button>
+            <button onclick="selectSamplePolicy('sample_4')" class="text-left text-xs p-2.5 rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900/60 light:bg-slate-50 hover:border-sky-500 hover:bg-sky-950/40 text-slate-200 light:text-slate-800 transition-all font-medium cursor-pointer">
+              <div class="font-bold text-sky-400 light:text-sky-700 truncate">Care Supreme</div>
+              <div class="text-[10px] text-slate-400 light:text-slate-500">₹7.5 Lakhs Cover</div>
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Super Top-Up Policy & Dual Comparison Engine Card -->
@@ -943,6 +1012,42 @@
     <!-- TAB 4: Claims & Care Journey Suite -->
     <section id="tab4-content" class="space-y-6 hidden">
       
+      <!-- Interactive 4-Stage Patient Care Journey Tracker -->
+      <div class="glass-card p-6 rounded-xl space-y-4 border border-indigo-900/50 light:border-indigo-200">
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
+          <div>
+            <h2 class="text-base font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+              <span>Patient Hospital Care Journey Tracker</span>
+            </h2>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Step-by-step decision support, document checklists, and policy guidance for each phase of hospital stay.</p>
+          </div>
+          <span class="text-xs bg-indigo-950 light:bg-indigo-100 text-indigo-400 light:text-indigo-800 border border-indigo-800 light:border-indigo-300 px-2.5 py-0.5 rounded-full font-bold">4 Stage Timeline</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <button onclick="loadCareJourneyStage('admission')" id="journeyBtn_admission" class="p-3.5 rounded-xl border transition-all text-left space-y-1 font-bold bg-sky-600 text-white border-sky-600 shadow-md cursor-pointer">
+            <div class="text-[11px] opacity-80 uppercase tracking-wider">Stage 1</div>
+            <div class="text-xs font-extrabold">1. Admission & Pre-Auth</div>
+          </button>
+          <button onclick="loadCareJourneyStage('investigation')" id="journeyBtn_investigation" class="p-3.5 rounded-xl border transition-all text-left space-y-1 font-bold bg-slate-900 light:bg-white text-slate-300 light:text-slate-800 border-slate-700 light:border-slate-300 hover:border-sky-500 cursor-pointer">
+            <div class="text-[11px] opacity-80 uppercase tracking-wider">Stage 2</div>
+            <div class="text-xs font-extrabold">2. Diagnostics & Care</div>
+          </button>
+          <button onclick="loadCareJourneyStage('procedure')" id="journeyBtn_procedure" class="p-3.5 rounded-xl border transition-all text-left space-y-1 font-bold bg-slate-900 light:bg-white text-slate-300 light:text-slate-800 border-slate-700 light:border-slate-300 hover:border-sky-500 cursor-pointer">
+            <div class="text-[11px] opacity-80 uppercase tracking-wider">Stage 3</div>
+            <div class="text-xs font-extrabold">3. Procedure & Surgery</div>
+          </button>
+          <button onclick="loadCareJourneyStage('discharge')" id="journeyBtn_discharge" class="p-3.5 rounded-xl border transition-all text-left space-y-1 font-bold bg-slate-900 light:bg-white text-slate-300 light:text-slate-800 border-slate-700 light:border-slate-300 hover:border-sky-500 cursor-pointer">
+            <div class="text-[11px] opacity-80 uppercase tracking-wider">Stage 4</div>
+            <div class="text-xs font-extrabold">4. Discharge & Settlement</div>
+          </button>
+        </div>
+
+        <div id="careJourneyDetails" class="bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-5 rounded-xl border border-slate-800 light:border-slate-300 space-y-4 text-xs">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
       <!-- Pre-Hospitalization Assistant Card -->
       <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
         <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
@@ -2799,8 +2904,115 @@
     setInterval(updateLiveClock, 1000);
     updateLiveClock();
 
+    function openDisclaimerModal() {
+      const el = document.getElementById('disclaimerModal');
+      if (el) el.classList.remove('hidden');
+    }
+
+    function closeDisclaimerModal() {
+      const el = document.getElementById('disclaimerModal');
+      if (el) el.classList.add('hidden');
+    }
+
+    async function selectSamplePolicy(policyId) {
+      try {
+        const res = await fetch(`/api/select-sample-policy?policy_id=${policyId}`, { method: 'POST' });
+        const data = await res.json();
+        if (data && data.summary) {
+          const s = data.summary;
+          currentBaseSI = s.sum_insured_inr || 500000;
+          activePolicyName = s.title || s.insurer_name;
+          
+          const resInsurer = document.getElementById('resInsurer');
+          const resSumInsured = document.getElementById('resSumInsured');
+          const resRoom = document.getElementById('resRoom');
+          const resCopay = document.getElementById('resCopay');
+          const summaryBaseSI = document.getElementById('summaryBaseSI');
+
+          if (resInsurer) resInsurer.innerText = s.insurer_name;
+          if (resSumInsured) resSumInsured.innerText = s.sum_insured || `₹${currentBaseSI.toLocaleString('en-IN')}`;
+          if (resRoom) resRoom.innerText = s.room_eligibility || "Single Private Room";
+          if (resCopay) resCopay.innerText = s.copay || "0% Co-Pay";
+          if (summaryBaseSI) summaryBaseSI.innerText = s.sum_insured || `₹${currentBaseSI.toLocaleString('en-IN')}`;
+          
+          updateHealthScoreUI(s);
+          calculateRiskInUI();
+          showNotification(`Sample Policy "${s.title}" loaded successfully!`);
+        }
+      } catch (e) {
+        console.error("Error selecting sample policy:", e);
+      }
+    }
+
+    async function loadCareJourneyStage(stageKey) {
+      const keys = ['admission', 'investigation', 'procedure', 'discharge'];
+      keys.forEach(k => {
+        const btn = document.getElementById(`journeyBtn_${k}`);
+        if (btn) {
+          if (k === stageKey) {
+            btn.className = "p-3.5 rounded-xl border transition-all text-left space-y-1 font-bold bg-sky-600 text-white border-sky-600 shadow-md cursor-pointer";
+          } else {
+            btn.className = "p-3.5 rounded-xl border transition-all text-left space-y-1 font-bold bg-slate-900 light:bg-white text-slate-300 light:text-slate-800 border-slate-700 light:border-slate-300 hover:border-sky-500 cursor-pointer";
+          }
+        }
+      });
+
+      const container = document.getElementById('careJourneyDetails');
+      if (!container) return;
+      container.innerHTML = '<div class="text-slate-400">Loading stage guidance...</div>';
+
+      try {
+        const res = await fetch(`/api/care-journey/${stageKey}`);
+        const data = await res.json();
+        const info = data.stage_info;
+        const notes = data.customized_policy_notes || [];
+
+        let html = `
+          <div class="border-b border-slate-800 light:border-slate-200 pb-3">
+            <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider bg-sky-950 px-2 py-0.5 rounded">Active Stage Guidance</span>
+            <h3 class="text-sm font-bold text-slate-100 light:text-slate-900 mt-1">${info.title}</h3>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">${info.description}</p>
+          </div>
+        `;
+
+        if (notes.length > 0) {
+          html += `
+            <div class="bg-indigo-950/60 light:bg-indigo-50 border border-indigo-800 light:border-indigo-200 text-indigo-300 light:text-indigo-900 p-3 rounded-lg space-y-1 text-xs">
+              <div class="font-bold text-indigo-400 light:text-indigo-950 text-[11px] uppercase tracking-wider">Policy-Aware Guidance Notes:</div>
+              ${notes.map(n => `<p>• ${n}</p>`).join('')}
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="space-y-2">
+              <h4 class="font-bold text-slate-200 light:text-slate-800">Action Checklist</h4>
+              <div class="space-y-1.5 text-slate-300 light:text-slate-700">
+                ${info.key_actions.map(a => `<div class="p-2 bg-slate-900/60 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg flex items-start gap-2"><span class="text-sky-400 font-bold">•</span><span>${a}</span></div>`).join('')}
+              </div>
+            </div>
+            <div class="space-y-2">
+              <h4 class="font-bold text-slate-200 light:text-slate-800">Required Documents</h4>
+              <div class="space-y-1.5 text-slate-300 light:text-slate-700">
+                ${info.required_documents.map(d => `<div class="p-2 bg-slate-900/60 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg flex items-center gap-2"><span class="text-purple-400 font-bold">📄</span><span>${d}</span></div>`).join('')}
+              </div>
+            </div>
+          </div>
+          <div class="bg-amber-950/40 light:bg-amber-50 border border-amber-800 light:border-amber-200 text-amber-200 light:text-amber-900 p-3 rounded-lg text-xs space-y-1">
+            <div class="font-bold">Stage Out-of-Pocket Financial Alert:</div>
+            <p>${info.cost_warning}</p>
+          </div>
+        `;
+        container.innerHTML = html;
+      } catch (e) {
+        console.error("Error loading care journey stage:", e);
+      }
+    }
+
     // Auto Location Detection on Load
     window.addEventListener('DOMContentLoaded', () => {
+      loadCareJourneyStage('admission');
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {
