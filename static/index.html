@@ -2155,21 +2155,29 @@
         const res = await fetch(`/api/cost-estimate?procedure=${encodeURIComponent(proc)}&city=Delhi`);
         const data = await res.json();
         
+        const avgCost = data.average_cost_inr || data.estimated_average_cost || 185000;
         let sublimit = "100% Base Sum Insured (No Sub-Limit Cap)";
         let clause = "Section 2.1 - General Inpatient Benefits";
         let waitingPeriod = "30-Day Initial Waiting Period";
         let preAuthSla = "Required (48h Planned / 24h Emergency)";
-        let statusBadgeText = `Covered (${data.coverage_percent || 90}% Coverage Ratio)`;
         let statusColorClass = "text-emerald-400 font-bold";
+
+        // Dynamic Coverage Ratio calculation based on loaded policy co-pay % and procedure sub-limit caps
+        let copayPercent = (activePolicyData && typeof activePolicyData.co_payment_percentage === 'number') ? activePolicyData.co_payment_percentage : 0;
+        let coverageRatio = 100 - copayPercent;
 
         if (proc.includes("Cataract")) {
           sublimit = "Max ₹40,000 per eye";
           clause = "Section 4.2 - Specific Surgical Sub-Limits";
           waitingPeriod = "24-Month Specific Illness Waiting Period";
+          const cappedCoverage = Math.round((40000 / avgCost) * 100);
+          coverageRatio = Math.min(coverageRatio, cappedCoverage);
         } else if (proc.includes("Knee")) {
           sublimit = "Max ₹1,50,000 per joint";
           clause = "Section 4.5 - Major Joint Replacement Sub-Limits";
           waitingPeriod = "24-Month Specific Illness Waiting Period";
+          const cappedCoverage = Math.round((150000 / avgCost) * 100);
+          coverageRatio = Math.min(coverageRatio, cappedCoverage);
         } else if (proc.includes("CABG")) {
           sublimit = "100% Base Sum Insured (No Sub-limit)";
           clause = "Section 3.1 - Major Cardiac Inpatient Benefits";
@@ -2182,6 +2190,8 @@
           sublimit = "Capped at ₹50,000 (Normal) / ₹75,000 (C-Section)";
           clause = "Section 7.2 - Maternity Benefits Rider";
           waitingPeriod = "24-Month Maternity Waiting Period";
+          const cappedCoverage = Math.round((50000 / avgCost) * 100);
+          coverageRatio = Math.min(coverageRatio, cappedCoverage);
         } else if (proc.includes("LASIK")) {
           sublimit = "Covered if Refractive Error > 7.5 Diopters";
           clause = "Section 8.1 - Advanced Ophthalmic Procedures";
@@ -2192,13 +2202,16 @@
           waitingPeriod = "Covered Immediately (Emergency Admission)";
         }
 
+        coverageRatio = Math.max(10, Math.min(100, coverageRatio));
+        let statusBadgeText = `Covered (${coverageRatio}% Coverage Ratio)`;
+
         resContainer.innerHTML = `
           <div class="flex items-center justify-between border-b border-slate-800 light:border-slate-200 pb-2">
             <span class="font-extrabold text-slate-200 light:text-slate-900">Coverage Status: <span class="${statusColorClass}">${statusBadgeText}</span></span>
             <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">AI Confidence: 98.4%</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
-            <div><strong class="text-slate-300 light:text-slate-700">Estimated Average Cost:</strong> ₹${(data.average_cost_inr || 185000).toLocaleString('en-IN')}</div>
+            <div><strong class="text-slate-300 light:text-slate-700">Estimated Average Cost:</strong> ₹${avgCost.toLocaleString('en-IN')}</div>
             <div><strong class="text-slate-300 light:text-slate-700">Sub-Limit Cap:</strong> ${sublimit}</div>
             <div><strong class="text-slate-300 light:text-slate-700">Waiting Period:</strong> ${waitingPeriod}</div>
             <div><strong class="text-slate-300 light:text-slate-700">Pre-Auth SLA:</strong> ${preAuthSla}</div>
