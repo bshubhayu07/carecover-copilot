@@ -56,9 +56,9 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- Top Location-Aware Emergency Banner -->
+  <!-- Top Location-Aware Emergency Banner (Defaulted to Pune / Maharashtra MEMS 108) -->
   <div id="emergencyBanner" class="bg-red-950/90 dark:bg-red-950/90 light:bg-red-100 border-b border-red-800/80 light:border-red-300 px-4 py-2 text-center text-xs md:text-sm text-red-200 light:text-red-900 font-medium transition-colors">
-    EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call <strong id="helplineNumbers">National 112 | Ambulance 108</strong> immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.
+    EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call <strong id="helplineNumbers">National 112 | MEMS Ambulance 108 (Pune / MH)</strong> immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.
   </div>
 
   <!-- Header -->
@@ -76,7 +76,7 @@
       
       <!-- PROMINENT LIGHT / DARK MODE TOGGLE SWITCH -->
       <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1.5 cursor-pointer">
-        <span>Theme: Light Mode</span>
+        <span>☀️ Switch to Light Mode</span>
       </button>
 
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
@@ -250,10 +250,10 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
             <div>
               <label class="block text-slate-400 light:text-slate-600 mb-1">Select City</label>
-              <select id="hospitalCity" onchange="fetchHospitals()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2">
-                <option value="Delhi">Delhi NCR</option>
-                <option value="Pune">Pune</option>
+              <select id="hospitalCity" onchange="fetchHospitals()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+                <option value="Pune" selected>Pune (Default)</option>
                 <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi NCR</option>
                 <option value="Bengaluru">Bengaluru</option>
                 <option value="Hyderabad">Hyderabad</option>
                 <option value="Chennai">Chennai</option>
@@ -306,20 +306,20 @@
     let userLon = null;
 
     const HELPLINE_DATABASE = {
+      'Pune': 'National 112 | MEMS Ambulance 108 (Pune / MH)',
+      'Mumbai': 'National 112 | MEMS Ambulance 108 (Mumbai / MH)',
       'Delhi': 'National 112 | Delhi Ambulance 102 / 108',
-      'Pune': 'National 112 | MEMS Ambulance 108',
-      'Mumbai': 'National 112 | MEMS Ambulance 108',
-      'Bengaluru': 'National 112 | Arogya Kavacha 108',
-      'Hyderabad': 'National 112 | EMRI Ambulance 108',
-      'Chennai': 'National 112 | TN EMS Ambulance 108',
+      'Bengaluru': 'National 112 | Arogya Kavacha 108 (KA)',
+      'Hyderabad': 'National 112 | EMRI Ambulance 108 (TS)',
+      'Chennai': 'National 112 | TN EMS Ambulance 108 (TN)',
       'Kolkata': 'National 112 | WB Health Ambulance 102 / 108',
-      'Ahmedabad': 'National 112 | 108 GVK EMRI Ambulance'
+      'Ahmedabad': 'National 112 | 108 GVK EMRI Ambulance (GJ)'
     };
 
     const CITY_COORDS = {
-      'Delhi': { lat: 28.6139, lon: 77.2090 },
       'Pune': { lat: 18.5204, lon: 73.8567 },
       'Mumbai': { lat: 19.0760, lon: 72.8777 },
+      'Delhi': { lat: 28.6139, lon: 77.2090 },
       'Bengaluru': { lat: 12.9716, lon: 77.5946 },
       'Hyderabad': { lat: 17.3850, lon: 78.4867 },
       'Chennai': { lat: 13.0827, lon: 80.2707 },
@@ -333,12 +333,12 @@
       if (htmlEl.classList.contains('dark')) {
         htmlEl.classList.remove('dark');
         htmlEl.classList.add('light');
-        themeBtn.innerHTML = "<span>Theme: Dark Mode</span>";
+        themeBtn.innerHTML = "<span>🌙 Switch to Dark Mode</span>";
         localStorage.setItem('theme', 'light');
       } else {
         htmlEl.classList.remove('light');
         htmlEl.classList.add('dark');
-        themeBtn.innerHTML = "<span>Theme: Light Mode</span>";
+        themeBtn.innerHTML = "<span>☀️ Switch to Light Mode</span>";
         localStorage.setItem('theme', 'dark');
       }
     }
@@ -347,12 +347,16 @@
     if (localStorage.getItem('theme') === 'light') {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
-      document.getElementById('themeBtn').innerHTML = "<span>Theme: Dark Mode</span>";
+      document.getElementById('themeBtn').innerHTML = "<span>🌙 Switch to Dark Mode</span>";
+    } else {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      document.getElementById('themeBtn').innerHTML = "<span>☀️ Switch to Light Mode</span>";
     }
 
     function updateHelplineNumbers(city) {
       const el = document.getElementById('helplineNumbers');
-      el.innerText = HELPLINE_DATABASE[city] || 'National 112 | Ambulance 108';
+      el.innerText = HELPLINE_DATABASE[city] || 'National 112 | MEMS Ambulance 108 (Pune / MH)';
     }
 
     function updateCombinedSI() {
@@ -503,6 +507,18 @@
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
+    function detectCityFromCoords(lat, lon) {
+      if (lat >= 18.0 && lat <= 19.3 && lon >= 73.0 && lon <= 74.5) return 'Pune';
+      if (lat >= 18.8 && lat <= 19.5 && lon >= 72.7 && lon <= 73.2) return 'Mumbai';
+      if (lat >= 28.3 && lat <= 28.9) return 'Delhi';
+      if (lat >= 12.8 && lat <= 13.2) return 'Bengaluru';
+      if (lat >= 17.2 && lat <= 17.6) return 'Hyderabad';
+      if (lat >= 12.9 && lat <= 13.3 && lon >= 80.0) return 'Chennai';
+      if (lat >= 22.3 && lat <= 22.8) return 'Kolkata';
+      if (lat >= 22.9 && lat <= 23.2) return 'Ahmedabad';
+      return 'Pune';
+    }
+
     function requestGPSLocation() {
       const btn = document.getElementById('gpsBtn');
       if (navigator.geolocation) {
@@ -511,24 +527,29 @@
           (pos) => {
             userLat = pos.coords.latitude;
             userLon = pos.coords.longitude;
-            btn.innerText = "GPS Active";
+            const detectedCity = detectCityFromCoords(userLat, userLon);
+            document.getElementById('hospitalCity').value = detectedCity;
+            updateHelplineNumbers(detectedCity);
+            btn.innerText = `GPS Active (${detectedCity})`;
             btn.className = "bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 shadow-sm";
             fetchHospitals();
           },
           (err) => {
             const city = document.getElementById('hospitalCity').value;
-            const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
+            const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
             userLat = fallback.lat;
             userLon = fallback.lon;
+            updateHelplineNumbers(city);
             btn.innerText = `${city} Location Active`;
             fetchHospitals();
           }
         );
       } else {
         const city = document.getElementById('hospitalCity').value;
-        const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
+        const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
         userLat = fallback.lat;
         userLon = fallback.lon;
+        updateHelplineNumbers(city);
         fetchHospitals();
       }
     }
@@ -544,7 +565,7 @@
       container.innerHTML = '<div class="text-slate-400 light:text-slate-600 col-span-2">Loading hospital network directory...</div>';
 
       if (userLat === null || userLon === null) {
-        const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
+        const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
         userLat = fallback.lat;
         userLon = fallback.lon;
       }
