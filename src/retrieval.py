@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 from typing import Optional, Dict, Any
 from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME, OPENAI_API_KEY
@@ -94,12 +95,14 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
         insurer_phrase = f" for {insurer_name}"
 
     q_clean = query.lower().strip()
+    q_norm = re.sub(r"[^\w\s]", "", q_clean)
     lang = language.strip()
 
     t = LANGUAGE_TRANSLATIONS.get(lang, None)
 
     # 0. Live Date / Time & Basic Temporal Queries
-    if any(k in q_clean for k in ["what is today's date", "today's date", "current date", "what date is today", "what is the date", "what time is it", "current time", "what day is today"]):
+    temporal_tokens = ["date", "time", "day", "today", "todays", "clock", "year", "month"]
+    if any(tok in q_norm.split() for tok in temporal_tokens) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day"]):
         now = datetime.now()
         day_str = now.strftime("%A, %d %B %Y")
         time_str = now.strftime("%H:%M:%S")
@@ -187,10 +190,11 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
         insurer_name = policy_profile.insurer_name
 
     q_clean = query.lower().strip()
+    q_norm = re.sub(r"[^\w\s]", "", q_clean)
 
     is_greeting = any(q_clean == g or q_clean.startswith(g + " ") or q_clean.startswith(g + ",") or g in q_clean for g in GREETING_KEYWORDS)
     is_ood = any(k in q_clean for k in OUT_OF_DOMAIN_KEYWORDS)
-    is_temporal = any(k in q_clean for k in ["date", "time", "today", "clock"])
+    is_temporal = any(tok in q_norm.split() for tok in ["date", "time", "day", "today", "todays", "clock"]) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day"])
     has_policy_kw = any(k in q_clean for k in ["cataract", "joint", "knee", "hip", "room", "icu", "rent", "auth", "cashless", "preauth", "pre-auth", "claim", "reimbursement", "doctor", "ambulance", "maternity", "waiting period", "ped", "pre-existing", "sub-limit", "copay", "co-pay", "deductible", "topup", "cover", "policy"])
 
     if is_greeting or is_ood or is_temporal or not has_policy_kw:
