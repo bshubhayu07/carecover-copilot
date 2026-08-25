@@ -1145,6 +1145,8 @@
           exportBtn.classList.add('hidden');
         }
       }
+
+      calculateRiskInUI();
     }
 
     function downloadPolicyPDF() {
@@ -1845,8 +1847,8 @@
           body: JSON.stringify({
             procedure_name: proc,
             estimated_bill: bill,
-            base_sum_insured: currentBaseSI > 0 ? currentBaseSI : 300000,
-            super_topup_sum_insured: currentTopupSI > 0 ? currentTopupSI : 1500000,
+            base_sum_insured: currentBaseSI,
+            super_topup_sum_insured: currentTopupSI,
             super_topup_deductible: 300000,
             room_category: room,
             co_pay_percent: copay
@@ -1855,24 +1857,34 @@
         const data = await res.json();
 
         document.getElementById('resBill').innerText = `₹${data.hospital_bill.toLocaleString('en-IN')}`;
-        document.getElementById('resPrimary').innerText = `₹${data.primary_base_payout.toLocaleString('en-IN')}`;
-        document.getElementById('resTopup').innerText = `₹${data.super_topup_payout.toLocaleString('en-IN')}`;
+        document.getElementById('resPrimary').innerText = currentBaseSI > 0 ? `₹${data.primary_base_payout.toLocaleString('en-IN')}` : "₹0 (No Policy)";
+        document.getElementById('resTopup').innerText = currentTopupSI > 0 ? `₹${data.super_topup_payout.toLocaleString('en-IN')}` : "₹0 (No Top-Up)";
         document.getElementById('resOutpocket').innerText = `₹${data.estimated_out_of_pocket.toLocaleString('en-IN')}`;
         
-        document.getElementById('resTopupStatus').innerText = data.topup_status;
-        document.getElementById('resTopupStatus').className = data.topup_triggered ? 
-          "font-bold text-emerald-400 light:text-emerald-800 bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-full text-xs" : 
-          "font-bold text-amber-400 light:text-amber-800 bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-full text-xs";
+        const topupBadge = document.getElementById('resTopupStatus');
+        if (currentTopupSI === 0) {
+          topupBadge.innerText = "No Super Top-Up Policy Uploaded";
+          topupBadge.className = "font-bold text-slate-400 light:text-slate-500 bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-full text-xs";
+        } else {
+          topupBadge.innerText = data.topup_status;
+          topupBadge.className = data.topup_triggered ? 
+            "font-bold text-emerald-400 light:text-emerald-800 bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-full text-xs" : 
+            "font-bold text-amber-400 light:text-amber-800 bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-full text-xs";
+        }
 
         const d = data.deductions_breakdown || {};
         const notes = [];
-        if (d.non_payable_consumables > 0) notes.push(`₹${d.non_payable_consumables.toLocaleString('en-IN')} non-payable consumables`);
-        if (d.room_penalty_deduction > 0) notes.push(`₹${d.room_penalty_deduction.toLocaleString('en-IN')} room penalty`);
-        if (d.sublimit_deduction > 0) notes.push(`₹${d.sublimit_deduction.toLocaleString('en-IN')} sub-limit cap`);
-        if (d.co_pay_amount > 0) notes.push(`₹${d.co_pay_amount.toLocaleString('en-IN')} co-pay`);
+        if (currentBaseSI === 0) {
+          notes.push("No Base Policy Uploaded: 100% Out-of-Pocket (Upload policy PDF or Load Demo Base Policy to calculate coverage)");
+        } else {
+          if (d.non_payable_consumables > 0) notes.push(`₹${d.non_payable_consumables.toLocaleString('en-IN')} non-payable consumables`);
+          if (d.room_penalty_deduction > 0) notes.push(`₹${d.room_penalty_deduction.toLocaleString('en-IN')} room penalty`);
+          if (d.sublimit_deduction > 0) notes.push(`₹${d.sublimit_deduction.toLocaleString('en-IN')} sub-limit cap`);
+          if (d.co_pay_amount > 0) notes.push(`₹${d.co_pay_amount.toLocaleString('en-IN')} co-pay`);
+        }
 
         document.getElementById('resDeductionNotes').innerText = notes.length > 0 ? 
-          `Deduction breakdown: ${notes.join(' | ')}` : 
+          `Deductions: ${notes.join(' | ')}` : 
           "No penalty deductions applied.";
       } catch (err) {
         console.error("Risk calculation error", err);
