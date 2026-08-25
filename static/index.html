@@ -67,9 +67,31 @@
     .light .text-slate-500, 
     .light .text-slate-300, 
     .light .text-slate-200, 
-    .light .text-slate-100, 
-    .light .text-white {
+    .light .text-slate-100 {
       color: #334155 !important;
+    }
+
+    /* Preserve white text inside buttons, badges, and colored spans in Light Mode */
+    .light button.text-white,
+    .light a.text-white,
+    .light .bg-sky-600,
+    .light .bg-sky-600 *,
+    .light .bg-blue-600,
+    .light .bg-blue-600 *,
+    .light .bg-indigo-600,
+    .light .bg-indigo-600 *,
+    .light .bg-red-600,
+    .light .bg-red-600 * {
+      color: #ffffff !important;
+    }
+
+    /* Hide scrollbars for smooth touch swipe on mobile */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
 
     /* Background containers in light mode */
@@ -331,7 +353,7 @@
 
   <!-- Explainable AI Traceability Chain Modal -->
   <div id="traceabilityModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
-    <div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5">
+    <div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl space-y-5">
       <div class="flex justify-between items-center border-b border-slate-800 light:border-slate-200 pb-3">
         <div>
           <h3 class="text-base font-extrabold text-white light:text-slate-900 flex items-center gap-2">
@@ -387,7 +409,7 @@
 
   <!-- Disclaimer Modal -->
   <div id="disclaimerModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 light:bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 dark:bg-slate-900 light:bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-800 light:border-slate-200 space-y-4">
+    <div class="bg-slate-900 dark:bg-slate-900 light:bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-slate-800 light:border-slate-200 space-y-4">
       <div class="flex items-center justify-between border-b border-slate-800 light:border-slate-100 pb-3">
         <div class="flex items-center gap-2 text-amber-500 light:text-amber-600 font-bold text-base">
           <span>Important System Disclaimer & Scope</span>
@@ -417,16 +439,23 @@
   </div>
 
   <!-- Header -->
-  <header class="bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border-b border-slate-800 light:border-slate-200 px-6 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4 transition-colors">
-    <div class="flex items-center gap-2.5">
-      <svg class="w-7 h-7" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path id="headerLogoShield" stroke="#0284c7" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path id="headerLogoCheckmark" stroke="#0284c7" d="m9 12 2 2 4-4"/></svg>
-      <h1 class="text-2xl font-extrabold text-white light:text-slate-900 flex items-center gap-2">
-        <span><span class="text-sky-400 light:text-sky-600">Care</span><span class="text-white light:text-slate-900">Cover</span></span>
-      </h1>
+  <header class="bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border-b border-slate-800 light:border-slate-200 px-4 sm:px-6 py-3 flex flex-col md:flex-row justify-between items-center gap-3 transition-colors">
+    <div class="flex items-center justify-between w-full md:w-auto">
+      <div class="flex items-center gap-2.5">
+        <svg class="w-7 h-7 flex-shrink-0" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path id="headerLogoShield" stroke="#0284c7" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path id="headerLogoCheckmark" stroke="#0284c7" d="m9 12 2 2 4-4"/></svg>
+        <h1 class="text-xl sm:text-2xl font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+          <span><span class="text-sky-400 light:text-sky-600">Care</span><span class="text-white light:text-slate-900">Cover</span></span>
+        </h1>
+      </div>
+
+      <!-- Mobile Hamburger Menu Button -->
+      <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="md:hidden bg-slate-800 light:bg-slate-100 p-2 rounded-lg text-slate-200 light:text-slate-800 border border-slate-700 light:border-slate-300 flex items-center gap-1 text-xs font-bold">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
     </div>
 
     <!-- Middle Live Day, Date & 24hr Clock -->
-    <div id="liveClockHeader" class="text-xs font-bold bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-700/80 light:border-slate-300 px-4 py-1.5 rounded-full flex items-center gap-2.5 shadow-md transition-all">
+    <div id="liveClockHeader" class="hidden sm:flex text-xs font-bold bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-700/80 light:border-slate-300 px-4 py-1.5 rounded-full items-center gap-2.5 shadow-md transition-all">
       <svg class="w-4 h-4 text-sky-400 light:text-sky-600 animate-pulse" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       <span id="liveDateStr" class="text-slate-100 dark:text-slate-100 light:text-slate-900 font-extrabold tracking-tight">Wednesday, 26 Aug 2026</span>
       <span class="text-slate-500 light:text-slate-400 font-semibold">|</span>
@@ -434,24 +463,17 @@
     </div>
 
     <!-- Right Header Tools -->
-    <div class="flex items-center gap-3">
-      
-      <!-- Purge Session Data Button -->
-      <button data-i18n="purge_btn" id="purgeBtnHeader" onclick="purgeSession()" class="bg-red-950/80 hover:bg-red-900 light:bg-red-600 light:hover:bg-red-700 text-red-200 light:text-white border border-red-800 light:border-red-600 font-bold text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap">
-        Purge & Delete Session Data
+    <div class="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full md:w-auto">
+      <button data-i18n="purge_btn" id="purgeBtnHeader" onclick="purgeSession()" class="bg-red-950/80 hover:bg-red-900 light:bg-red-600 light:hover:bg-red-700 text-red-200 light:text-white border border-red-800 light:border-red-600 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap">
+        Purge Data
       </button>
-
-      <!-- LIGHT / DARK MODE TOGGLE SWITCH -->
-      <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1.5 cursor-pointer">
-        <span data-i18n="theme_btn" id="themeBtnSpan">Switch to Light Mode</span>
+      <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-2.5 py-1.5 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1 cursor-pointer">
+        <span data-i18n="theme_btn" id="themeBtnSpan">Light Mode</span>
       </button>
-
-      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span> <span data-i18n="system_online">System: Online</span>
+      <span class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span> <span data-i18n="system_online">Online</span>
       </span>
-
-      <!-- 22 OFFICIAL SCHEDULED LANGUAGES OF INDIA SELECTION -->
-      <select id="languageSelect" onchange="changeLanguage()" class="bg-slate-800 dark:bg-slate-800 light:bg-slate-100 border border-slate-700 light:border-slate-300 text-slate-200 light:text-slate-800 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-sky-500 font-medium">
+      <select id="languageSelect" onchange="changeLanguage()" class="bg-slate-800 dark:bg-slate-800 light:bg-slate-100 border border-slate-700 light:border-slate-300 text-slate-200 light:text-slate-800 text-xs rounded-lg px-2 py-1.5 focus:outline-none focus:border-sky-500 font-medium">
         <option value="English" selected>English</option>
         <option value="Hindi">Hindi (हिंदी)</option>
         <option value="Marathi">Marathi (मराठी)</option>
@@ -480,44 +502,30 @@
   </header>
 
   <!-- Main Workspace -->
-  <div class="flex-1 flex flex-col max-w-7xl w-full mx-auto p-4 md:p-6 gap-6">
+  <div class="flex-1 flex flex-col max-w-7xl w-full mx-auto p-3 sm:p-4 md:p-6 gap-4 sm:gap-6">
     
-    <!-- 6-Section Navigation Bar (Desktop & Mobile Drawer) -->
+    <!-- 6-Section Navigation Bar (Horizontally Scrollable on Mobile) -->
     <div class="relative border-b border-slate-800 light:border-slate-200">
-      <div class="flex items-center justify-between">
-        <!-- Desktop Section Tabs -->
-        <nav class="hidden md:flex text-sm gap-4 font-semibold overflow-x-auto">
-          <button data-i18n="nav_dashboard" onclick="switchTab('tab-dashboard')" id="tab-dashboard-btn" class="py-3 px-2 tab-active flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>Dashboard</span>
-          </button>
-          <button data-i18n="nav_coverage" onclick="switchTab('tab1')" id="tab1-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>Coverage</span>
-          </button>
-          <button data-i18n="nav_hospitals" onclick="switchTab('tab3')" id="tab3-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>Hospitals & Cost</span>
-          </button>
-          <button data-i18n="nav_claims" onclick="switchTab('tab4')" id="tab4-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>Claims & Journey</span>
-          </button>
-          <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>Ask AI</span>
-          </button>
-          <button data-i18n="nav_emergency" onclick="switchTab('tab-emergency')" id="tab-emergency-btn" class="py-3 px-2 text-red-400 hover:text-red-300 flex items-center gap-1.5 cursor-pointer whitespace-nowrap font-bold">
-            <span>Emergency SOS</span>
-          </button>
-        </nav>
-
-        <!-- Mobile Hamburger Toggle Button -->
-        <div class="flex md:hidden items-center justify-between w-full py-2">
-          <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">
-            <span>Navigation Menu</span>
-          </span>
-          <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="bg-slate-800 light:bg-slate-100 p-2 rounded-lg text-slate-200 light:text-slate-800 border border-slate-700 light:border-slate-300 flex items-center gap-1 text-xs font-bold">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <span>Sections</span>
-          </button>
-        </div>
-      </div>
+      <nav id="mainTabBar" class="flex text-xs sm:text-sm gap-2 sm:gap-4 font-semibold overflow-x-auto whitespace-nowrap py-2.5 no-scrollbar">
+        <button data-i18n="nav_dashboard" onclick="switchTab('tab-dashboard')" id="tab-dashboard-btn" class="py-2 px-3 rounded-xl tab-active flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+          <span>Dashboard</span>
+        </button>
+        <button data-i18n="nav_coverage" onclick="switchTab('tab1')" id="tab1-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+          <span>Coverage</span>
+        </button>
+        <button data-i18n="nav_hospitals" onclick="switchTab('tab3')" id="tab3-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+          <span>Hospitals & Cost</span>
+        </button>
+        <button data-i18n="nav_claims" onclick="switchTab('tab4')" id="tab4-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+          <span>Claims & Journey</span>
+        </button>
+        <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+          <span>Ask AI</span>
+        </button>
+        <button data-i18n="nav_emergency" onclick="switchTab('tab-emergency')" id="tab-emergency-btn" class="py-2 px-3 rounded-xl text-red-400 hover:text-red-300 flex items-center gap-1.5 cursor-pointer whitespace-nowrap font-bold">
+          <span>Emergency SOS</span>
+        </button>
+      </nav>
 
       <!-- Mobile Slide-Down Drawer Container -->
       <div id="mobileMenu" class="hidden md:hidden py-3 space-y-2 border-t border-slate-800 light:border-slate-200">
@@ -851,7 +859,7 @@
 
     <!-- TAB 2: Ask Your Policy -->
     <section id="tab2-content" class="space-y-6 hidden">
-      <div class="glass-card p-6 rounded-xl space-y-4 flex flex-col h-[530px]">
+      <div class="glass-card p-4 sm:p-6 rounded-xl space-y-4 flex flex-col min-h-[420px] max-h-[70vh]">
         <div class="flex justify-between items-center border-b border-slate-800 light:border-slate-200 pb-2">
           <h2 data-i18n="ask_title" class="text-lg font-bold text-white light:text-slate-900">Ask Questions About Your Coverage</h2>
           <span class="text-[11px] bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">RAG Chain Active</span>
