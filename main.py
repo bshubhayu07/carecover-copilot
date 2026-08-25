@@ -25,6 +25,7 @@ from src.policy_schema import PolicyProfile
 from src.procedure_lookup import get_procedure_details, PROCEDURE_DATABASE
 from src.journey_guidance import get_journey_timeline
 from src.financial_risk_engine import calculate_financial_risk
+from src.bhashini_engine import translate_with_bhashini, BHASHINI_LANG_CODES
 
 app = FastAPI(
     title="CareCover Copilot Python Enterprise API",
@@ -278,6 +279,23 @@ def get_procedures_endpoint(name: Optional[str] = None):
 @app.get("/api/journey")
 def get_journey_endpoint():
     return get_journey_timeline()
+
+class BhashiniTranslateRequest(BaseModel):
+    text: str
+    target_language: str
+    source_language: Optional[str] = "English"
+
+@app.post("/api/bhashini/translate")
+def bhashini_translate_endpoint(req: BhashiniTranslateRequest):
+    translated_text = translate_with_bhashini(req.text, req.target_language, req.source_language)
+    return {
+        "status": "success",
+        "source_language": req.source_language,
+        "target_language": req.target_language,
+        "original_text": req.text,
+        "translated_text": translated_text,
+        "supported_languages": list(BHASHINI_LANG_CODES.keys())
+    }
 
 @app.post("/api/purge-session")
 def purge_session_endpoint():
