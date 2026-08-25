@@ -1,3 +1,7 @@
-# CareCover Copilot - 100% Pure Python Application Configuration
-*.py linguist-detectable=true
-*.py text eol=lf
+# GitHub Linguist Overrides
+# Mark static frontend UI files as vendored/ignored so GitHub recognizes Python as the primary language
+
+static/* linguist-vendored
+static/index.html linguist-detectable=false
+docs/* linguist-documentation
+data/* linguist-vendored
