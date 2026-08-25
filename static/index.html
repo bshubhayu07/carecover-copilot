@@ -56,9 +56,21 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- Top Location-Aware Emergency Banner (Defaulted to Pune / Maharashtra MEMS 108) -->
-  <div id="emergencyBanner" class="bg-red-950/90 dark:bg-red-950/90 light:bg-red-100 border-b border-red-800/80 light:border-red-300 px-4 py-2 text-center text-xs md:text-sm text-red-200 light:text-red-900 font-medium transition-colors">
-    EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call <strong id="helplineNumbers">National 112 | MEMS Ambulance 108 (Pune / MH)</strong> immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.
+  <!-- Top Location-Aware Emergency Banner with Instant Location Search -->
+  <div id="emergencyBanner" class="bg-red-950/90 dark:bg-red-950/90 light:bg-red-100 border-b border-red-800/80 light:border-red-300 px-4 py-3 transition-colors">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs md:text-sm">
+      <div class="text-red-200 light:text-red-900 font-medium text-center md:text-left">
+        EMERGENCY NOTICE: <span id="helplineText">Call <strong id="helplineNumbers" class="text-white light:text-red-950 underline decoration-red-400 font-bold">National Emergency 112 | Medical Ambulance 108</strong></span>
+      </div>
+      
+      <!-- Interactive User Location Input Box -->
+      <div class="flex items-center gap-2 w-full md:w-auto">
+        <input type="text" id="userLocationInput" oninput="handleUserLocationInput()" placeholder="Enter your city/location (e.g. Pune, Mumbai, Delhi)..." class="bg-red-900/60 light:bg-white text-white light:text-slate-900 placeholder-red-300 light:placeholder-slate-400 border border-red-700 light:border-red-300 rounded-lg px-3 py-1.5 text-xs w-full md:w-64 focus:outline-none focus:ring-1 focus:ring-red-400">
+        <button onclick="requestGPSLocation()" id="gpsBtn" title="Detect GPS Location" class="bg-red-800 hover:bg-red-700 light:bg-red-600 light:hover:bg-red-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-red-600 transition-colors whitespace-nowrap cursor-pointer">
+          Detect Location
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Header -->
@@ -74,7 +86,7 @@
     <!-- Right Header Tools -->
     <div class="flex items-center gap-3">
       
-      <!-- PROMINENT LIGHT / DARK MODE TOGGLE SWITCH -->
+      <!-- LIGHT / DARK MODE TOGGLE SWITCH -->
       <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1.5 cursor-pointer">
         <span>☀️ Switch to Light Mode</span>
       </button>
@@ -240,20 +252,18 @@
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
             <div>
               <h2 class="text-lg font-bold text-white light:text-slate-900">Hospital Network & Room Eligibility Matching</h2>
-              <p class="text-xs text-slate-400 light:text-slate-600">Click below to share your GPS location to find nearest cashless network hospitals and get state emergency helpline numbers.</p>
+              <p class="text-xs text-slate-400 light:text-slate-600">Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.</p>
             </div>
-            <button onclick="requestGPSLocation()" id="gpsBtn" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-4 py-2 rounded-lg border border-sky-400 flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer whitespace-nowrap">
-              Use Live GPS Location
-            </button>
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
             <div>
-              <label class="block text-slate-400 light:text-slate-600 mb-1">Select City</label>
-              <select id="hospitalCity" onchange="fetchHospitals()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
-                <option value="Pune" selected>Pune (Default)</option>
-                <option value="Mumbai">Mumbai</option>
+              <label class="block text-slate-400 light:text-slate-600 mb-1">Select Your City</label>
+              <select id="hospitalCity" onchange="handleCityDropdownChange()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+                <option value="" disabled selected>Select Your City</option>
                 <option value="Delhi">Delhi NCR</option>
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
                 <option value="Bengaluru">Bengaluru</option>
                 <option value="Hyderabad">Hyderabad</option>
                 <option value="Chennai">Chennai</option>
@@ -306,26 +316,96 @@
     let userLon = null;
 
     const HELPLINE_DATABASE = {
-      'Pune': 'National 112 | MEMS Ambulance 108 (Pune / MH)',
-      'Mumbai': 'National 112 | MEMS Ambulance 108 (Mumbai / MH)',
-      'Delhi': 'National 112 | Delhi Ambulance 102 / 108',
-      'Bengaluru': 'National 112 | Arogya Kavacha 108 (KA)',
-      'Hyderabad': 'National 112 | EMRI Ambulance 108 (TS)',
-      'Chennai': 'National 112 | TN EMS Ambulance 108 (TN)',
-      'Kolkata': 'National 112 | WB Health Ambulance 102 / 108',
-      'Ahmedabad': 'National 112 | 108 GVK EMRI Ambulance (GJ)'
+      'pune': 'National Emergency 112 | MEMS Ambulance 108 (Pune / Maharashtra)',
+      'mumbai': 'National Emergency 112 | MEMS Ambulance 108 (Mumbai / Maharashtra)',
+      'maharashtra': 'National Emergency 112 | MEMS Ambulance 108 (Maharashtra)',
+      'delhi': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
+      'bengaluru': 'National Emergency 112 | Arogya Kavacha 108 (Bengaluru / Karnataka)',
+      'bangalore': 'National Emergency 112 | Arogya Kavacha 108 (Karnataka)',
+      'karnataka': 'National Emergency 112 | Arogya Kavacha 108 (Karnataka)',
+      'hyderabad': 'National Emergency 112 | EMRI Ambulance 108 (Hyderabad / Telangana)',
+      'telangana': 'National Emergency 112 | EMRI Ambulance 108 (Telangana)',
+      'chennai': 'National Emergency 112 | TN EMS Ambulance 108 (Chennai / Tamil Nadu)',
+      'tamil nadu': 'National Emergency 112 | TN EMS Ambulance 108 (Tamil Nadu)',
+      'kolkata': 'National Emergency 112 | WB Health Ambulance 102 / 108 (West Bengal)',
+      'west bengal': 'National Emergency 112 | WB Health Ambulance 102 / 108 (West Bengal)',
+      'ahmedabad': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
+      'gujarat': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
+      'goa': 'National Emergency 112 | 108 EMS Ambulance (Goa)',
+      'jaipur': 'National Emergency 112 | 108 Emergency Ambulance (Rajasthan)',
+      'rajasthan': 'National Emergency 112 | 108 Emergency Ambulance (Rajasthan)',
+      'lucknow': 'National Emergency 112 | 108 ALS Ambulance (Uttar Pradesh)',
+      'uttar pradesh': 'National Emergency 112 | 108 ALS Ambulance (Uttar Pradesh)',
+      'kochi': 'National Emergency 112 | 108 KIVS Medical Emergency (Kerala)',
+      'kerala': 'National Emergency 112 | 108 KIVS Medical Emergency (Kerala)'
     };
 
     const CITY_COORDS = {
+      'Delhi': { lat: 28.6139, lon: 77.2090 },
       'Pune': { lat: 18.5204, lon: 73.8567 },
       'Mumbai': { lat: 19.0760, lon: 72.8777 },
-      'Delhi': { lat: 28.6139, lon: 77.2090 },
       'Bengaluru': { lat: 12.9716, lon: 77.5946 },
       'Hyderabad': { lat: 17.3850, lon: 78.4867 },
       'Chennai': { lat: 13.0827, lon: 80.2707 },
       'Kolkata': { lat: 22.5726, lon: 88.3639 },
       'Ahmedabad': { lat: 23.0225, lon: 72.5714 }
     };
+
+    function handleUserLocationInput() {
+      const inputVal = document.getElementById('userLocationInput').value.trim();
+      if (!inputVal) {
+        document.getElementById('helplineNumbers').innerText = "National Emergency 112 | Medical Ambulance 108";
+        return;
+      }
+
+      const q = inputVal.toLowerCase();
+      let matchedHelpline = null;
+
+      for (const [key, val] of Object.entries(HELPLINE_DATABASE)) {
+        if (q.includes(key)) {
+          matchedHelpline = val;
+          break;
+        }
+      }
+
+      if (matchedHelpline) {
+        document.getElementById('helplineNumbers').innerText = matchedHelpline;
+      } else {
+        document.getElementById('helplineNumbers').innerText = `National Emergency 112 | State Medical Ambulance 108 (${inputVal})`;
+      }
+
+      // Sync city dropdown if matching city option exists
+      const citySelect = document.getElementById('hospitalCity');
+      if (citySelect) {
+        for (let i = 0; i < citySelect.options.length; i++) {
+          if (q.includes(citySelect.options[i].value.toLowerCase())) {
+            citySelect.selectedIndex = i;
+            fetchHospitals();
+            break;
+          }
+        }
+      }
+    }
+
+    function handleCityDropdownChange() {
+      const citySelect = document.getElementById('hospitalCity');
+      const selectedCity = citySelect.value;
+      if (selectedCity) {
+        document.getElementById('userLocationInput').value = selectedCity;
+        updateHelplineNumbers(selectedCity);
+      }
+      fetchHospitals();
+    }
+
+    function updateHelplineNumbers(city) {
+      if (!city) return;
+      const key = city.toLowerCase();
+      if (HELPLINE_DATABASE[key]) {
+        document.getElementById('helplineNumbers').innerText = HELPLINE_DATABASE[key];
+      } else {
+        document.getElementById('helplineNumbers').innerText = `National Emergency 112 | State Medical Ambulance 108 (${city})`;
+      }
+    }
 
     function toggleTheme() {
       const htmlEl = document.documentElement;
@@ -352,11 +432,6 @@
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
       document.getElementById('themeBtn').innerHTML = "<span>☀️ Switch to Light Mode</span>";
-    }
-
-    function updateHelplineNumbers(city) {
-      const el = document.getElementById('helplineNumbers');
-      el.innerText = HELPLINE_DATABASE[city] || 'National 112 | MEMS Ambulance 108 (Pune / MH)';
     }
 
     function updateCombinedSI() {
@@ -516,46 +591,47 @@
       if (lat >= 12.9 && lat <= 13.3 && lon >= 80.0) return 'Chennai';
       if (lat >= 22.3 && lat <= 22.8) return 'Kolkata';
       if (lat >= 22.9 && lat <= 23.2) return 'Ahmedabad';
-      return 'Pune';
+      return 'Delhi';
     }
 
     function requestGPSLocation() {
       const btn = document.getElementById('gpsBtn');
       if (navigator.geolocation) {
-        btn.innerText = "Acquiring GPS Location...";
+        btn.innerText = "Detecting...";
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             userLat = pos.coords.latitude;
             userLon = pos.coords.longitude;
             const detectedCity = detectCityFromCoords(userLat, userLon);
-            document.getElementById('hospitalCity').value = detectedCity;
+            document.getElementById('userLocationInput').value = detectedCity;
+            const citySelect = document.getElementById('hospitalCity');
+            if (citySelect) citySelect.value = detectedCity;
             updateHelplineNumbers(detectedCity);
-            btn.innerText = `GPS Active (${detectedCity})`;
-            btn.className = "bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 shadow-sm";
+            btn.innerText = `Detected (${detectedCity})`;
+            btn.className = "bg-emerald-800 dark:bg-emerald-950 light:bg-emerald-600 text-white border border-emerald-600 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm";
             fetchHospitals();
           },
           (err) => {
-            const city = document.getElementById('hospitalCity').value;
-            const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
-            userLat = fallback.lat;
-            userLon = fallback.lon;
+            const citySelect = document.getElementById('hospitalCity');
+            const city = (citySelect && citySelect.value) ? citySelect.value : 'Delhi';
+            document.getElementById('userLocationInput').value = city;
             updateHelplineNumbers(city);
-            btn.innerText = `${city} Location Active`;
+            btn.innerText = `${city} Active`;
             fetchHospitals();
           }
         );
-      } else {
-        const city = document.getElementById('hospitalCity').value;
-        const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
-        userLat = fallback.lat;
-        userLon = fallback.lon;
-        updateHelplineNumbers(city);
-        fetchHospitals();
       }
     }
 
     async function fetchHospitals() {
-      const city = document.getElementById('hospitalCity').value;
+      const citySelect = document.getElementById('hospitalCity');
+      let city = citySelect ? citySelect.value : '';
+      if (!city) {
+        const inputVal = document.getElementById('userLocationInput').value.trim();
+        if (inputVal) city = inputVal;
+        else city = 'Delhi';
+      }
+
       const specialty = document.getElementById('hospitalSpecialty').value;
       const networkOnly = document.getElementById('inNetworkOnly').checked;
 
@@ -565,7 +641,7 @@
       container.innerHTML = '<div class="text-slate-400 light:text-slate-600 col-span-2">Loading hospital network directory...</div>';
 
       if (userLat === null || userLon === null) {
-        const fallback = CITY_COORDS[city] || CITY_COORDS['Pune'];
+        const fallback = CITY_COORDS[city] || CITY_COORDS['Delhi'];
         userLat = fallback.lat;
         userLon = fallback.lon;
       }
@@ -657,6 +733,26 @@
         `;
       }
     }
+
+    // Auto Location Detection on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            userLat = pos.coords.latitude;
+            userLon = pos.coords.longitude;
+            const detectedCity = detectCityFromCoords(userLat, userLon);
+            document.getElementById('userLocationInput').value = detectedCity;
+            const citySelect = document.getElementById('hospitalCity');
+            if (citySelect) citySelect.value = detectedCity;
+            updateHelplineNumbers(detectedCity);
+          },
+          (err) => {
+            // Geolocation pending/declined, keep neutral national baseline
+          }
+        );
+      }
+    });
   </script>
 
 </body>
