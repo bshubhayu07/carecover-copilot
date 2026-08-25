@@ -1,5 +1,7 @@
 import os
-import requests
+import json
+import urllib.request
+import urllib.error
 from typing import Optional, Dict, Any
 
 # Bhashini Language Code Mapping for all 22 Official Scheduled Languages of India
@@ -38,6 +40,7 @@ def translate_with_bhashini(text: str, target_language: str, source_language: st
     """
     Translates text to/from any of the 22 Scheduled Languages of India using Digital India Bhashini REST API.
     Zero local storage footprint - executes 100% via online cloud HTTPS requests.
+    Uses Python standard library (urllib.request) to ensure zero third-party dependency crashes.
     """
     if not text or target_language == "English":
         return text
@@ -48,12 +51,6 @@ def translate_with_bhashini(text: str, target_language: str, source_language: st
     # If Bhashini API Credentials are set in environment, execute live Cloud REST API request
     if BHASHINI_API_KEY and BHASHINI_USER_ID:
         try:
-            headers = {
-                "Authorization": BHASHINI_API_KEY,
-                "Content-Type": "application/json",
-                "userID": BHASHINI_USER_ID
-            }
-
             payload = {
                 "pipelineTasks": [
                     {
@@ -76,12 +73,23 @@ def translate_with_bhashini(text: str, target_language: str, source_language: st
                 }
             }
 
-            response = requests.post(BHASHINI_INFERENCE_URL, json=payload, headers=headers, timeout=5)
-            if response.status_code == 200:
-                data = response.json()
-                translated_text = data.get("pipelineResponse", [{}])[0].get("output", [{}])[0].get("target")
-                if translated_text:
-                    return translated_text
+            req = urllib.request.Request(
+                BHASHINI_INFERENCE_URL,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "Authorization": BHASHINI_API_KEY,
+                    "Content-Type": "application/json",
+                    "userID": BHASHINI_USER_ID
+                },
+                method="POST"
+            )
+
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                if resp.status == 200:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    translated_text = data.get("pipelineResponse", [{}])[0].get("output", [{}])[0].get("target")
+                    if translated_text:
+                        return translated_text
         except Exception:
             # Fallback seamlessly to native multilingual pipeline on timeout/connection issue
             pass
