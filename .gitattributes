@@ -1,7 +1,6 @@
-# GitHub Linguist Overrides
-# Mark static frontend UI files as vendored/ignored so GitHub recognizes Python as the primary language
-
-static/* linguist-vendored
-static/index.html linguist-detectable=false
-docs/* linguist-documentation
-data/* linguist-vendored
+# GitHub Linguist Overrides - Force Python to 100%
+static/** linguist-vendored=true
+static/index.html linguist-vendored=true
+static/i18n.json linguist-generated=true
+docs/** linguist-documentation=true
+data/** linguist-vendored=true

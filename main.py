@@ -101,6 +101,12 @@ def get_favicon():
         return FileResponse("docs/favicon.svg")
     raise HTTPException(status_code=404, detail="Asset not found")
 
+@app.get("/static/i18n.json")
+def get_i18n_json():
+    if os.path.exists("static/i18n.json"):
+        return FileResponse("static/i18n.json", media_type="application/json")
+    raise HTTPException(status_code=404, detail="i18n data file not found")
+
 @app.get("/data/demo_base_policy.pdf")
 def get_demo_base_pdf():
     if os.path.exists("data/demo_base_policy.pdf"):
