@@ -22,7 +22,7 @@ def detect_policy_contradictions(policy_profile: PolicyProfile) -> Dict[str, Any
         })
         
     # Check 2: Zero Co-Pay vs Senior Citizen Age Co-Pay
-    if copay == 0 and policy_profile.policy_features and any("co-pay" in f.lower() for f.lower() in policy_profile.policy_features):
+    if copay == 0 and policy_profile.policy_features and any("co-pay" in f.lower() for f in policy_profile.policy_features):
         contradictions.append({
             "title": "Conditional Co-Pay Conflict",
             "clause_a": "Summary Schedule: 0% Co-Payment",
