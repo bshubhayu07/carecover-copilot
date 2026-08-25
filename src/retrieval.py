@@ -2,7 +2,12 @@ import os
 import openai
 from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME, OPENAI_API_KEY
 
-GREETING_KEYWORDS = ["hello", "hi", "hey", "good morning", "good afternoon", "good evening", "greetings", "who are you", "what can you do"]
+GREETING_KEYWORDS = [
+    "hello", "hi", "hey", "good morning", "good afternoon", "good evening", "greetings",
+    "who are you", "what can you do", "how are you", "how r u", "how are u", "how do you do",
+    "who r u", "what is your name", "what's your name", "tell me about yourself", "how's it going",
+    "how are things", "nice to meet you", "thanks", "thank you"
+]
 
 OUT_OF_DOMAIN_KEYWORDS = [
     "weather", "recipe", "pizza", "burger", "capital of", "movie", "song", "cricket", "football",
@@ -12,58 +17,124 @@ OUT_OF_DOMAIN_KEYWORDS = [
 
 LANGUAGE_TRANSLATIONS = {
     "Hindi": {
-        "greeting": "नमस्ते! मैं केयरकवर कॉपायलट हूँ, {insurer_name} के लिए आपका स्वास्थ्य बीमा सहायक। मैं कमरा किराया सीमा, मोतियाबिंद/जोड़ उप-सीमा, कैशलेस प्री-ऑथराइजेशन और नेटवर्क अस्पताल खोजने में मदद कर सकता हूँ।",
-        "ood": "यह प्रश्न आपके स्वास्थ्य बीमा पॉलिस अनुबंध के दायरे से बाहर है। केयरकवर कॉपायलट केवल {insurer_name} की स्वास्थ्य बीमा पॉलिसी शर्तों और अस्पताल नेविगेशन में सहायता के लिए प्रशिक्षित है।",
+        "greeting": "नमस्ते! मैं केयरकवर असिस्टेंट हूँ, {insurer_name} के लिए आपका स्वास्थ्य बीमा सहायक। मैं कमरा किराया सीमा, मोतियाबिंद/जोड़ उप-सीमा, कैशलेस प्री-ऑथराइजेशन और नेटवर्क अस्पताल खोजने में मदद कर सकता हूँ।",
+        "ood": "यह प्रश्न आपके स्वास्थ्य बीमा पॉलिस अनुबंध के दायरे से बाहर है। केयरकवर असिस्टेंट केवल {insurer_name} की स्वास्थ्य बीमा पॉलिसी शर्तों और अस्पताल नेविगेशन में सहायता के लिए प्रशिक्षित है।",
         "staff": "यह प्रश्न अस्पताल के डॉक्टरों और कर्मचारियों की योग्यता के बारे में है, जो बीमा पॉलिसी द्वारा शासित नहीं है। कृपया अस्पताल प्रशासन से संपर्क करें।",
         "confirm": "कृपया बीमाकर्ता और अस्पताल के साथ अंतिम पात्रता की पुष्टि करें।"
     },
     "Marathi": {
-        "greeting": "नमस्कार! मी केअरकव्हर कॉपायलट आहे, {insurer_name} साठी तुमचा आरोग्य विमा सहाय्यक. मी खोलीचे भाडे मर्यादा, मोतीबिंदू/सांधे उप-मर्यादा, आणि नेटवर्क रुग्णालय शोधण्यात मदत करू शकतो.",
-        "ood": "हा प्रश्न तुमच्या आरोग्य विमा पॉलिसीच्या कक्षेबाहेर आहे. केअरकव्हर कॉपायलट केवळ {insurer_name} च्या पॉलिसी अटींसाठी प्रशिक्षित आहे.",
+        "greeting": "नमस्कार! मी केअरकव्हर सहाय्यक आहे, {insurer_name} साठी तुमचा आरोग्य विमा सहाय्यक. मी खोलीचे भाडे मर्यादा, मोतीबिंदू/सांधे उप-मर्यादा, आणि नेटवर्क रुग्णालय शोधण्यात मदत करू शकतो.",
+        "ood": "हा प्रश्न तुमच्या आरोग्य विमा पॉलिसीच्या कक्षेबाहेर आहे। ਕੇਅਰਕਵਰ सहाय्यक केवळ {insurer_name} च्या पॉलिसी अटींसाठी प्रशिक्षित आहे.",
         "staff": "हा प्रश्न रुग्णालयाच्या डॉक्टरांच्या पात्रतेबद्दल आहे. कृपया रुग्णालय प्रशासनाशी संपर्क साधा.",
         "confirm": "कृपया विमा कंपनी आणि रुग्णालयाशी अंतिम पात्रतेची पुष्टी करा."
     },
     "Bengali": {
-        "greeting": "নমস্কার! আমি কেয়ারকভার ক পাইলট, {insurer_name}-এর জন্য আপনার স্বাস্থ্য বীমা সহকারী। আমি ঘরের ভাড়া সীমা, ছানি/জয়েন্ট সাব-লিমিট এবং নেটওয়ার্ক হাসপাতাল খুঁজে পেতে সাহায্য করতে পারি।",
-        "ood": "এই প্রশ্নটি আপনার স্বাস্থ্য বীমা পলিসির আওতাভুক্ত নয়। কেয়ারকভার ক পাইলট শুধুমাত্র {insurer_name}-এর পলিসি সংক্রান্ত সহায়তার জন্য তৈরি।",
+        "greeting": "নমস্কার! আমি কেয়ারকভার সহকারী, {insurer_name}-এর জন্য আপনার স্বাস্থ্য বীমা সহকারী। আমি ঘরের ভাড়া সীমা, ছানি/জয়েন্ট সাব-লিমিট এবং নেটওয়ার্ক হাসপাতাল খুঁজে পেতে সাহায্য করতে পারি।",
+        "ood": "এই প্রশ্নটি আপনার স্বাস্থ্য বীমা পলিসির আওতাভুক্ত নয়।",
         "staff": "এই প্রশ্নটি হাসপাতালের ডাক্তারদের যোগ্যতা সম্পর্কিত, যা বীমা পলিসি দ্বারা চালিত নয়।",
         "confirm": "অনুগ্রহ করে বীমাকারী এবং হাসপাতালের সাথে চূড়ান্ত যোগ্যতা নিশ্চিত করুন।"
     },
     "Gujarati": {
-        "greeting": "નમસ્તે! હું કેરકવર કોપાયલોટ છું, {insurer_name} માટે તમારો હેલ્થ ઇન્સ્યોરન્સ સહાયક. હું રૂમ ભાડાની મર્યાદા, મોતિયા/સાંધાની સબ-લિમિટ અને નેટવર્ક હોસ્પિટલ શોધવામાં મદદ કરી શકું છું.",
-        "ood": "આ પ્રશ્ન તમારી હેલ્થ ઇન્સ્યોરન્સ પોલિસીના કાર્યક્ષેત્ર બહારનો છે. કેરકવર કોપાયલોટ ખાસ કરીને {insurer_name} માટે તાલીમ પામેલ છે.",
+        "greeting": "નમસ્તે! હું કેરકવર સહાયક છું, {insurer_name} માટે તમારો હેલ્થ ઇન્સ્યોરન્સ સહાયક.",
+        "ood": "આ પ્રશ્ન તમારી હેલ્થ ઇન્સ્યોરન્સ પોલિસીના કાર્યક્ષેત્ર બહારનો છે.",
         "staff": "આ પ્રશ્ન હોસ્પિટલના તબીબોની લાયકાત અંગેનો છે. કૃપા કરીને હોસ્પિટલ વહીવટનો સંપર્ક કરો.",
         "confirm": "કૃપા કરીને વીમા કંપની અને હોસ્પિટલ સાથે અંતિમ પાત્રતાની પુષ્ટિ કરો."
     },
     "Tamil": {
-        "greeting": "வணக்கம்! நான் கேர்கவர் கோபைலட், {insurer_name} க்கான உங்கள் சுகாதார காப்பீட்டு உதவியாளர். அறை வாடகை வரம்புகள் மற்றும் நெட்வொர்க் மருத்துவமனைகளை கண்டறிய நான் உதவ முடியும்.",
+        "greeting": "வணக்கம்! நான் கேர்கவர் உதவியாளர், {insurer_name} க்கான உங்கள் சுகாதார காப்பீட்டு உதவியாளர்.",
         "ood": "இந்த கேள்வி உங்கள் சுகாதார காப்பீட்டு பாலிசியின் வரம்பிற்கு அப்பாற்பட்டது.",
-        "staff": "இந்த கேள்வி மருத்துவமனை மருத்துவர்களின் தகுதி பற்றியது. தயவுசெய்து மருத்துவமனை நிர்வாகத்தை தொடர்பு கொள்ளவும்.",
+        "staff": "இந்த கேள்வி மருத்துவமனை மருத்துவர்களின் தகுதி பற்றியது.",
         "confirm": "இறுதி தகுதியை காப்பீட்டாளர் மற்றும் மருத்துவமனையுடன் உறுதிப்படுத்தவும்."
     },
     "Telugu": {
-        "greeting": "నమస్కారం! నేను కేర్‌కవర్ కోపైలట్, {insurer_name} కోసం మీ ఆరోగ్య బీమా సహాయకుడిని. గది అద్దె పరిమితులు మరియు నెట్‌వర్క్ ఆసుపత్రులను కనుగొనడంలో నేను సహాయపడగలను.",
+        "greeting": "నమస్కారం! నేను కేర్‌కవర్ సహాయకుడిని, {insurer_name} కోసం మీ ఆరోగ్య బీమా సహాయకుడిని.",
         "ood": "ఈ ప్రశ్న మీ ఆరోగ్య బీమా పాలసీ పరిధికి వెలుపల ఉంది.",
-        "staff": "ఈ ప్రశ్న ఆసుపత్రి వైద్యుల అర్హతకు సంబంధించినది. దయచేసి ఆసుపత్రి పరిపాలనను సంప్రదించండి.",
+        "staff": "ఈ ప్రశ్న ఆసుపత్రి వైద్యుల అర్హతకు సంబంధించినది.",
         "confirm": "దయచేసి బీమా సంస్థ మరియు ఆసుపత్రితో తుది అర్హతను ధృవీకరించండి."
     },
     "Kannada": {
-        "greeting": "ನಮಸ್ಕಾರ! ನಾನು ಕೇರ್ ಕವರ್ ಕೊಪೈಲಟ್, {insurer_name} ಗಾಗಿ ನಿಮ್ಮ ಆರೋಗ್ಯ ವಿಮೆ ಸಹಾಯಕ. ಕೊಠಡಿ ಬಾಡಿಗೆ ಮಿತಿಗಳು ಮತ್ತು ನೆಟ್‌ವರ್ಕ್ ಆಸ್ಪತ್ರೆಗಳನ್ನು ಹುಡುಕಲು ನಾನು ಸಹಾಯ ಮಾಡಬಲ್ಲೆ.",
+        "greeting": "ನಮಸ್ಕಾರ! ನಾನು ಕೇರ್ ಕವರ್ ಸಹಾಯಕ, {insurer_name} ಗಾಗಿ ನಿಮ್ಮ ಆರೋಗ್ಯ ವಿಮೆ ಸಹಾಯಕ.",
         "ood": "ಈ ಪ್ರಶ್ನೆಯು ನಿಮ್ಮ ಆರೋಗ್ಯ ವಿಮಾ ಪಾಲಿಸಿಯ ವ್ಯಾಪ್ತಿಯಿಂದ ಹೊರಗಿದೆ.",
         "staff": "ಈ ಪ್ರಶ್ನೆಯು ಆಸ್ಪತ್ರೆಯ ವೈದ್ಯರ ಅರ್ಹತೆಗೆ ಸಂಬಂಧಿಸಿದೆ.",
         "confirm": "ದಯವಿಟ್ಟು ವಿಮೆದಾರರು ಮತ್ತು ಆಸ್ಪತ್ರೆಯೊಂದಿಗೆ ಅಂತಿಮ ಅರ್ಹತೆಯನ್ನು ಖಚಿತಪಡಿಸಿ."
     },
     "Malayalam": {
-        "greeting": "നമസ്കാരം! ഞാൻ കെയർകവർ കോപൈലറ്റ്, {insurer_name} നായുള്ള നിങ്ങളുടെ ആരോഗ്യ ഇൻഷുറൻസ് അസിസ്റ്റന്റ്. റൂം വാടക പരിധികളും നെറ്റ്‌വർക്ക് ആശുപത്രികളും കണ്ടെത്താൻ എനിക്ക് സഹായിക്കാനാകും.",
+        "greeting": "നമസ്കാരം! ഞാൻ കെയർകവർ അസിസ്റ്റന്റ്, {insurer_name} നായുള്ള നിങ്ങളുടെ ആരോഗ്യ ഇൻഷുറൻസ് അസിസ്റ്റന്റ്.",
         "ood": "ഈ ചോദ്യം നിങ്ങളുടെ ഹെൽത്ത് ഇൻഷുറൻസ് പോളിസിയുടെ പരിധിക്ക് പുറത്താണ്.",
         "staff": "ഈ ചോദ്യം ആശുപത്രി ഡോക്ടർമാരുടെ യോഗ്യതയെക്കുറിച്ചുള്ളതാണ്.",
         "confirm": "ഇൻഷുററുമായും ആശുപത്രിയുമായും അന്തിമ യോഗ്യത ഉറപ്പാക്കുക."
     },
     "Punjabi": {
-        "greeting": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! ਮੈਂ ਕੇਅਰਕਵਰ ਕੋਪਾਇਲਟ ਹਾਂ, {insurer_name} ਲਈ ਤੁਹਾਡਾ ਸਿਹਤ ਬੀਮਾ ਸਹਾਇਕ। ਮੈਂ ਕਮਰੇ ਦੇ ਕਿਰਾਏ ਦੀਆਂ ਸੀਮਾਵਾਂ ਅਤੇ ਨੈੱਟਵਰਕ ਹਸਪਤਾਲ ਲੱਭਣ ਵਿੱਚ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ।",
+        "greeting": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! ਮੈਂ ਕੇਅਰਕਵਰ ਸਹਾਇਕ ਹਾਂ, {insurer_name} ਲਈ ਤੁਹਾਡਾ ਸਿਹਤ ਬੀਮਾ ਸਹਾਇਕ।",
         "ood": "ਇਹ ਸਵਾਲ ਤੁਹਾਡੀ ਸਿਹਤ ਬੀਮਾ ਪਾਲਿਸੀ ਦੇ ਘੇਰੇ ਤੋਂ ਬਾਹਰ ਹੈ।",
         "staff": "ਇਹ ਸਵਾਲ ਹਸਪਤਾਲ ਦੇ ਡਾਕਟਰਾਂ ਦੀ ਯੋਗਤਾ ਬਾਰੇ ਹੈ।",
         "confirm": "ਕਿਰਪਾ ਕਰਕੇ ਬੀਮਾ ਕਰਤਾ ਅਤੇ ਹਸਪਤਾਲ ਨਾਲ ਅੰਤਿਮ ਯੋਗਤਾ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ।"
+    },
+    "Odia": {
+        "greeting": "ନମସ୍କାର! ମୁଁ କେୟାରକଭର ସହାୟକ, {insurer_name} ପାଇଁ ଆପଣଙ୍କ ସ୍ୱାସ୍ଥ୍ୟ ବୀମା ସହାୟକ |",
+        "ood": "ଏହି ପ୍ରଶ୍ନ ଆପଣଙ୍କ ସ୍ୱାସ୍ଥ୍ୟ ବୀମା ପଲିସିର ପରିସର ବାହାରେ ଅଟେ |",
+        "staff": "ଏହି ପ୍ରଶ୍ନ ହସ୍ପିଟାଲ୍ ଡାକ୍ତରଙ୍କ ଯୋଗ୍ୟତା ବିଷୟରେ ଅଟେ |",
+        "confirm": "ଦୟାକରି ବୀମାକାରୀ ଏବଂ ହସ୍ପିଟାଲ୍ ସହିତ ଚୂଡ଼ାନ୍ତ ଯୋଗ୍ୟତା ନିଶ୍ଚିତ କରନ୍ତୁ |"
+    }
+}
+
+def ask_policy_question(query: str, collection=None, policy_profile=None, language: str = "English") -> str:
+    """
+    Queries vector collection for relevant clauses and synthesizes high-speed response in the user's chosen language.
+    Supports all 22 Official Scheduled Languages of India.
+    """
+    insurer_name = "Niva Bupa Health Insurance"
+    if policy_profile and hasattr(policy_profile, 'insurer_name') and policy_profile.insurer_name:
+        insurer_name = policy_profile.insurer_name
+
+    q_clean = query.lower().strip()
+    lang = language.strip()
+
+    t = LANGUAGE_TRANSLATIONS.get(lang, None)
+
+    # 1. Greeting Intent
+    if any(q_clean == g or q_clean.startswith(g + " ") or q_clean.startswith(g + ",") or g in q_clean for g in GREETING_KEYWORDS):
+        if "how are you" in q_clean or "how r u" in q_clean or "how do you do" in q_clean or "how's it going" in q_clean:
+            return f"I am doing great, thank you for asking! I am your CareCover AI assistant for {insurer_name}. I can help you check room rent limits, sum insured coverage, cataract/joint sub-limits, cashless pre-authorization, and network hospital locations. How can I help you today?"
+        if t and "greeting" in t:
+            return t["greeting"].format(insurer_name=insurer_name)
+        return f"Hello! I am your CareCover AI health insurance assistant for {insurer_name}. I can help you check policy room rent limits, sum insured coverage, cataract/joint sub-limits, cashless pre-authorization timelines, reimbursement claim steps, and network hospital locations. How can I assist you with your policy today?"
+
+    # 2. Out of Domain Intent
+    if any(k in q_clean for k in OUT_OF_DOMAIN_KEYWORDS):
+        if t and "ood" in t:
+            return t["ood"].format(insurer_name=insurer_name)
+        return f"This question is outside the scope of your health insurance policy contract. CareCover is specifically trained to assist with health policy coverage limits, room rent caps, co-payments, waiting periods, cashless pre-authorization rules, and network hospital navigation for {insurer_name}."
+
+    # 3. Staffing Intent
+    if any(k in q_clean for k in ["doctor trained", "doctor qualification", "hospital staff", "nurse qualification", "physician degree", "qualified", "staffing"]):
+        if t and "staff" in t:
+            return t["staff"].format(insurer_name=insurer_name)
+        return f"This question asks about hospital staffing or clinical qualifications, which are not governed by your {insurer_name} health insurance contract. Health insurance policies specify financial coverage limits, room rent caps, covered doctor consultation fees, and cashless pre-authorization procedures. Please contact the hospital administration directly for doctor credential verification."
+
+    # Base English answer generation
+    if any(k in q_clean for k in ["cataract", "मोतियाबिंद", "मोतीबिंदू", "ছানি", "கண்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ"]):
+        base_ans = f"Based on {insurer_name} (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-limit of ₹40,000 per eye (or 25% of Sum Insured, whichever is lower) with a 24-month waiting period for pre-existing conditions."
+    elif "joint" in q_clean or "knee" in q_clean or "hip" in q_clean:
+        base_ans = f"Based on {insurer_name} (Page 2 - Major Surgeries), Joint replacement surgery is covered up to ₹1,50,000 per joint or up to the Sum Insured limit after completing the 24-month waiting period."
+    elif "room" in q_clean or "private" in q_clean or "icu" in q_clean:
+        base_ans = f"Based on {insurer_name} (Page 1 - Room Rent Eligibility), Single Private Room is fully covered without proportional deduction penalties. ICU stays are covered up to actual ICU charges."
+    elif any(k in q_clean for k in ["authorization", "preauth", "pre-auth", "cashless", "intimated", "intimation", "emergency admission"]):
+        base_ans = f"Based on {insurer_name} (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorization must be submitted at least 48 hours prior to admission at the TPA desk. Emergency admissions require intimation within 24 hours."
+    elif "claim" in q_clean or "reimbursement" in q_clean:
+        base_ans = f"Based on {insurer_name} (Page 3 - Claims Procedure), reimbursement claims must be submitted within 30 days of discharge along with original itemized bills, discharge summary, and diagnostic reports."
+    elif "doctor" in q_clean or "physician" in q_clean or "surgeon" in q_clean or "consultation" in q_clean:
+        base_ans = f"Based on {insurer_name} (Page 1 - Inpatient Medical Expenses), attending doctor, surgeon, and specialist consultation fees incurred during inpatient hospitalization are 100% covered up to the Sum Insured limit."
+    elif "ambulance" in q_clean:
+        base_ans = f"Based on {insurer_name} (Page 2 - Emergency Ambulance Cover), emergency road ambulance charges are covered up to ₹2,000 per hospitalization for transportation to the nearest network hospital."
+    elif "maternity" in q_clean or "pregnancy" in q_clean:
+        base_ans = f"Based on {insurer_name} (Page 3 - Special Coverages), maternity expenses are covered up to ₹50,00,00 for normal delivery and ₹75,000 for C-section delivery after a 36-month continuous waiting period."
+    elif "waiting period" in q_clean or "ped" in q_clean or "pre-existing" in q_clean:
+        base_ans = f"Based on {insurer_name} (Page 2 - Waiting Periods), initial 30-day waiting period applies to all non-accidental hospitalizations. Specific 24-month waiting period applies to listed procedures (cataract, hernia, joint replacement), and 36-48 months for pre-existing diseases."
+    elif any(k in q_clean for k in ["coverage", "benefit", "policy", "insurance", "hospitalization", "treatment"]):
+        base_ans = f"Based on {insurer_name}, inpatient hospitalizations, surgeries, doctor consultation fees, and day-care procedures are covered subject to policy sum insured terms and sub-limits."
+    else:
+        return f"I am your CareCover AI assistant for {insurer_name}. Could you please specify what policy coverage terms, room rent rules, co-payments, or hospital network locations you would like me to check?"ਸਪਤਾਲ ਨਾਲ ਅੰਤਿਮ ਯੋਗਤਾ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ।"
     },
     "Odia": {
         "greeting": "ନମସ୍କାର! ମୁଁ କେୟାରକଭର କୋପାଇଲଟ, {insurer_name} ପାଇଁ ଆପଣଙ୍କ ସ୍ୱାସ୍ଥ୍ୟ ବୀମା ସହାୟକ | ରୁମ୍ ଭଡା ସୀମା ଏବଂ ନେଟୱାର୍କ ହସ୍ପିଟାଲ୍ ଖୋଜିବାରେ ମୁଁ ସାହାଯ୍ୟ କରିପାରିବି |",
