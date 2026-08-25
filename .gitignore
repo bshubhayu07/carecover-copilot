@@ -32,8 +32,10 @@ chroma_db/
 data/chroma_db/
 data/temp_*
 
-# IDE tools & stitch downloads
+# IDE tools & agent skills folders
 .cursor/
+.claude/
+.agents/
 stitch_downloads/
 
 # Local Blueprint Master Files

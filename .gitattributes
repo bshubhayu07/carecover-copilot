@@ -1,4 +1,16 @@
-# GitHub Linguist Overrides - Force Python to 100%
+# Force GitHub Linguist to ignore all non-Python assets and scripts
+.claude/** linguist-vendored=true
+.claude/** linguist-detectable=false
+.agents/** linguist-vendored=true
+.agents/** linguist-detectable=false
+.cursor/** linguist-vendored=true
+.cursor/** linguist-detectable=false
+*.mjs linguist-vendored=true
+*.mjs linguist-detectable=false
+*.js linguist-vendored=true
+*.js linguist-detectable=false
+stitch_downloads/** linguist-vendored=true
+stitch_downloads/** linguist-detectable=false
 static/** linguist-vendored=true
 static/index.html linguist-vendored=true
 static/i18n.json linguist-generated=true
