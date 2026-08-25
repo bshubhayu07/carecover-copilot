@@ -252,6 +252,34 @@
       color: #0284c7 !important;
       font-weight: 800 !important;
     }
+    /* Risk Calculator Results Box in Light Mode */
+    .light #riskResultCard {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+    .light #riskResultCard div {
+      background-color: #f8fafc !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+    .light #riskResultCard .bg-red-950\/60,
+    .light #riskResultCard .bg-red-950 {
+      background-color: #fef2f2 !important;
+      border-color: #fca5a5 !important;
+      color: #991b1b !important;
+    }
+    .light #riskResultCard .bg-red-950\/60 *,
+    .light #riskResultCard .bg-red-950 * {
+      color: #991b1b !important;
+    }
+    .light #resTopupStatus {
+      color: #047857 !important;
+    }
+    .light #resDeductionNotes {
+      color: #475569 !important;
+    }
+
     .light nav button:not(.tab-active) {
       color: #475569 !important;
       font-weight: 600 !important;
@@ -1546,7 +1574,7 @@
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2.5">
             <div class="flex items-center justify-between">
               <div class="font-extrabold text-sky-400 light:text-sky-700 text-sm flex items-center gap-2">
-                <span class="bg-sky-950 dark:bg-sky-950 light:bg-sky-100 border border-sky-800 light:border-sky-300 text-sky-400 light:text-sky-800 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">${step.step || (idx + 1)}</span>
+                <span class="bg-sky-600 text-white font-extrabold w-6 h-6 rounded-full flex items-center justify-center text-xs shadow-sm">${step.step || (idx + 1)}</span>
                 <span>${step.stage || 'Stage Guidance'}</span>
               </div>
               <span class="text-[10px] bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-700 px-2 py-0.5 rounded font-semibold">Stage ${step.step || (idx + 1)} of 9</span>
