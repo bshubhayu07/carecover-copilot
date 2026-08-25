@@ -257,7 +257,8 @@ def get_hospitals_endpoint(
     specialty: str = Query("All Specialties"),
     in_network_only: bool = Query(False),
     user_lat: Optional[float] = Query(None),
-    user_lon: Optional[float] = Query(None)
+    user_lon: Optional[float] = Query(None),
+    user_city: Optional[str] = Query(None)
 ):
     hospitals = get_hospitals_by_city(city)
     if not hospitals:
@@ -265,8 +266,9 @@ def get_hospitals_endpoint(
 
     p_profile = active_policy_profile if active_policy_profile else PolicyProfile(insurer_name="Niva Bupa", room_eligibility="Single Room")
     
-    use_live = (user_lat is not None and user_lon is not None)
-    matches = match_hospitals(hospitals, p_profile, context_city=city, user_city=city, use_live_location=use_live)
+    effective_user_city = user_city.strip() if (user_city and user_city.strip()) else "Pune"
+    use_live = (user_lat is not None and user_lon is not None) or (user_city is not None)
+    matches = match_hospitals(hospitals, p_profile, context_city=city, user_city=effective_user_city, use_live_location=use_live)
 
     filtered = []
     for m in matches:

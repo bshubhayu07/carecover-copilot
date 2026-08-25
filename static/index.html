@@ -2355,11 +2355,10 @@
       const citySelect = document.getElementById('hospitalCity');
       let city = citySelect ? citySelect.value : '';
       if (!city) {
-        const inputVal = document.getElementById('userLocationInput').value.trim();
-        if (inputVal) city = inputVal;
-        else city = 'Pune';
+        city = 'Pune';
       }
 
+      const userHomeCity = document.getElementById('userLocationInput')?.value?.trim() || 'Pune';
       const specialty = document.getElementById('hospitalSpecialty').value;
       const networkOnly = document.getElementById('inNetworkOnly').checked;
 
@@ -2368,13 +2367,8 @@
       const container = document.getElementById('hospitalList');
       container.innerHTML = '<div class="text-slate-400 light:text-slate-600 col-span-2">Loading hospital network directory...</div>';
 
-      if (CITY_COORDS[city]) {
-        userLat = CITY_COORDS[city].lat;
-        userLon = CITY_COORDS[city].lon;
-      }
-
       try {
-        let url = `/api/hospitals?city=${encodeURIComponent(city)}&specialty=${encodeURIComponent(specialty)}&in_network_only=${networkOnly}`;
+        let url = `/api/hospitals?city=${encodeURIComponent(city)}&user_city=${encodeURIComponent(userHomeCity)}&specialty=${encodeURIComponent(specialty)}&in_network_only=${networkOnly}`;
         if (userLat !== null && userLon !== null) {
           url += `&user_lat=${userLat}&user_lon=${userLon}`;
         }
@@ -2390,8 +2384,7 @@
         }
 
         container.innerHTML = data.map((h, idx) => {
-          const distVal = h.distance_km || h.distance || "2.4";
-          const distStr = typeof distVal === 'number' ? distVal.toFixed(1) + ' km away' : (distVal.includes('km') ? distVal : distVal + ' km away');
+          const distStr = h.distance_display || (typeof h.distance === 'number' ? h.distance.toFixed(1) + ' km away' : (h.distance || '2.4 km away'));
           const phone = h.phone || "108";
 
           return `

@@ -127,6 +127,8 @@ def match_hospitals(
         feed_id = f"FEED-{(policy_profile.insurer_name if policy_profile else 'NIVABUPA').upper().replace(' ', '')}-20260816-01"
         match_score_percent = min(98, max(55, score))
 
+        dist_label = f"{computed_dist:,.1f} km from {user_city.title()}" if (use_live_location and user_city and user_city.strip().lower() != hosp_city.strip().lower()) else f"{computed_dist} km away"
+
         results.append({
             "id": row['hospital_id'],
             "name": row['hospital_name'],
@@ -138,6 +140,7 @@ def match_hospitals(
             "network_status": network_status,
             "eligible_room": eligible_room_display,
             "distance": computed_dist,
+            "distance_display": dist_label,
             "explanation": " | ".join(explanation),
             "caveat": caveat,
             "feed_id": feed_id
