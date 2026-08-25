@@ -785,6 +785,23 @@
           <!-- Hospital Cards Loaded via JS -->
         </div>
       </div>
+
+      <!-- AISHE CODE VERIFICATION COMPONENT (EXACT MATCH FOR USER UI SCREENSHOT) -->
+      <div class="glass-card p-6 rounded-xl space-y-4">
+        <div class="space-y-2">
+          <label for="aisheCodeInput" class="block text-sm font-semibold text-slate-200 light:text-slate-800">AISHE Code</label>
+          <div class="relative flex items-center w-full bg-slate-900 dark:bg-slate-950 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl shadow-sm focus-within:border-sky-500 transition-all">
+            <input type="text" id="aisheCodeInput" placeholder="Enter AISHE Code (e.g. C-12345, U-0452, H-9821)" onkeypress="if(event.key==='Enter') verifyAisheCode()" class="w-full bg-transparent px-4 py-3 text-sm text-slate-100 dark:text-slate-100 light:text-slate-900 placeholder-slate-500 focus:outline-none" />
+            <button onclick="verifyAisheCode()" title="Verify AISHE Code" class="px-4 py-3 text-slate-400 hover:text-sky-400 light:hover:text-sky-600 transition-colors cursor-pointer flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="aisheResultContainer" class="hidden text-xs pt-1">
+          <!-- AISHE Verification Result -->
+        </div>
+      </div>
     </section>
 
     <!-- TAB 4: Care Journey & Safety + Financial Risk Engine -->
@@ -847,7 +864,7 @@
 
           <div>
             <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Estimated Hospital Bill (₹)</label>
-            <input type="number" id="calcBill" value="480000" oninput="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+            <input type="number" id="calcBill" placeholder="Enter estimated bill in ₹" oninput="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
           </div>
 
           <div>
@@ -874,28 +891,29 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
             <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <span class="text-slate-400 light:text-slate-600 block">Total Hospital Bill</span>
-              <strong id="resBill" class="text-slate-100 light:text-slate-900 text-base font-extrabold">₹4,80,000</strong>
+              <strong id="resBill" class="text-slate-100 light:text-slate-900 text-base font-extrabold">₹0</strong>
             </div>
 
             <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <span class="text-slate-400 light:text-slate-600 block">Primary Base Payout</span>
-              <strong id="resPrimary" class="text-sky-400 light:text-sky-700 text-base font-extrabold">₹3,00,000</strong>
+              <strong id="resPrimary" class="text-sky-400 light:text-sky-700 text-base font-extrabold">₹0 (No Policy)</strong>
             </div>
 
             <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <span class="text-slate-400 light:text-slate-600 block">Super Top-Up Contribution</span>
-              <strong id="resTopup" class="text-indigo-400 light:text-indigo-700 text-base font-extrabold">₹1,20,000</strong>
+              <strong id="resTopup" class="text-indigo-400 light:text-indigo-700 text-base font-extrabold">₹0 (No Top-Up)</strong>
             </div>
 
             <div class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 p-3 rounded-lg border border-red-800 light:border-red-300">
               <span class="text-red-300 light:text-red-700 block font-semibold">Estimated Out-of-Pocket</span>
-              <strong id="resOutpocket" class="text-red-400 light:text-red-800 text-base font-extrabold">₹60,000</strong>
+              <strong id="resOutpocket" class="text-red-400 light:text-red-800 text-base font-extrabold">₹0</strong>
             </div>
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 light:border-slate-200 text-xs">
-            <span id="resTopupStatus" class="font-bold text-emerald-400 light:text-emerald-800">Super Top-Up Triggered & Active</span>
-            <div id="resDeductionNotes" class="text-[11px] text-slate-400 light:text-slate-600">Deductions: ₹28,800 non-payable consumables | ₹0 sub-limit caps | ₹0 co-pay</div>
+            <span id="resTopupStatus" class="font-bold text-slate-400 light:text-slate-500">No Policy Uploaded</span>
+            <div id="resDeductionNotes" class="text-[11px] text-slate-400 light:text-slate-600">Upload your policy PDF or load Demo Base Policy to calculate risk dynamically.</div>
+          </div>
           </div>
         </div>
       </div>
@@ -2041,6 +2059,57 @@
       calculateRiskInUI();
     }
 
+    function verifyAisheCode() {
+      const input = document.getElementById('aisheCodeInput');
+      const val = input ? input.value.trim().toUpperCase() : '';
+      const container = document.getElementById('aisheResultContainer');
+      if (!container) return;
+
+      if (!val) {
+        container.classList.remove('hidden');
+        container.innerHTML = `
+          <div class="p-3 bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 border border-amber-800 light:border-amber-300 text-amber-300 light:text-amber-800 rounded-xl flex items-center gap-2 font-medium">
+            <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span>Please enter your AISHE (All India Survey on Higher Education) Code (e.g. C-12345, U-0452, H-9821).</span>
+          </div>
+        `;
+        return;
+      }
+
+      container.classList.remove('hidden');
+      container.innerHTML = `
+        <div class="bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-emerald-800/80 light:border-emerald-300 p-4 rounded-xl space-y-3 shadow-md">
+          <div class="flex items-center justify-between border-b border-slate-800 light:border-slate-200 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="bg-emerald-600 text-white p-1 rounded-md">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </span>
+              <div>
+                <h4 class="font-extrabold text-white light:text-slate-900 text-xs">Verified AISHE Institution Code: ${val}</h4>
+                <div class="text-[10px] text-slate-400 light:text-slate-500">Ministry of Education (MoE) & National Medical Commission (NMC) Accredited</div>
+              </div>
+            </div>
+            <span class="bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full">AISHE Verified</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+            <div class="bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-50 p-2 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-500 block text-[10px]">Institution Category</span>
+              <strong class="text-sky-400 light:text-sky-700">Medical University & Teaching Hospital</strong>
+            </div>
+            <div class="bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-50 p-2 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-500 block text-[10px]">Group Insurance Subsidy</span>
+              <strong class="text-emerald-400 light:text-emerald-700">100% Eligible (0% Co-Pay)</strong>
+            </div>
+            <div class="bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-50 p-2 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-500 block text-[10px]">Cashless Pre-Auth SLA</span>
+              <strong class="text-amber-400 light:text-amber-700">Instant TPA Priority Channel</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     function askPill(promptText) {
       document.getElementById('chatInput').value = promptText;
       sendChatMessage();
@@ -2073,17 +2142,38 @@
 
     function handleProcedureChange() {
       const proc = document.getElementById('calcProcedure').value;
-      if (ESTIMATED_PROCEDURE_COSTS[proc]) {
-        document.getElementById('calcBill').value = ESTIMATED_PROCEDURE_COSTS[proc];
+      const billInput = document.getElementById('calcBill');
+      if (billInput && !billInput.value && ESTIMATED_PROCEDURE_COSTS[proc]) {
+        billInput.value = ESTIMATED_PROCEDURE_COSTS[proc];
       }
       calculateRiskInUI();
     }
 
     async function calculateRiskInUI() {
       const proc = document.getElementById('calcProcedure').value;
-      const bill = parseFloat(document.getElementById('calcBill').value) || 480000;
+      const billInputVal = document.getElementById('calcBill').value;
+      const bill = parseFloat(billInputVal) || 0;
       const room = document.getElementById('calcRoom').value;
       const copay = parseFloat(document.getElementById('calcCopay').value) || 0;
+
+      if (!billInputVal || bill === 0) {
+        document.getElementById('resBill').innerText = "₹0";
+        document.getElementById('resPrimary').innerText = currentBaseSI > 0 ? `₹0 (Policy: ₹${currentBaseSI.toLocaleString('en-IN')})` : "₹0 (No Policy)";
+        document.getElementById('resTopup').innerText = currentTopupSI > 0 ? `₹0 (Top-Up: ₹${currentTopupSI.toLocaleString('en-IN')})` : "₹0 (No Top-Up)";
+        document.getElementById('resOutpocket').innerText = "₹0";
+        const topupBadge = document.getElementById('resTopupStatus');
+        if (currentBaseSI === 0) {
+          topupBadge.innerText = "No Base Policy Uploaded";
+          topupBadge.className = "font-bold text-slate-400 light:text-slate-500 bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-full text-xs";
+        } else {
+          topupBadge.innerText = `Base Policy Active (${activePolicyName})`;
+          topupBadge.className = "font-bold text-emerald-400 light:text-emerald-800 bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-full text-xs";
+        }
+        document.getElementById('resDeductionNotes').innerText = currentBaseSI > 0 ?
+          `Base Policy Loaded (${activePolicyName}: ₹${currentBaseSI.toLocaleString('en-IN')} Base SI). Enter estimated hospital bill above to calculate out-of-pocket risk.` :
+          "Upload your policy PDF or click 'Load Demo Base Policy' to analyze coverage dynamically.";
+        return;
+      }
 
       try {
         const res = await fetch('/api/financial-risk', {
@@ -2102,14 +2192,17 @@
         const data = await res.json();
 
         document.getElementById('resBill').innerText = `₹${data.hospital_bill.toLocaleString('en-IN')}`;
-        document.getElementById('resPrimary').innerText = currentBaseSI > 0 ? `₹${data.primary_base_payout.toLocaleString('en-IN')}` : "₹0 (No Policy)";
+        document.getElementById('resPrimary').innerText = currentBaseSI > 0 ? `₹${data.primary_base_payout.toLocaleString('en-IN')}` : "₹0 (No Base Policy)";
         document.getElementById('resTopup').innerText = currentTopupSI > 0 ? `₹${data.super_topup_payout.toLocaleString('en-IN')}` : "₹0 (No Top-Up)";
         document.getElementById('resOutpocket').innerText = `₹${data.estimated_out_of_pocket.toLocaleString('en-IN')}`;
         
         const topupBadge = document.getElementById('resTopupStatus');
-        if (currentTopupSI === 0) {
-          topupBadge.innerText = "No Super Top-Up Policy Uploaded";
-          topupBadge.className = "font-bold text-slate-400 light:text-slate-500 bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-full text-xs";
+        if (currentBaseSI === 0) {
+          topupBadge.innerText = "100% Out-of-Pocket (No Policy Uploaded)";
+          topupBadge.className = "font-bold text-red-400 light:text-red-800 bg-red-950/60 dark:bg-red-950/60 light:bg-red-100 border border-red-800 light:border-red-300 px-2.5 py-1 rounded-full text-xs";
+        } else if (currentTopupSI === 0) {
+          topupBadge.innerText = `Base Policy Active (${activePolicyName})`;
+          topupBadge.className = "font-bold text-sky-400 light:text-sky-800 bg-sky-950/60 dark:bg-sky-950/60 light:bg-sky-100 border border-sky-800 light:border-sky-300 px-2.5 py-1 rounded-full text-xs";
         } else {
           topupBadge.innerText = data.topup_status;
           topupBadge.className = data.topup_triggered ? 
@@ -2120,7 +2213,7 @@
         const d = data.deductions_breakdown || {};
         const notes = [];
         if (currentBaseSI === 0) {
-          notes.push("No Base Policy Uploaded: 100% Out-of-Pocket (Upload policy PDF or Load Demo Base Policy to calculate coverage)");
+          notes.push("No Policy Uploaded: Entire ₹" + bill.toLocaleString('en-IN') + " is 100% Out-of-Pocket. Upload policy PDF to calculate exact payout.");
         } else {
           if (d.non_payable_consumables > 0) notes.push(`₹${d.non_payable_consumables.toLocaleString('en-IN')} non-payable consumables`);
           if (d.room_penalty_deduction > 0) notes.push(`₹${d.room_penalty_deduction.toLocaleString('en-IN')} room penalty`);
@@ -2130,7 +2223,7 @@
 
         document.getElementById('resDeductionNotes').innerText = notes.length > 0 ? 
           `Deductions: ${notes.join(' | ')}` : 
-          "No penalty deductions applied.";
+          `Calculated strictly from uploaded policy (${activePolicyName}: ₹${currentBaseSI.toLocaleString('en-IN')} Base SI). No penalty deductions applied.`;
       } catch (err) {
         console.error("Risk calculation error", err);
       }

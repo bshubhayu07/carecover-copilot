@@ -234,8 +234,12 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
     t = NATIVE_RESPONSES.get(lang, None)
 
     # 1. Live Date / Time & Basic Temporal Queries (Calculated in IST UTC+5:30)
-    temporal_phrases = ["what is today", "what is the date", "what time", "current date", "current time", "what day", "todays date", "today date", "आज की तारीख", "आज का समय", "आज क्या तारीख है", "आज काय तारीख आहे"]
-    if any(p in q_clean for p in temporal_phrases) or (any(tok in q_norm.split() for tok in ["date", "time", "clock", "तारीख", "समय"]) and not any(pk in q_clean for pk in ["waiting period", "pre-auth", "claim", "cover", "policy", "प्रतीक्षा"])):
+    temporal_phrases = [
+        "what is today", "what is the date", "what time", "current date", "current time", "what day", "todays date", "today date",
+        "आज की तारीख", "आज का समय", "आज क्या तारीख है", "आज काय तारीख आहे",
+        "aaj ka tarik", "aaj ki tarik", "aaj ka tarikh", "aaj ki tarikh", "aaj kya tarik", "aaj kya tarikh", "aaj ka samay", "kya tarik hai", "kya tarikh hai", "tarik kya", "tarikh kya"
+    ]
+    if any(p in q_clean for p in temporal_phrases) or (any(tok in q_norm.split() for tok in ["date", "time", "clock", "tarik", "tarikh", "samay", "तारीख", "समय"]) and not any(pk in q_clean for pk in ["waiting period", "pre-auth", "claim", "cover", "policy", "प्रतीक्षा"])):
         ist = timezone(timedelta(hours=5, minutes=30))
         now = datetime.now(ist)
         day_str = now.strftime("%A, %d %B %Y")
@@ -356,7 +360,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
 
     is_greeting = any(q_clean == g or q_clean.startswith(g + " ") or q_clean.startswith(g + ",") or q_clean.endswith(" " + g) for g in GREETING_KEYWORDS)
     is_ood = any(k in q_clean for k in OUT_OF_DOMAIN_KEYWORDS)
-    is_temporal = any(tok in q_norm.split() for tok in ["date", "time", "day", "today", "todays", "clock", "तारीख", "समय"]) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day"])
+    is_temporal = any(tok in q_norm.split() for tok in ["date", "time", "day", "today", "todays", "clock", "tarik", "tarikh", "samay", "तारीख", "समय"]) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day", "aaj ka tarik", "aaj ki tarik", "aaj ka tarikh", "aaj ki tarikh", "aaj kya tarik", "aaj kya tarikh", "aaj ka samay", "kya tarik hai", "kya tarikh hai"])
     has_policy_kw = any(k in q_clean for k in ["cataract", "joint", "knee", "hip", "room", "icu", "rent", "auth", "cashless", "preauth", "pre-auth", "claim", "reimbursement", "doctor", "ambulance", "maternity", "waiting period", "ped", "pre-existing", "sub-limit", "copay", "co-pay", "deductible", "topup", "cover", "policy", "मोतियाबिंद", "मोतीबिंदू", "छानि", "कण்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ"])
 
     # If no active policy is loaded OR it's a non-policy query, return NO intelligence card (intelligence = None)
