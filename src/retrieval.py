@@ -146,7 +146,13 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
 
     q_clean = query.lower().strip()
 
-    if "cataract" in q_clean or "eye" in q_clean:
+    is_greeting = any(q_clean == g or q_clean.startswith(g + " ") or q_clean.startswith(g + ",") for g in GREETING_KEYWORDS)
+    is_ood = any(k in q_clean for k in OUT_OF_DOMAIN_KEYWORDS)
+    has_policy_kw = any(k in q_clean for k in ["cataract", "joint", "knee", "hip", "room", "icu", "rent", "auth", "cashless", "preauth", "pre-auth", "claim", "reimbursement", "doctor", "ambulance", "maternity", "waiting period", "ped", "pre-existing", "sub-limit", "copay", "co-pay", "deductible", "topup", "cover", "policy"])
+
+    if is_greeting or is_ood or not has_policy_kw:
+        intelligence = None
+    elif "cataract" in q_clean or "eye" in q_clean:
         intelligence = {
             "coverage_status": "Covered (Sub-Limited)",
             "room_eligibility": "Single Private Room",

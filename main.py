@@ -210,9 +210,28 @@ async def policy_qa_endpoint(request: QARequest):
     elif not profile_to_use:
         profile_to_use = PolicyProfile(insurer_name="Niva Bupa Health Insurance")
 
-    # 3. Execute RAG retrieval & LLM synthesis via Python RAG chain with multilingual support
+    # 3. Track generic question count in history
+    generic_history_count = 0
+    if request.history:
+        for turn in reversed(request.history):
+            turn_q = turn.get("query", "").lower() if isinstance(turn, dict) else str(turn).lower()
+            has_kw = any(k in turn_q for k in ["cataract", "joint", "knee", "hip", "room", "icu", "rent", "auth", "cashless", "preauth", "pre-auth", "claim", "reimbursement", "doctor", "ambulance", "maternity", "waiting period", "ped", "pre-existing", "sub-limit", "copay", "co-pay", "deductible", "topup", "cover", "policy"])
+            if not has_kw:
+                generic_history_count += 1
+            else:
+                break
+
+    # 4. Execute RAG retrieval & LLM synthesis via Python RAG chain with multilingual support
     detailed_res = ask_policy_question_detailed(request.query, active_vector_collection, profile_to_use, language=request.language or "English")
     guarded_answer = apply_response_guardrails(detailed_res["answer"])
+
+    # 5. Generic question limit steering (If 2+ generic questions asked in a row, suggest specific policy concerns)
+    q_clean = request.query.lower().strip()
+    is_current_generic = not any(k in q_clean for k in ["cataract", "joint", "knee", "hip", "room", "icu", "rent", "auth", "cashless", "preauth", "pre-auth", "claim", "reimbursement", "doctor", "ambulance", "maternity", "waiting period", "ped", "pre-existing", "sub-limit", "copay", "co-pay", "deductible", "topup", "cover", "policy"])
+    
+    if is_current_generic and generic_history_count >= 2:
+        steering_note = "\n\nNotice: You have asked several general questions. To get specific, actionable insights from CareCover Copilot, please ask questions regarding your policy coverage, room rent limits, cataract caps, cashless pre-authorization, or network hospital options."
+        guarded_answer += steering_note
 
     return {
         "answer": guarded_answer,
