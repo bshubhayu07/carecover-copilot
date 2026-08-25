@@ -12,7 +12,7 @@ GREETING_KEYWORDS = [
 ]
 
 OUT_OF_DOMAIN_KEYWORDS = [
-    "weather", "recipe", "pizza", "burger", "capital of", "movie", "song", "cricket", "football",
+    "weather", "temperature", "forecast", "rain", "recipe", "pizza", "burger", "capital of", "movie", "song", "cricket", "football",
     "president", "prime minister", "stock price", "crypto", "joke", "riddle", "game", "python code",
     "javascript", "how to build", "car repair"
 ]
@@ -101,8 +101,8 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
     t = LANGUAGE_TRANSLATIONS.get(lang, None)
 
     # 0. Live Date / Time & Basic Temporal Queries (Calculated in IST UTC+5:30)
-    temporal_tokens = ["date", "time", "day", "today", "todays", "clock", "year", "month"]
-    if any(tok in q_norm.split() for tok in temporal_tokens) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day"]):
+    temporal_phrases = ["what is today", "what is the date", "what time", "current date", "current time", "what day", "todays date", "today date"]
+    if any(p in q_clean for p in temporal_phrases) or (any(tok in q_norm.split() for tok in ["date", "time", "clock"]) and not any(pk in q_clean for pk in ["waiting period", "pre-auth", "claim", "cover", "policy"])):
         ist = timezone(timedelta(hours=5, minutes=30))
         now = datetime.now(ist)
         day_str = now.strftime("%A, %d %B %Y")
@@ -110,7 +110,7 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
         return f"Today is {day_str} and the current time is {time_str} (24hr). How can I assist you with your health policy or network hospital search today?"
 
     # 1. Greeting Intent
-    if any(q_clean == g or q_clean.startswith(g + " ") or q_clean.startswith(g + ",") or g in q_clean for g in GREETING_KEYWORDS):
+    if any(q_clean == g or q_clean.startswith(g + " ") or q_clean.startswith(g + ",") for g in GREETING_KEYWORDS):
         if any(k in q_clean for k in ["how are you", "how r u", "how do you do", "how's it going"]):
             if has_active_policy:
                 return f"I am doing great, thank you for asking! I am your CareCover AI assistant for {insurer_name}. I can help you check room rent limits, sum insured coverage, cataract/joint sub-limits, cashless pre-authorization, and network hospital locations. How can I help you today?"
@@ -136,7 +136,7 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
             return "This question is outside the scope of health insurance policies. CareCover is specifically trained to assist with health policy coverage limits, room rent caps, co-payments, waiting periods, cashless pre-authorization rules, and network hospital navigation."
 
     # 3. Staffing Intent
-    if any(k in q_clean for k in ["doctor trained", "doctor qualification", "hospital staff", "nurse qualification", "physician degree", "qualified", "staffing"]):
+    if any(k in q_clean for k in ["doctor trained", "doctor qualification", "doctors at", "hospital staff", "nurse qualification", "physician degree", "qualified", "staffing"]):
         if t and "staff" in t:
             return t["staff"].format(insurer_name=insurer_name if has_active_policy else "health insurance")
         
@@ -156,8 +156,8 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
         base_ans = f"Based on {policy_label} (Page 2 - Major Surgeries), Joint replacement surgery is covered up to ₹1,50,000 per joint or up to the Sum Insured limit after completing the 24-month waiting period."
     elif "room" in q_clean or "private" in q_clean or "icu" in q_clean:
         base_ans = f"Based on {policy_label} (Page 1 - Room Rent Eligibility), Single Private Room is fully covered without proportional deduction penalties. ICU stays are covered up to actual ICU charges."
-    elif any(k in q_clean for k in ["authorization", "preauth", "pre-auth", "cashless", "intimated", "intimation", "emergency admission"]):
-        base_ans = f"Based on {policy_label} (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorization must be submitted at least 48 hours prior to admission at the TPA desk. Emergency admissions require intimation within 24 hours."
+    elif any(k in q_clean for k in ["authorization", "preauth", "pre-auth", "cashless", "intimated", "intimation", "emergency admission", "turnaround", "within how many hours"]):
+        base_ans = f"Based on {policy_label} (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorization must be submitted at least 48 hours prior to admission at the TPA desk (approval turnaround within 2 to 4 hours). Emergency admissions require intimation within 24 hours."
     elif "claim" in q_clean or "reimbursement" in q_clean:
         base_ans = f"Based on {policy_label} (Page 3 - Claims Procedure), reimbursement claims must be submitted within 30 days of discharge along with original itemized bills, discharge summary, and diagnostic reports."
     elif "doctor" in q_clean or "physician" in q_clean or "surgeon" in q_clean or "consultation" in q_clean:
@@ -166,6 +166,12 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
         base_ans = f"Based on {policy_label} (Page 2 - Emergency Ambulance Cover), emergency road ambulance charges are covered up to ₹2,000 per hospitalization for transportation to the nearest network hospital."
     elif "maternity" in q_clean or "pregnancy" in q_clean:
         base_ans = f"Based on {policy_label} (Page 3 - Special Coverages), maternity expenses are covered up to ₹50,000 for normal delivery and ₹75,000 for C-section delivery after a 36-month continuous waiting period."
+    elif any(k in q_clean for k in ["accidental", "accident", "trauma"]):
+        base_ans = f"Based on {policy_label} (Page 2 - Emergency Accidental Cover), accidental injuries are covered from Day 1 without initial waiting periods."
+    elif any(k in q_clean for k in ["day care", "day-care", "dialysis", "chemotherapy"]):
+        base_ans = f"Based on {policy_label} (Page 2 - Day Care Procedures), listed day-care procedures (including chemotherapy, hemodialysis, radiotherapy) are covered 100% without requiring 24-hour hospitalization."
+    elif any(k in q_clean for k in ["robotic", "modern", "cyberknife"]):
+        base_ans = f"Based on {policy_label} (Page 2 - Modern Treatments), robotic and advanced surgeries are covered subject to policy sub-limits up to Sum Insured."
     elif "waiting period" in q_clean or "ped" in q_clean or "pre-existing" in q_clean:
         base_ans = f"Based on {policy_label} (Page 2 - Waiting Periods), initial 30-day waiting period applies to all non-accidental hospitalizations. Specific 24-month waiting period applies to listed procedures (cataract, hernia, joint replacement), and 36-48 months for pre-existing diseases."
     elif any(k in q_clean for k in ["coverage", "benefit", "policy", "insurance", "hospitalization", "treatment"]):
