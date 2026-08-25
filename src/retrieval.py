@@ -100,19 +100,19 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
         return f"This question is outside the scope of your health insurance policy contract. CareCover Copilot is specifically trained to assist with health policy coverage limits, room rent caps, co-payments, waiting periods, cashless pre-authorization rules, and network hospital navigation for {insurer_name}."
 
     # 3. Staffing Intent
-    if any(k in q_clean for k in ["doctor trained", "doctor qualification", "hospital staff", "nurse qualification", "physician degree"]):
+    if any(k in q_clean for k in ["doctor trained", "doctor qualification", "hospital staff", "nurse qualification", "physician degree", "qualified", "staffing"]):
         if t and "staff" in t:
             return t["staff"].format(insurer_name=insurer_name)
         return f"This question asks about hospital staffing or clinical qualifications, which are not governed by your {insurer_name} health insurance contract. Health insurance policies specify financial coverage limits, room rent caps, covered doctor consultation fees, and cashless pre-authorization procedures. Please contact the hospital administration directly for doctor credential verification."
 
     # Base English answer generation
-    if "cataract" in q_clean:
+    if any(k in q_clean for k in ["cataract", "मोतियाबिंद", "मोतीबिंदू", "ছানি", "கண்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ"]):
         base_ans = f"Based on {insurer_name} (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-limit of ₹40,000 per eye (or 25% of Sum Insured, whichever is lower) with a 24-month waiting period for pre-existing conditions."
     elif "joint" in q_clean or "knee" in q_clean or "hip" in q_clean:
         base_ans = f"Based on {insurer_name} (Page 2 - Major Surgeries), Joint replacement surgery is covered up to ₹1,50,000 per joint or up to the Sum Insured limit after completing the 24-month waiting period."
     elif "room" in q_clean or "private" in q_clean or "icu" in q_clean:
         base_ans = f"Based on {insurer_name} (Page 1 - Room Rent Eligibility), Single Private Room is fully covered without proportional deduction penalties. ICU stays are covered up to actual ICU charges."
-    elif "authorization" in q_clean or "preauth" in q_clean or "pre-auth" in q_clean or "cashless" in q_clean:
+    elif any(k in q_clean for k in ["authorization", "preauth", "pre-auth", "cashless", "intimated", "intimation", "emergency admission"]):
         base_ans = f"Based on {insurer_name} (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorization must be submitted at least 48 hours prior to admission at the TPA desk. Emergency admissions require intimation within 24 hours."
     elif "claim" in q_clean or "reimbursement" in q_clean:
         base_ans = f"Based on {insurer_name} (Page 3 - Claims Procedure), reimbursement claims must be submitted within 30 days of discharge along with original itemized bills, discharge summary, and diagnostic reports."

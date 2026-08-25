@@ -21,8 +21,20 @@ def get_guardrail_response() -> str:
     return "I am an insurance navigation assistant and cannot provide medical advice, diagnosis, or treatment recommendations. Please consult a qualified healthcare professional or a doctor for your symptoms."
 
 def validate_query_safety(query: str) -> tuple[bool, str]:
+    q_lower = query.lower()
+    
+    # Prompt injection & security guardrails
+    injection_keywords = [
+        "ignore previous", "system prompt", "print secret", "api key",
+        "select * from", "eval(", "os.system", "unrestricted assistant",
+        "drop table", "<script>"
+    ]
+    if any(kw in q_lower for kw in injection_keywords):
+        return False, "Security Violation: Query contains prohibited system override or security injection patterns."
+
     if check_medical_advice_query(query):
         return False, get_guardrail_response()
+        
     return True, ""
 
 def apply_response_guardrails(response_text: str) -> str:
