@@ -56,8 +56,8 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- Location-Aware Emergency Banner -->
-  <div id="emergencyBanner" class="bg-red-950/90 dark:bg-red-950/90 light:bg-red-50 border-b border-red-800/80 light:border-red-200 px-4 py-2 text-center text-xs md:text-sm text-red-200 light:text-red-800 font-medium transition-colors">
+  <!-- Top Location-Aware Emergency Banner -->
+  <div id="emergencyBanner" class="bg-red-950/90 dark:bg-red-950/90 light:bg-red-100 border-b border-red-800/80 light:border-red-300 px-4 py-2 text-center text-xs md:text-sm text-red-200 light:text-red-900 font-medium transition-colors">
     EMERGENCY NOTICE: If you or a family member are experiencing a medical emergency, call <strong id="helplineNumbers">National 112 | Ambulance 108</strong> immediately or go directly to the nearest Casualty ER. Do not delay medical care for policy verification.
   </div>
 
@@ -70,15 +70,19 @@
       </h1>
       <p class="text-xs text-slate-400 light:text-slate-500">Independent Clinical & Insurance Decision Support Navigation System</p>
     </div>
+
+    <!-- Right Header Tools -->
     <div class="flex items-center gap-3">
-      <!-- Light / Dark Mode Toggle Switch -->
-      <button onclick="toggleTheme()" id="themeBtn" class="bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors">
-        Light Mode
+      
+      <!-- PROMINENT LIGHT / DARK MODE TOGGLE SWITCH -->
+      <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1.5 cursor-pointer">
+        <span>Theme: Light Mode</span>
       </button>
 
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span> System Status: Online
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span> System: Online
       </span>
+
       <select id="languageSelect" class="bg-slate-800 dark:bg-slate-800 light:bg-slate-100 border border-slate-700 light:border-slate-300 text-slate-200 light:text-slate-800 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-sky-500">
         <option value="English">English</option>
         <option value="Hindi">Hindi (हिंदी)</option>
@@ -234,8 +238,11 @@
       <section id="tab3-content" class="space-y-6 hidden">
         <div class="glass-card p-6 rounded-xl space-y-4">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
-            <h2 class="text-lg font-bold text-white light:text-slate-900">Hospital Network & Room Eligibility Matching</h2>
-            <button onclick="requestGPSLocation()" id="gpsBtn" class="bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-sky-400 light:text-sky-700 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 light:border-slate-300 flex items-center gap-1.5 transition-colors">
+            <div>
+              <h2 class="text-lg font-bold text-white light:text-slate-900">Hospital Network & Room Eligibility Matching</h2>
+              <p class="text-xs text-slate-400 light:text-slate-600">Click below to share your GPS location to find nearest cashless network hospitals and get state emergency helpline numbers.</p>
+            </div>
+            <button onclick="requestGPSLocation()" id="gpsBtn" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-4 py-2 rounded-lg border border-sky-400 flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer whitespace-nowrap">
               Use Live GPS Location
             </button>
           </div>
@@ -326,12 +333,12 @@
       if (htmlEl.classList.contains('dark')) {
         htmlEl.classList.remove('dark');
         htmlEl.classList.add('light');
-        themeBtn.innerText = "Dark Mode";
+        themeBtn.innerHTML = "<span>Theme: Dark Mode</span>";
         localStorage.setItem('theme', 'light');
       } else {
         htmlEl.classList.remove('light');
         htmlEl.classList.add('dark');
-        themeBtn.innerText = "Light Mode";
+        themeBtn.innerHTML = "<span>Theme: Light Mode</span>";
         localStorage.setItem('theme', 'dark');
       }
     }
@@ -340,7 +347,7 @@
     if (localStorage.getItem('theme') === 'light') {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
-      document.getElementById('themeBtn').innerText = "Dark Mode";
+      document.getElementById('themeBtn').innerHTML = "<span>Theme: Dark Mode</span>";
     }
 
     function updateHelplineNumbers(city) {
@@ -505,7 +512,7 @@
             userLat = pos.coords.latitude;
             userLon = pos.coords.longitude;
             btn.innerText = "GPS Active";
-            btn.className = "bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5";
+            btn.className = "bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 shadow-sm";
             fetchHospitals();
           },
           (err) => {
