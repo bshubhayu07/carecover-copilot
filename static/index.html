@@ -65,7 +65,7 @@
       
       <!-- Interactive User Location Input Box -->
       <div class="flex items-center gap-2 w-full md:w-auto">
-        <input type="text" id="userLocationInput" oninput="handleUserLocationInput()" placeholder="Enter your city/location (e.g. Pune, Mumbai, Delhi)..." class="bg-red-900/60 light:bg-white text-white light:text-slate-900 placeholder-red-300 light:placeholder-slate-400 border border-red-700 light:border-red-300 rounded-lg px-3 py-1.5 text-xs w-full md:w-64 focus:outline-none focus:ring-1 focus:ring-red-400">
+        <input type="text" id="userLocationInput" oninput="handleUserLocationInput()" placeholder="Enter your city/state (e.g. Pune, Mumbai, Delhi, Patna)..." class="bg-red-900/60 light:bg-white text-white light:text-slate-900 placeholder-red-300 light:placeholder-slate-400 border border-red-700 light:border-red-300 rounded-lg px-3 py-1.5 text-xs w-full md:w-64 focus:outline-none focus:ring-1 focus:ring-red-400">
         <button onclick="requestGPSLocation()" id="gpsBtn" title="Detect GPS Location" class="bg-red-800 hover:bg-red-700 light:bg-red-600 light:hover:bg-red-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-red-600 transition-colors whitespace-nowrap cursor-pointer">
           Detect Location
         </button>
@@ -269,6 +269,22 @@
                 <option value="Chennai">Chennai</option>
                 <option value="Kolkata">Kolkata</option>
                 <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Jaipur">Jaipur</option>
+                <option value="Lucknow">Lucknow</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Kochi">Kochi</option>
+                <option value="Bhopal">Bhopal</option>
+                <option value="Patna">Patna</option>
+                <option value="Bhubaneswar">Bhubaneswar</option>
+                <option value="Guwahati">Guwahati</option>
+                <option value="Visakhapatnam">Visakhapatnam</option>
+                <option value="Raipur">Raipur</option>
+                <option value="Ranchi">Ranchi</option>
+                <option value="Dehradun">Dehradun</option>
+                <option value="Shimla">Shimla</option>
+                <option value="Panaji">Goa (Panaji)</option>
+                <option value="Srinagar">Srinagar</option>
+                <option value="Jammu">Jammu</option>
               </select>
             </div>
             <div>
@@ -315,11 +331,13 @@
     let userLat = null;
     let userLon = null;
 
+    // Comprehensive Emergency Helpline Database covering ALL 36 States & Union Territories of India
     const HELPLINE_DATABASE = {
       'pune': 'National Emergency 112 | MEMS Ambulance 108 (Pune / Maharashtra)',
       'mumbai': 'National Emergency 112 | MEMS Ambulance 108 (Mumbai / Maharashtra)',
       'maharashtra': 'National Emergency 112 | MEMS Ambulance 108 (Maharashtra)',
       'delhi': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
+      'ncr': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
       'bengaluru': 'National Emergency 112 | Arogya Kavacha 108 (Bengaluru / Karnataka)',
       'bangalore': 'National Emergency 112 | Arogya Kavacha 108 (Karnataka)',
       'karnataka': 'National Emergency 112 | Arogya Kavacha 108 (Karnataka)',
@@ -331,13 +349,60 @@
       'west bengal': 'National Emergency 112 | WB Health Ambulance 102 / 108 (West Bengal)',
       'ahmedabad': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
       'gujarat': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
-      'goa': 'National Emergency 112 | 108 EMS Ambulance (Goa)',
       'jaipur': 'National Emergency 112 | 108 Emergency Ambulance (Rajasthan)',
       'rajasthan': 'National Emergency 112 | 108 Emergency Ambulance (Rajasthan)',
       'lucknow': 'National Emergency 112 | 108 ALS Ambulance (Uttar Pradesh)',
       'uttar pradesh': 'National Emergency 112 | 108 ALS Ambulance (Uttar Pradesh)',
-      'kochi': 'National Emergency 112 | 108 KIVS Medical Emergency (Kerala)',
-      'kerala': 'National Emergency 112 | 108 KIVS Medical Emergency (Kerala)'
+      'patna': 'National Emergency 112 | 102 / 108 Swasthya Sewa (Bihar)',
+      'bihar': 'National Emergency 112 | 102 / 108 Swasthya Sewa (Bihar)',
+      'bhopal': 'National Emergency 112 | Sanjeevani Ambulance 108 (Madhya Pradesh)',
+      'indore': 'National Emergency 112 | Sanjeevani Ambulance 108 (Madhya Pradesh)',
+      'madhya pradesh': 'National Emergency 112 | Sanjeevani Ambulance 108 (Madhya Pradesh)',
+      'bhubaneswar': 'National Emergency 112 | 108 Ambulance Service (Odisha)',
+      'odisha': 'National Emergency 112 | 108 Ambulance Service (Odisha)',
+      'guwahati': 'National Emergency 112 | Mrityunjoy Ambulance 108 (Assam)',
+      'assam': 'National Emergency 112 | Mrityunjoy Ambulance 108 (Assam)',
+      'visakhapatnam': 'National Emergency 112 | 108 Medical Ambulance (Andhra Pradesh)',
+      'andhra pradesh': 'National Emergency 112 | 108 Medical Ambulance (Andhra Pradesh)',
+      'chandigarh': 'National Emergency 112 | 108 Emergency Ambulance (Chandigarh)',
+      'punjab': 'National Emergency 112 | 108 National Ambulance (Punjab)',
+      'haryana': 'National Emergency 112 | Swasthya Express 108 (Haryana)',
+      'kochi': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      'kerala': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      'goa': 'National Emergency 112 | 108 EMS Ambulance (Goa)',
+      'panaji': 'National Emergency 112 | 108 EMS Ambulance (Goa)',
+      'raipur': 'National Emergency 112 | Sanjeevani Express 108 (Chhattisgarh)',
+      'chhattisgarh': 'National Emergency 112 | Sanjeevani Express 108 (Chhattisgarh)',
+      'ranchi': 'National Emergency 112 | 108 Emergency Ambulance (Jharkhand)',
+      'jharkhand': 'National Emergency 112 | 108 Emergency Ambulance (Jharkhand)',
+      'dehradun': 'National Emergency 112 | Pt. Deendayal 108 Ambulance (Uttarakhand)',
+      'uttarakhand': 'National Emergency 112 | Pt. Deendayal 108 Ambulance (Uttarakhand)',
+      'shimla': 'National Emergency 112 | 108 National Ambulance (Himachal Pradesh)',
+      'himachal pradesh': 'National Emergency 112 | 108 National Ambulance (Himachal Pradesh)',
+      'srinagar': 'National Emergency 112 | 108 JK EMS Ambulance (Jammu & Kashmir)',
+      'jammu': 'National Emergency 112 | 108 JK EMS Ambulance (Jammu & Kashmir)',
+      'leh': 'National Emergency 112 | 108 EMS Ambulance (Ladakh)',
+      'ladakh': 'National Emergency 112 | 108 EMS Ambulance (Ladakh)',
+      'puducherry': 'National Emergency 112 | 108 GVK EMRI Ambulance (Puducherry)',
+      'agartala': 'National Emergency 112 | 108 Tripura Emergency Response',
+      'tripura': 'National Emergency 112 | 108 Tripura Emergency Response',
+      'shillong': 'National Emergency 112 | 108 EMRI Ambulance (Meghalaya)',
+      'meghalaya': 'National Emergency 112 | 108 EMRI Ambulance (Meghalaya)',
+      'imphal': 'National Emergency 112 | 108 EMS Ambulance (Manipur)',
+      'manipur': 'National Emergency 112 | 108 EMS Ambulance (Manipur)',
+      'kohima': 'National Emergency 112 | 108 Emergency Ambulance (Nagaland)',
+      'nagaland': 'National Emergency 112 | 108 Emergency Ambulance (Nagaland)',
+      'itanagar': 'National Emergency 112 | 108 Ambulance (Arunachal Pradesh)',
+      'arunachal pradesh': 'National Emergency 112 | 108 Ambulance (Arunachal Pradesh)',
+      'aizawl': 'National Emergency 112 | 108 EMS Ambulance (Mizoram)',
+      'mizoram': 'National Emergency 112 | 108 EMS Ambulance (Mizoram)',
+      'gangtok': 'National Emergency 112 | 108 Ambulance Services (Sikkim)',
+      'sikkim': 'National Emergency 112 | 108 Ambulance Services (Sikkim)',
+      'port blair': 'National Emergency 112 | 102 / 108 Emergency Helpline (A&N Islands)',
+      'andaman': 'National Emergency 112 | 102 / 108 Emergency Helpline (A&N Islands)',
+      'silvassa': 'National Emergency 112 | 108 EMS Ambulance (DNH & DD)',
+      'daman': 'National Emergency 112 | 108 EMS Ambulance (DNH & DD)',
+      'kavaratti': 'National Emergency 112 | Island Emergency Services (Lakshadweep)'
     };
 
     const CITY_COORDS = {
@@ -348,7 +413,12 @@
       'Hyderabad': { lat: 17.3850, lon: 78.4867 },
       'Chennai': { lat: 13.0827, lon: 80.2707 },
       'Kolkata': { lat: 22.5726, lon: 88.3639 },
-      'Ahmedabad': { lat: 23.0225, lon: 72.5714 }
+      'Ahmedabad': { lat: 23.0225, lon: 72.5714 },
+      'Jaipur': { lat: 26.9124, lon: 75.7873 },
+      'Lucknow': { lat: 26.8467, lon: 80.9462 },
+      'Chandigarh': { lat: 30.7333, lon: 76.7794 },
+      'Kochi': { lat: 9.9312, lon: 76.2673 },
+      'Bhopal': { lat: 23.2599, lon: 77.4126 }
     };
 
     function handleUserLocationInput() {
@@ -378,7 +448,7 @@
       const citySelect = document.getElementById('hospitalCity');
       if (citySelect) {
         for (let i = 0; i < citySelect.options.length; i++) {
-          if (q.includes(citySelect.options[i].value.toLowerCase())) {
+          if (citySelect.options[i].value && q.includes(citySelect.options[i].value.toLowerCase())) {
             citySelect.selectedIndex = i;
             fetchHospitals();
             break;
@@ -612,11 +682,10 @@
             fetchHospitals();
           },
           (err) => {
-            const citySelect = document.getElementById('hospitalCity');
-            const city = (citySelect && citySelect.value) ? citySelect.value : 'Delhi';
-            document.getElementById('userLocationInput').value = city;
+            const inputVal = document.getElementById('userLocationInput').value.trim();
+            const city = inputVal || 'Delhi';
             updateHelplineNumbers(city);
-            btn.innerText = `${city} Active`;
+            btn.innerText = `Active (${city})`;
             fetchHospitals();
           }
         );
