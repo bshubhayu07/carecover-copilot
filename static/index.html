@@ -924,18 +924,6 @@
         </div>
       </div>
 
-      <!-- 9-Stage Care Journey & Attached Policy Requirements -->
-      <div class="glass-card p-6 rounded-xl space-y-4">
-        <div class="border-b border-slate-800 light:border-slate-200 pb-3">
-          <h2 data-i18n="journey_title" class="text-lg font-bold text-white light:text-slate-900">End-to-End Clinical Care Journey & Policy Requirements</h2>
-          <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Stage-by-stage navigation from diagnosis to final cashless reimbursement with policy requirements attached to each stage.</p>
-        </div>
-
-        <div id="journeyTimeline" class="space-y-4 text-xs">
-          <!-- Journey Loaded via JS -->
-        </div>
-      </div>
-
     </section>
 
   </div>
@@ -1306,7 +1294,6 @@
       activeBtn.classList.remove('text-slate-400', 'light:text-slate-500');
 
       if(tabId === 'tab3') fetchHospitals();
-      if(tabId === 'tab4') fetchJourney();
     }
 
     let activePolicyData = null;
