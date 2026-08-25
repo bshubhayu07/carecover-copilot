@@ -541,25 +541,25 @@
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-xl bg-sky-950 light:bg-sky-100 border border-sky-800 light:border-sky-300 flex items-center justify-center font-extrabold text-sky-400 light:text-sky-700 text-lg shadow-inner">
-                <span id="healthScoreValue">88</span>
+                <span id="healthScoreValue">--</span>
               </div>
               <div>
                 <h4 class="font-extrabold text-slate-100 light:text-slate-900 text-xs flex items-center gap-1.5">
                   <span>Policy Health Rating</span>
-                  <span id="healthRatingBadge" class="bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2 py-0.5 rounded-full text-[10px]">Excellent Protection</span>
+                  <span id="healthRatingBadge" class="bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2 py-0.5 rounded-full text-[10px]">Evaluating...</span>
                 </h4>
                 <p class="text-[11px] text-slate-400 light:text-slate-600 mt-0.5">Comprehensive score evaluating room rent capping, co-pay %, waiting periods, and top-up presence.</p>
               </div>
             </div>
             <div class="text-right text-xs">
               <span class="text-slate-400 light:text-slate-600">Active Coverage Meter:</span>
-              <strong id="healthMeterPercent" class="text-sky-400 light:text-sky-700 block font-extrabold text-sm">88% Covered</strong>
+              <strong id="healthMeterPercent" class="text-sky-400 light:text-sky-700 block font-extrabold text-sm">--% Covered</strong>
             </div>
           </div>
 
           <!-- Visual Progress Bar -->
           <div class="w-full bg-slate-900 dark:bg-slate-900 light:bg-slate-200 h-2.5 rounded-full overflow-hidden border border-slate-800 light:border-slate-300">
-            <div id="healthProgressBar" class="bg-gradient-to-r from-sky-500 to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 88%;"></div>
+            <div id="healthProgressBar" class="bg-gradient-to-r from-sky-500 to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
           </div>
 
           <!-- Risk Alert Badges Container (Populated Dynamically) -->
@@ -1134,41 +1134,64 @@
 
     function calculatePolicyHealthScore(data) {
       if (!data) data = activePolicyData || {};
-      let score = 100;
+      let score = 75; // Neutral starting baseline score
       const badges = [];
 
-      const room = (data.room_eligibility || 'Single Private Room').toLowerCase();
-      const copay = data.co_payment_percentage || 0;
+      const room = (data.room_eligibility || '').toLowerCase();
+      const copayStr = (data.co_pay || '').toLowerCase();
+      let copay = data.co_payment_percentage || 0;
+      if (copayStr.includes('10%')) copay = 10;
+      else if (copayStr.includes('20%')) copay = 20;
+      else if (copayStr.includes('30%')) copay = 30;
 
-      // 1. Room Rent Capping Deduction
+      const sumInsured = currentBaseSI || data.sum_insured_inr || 0;
+
+      // 1. Base Sum Insured Factor (+15 to -20)
+      if (sumInsured >= 2500000) {
+        score += 15;
+      } else if (sumInsured >= 1000000) {
+        score += 10;
+      } else if (sumInsured >= 500000) {
+        score += 5;
+      } else if (sumInsured > 0 && sumInsured < 500000) {
+        score -= 10;
+      } else {
+        score -= 20;
+      }
+
+      // 2. Room Rent Capping Deduction / Bonus
       if (room.includes('twin') || room.includes('shared') || room.includes('1%')) {
         score -= 15;
         badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT CAP] ${data.room_eligibility || 'Room Rent Capped'}</span>`);
       } else if (room.includes('general')) {
         score -= 25;
         badges.push(`<span class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-100 text-red-300 light:text-red-800 border border-red-800 light:border-red-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT CAP] General Ward Category</span>`);
-      } else {
+      } else if (room.includes('single') || room.includes('private') || room.includes('no cap')) {
+        score += 5;
         badges.push(`<span class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-lg font-medium">[APPROVED] Single Private Room Category</span>`);
+      } else {
+        badges.push(`<span class="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT] ${data.room_eligibility || 'Standard Room'}</span>`);
       }
 
-      // 2. Co-Pay Deduction
+      // 3. Co-Pay Deduction / Bonus
       if (copay > 0) {
         score -= (copay >= 20 ? 20 : 10);
         badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[CO-PAY] ${copay}% Mandatory Co-Payment</span>`);
       } else {
+        score += 5;
         badges.push(`<span class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-lg font-medium">[APPROVED] 0% Co-Pay Requirement</span>`);
       }
 
-      // 3. Super Top-Up Presence
+      // 4. Super Top-Up Presence (+15 / -5)
       if (currentTopupSI > 0) {
-        score += 10;
+        score += 15;
         badges.push(`<span class="bg-sky-950/60 dark:bg-sky-950/60 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-1 rounded-lg font-medium">[TOP-UP ACTIVE] Super Top-Up Protection (₹${currentTopupSI.toLocaleString('en-IN')})</span>`);
       } else {
         score -= 5;
         badges.push(`<span class="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-lg font-medium">[NO TOP-UP] Base Policy Only</span>`);
       }
 
-      // 4. Waiting Period & Sub-Limit Badges
+      // 5. Waiting Period & Sub-Limit Badges
       if (data.waiting_periods && data.waiting_periods.length > 0) {
         score -= 3;
         badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[WAITING PERIOD] 24-Month Specific Illness Clause</span>`);
@@ -1176,7 +1199,7 @@
 
       badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[SUB-LIMIT CAP] Cataract Surgery (₹40,000 / eye)</span>`);
 
-      score = Math.max(25, Math.min(100, score));
+      score = Math.max(30, Math.min(100, score));
 
       // Update UI Elements
       document.getElementById('healthScoreValue').innerText = score;
@@ -1214,6 +1237,13 @@
       };
       updateCombinedSI();
 
+      const dlBtn = document.getElementById('downloadDemoBaseBtn');
+      if (dlBtn) {
+        dlBtn.href = "/data/demo_base_policy.pdf";
+        dlBtn.download = "demo_base_policy.pdf";
+        dlBtn.innerText = "Download Demo PDF";
+      }
+
       document.getElementById('resInsurer').innerText = "Niva Bupa Health Insurance";
       document.getElementById('resSumInsured').innerText = "₹5,00,000";
       document.getElementById('resSumInsured').className = "font-bold text-sky-400 light:text-sky-700 text-sm mt-1";
@@ -1242,7 +1272,16 @@
     function clearBasePolicy() {
       currentBaseSI = 0;
       activePolicyName = "";
+      activePolicyData = null;
       document.getElementById('policyFileInput').value = "";
+      
+      const dlBtn = document.getElementById('downloadDemoBaseBtn');
+      if (dlBtn) {
+        dlBtn.href = "/data/demo_base_policy.pdf";
+        dlBtn.download = "demo_base_policy.pdf";
+        dlBtn.innerText = "Download Demo PDF";
+      }
+
       document.getElementById('resInsurer').innerText = "No Policy Uploaded";
       document.getElementById('resSumInsured').innerText = "₹0 (Pending Upload)";
       document.getElementById('resSumInsured').className = "font-bold text-slate-400 light:text-slate-500 text-sm mt-1";
@@ -1272,6 +1311,13 @@
       currentTopupSI = 1500000;
       updateCombinedSI();
 
+      const dlBtn = document.getElementById('downloadDemoTopupBtn');
+      if (dlBtn) {
+        dlBtn.href = "/data/demo_super_topup_policy.pdf";
+        dlBtn.download = "demo_super_topup_policy.pdf";
+        dlBtn.innerText = "Download Top-Up PDF";
+      }
+
       const badge = document.getElementById('topupBadge');
       badge.innerText = "Top-Up Active";
       badge.className = "text-xs bg-sky-950 dark:bg-sky-950 light:bg-sky-50 text-sky-400 light:text-sky-700 border border-sky-800 light:border-sky-200 px-2.5 py-0.5 rounded-full font-semibold";
@@ -1289,6 +1335,13 @@
     function clearTopupPolicy() {
       currentTopupSI = 0;
       document.getElementById('topupFileInput').value = "";
+
+      const dlBtn = document.getElementById('downloadDemoTopupBtn');
+      if (dlBtn) {
+        dlBtn.href = "/data/demo_super_topup_policy.pdf";
+        dlBtn.download = "demo_super_topup_policy.pdf";
+        dlBtn.innerText = "Download Top-Up PDF";
+      }
       
       const badge = document.getElementById('topupBadge');
       badge.innerText = "Top-Up Optional";
@@ -1316,6 +1369,15 @@
         status.innerText = "File size exceeds 25 MB enterprise threshold.";
         status.className = "text-xs text-red-400 light:text-red-700 block";
         return;
+      }
+
+      // Update Download Link to point directly to uploaded PDF Blob
+      const dlBtn = document.getElementById('downloadDemoBaseBtn');
+      if (dlBtn && file) {
+        const blobUrl = URL.createObjectURL(file);
+        dlBtn.href = blobUrl;
+        dlBtn.download = file.name;
+        dlBtn.innerText = `Download ${file.name}`;
       }
 
       status.innerText = `Extracting policy clauses from '${file.name}' automatically...`;
@@ -1376,6 +1438,16 @@
       if (!input.files || input.files.length === 0) return;
       
       const file = input.files[0];
+
+      // Update Topup Download Link to point directly to uploaded Topup PDF Blob
+      const dlBtn = document.getElementById('downloadDemoTopupBtn');
+      if (dlBtn && file) {
+        const blobUrl = URL.createObjectURL(file);
+        dlBtn.href = blobUrl;
+        dlBtn.download = file.name;
+        dlBtn.innerText = `Download ${file.name}`;
+      }
+
       status.innerText = `Extracting Super Top-Up clauses from '${file.name}' automatically...`;
       status.className = "text-xs text-indigo-400 light:text-indigo-700 block animate-pulse mt-2";
 
