@@ -24,6 +24,7 @@ from src.eligibility_engine import match_hospitals
 from src.policy_schema import PolicyProfile
 from src.procedure_lookup import get_procedure_details, PROCEDURE_DATABASE
 from src.journey_guidance import get_journey_timeline
+from src.financial_risk_engine import calculate_financial_risk
 
 app = FastAPI(
     title="CareCover Copilot Python Enterprise API",
@@ -285,6 +286,27 @@ Issued by CareCover Security & Compliance Systems"""
         "timestamp": ts,
         "receiptText": receipt_text
     }
+
+class FinancialRiskRequest(BaseModel):
+    procedure_name: str = "Cataract Surgery"
+    estimated_bill: float = 480000.0
+    base_sum_insured: Optional[float] = 300000.0
+    super_topup_sum_insured: Optional[float] = 1500000.0
+    super_topup_deductible: Optional[float] = 300000.0
+    room_category: Optional[str] = "Single Private Room"
+    co_pay_percent: Optional[float] = 0.0
+
+@app.post("/api/financial-risk")
+def calculate_financial_risk_endpoint(req: FinancialRiskRequest):
+    return calculate_financial_risk(
+        procedure_name=req.procedure_name,
+        estimated_bill=req.estimated_bill,
+        base_sum_insured=req.base_sum_insured or 300000.0,
+        super_topup_sum_insured=req.super_topup_sum_insured or 1500000.0,
+        super_topup_deductible=req.super_topup_deductible or 300000.0,
+        room_category=req.room_category or "Single Private Room",
+        co_pay_percent=req.co_pay_percent or 0.0
+    )
 
 if __name__ == "__main__":
     import uvicorn

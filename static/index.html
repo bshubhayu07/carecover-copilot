@@ -514,14 +514,104 @@
       </div>
     </section>
 
-    <!-- TAB 4: Care Journey & Safety -->
+    <!-- TAB 4: Care Journey & Safety + Financial Risk Engine -->
     <section id="tab4-content" class="space-y-6 hidden">
+      
+      <!-- Financial-Risk & Out-Of-Pocket Prediction Engine Card -->
+      <div class="glass-card p-6 rounded-xl space-y-5 border border-sky-900/50 light:border-sky-300">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-800 light:border-slate-200 pb-3">
+          <div>
+            <h2 class="text-lg font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+              <span>Financial-Risk & Out-of-Pocket Calculator</span>
+              <span class="text-xs bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">What Could I Potentially Pay?</span>
+            </h2>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Calculate hospital bills, room rent penalties, procedure sub-limits, co-pay deductions, and Super Top-Up triggers in real time.</p>
+          </div>
+          <button onclick="calculateRiskInUI()" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-md cursor-pointer transition-all">
+            Calculate Financial Risk
+          </button>
+        </div>
+
+        <!-- Calculator Inputs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Select Medical Procedure</label>
+            <select id="calcProcedure" onchange="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+              <option value="Cataract Surgery">Cataract Surgery (Per Eye)</option>
+              <option value="Joint Replacement Surgery" selected>Joint Replacement Surgery</option>
+              <option value="Cardiac Stent Angioplasty">Cardiac Stent Angioplasty</option>
+              <option value="General Major Surgery">General Major Surgery</option>
+              <option value="Maternity C-Section Delivery">Maternity C-Section Delivery</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Estimated Hospital Bill (₹)</label>
+            <input type="number" id="calcBill" value="480000" oninput="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+          </div>
+
+          <div>
+            <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Room Category Selected</label>
+            <select id="calcRoom" onchange="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+              <option value="Single Private Room" selected>Single Private Room (Standard)</option>
+              <option value="Deluxe Suite">Deluxe Suite (Proportional Penalty)</option>
+              <option value="Shared Twin Room">Shared Twin Room</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Co-Pay Percentage (%)</label>
+            <select id="calcCopay" onchange="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+              <option value="0" selected>0% Co-Pay</option>
+              <option value="10">10% Co-Pay</option>
+              <option value="20">20% Co-Pay</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Calculated Results Breakdown Card -->
+        <div id="riskResultCard" class="bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+            <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-600 block">Total Hospital Bill</span>
+              <strong id="resBill" class="text-slate-100 light:text-slate-900 text-base font-extrabold">₹4,80,000</strong>
+            </div>
+
+            <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-600 block">Primary Base Payout</span>
+              <strong id="resPrimary" class="text-sky-400 light:text-sky-700 text-base font-extrabold">₹3,00,000</strong>
+            </div>
+
+            <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-600 block">Super Top-Up Contribution</span>
+              <strong id="resTopup" class="text-indigo-400 light:text-indigo-700 text-base font-extrabold">₹1,20,000</strong>
+            </div>
+
+            <div class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 p-3 rounded-lg border border-red-800 light:border-red-300">
+              <span class="text-red-300 light:text-red-700 block font-semibold">Estimated Out-of-Pocket</span>
+              <strong id="resOutpocket" class="text-red-400 light:text-red-800 text-base font-extrabold">₹60,000</strong>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 light:border-slate-200 text-xs">
+            <span id="resTopupStatus" class="font-bold text-emerald-400 light:text-emerald-800">✅ Super Top-Up Triggered & Active</span>
+            <div id="resDeductionNotes" class="text-[11px] text-slate-400 light:text-slate-600">Deductions: ₹28,800 non-payable consumables | ₹0 sub-limit caps | ₹0 co-pay</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9-Stage Care Journey & Attached Policy Requirements -->
       <div class="glass-card p-6 rounded-xl space-y-4">
-        <h2 data-i18n="journey_title" class="text-lg font-bold text-white light:text-slate-900">Care Journey Timeline & Guidance</h2>
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3">
+          <h2 data-i18n="journey_title" class="text-lg font-bold text-white light:text-slate-900">End-to-End Clinical Care Journey & Policy Requirements</h2>
+          <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Stage-by-stage navigation from diagnosis to final cashless reimbursement with policy requirements attached to each stage.</p>
+        </div>
+
         <div id="journeyTimeline" class="space-y-4 text-xs">
           <!-- Journey Loaded via JS -->
         </div>
       </div>
+
     </section>
 
   </div>
@@ -1206,6 +1296,53 @@
       }
     }
 
+    async function calculateRiskInUI() {
+      const proc = document.getElementById('calcProcedure').value;
+      const bill = parseFloat(document.getElementById('calcBill').value) || 480000;
+      const room = document.getElementById('calcRoom').value;
+      const copay = parseFloat(document.getElementById('calcCopay').value) || 0;
+
+      try {
+        const res = await fetch('/api/financial-risk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            procedure_name: proc,
+            estimated_bill: bill,
+            base_sum_insured: currentBaseSI > 0 ? currentBaseSI : 300000,
+            super_topup_sum_insured: currentTopupSI > 0 ? currentTopupSI : 1500000,
+            super_topup_deductible: 300000,
+            room_category: room,
+            co_pay_percent: copay
+          })
+        });
+        const data = await res.json();
+
+        document.getElementById('resBill').innerText = `₹${data.hospital_bill.toLocaleString('en-IN')}`;
+        document.getElementById('resPrimary').innerText = `₹${data.primary_base_payout.toLocaleString('en-IN')}`;
+        document.getElementById('resTopup').innerText = `₹${data.super_topup_payout.toLocaleString('en-IN')}`;
+        document.getElementById('resOutpocket').innerText = `₹${data.estimated_out_of_pocket.toLocaleString('en-IN')}`;
+        
+        document.getElementById('resTopupStatus').innerText = data.topup_status;
+        document.getElementById('resTopupStatus').className = data.topup_triggered ? 
+          "font-bold text-emerald-400 light:text-emerald-800 bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-full text-xs" : 
+          "font-bold text-amber-400 light:text-amber-800 bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-full text-xs";
+
+        const d = data.deductions_breakdown || {};
+        const notes = [];
+        if (d.non_payable_consumables > 0) notes.push(`₹${d.non_payable_consumables.toLocaleString('en-IN')} non-payable consumables`);
+        if (d.room_penalty_deduction > 0) notes.push(`₹${d.room_penalty_deduction.toLocaleString('en-IN')} room penalty`);
+        if (d.sublimit_deduction > 0) notes.push(`₹${d.sublimit_deduction.toLocaleString('en-IN')} sub-limit cap`);
+        if (d.co_pay_amount > 0) notes.push(`₹${d.co_pay_amount.toLocaleString('en-IN')} co-pay`);
+
+        document.getElementById('resDeductionNotes').innerText = notes.length > 0 ? 
+          `Deduction breakdown: ${notes.join(' | ')}` : 
+          "No penalty deductions applied.";
+      } catch (err) {
+        console.error("Risk calculation error", err);
+      }
+    }
+
     async function fetchJourney() {
       const container = document.getElementById('journeyTimeline');
       container.innerHTML = '<div class="text-slate-400 light:text-slate-600">Loading care journey timeline...</div>';
@@ -1215,45 +1352,38 @@
         const items = Array.isArray(data) ? data : (data.timeline || []);
 
         if (!items || items.length === 0) {
-          container.innerHTML = `
-            <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2">
-              <div class="font-bold text-sky-400 light:text-sky-700 text-sm">Phase 1: Pre-Admission Notice</div>
-              <div class="text-slate-300 light:text-slate-700">Intimate insurer 48 hours prior to planned hospitalization or within 24 hours of emergency admission.</div>
-            </div>
-            <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2">
-              <div class="font-bold text-sky-400 light:text-sky-700 text-sm">Phase 2: TPA Cashless Desk Submission</div>
-              <div class="text-slate-300 light:text-slate-700">Submit Part A & B cashless authorization request forms along with doctor admission request letter and preliminary diagnostic reports.</div>
-            </div>
-            <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2">
-              <div class="font-bold text-sky-400 light:text-sky-700 text-sm">Phase 3: Final Hospital Settlement & Discharge</div>
-              <div class="text-slate-300 light:text-slate-700">TPA issues final approval letter. Pay non-medical exclusions and deductibles directly at hospital billing counter.</div>
-            </div>
-          `;
+          container.innerHTML = '<div class="text-slate-400">No care journey items.</div>';
           return;
         }
 
         container.innerHTML = items.map((step, idx) => `
-          <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2">
-            <div class="font-bold text-sky-400 light:text-sky-700 text-sm">Phase ${idx + 1}: ${step.stage || step.phase || step.title || 'Guidance Stage'}</div>
-            <div class="text-slate-300 light:text-slate-700">${step.description || step.action || ''}</div>
-            ${step.checklist ? `<ul class="list-disc list-inside text-slate-400 light:text-slate-600 space-y-1 pt-1">${step.checklist.map(c => `<li>${c}</li>`).join('')}</ul>` : ''}
+          <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2.5">
+            <div class="flex items-center justify-between">
+              <div class="font-extrabold text-sky-400 light:text-sky-700 text-sm flex items-center gap-2">
+                <span class="bg-sky-950 dark:bg-sky-950 light:bg-sky-100 border border-sky-800 light:border-sky-300 text-sky-400 light:text-sky-800 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">${step.step || (idx + 1)}</span>
+                <span>${step.icon || '📌'} ${step.stage || 'Stage Guidance'}</span>
+              </div>
+              <span class="text-[10px] bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-700 px-2 py-0.5 rounded font-semibold">Stage ${step.step || (idx + 1)} of 9</span>
+            </div>
+
+            <div class="text-slate-300 light:text-slate-700 font-medium text-xs">${step.description || ''}</div>
+
+            ${step.policy_requirement ? `
+              <div class="p-2.5 bg-amber-950/40 dark:bg-amber-950/40 light:bg-amber-50 border border-amber-800/60 light:border-amber-300 rounded-lg text-[11px] text-amber-300 light:text-amber-900 font-semibold">
+                <strong>Attached Policy Requirement:</strong> ${step.policy_requirement}
+              </div>
+            ` : ''}
+
+            ${step.checklist ? `
+              <div class="text-[11px] text-slate-400 light:text-slate-600 font-semibold pt-1">Stage Action Checklist:</div>
+              <ul class="list-disc list-inside text-slate-300 light:text-slate-700 space-y-1 text-[11px]">
+                ${step.checklist.map(c => `<li>${c}</li>`).join('')}
+              </ul>
+            ` : ''}
           </div>
         `).join('');
       } catch (err) {
-        container.innerHTML = `
-          <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2">
-            <div class="font-bold text-sky-400 light:text-sky-700 text-sm">Phase 1: Pre-Admission Notice</div>
-            <div class="text-slate-300 light:text-slate-700">Intimate insurer 48 hours prior to planned hospitalization or within 24 hours of emergency admission.</div>
-          </div>
-          <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2">
-            <div class="font-bold text-sky-400 light:text-sky-700 text-sm">Phase 2: TPA Cashless Desk Submission</div>
-            <div class="text-slate-300 light:text-slate-700">Submit Part A & B cashless authorization request forms along with doctor admission request letter and preliminary diagnostic reports.</div>
-          </div>
-          <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2">
-            <div class="font-bold text-sky-400 light:text-sky-700 text-sm">Phase 3: Final Hospital Settlement & Discharge</div>
-            <div class="text-slate-300 light:text-slate-700">TPA issues final approval letter. Pay non-medical exclusions and deductibles directly at hospital billing counter.</div>
-          </div>
-        `;
+        container.innerHTML = '<div class="text-red-400">Failed to load care journey.</div>';
       }
     }
 
