@@ -438,16 +438,163 @@
   <!-- Main Workspace -->
   <div class="flex-1 flex flex-col max-w-7xl w-full mx-auto p-4 md:p-6 gap-6">
     
-    <!-- Navigation Tabs -->
-    <nav class="flex border-b border-slate-800 light:border-slate-200 text-sm gap-6 font-medium">
-      <button data-i18n="tab1" onclick="switchTab('tab1')" id="tab1-btn" class="py-2.5 tab-active">Upload & Extract</button>
-      <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Ask Your Policy</button>
-      <button data-i18n="tab3" onclick="switchTab('tab3')" id="tab3-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Find Hospital Options</button>
-      <button data-i18n="tab4" onclick="switchTab('tab4')" id="tab4-btn" class="py-2.5 text-slate-400 light:text-slate-500 hover:text-slate-200 light:hover:text-slate-800">Care Journey & Safety</button>
-    </nav>
+    <!-- 6-Section Navigation Bar (Desktop & Mobile Drawer) -->
+    <div class="relative border-b border-slate-800 light:border-slate-200">
+      <div class="flex items-center justify-between">
+        <!-- Desktop Section Tabs -->
+        <nav class="hidden md:flex text-sm gap-4 font-semibold overflow-x-auto">
+          <button data-i18n="nav_dashboard" onclick="switchTab('tab-dashboard')" id="tab-dashboard-btn" class="py-3 px-2 tab-active flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+            <span>📊</span> <span>Dashboard</span>
+          </button>
+          <button data-i18n="nav_coverage" onclick="switchTab('tab1')" id="tab1-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+            <span>🛡️</span> <span>Coverage</span>
+          </button>
+          <button data-i18n="nav_hospitals" onclick="switchTab('tab3')" id="tab3-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+            <span>🏥</span> <span>Hospitals & Cost</span>
+          </button>
+          <button data-i18n="nav_claims" onclick="switchTab('tab4')" id="tab4-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+            <span>📝</span> <span>Claims & Journey</span>
+          </button>
+          <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+            <span>🤖</span> <span>Ask AI</span>
+          </button>
+          <button data-i18n="nav_emergency" onclick="switchTab('tab-emergency')" id="tab-emergency-btn" class="py-3 px-2 text-red-400 hover:text-red-300 flex items-center gap-1.5 cursor-pointer whitespace-nowrap font-bold">
+            <span>🚨</span> <span>Emergency SOS</span>
+          </button>
+        </nav>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <div class="flex md:hidden items-center justify-between w-full py-2">
+          <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">
+            <span>Navigation Menu</span>
+          </span>
+          <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="bg-slate-800 light:bg-slate-100 p-2 rounded-lg text-slate-200 light:text-slate-800 border border-slate-700 light:border-slate-300 flex items-center gap-1 text-xs font-bold">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span>Sections</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Slide-Down Drawer Container -->
+      <div id="mobileMenu" class="hidden md:hidden py-3 space-y-2 border-t border-slate-800 light:border-slate-200">
+        <button onclick="switchTab('tab-dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-sky-400 bg-slate-900 light:bg-slate-100 rounded-lg flex items-center gap-2">
+          <span>📊</span> <span>Dashboard</span>
+        </button>
+        <button onclick="switchTab('tab1'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+          <span>🛡️</span> <span>Coverage</span>
+        </button>
+        <button onclick="switchTab('tab3'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+          <span>🏥</span> <span>Hospitals & Cost</span>
+        </button>
+        <button onclick="switchTab('tab4'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+          <span>📝</span> <span>Claims & Journey</span>
+        </button>
+        <button onclick="switchTab('tab2'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+          <span>🤖</span> <span>Ask AI</span>
+        </button>
+        <button onclick="switchTab('tab-emergency'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-red-400 bg-red-950/60 rounded-lg flex items-center gap-2">
+          <span>🚨</span> <span>Emergency SOS</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB DASHBOARD: Overview & Executive Command Center -->
+    <section id="tab-dashboard-content" class="space-y-6">
+      
+      <!-- Welcome Hero Banner -->
+      <div class="glass-card p-6 rounded-2xl border border-sky-600/60 shadow-xl space-y-4">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 light:border-slate-200 pb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">Executive Dashboard</span>
+              <span class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>DPDP 2025 Compliant</span>
+              </span>
+            </div>
+            <h2 class="text-xl font-extrabold text-white light:text-slate-900">Health Coverage & Patient Navigation Overview</h2>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-1">Real-time policy health scoring, sum insured tracking, cashless hospital matching, and risk prediction.</p>
+          </div>
+          <button onclick="switchTab('tab1')" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-md cursor-pointer whitespace-nowrap">
+            + Upload / Manage Policy PDF
+          </button>
+        </div>
+
+        <!-- 4 Metrics Overview Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-slate-400 light:text-slate-600 block">Active Health Insurer</span>
+            <strong id="dashInsurerName" class="text-white light:text-slate-900 text-sm font-extrabold block truncate">No Policy Uploaded</strong>
+            <span class="text-[10px] text-sky-400 light:text-sky-700">DPDP Encrypted Buffer</span>
+          </div>
+
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-slate-400 light:text-slate-600 block">Total Combined Protection</span>
+            <strong id="dashTotalSI" class="text-emerald-400 light:text-emerald-700 text-sm font-extrabold block">₹0</strong>
+            <span class="text-[10px] text-slate-400">Base SI + Super Top-Up</span>
+          </div>
+
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-slate-400 light:text-slate-600 block">Room Rent Eligibility</span>
+            <strong id="dashRoomEligibility" class="text-slate-200 light:text-slate-800 text-sm font-extrabold block truncate">Single Private Room</strong>
+            <span class="text-[10px] text-emerald-400">No Capping Penalty</span>
+          </div>
+
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-slate-400 light:text-slate-600 block">Policy Health Rating</span>
+            <strong id="dashHealthGrade" class="text-sky-400 light:text-sky-700 text-sm font-extrabold block">Good Protection (75/100)</strong>
+            <span class="text-[10px] text-slate-400">Informational Health Score</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Quick Journey Action Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+        
+        <!-- Action 1: Coverage -->
+        <div onclick="switchTab('tab1')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">🛡️</span>
+            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+          </div>
+          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Policy Coverage & Risk</h3>
+          <p class="text-slate-400 light:text-slate-600 text-[11px]">View extracted sum insured, sub-limits, room capping, and specific illness waiting periods.</p>
+        </div>
+
+        <!-- Action 2: Hospitals -->
+        <div onclick="switchTab('tab3')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">🏥</span>
+            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+          </div>
+          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Network Hospitals & Cost</h3>
+          <p class="text-slate-400 light:text-slate-600 text-[11px]">Find nearest cashless hospitals by city, specialty, match score, and estimate treatment costs.</p>
+        </div>
+
+        <!-- Action 3: Claims -->
+        <div onclick="switchTab('tab4')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">📝</span>
+            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+          </div>
+          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
+          <p class="text-slate-400 light:text-slate-600 text-[11px]">Calculate exact out-of-pocket expenses, pre-auth SLAs, and generate mandatory document checklists.</p>
+        </div>
+
+        <!-- Action 4: Emergency SOS -->
+        <div onclick="switchTab('tab-emergency')" class="glass-card p-5 rounded-xl border border-red-900/60 light:border-red-300 hover:border-red-500 transition-all cursor-pointer space-y-2 group">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">🚨</span>
+            <span class="text-[10px] bg-red-950 text-red-300 px-2 py-0.5 rounded-full group-hover:bg-red-600 group-hover:text-white transition-colors">Emergency →</span>
+          </div>
+          <h3 class="font-extrabold text-red-400 light:text-red-700 text-sm">Emergency SOS & Helplines</h3>
+          <p class="text-slate-400 light:text-slate-600 text-[11px]">Instant 24/7 national & city emergency helplines, TPA priority desk, and emergency admission guidelines.</p>
+        </div>
+      </div>
+    </section>
 
     <!-- TAB 1: Upload & Extract -->
-    <section id="tab1-content" class="space-y-6">
+    <section id="tab1-content" class="space-y-6 hidden">
       
       <!-- Base Policy Upload Card -->
       <div class="glass-card p-6 rounded-xl space-y-4">
@@ -926,6 +1073,50 @@
 
     </section>
 
+    <!-- SECTION 6: Emergency SOS & Helplines -->
+    <section id="tab-emergency-content" class="space-y-6 hidden">
+      <div class="glass-card p-6 rounded-2xl border border-red-800/80 light:border-red-300 space-y-5 bg-red-950/20">
+        <div class="flex items-center justify-between border-b border-red-900/60 pb-3">
+          <div>
+            <h2 class="text-lg font-extrabold text-red-400 light:text-red-700 flex items-center gap-2">
+              <span>🚨 Emergency SOS & Immediate Cashless Navigation</span>
+            </h2>
+            <p class="text-xs text-slate-300 light:text-slate-700 mt-1">24/7 National Emergency directory, hospital emergency ICUs, and 3-step emergency admission guidelines.</p>
+          </div>
+          <span class="text-xs bg-red-950 text-red-300 border border-red-800 px-3 py-1 rounded-full font-extrabold animate-pulse">
+            EMERGENCY PRIORITY ACTIVE
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <!-- Hotlines -->
+          <div class="bg-red-950/80 p-4 rounded-xl border border-red-800 space-y-2">
+            <span class="text-red-300 font-bold block uppercase tracking-wider text-[10px]">National Emergency Hotlines</span>
+            <div class="text-base font-extrabold text-white">Dial 112 (National SOS)</div>
+            <div class="text-base font-extrabold text-red-400">Dial 108 (State Ambulance)</div>
+            <p class="text-[11px] text-red-200 mt-1">Free 24/7 emergency dispatch services across all states in India.</p>
+          </div>
+
+          <!-- TPA Cashless Desk -->
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-sky-400 font-bold block uppercase tracking-wider text-[10px]">Insurance TPA Cashless Helpdesk</span>
+            <div class="text-sm font-extrabold text-white">24-Hour Emergency Intimation</div>
+            <p class="text-slate-300 text-[11px]">Inform your insurer within <strong>24 hours</strong> of emergency admission to guarantee cashless authorization.</p>
+          </div>
+
+          <!-- Admission Checklist -->
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block uppercase tracking-wider text-[10px]">3-Step Emergency Checklist</span>
+            <ul class="space-y-1 text-[11px] text-slate-300">
+              <li>1. Show Health Card / Policy Copy at Casualty Desk.</li>
+              <li>2. Request Hospital TPA Desk for Pre-Auth Form.</li>
+              <li>3. Submit Patient Aadhaar/Govt ID proof.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 
   <!-- HOSPITAL ROOM CATEGORY SELECTION MODAL (FLOWCHART STEP 4) -->
@@ -1261,6 +1452,13 @@
       document.getElementById('summaryTopupSI').innerText = currentTopupSI > 0 ? `₹${currentTopupSI.toLocaleString('en-IN')}` : "₹0";
       document.getElementById('summaryCombinedSI').innerText = combined > 0 ? `₹${combined.toLocaleString('en-IN')}` : "₹0";
 
+      // Sync Executive Dashboard Widgets
+      const dashInsurer = document.getElementById('dashInsurerName');
+      if (dashInsurer) dashInsurer.innerText = activePolicyName || "No Policy Uploaded";
+      
+      const dashSI = document.getElementById('dashTotalSI');
+      if (dashSI) dashSI.innerText = combined > 0 ? `₹${combined.toLocaleString('en-IN')}` : "₹0";
+
       const exportBtn = document.getElementById('exportPdfBtn');
       if (exportBtn) {
         if (currentBaseSI > 0 || currentTopupSI > 0 || (activePolicyName && activePolicyName.length > 0)) {
@@ -1281,17 +1479,28 @@
       window.print();
     }
 
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
     function switchTab(tabId) {
-      ['tab1', 'tab2', 'tab3', 'tab4'].forEach(id => {
-        document.getElementById(id + '-content').classList.add('hidden');
+      ['tab-dashboard', 'tab1', 'tab2', 'tab3', 'tab4', 'tab-emergency'].forEach(id => {
+        const el = document.getElementById(id + '-content');
+        if (el) el.classList.add('hidden');
         const btn = document.getElementById(id + '-btn');
-        btn.classList.remove('tab-active');
-        btn.classList.add('text-slate-400', 'light:text-slate-500');
+        if (btn) {
+          btn.classList.remove('tab-active');
+          btn.classList.add('text-slate-400', 'light:text-slate-500');
+        }
       });
-      document.getElementById(tabId + '-content').classList.remove('hidden');
+      const activeEl = document.getElementById(tabId + '-content');
+      if (activeEl) activeEl.classList.remove('hidden');
       const activeBtn = document.getElementById(tabId + '-btn');
-      activeBtn.classList.add('tab-active');
-      activeBtn.classList.remove('text-slate-400', 'light:text-slate-500');
+      if (activeBtn) {
+        activeBtn.classList.add('tab-active');
+        activeBtn.classList.remove('text-slate-400', 'light:text-slate-500');
+      }
 
       if(tabId === 'tab3') fetchHospitals();
     }

@@ -26,6 +26,14 @@ from src.procedure_lookup import get_procedure_details, PROCEDURE_DATABASE
 from src.journey_guidance import get_journey_timeline
 from src.financial_risk_engine import calculate_financial_risk
 from src.bhashini_engine import translate_with_bhashini, BHASHINI_LANG_CODES
+from src.security import validate_file_upload, sanitize_untrusted_document_input, rate_limiter
+from src.bill_analyzer import analyze_hospital_bill
+from src.cost_estimator import estimate_treatment_cost
+from src.claims_engine import get_claim_guidance, detect_missing_documents
+from src.policy_comparison import compare_policies
+from src.contradiction_detector import detect_policy_contradictions
+from src.document_classifier import classify_document
+from src.eval_suite import evaluate_rag_performance
 
 app = FastAPI(
     title="CareCover Copilot Python Enterprise API",
@@ -348,6 +356,63 @@ def calculate_financial_risk_endpoint(req: FinancialRiskRequest):
         room_category=req.room_category or "Single Private Room",
         co_pay_percent=req.co_pay_percent if req.co_pay_percent is not None else 0.0
     )
+
+class BillAnalysisRequest(BaseModel):
+    items: List[Dict[str, Any]]
+    room_category: Optional[str] = "Single Private Room"
+    base_sum_insured: Optional[float] = 300000.0
+    co_pay_percent: Optional[float] = 0.0
+
+@app.post("/api/analyze-bill")
+def analyze_bill_endpoint(req: BillAnalysisRequest):
+    return analyze_hospital_bill(
+        bill_items=req.items,
+        room_category=req.room_category or "Single Private Room",
+        base_sum_insured=req.base_sum_insured or 0.0,
+        co_pay_percent=req.co_pay_percent or 0.0
+    )
+
+@app.get("/api/cost-estimate")
+def cost_estimate_endpoint(procedure: str = Query("Cataract Surgery (Per Eye)"), city: str = Query("Pune")):
+    return estimate_treatment_cost(procedure, city)
+
+class ClaimGuidanceRequest(BaseModel):
+    claim_type: str = "Cashless Pre-Auth"
+    procedure_name: str = "Cataract Surgery"
+
+@app.post("/api/claim-guidance")
+def claim_guidance_endpoint(req: ClaimGuidanceRequest):
+    return get_claim_guidance(req.claim_type, req.procedure_name)
+
+class MissingDocsRequest(BaseModel):
+    submitted_documents: List[str]
+    claim_type: Optional[str] = "Reimbursement Claim"
+
+@app.post("/api/generate-checklist")
+def generate_checklist_endpoint(req: MissingDocsRequest):
+    return detect_missing_documents(req.submitted_documents, req.claim_type or "Reimbursement Claim")
+
+@app.post("/api/compare-policies")
+def compare_policies_endpoint():
+    p_profile = active_policy_profile if active_policy_profile else PolicyProfile(insurer_name="Niva Bupa", sum_insured_inr=300000.0)
+    return compare_policies(p_profile)
+
+@app.post("/api/detect-contradictions")
+def detect_contradictions_endpoint():
+    p_profile = active_policy_profile if active_policy_profile else PolicyProfile(insurer_name="Niva Bupa", sum_insured_inr=300000.0)
+    return detect_policy_contradictions(p_profile)
+
+class ClassifyDocRequest(BaseModel):
+    text_content: str
+    filename: Optional[str] = ""
+
+@app.post("/api/classify-document")
+def classify_document_endpoint(req: ClassifyDocRequest):
+    return classify_document(req.text_content, req.filename or "")
+
+@app.get("/api/eval-rag")
+def eval_rag_endpoint():
+    return evaluate_rag_performance()
 
 if __name__ == "__main__":
     import uvicorn

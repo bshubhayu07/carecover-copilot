@@ -125,6 +125,7 @@ def match_hospitals(
             caveat += " Pre-authorization required."
             
         feed_id = f"FEED-{(policy_profile.insurer_name if policy_profile else 'NIVABUPA').upper().replace(' ', '')}-20260816-01"
+        match_score_percent = min(98, max(55, score))
 
         results.append({
             "id": row['hospital_id'],
@@ -132,6 +133,8 @@ def match_hospitals(
             "city": row['city'],
             "specialties": row['specialties'],
             "score": score,
+            "match_score_percent": match_score_percent,
+            "match_reasons": explanation,
             "network_status": network_status,
             "eligible_room": eligible_room_display,
             "distance": computed_dist,
