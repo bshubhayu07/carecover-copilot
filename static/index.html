@@ -634,12 +634,102 @@
       </div>
     </section>
 
-    <!-- TAB 3: Find Hospital Options -->
+    <!-- TAB 3: Find Hospital Options & Flowchart Navigator -->
     <section id="tab3-content" class="space-y-6 hidden">
+      
+      <!-- 4-STEP PATIENT FLOWCHART BANNER -->
+      <div class="glass-card p-5 rounded-xl border border-sky-800/80 light:border-sky-300 space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
+          <div>
+            <h3 class="text-base font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+              <svg class="w-5 h-5 text-sky-400 light:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.483V6.051a2 2 0 011.053-1.764l5.447-2.724a2 2 0 011.9.001l5.447 2.724A2 2 0 0118 6.051v9.432a2 2 0 01-1.053 1.764l-5.447 2.724a2 2 0 01-1.9-.001z"/></svg>
+              <span>CareCover Patient Navigation Flowchart</span>
+            </h3>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Follow the 4-step guided pathway from location detection to disease selection, hospital segregation, and hospital-specific room options.</p>
+          </div>
+          <span class="text-xs bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>4-Step Flow Active</span>
+          </span>
+        </div>
+
+        <!-- 4-Step Progress Indicator Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <!-- Step 1: Location -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-sky-500 light:border-sky-400 space-y-1.5 shadow-sm">
+            <div class="text-[10px] font-extrabold text-sky-400 light:text-sky-700 uppercase tracking-wider flex items-center justify-between">
+              <span>Step 1: Location</span>
+              <span id="flowStep1Badge" class="text-[9px] bg-sky-950 text-sky-300 px-1.5 py-0.5 rounded">Detected</span>
+            </div>
+            <div id="flowStep1City" class="font-extrabold text-slate-100 dark:text-slate-100 light:text-slate-900 text-xs">Delhi NCR</div>
+            <div id="flowStep1Coords" class="text-[10px] text-slate-400 light:text-slate-500">Auto-Detect Active</div>
+          </div>
+
+          <!-- Step 2: Disease Selection -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-sky-500 light:border-sky-400 space-y-1.5 shadow-sm">
+            <div class="text-[10px] font-extrabold text-sky-400 light:text-sky-700 uppercase tracking-wider">Step 2: Disease / Procedure</div>
+            <select id="flowProcedureSelect" onchange="handleFlowProcedureChange()" class="w-full bg-slate-950 dark:bg-slate-950 light:bg-slate-100 border border-slate-700 light:border-slate-300 text-white light:text-slate-900 text-xs rounded-lg p-1.5 font-bold focus:outline-none focus:border-sky-500">
+              <optgroup label="Ophthalmology & ENT">
+                <option value="Cataract Surgery (Per Eye)">Cataract Surgery (Per Eye)</option>
+                <option value="LASIK / Refractive Eye Surgery">LASIK / Refractive Eye Surgery</option>
+              </optgroup>
+              <optgroup label="Orthopedics & Joint Care">
+                <option value="Total Knee Replacement Surgery" selected>Total Knee Replacement Surgery</option>
+                <option value="Total Hip Replacement Surgery">Total Hip Replacement Surgery</option>
+                <option value="ACL / Knee Ligament Arthroscopy">ACL / Knee Ligament Arthroscopy</option>
+                <option value="Spine Microdiscectomy / Disc Surgery">Spine Microdiscectomy / Disc Surgery</option>
+              </optgroup>
+              <optgroup label="Cardiology & Vascular">
+                <option value="Coronary Artery Bypass Graft (CABG)">Coronary Artery Bypass Graft (CABG)</option>
+                <option value="Cardiac Stent Angioplasty">Cardiac Stent Angioplasty</option>
+                <option value="Pacemaker Implantation Surgery">Pacemaker Implantation Surgery</option>
+              </optgroup>
+              <optgroup label="Oncology & Radiation">
+                <option value="Chemotherapy Cycle & Targeted Therapy">Chemotherapy Cycle & Targeted Therapy</option>
+                <option value="Radiation Therapy (IMRT / CyberKnife)">Radiation Therapy (IMRT / CyberKnife)</option>
+                <option value="Cancer Tumor Surgical Resection">Cancer Tumor Surgical Resection</option>
+              </optgroup>
+              <optgroup label="General & Laparoscopic Surgery">
+                <option value="Laparoscopic Cholecystectomy (Gallbladder)">Laparoscopic Cholecystectomy (Gallbladder)</option>
+                <option value="Laparoscopic Appendectomy">Laparoscopic Appendectomy</option>
+                <option value="Hernia Mesh Repair Surgery">Hernia Mesh Repair Surgery</option>
+                <option value="General Major Surgery">General Major Surgery</option>
+              </optgroup>
+              <optgroup label="Urology & Kidney Care">
+                <option value="Kidney Stone Surgery (RIRS / PCNL)">Kidney Stone Surgery (RIRS / PCNL)</option>
+                <option value="Hemodialysis Session">Hemodialysis Session</option>
+              </optgroup>
+              <optgroup label="Maternity & Gynecology">
+                <option value="Maternity Normal Delivery">Maternity Normal Delivery</option>
+                <option value="Maternity C-Section Delivery">Maternity C-Section Delivery</option>
+                <option value="Hysterectomy (Uterus Removal)">Hysterectomy (Uterus Removal)</option>
+              </optgroup>
+              <optgroup label="Neurology & Neurosurgery">
+                <option value="Brain Tumor Craniotomy Surgery">Brain Tumor Craniotomy Surgery</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Step 3: Segregated Hospitals -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-sky-500 light:border-sky-400 space-y-1.5 shadow-sm">
+            <div class="text-[10px] font-extrabold text-sky-400 light:text-sky-700 uppercase tracking-wider">Step 3: Segregated Hospitals</div>
+            <div id="flowHospitalCount" class="font-extrabold text-emerald-400 light:text-emerald-700 text-xs">Matching Hospitals...</div>
+            <div class="text-[10px] text-slate-400 light:text-slate-500">Cashless Network Filtering</div>
+          </div>
+
+          <!-- Step 4: Hospital Rooms -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-slate-800 light:border-slate-300 space-y-1.5 shadow-sm">
+            <div class="text-[10px] font-extrabold text-sky-400 light:text-sky-700 uppercase tracking-wider">Step 4: Hospital Rooms</div>
+            <div id="flowStep4HospitalName" class="font-extrabold text-slate-400 light:text-slate-500 text-xs truncate">Click Hospital Below</div>
+            <div class="text-[10px] text-slate-500">Room Rent Capping Evaluation</div>
+          </div>
+        </div>
+      </div>
+
       <div class="glass-card p-6 rounded-xl space-y-4">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
           <div>
-            <h2 data-i18n="hospital_title" class="text-lg font-bold text-white light:text-slate-900">Hospital Network & Room Eligibility Matching</h2>
+            <h2 data-i18n="hospital_title" class="text-lg font-bold text-white light:text-slate-900">Compliant Network Hospitals (Step 3)</h2>
             <p data-i18n="hospital_desc" class="text-xs text-slate-400 light:text-slate-600">Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.</p>
           </div>
         </div>
@@ -686,7 +776,7 @@
           <div class="flex items-end">
             <label class="flex items-center gap-2 text-slate-300 light:text-slate-700 cursor-pointer pb-2">
               <input type="checkbox" id="inNetworkOnly" onchange="fetchHospitals()" class="rounded bg-slate-900 light:bg-slate-100 border-slate-700 light:border-slate-300 text-sky-500">
-              <span data-i18n="in_network_label">In-Network Only</span>
+              <span data-i18n="in_network_label">In-Network Cashless Only</span>
             </label>
           </div>
         </div>
@@ -824,6 +914,28 @@
 
     </section>
 
+  </div>
+
+  <!-- HOSPITAL ROOM CATEGORY SELECTION MODAL (FLOWCHART STEP 4) -->
+  <div id="hospitalRoomsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-2xl w-full p-6 rounded-2xl border border-sky-600/80 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 light:border-slate-200 pb-3">
+        <div>
+          <span class="text-[10px] font-extrabold text-sky-400 light:text-sky-700 uppercase tracking-wider block">Flowchart Step 4: Room Category Selection</span>
+          <h3 id="modalHospitalTitle" class="text-base font-extrabold text-white light:text-slate-900">Hospital Room Options</h3>
+          <p id="modalHospitalMeta" class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Select a room category available at this hospital to evaluate coverage eligibility and room rent capping penalties.</p>
+        </div>
+        <button onclick="closeHospitalRoomsModal()" class="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer">&times;</button>
+      </div>
+
+      <div id="modalRoomsList" class="space-y-3 text-xs">
+        <!-- Room category cards generated dynamically per hospital -->
+      </div>
+
+      <div class="pt-2 border-t border-slate-800 light:border-slate-200 flex justify-end">
+        <button onclick="closeHospitalRoomsModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs px-4 py-2 rounded-lg cursor-pointer">Close</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1738,13 +1850,16 @@
         }
         const res = await fetch(url);
         const data = await res.json();
+        window.currentHospitalsData = data;
+
+        updateFlowchartUI(city, data ? data.length : 0);
 
         if (!data || data.length === 0) {
           container.innerHTML = '<div class="text-slate-400 light:text-slate-600 col-span-2">No matching hospitals found for this filter criteria.</div>';
           return;
         }
 
-        container.innerHTML = data.map(h => {
+        container.innerHTML = data.map((h, idx) => {
           const distVal = h.distance_km || h.distance || "2.4";
           const distStr = typeof distVal === 'number' ? distVal.toFixed(1) + ' km away' : (distVal.includes('km') ? distVal : distVal + ' km away');
           const phone = h.phone || "108";
@@ -1769,12 +1884,12 @@
                   <span class="font-bold text-sky-400 light:text-sky-700">${h.specialties || 'Multispecialty'}</span>
                 </div>
                 <div class="bg-slate-950/60 dark:bg-slate-950/60 light:bg-white p-2 rounded-lg border border-slate-800/80 light:border-slate-200">
-                  <span class="text-slate-400 light:text-slate-500 block text-[10px]">Room Rent Eligibility</span>
-                  <span class="font-bold text-emerald-400 light:text-emerald-700">Single Private Room</span>
+                  <span class="text-slate-400 light:text-slate-500 block text-[10px]">Indicative Room Rate</span>
+                  <span class="font-bold text-emerald-400 light:text-emerald-700">₹${(parseFloat(h.indicative_daily_room_cost_inr) || 4500).toLocaleString('en-IN')}/night</span>
                 </div>
               </div>
 
-              <div class="flex justify-between items-center text-[11px] pt-2 border-t border-slate-800 light:border-slate-200">
+              <div class="flex justify-between items-center text-[11px] pt-1">
                 <span class="text-sky-400 light:text-sky-700 font-extrabold flex items-center gap-1">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   Match Score: ${h.match_score || 98}%
@@ -1788,12 +1903,142 @@
                   </a>
                 </div>
               </div>
+
+              <!-- STEP 4 FLOWCHART ACTION BUTTON -->
+              <button onclick="openHospitalRoomsModal(${idx})" class="w-full mt-2 bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-extrabold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 shadow transition-all cursor-pointer">
+                <span>Select Hospital & View Room Categories (Step 4)</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </button>
             </div>
           `;
         }).join('');
       } catch (err) {
         container.innerHTML = '<div class="text-red-400 light:text-red-700 col-span-2">Failed to load hospitals.</div>';
       }
+    }
+
+    function handleFlowProcedureChange() {
+      const selectedProc = document.getElementById('flowProcedureSelect').value;
+      const calcProc = document.getElementById('calcProcedure');
+      if (calcProc) calcProc.value = selectedProc;
+      handleProcedureChange();
+      fetchHospitals();
+    }
+
+    function updateFlowchartUI(city, hospitalCount) {
+      const cityElem = document.getElementById('flowStep1City');
+      if (cityElem) cityElem.innerText = city;
+      
+      const coordsElem = document.getElementById('flowStep1Coords');
+      if (coordsElem && userLat !== null && userLon !== null) {
+        coordsElem.innerText = `GPS (${userLat.toFixed(2)}, ${userLon.toFixed(2)})`;
+      }
+
+      const countElem = document.getElementById('flowHospitalCount');
+      if (countElem) countElem.innerText = `${hospitalCount} Segregated Hospitals`;
+    }
+
+    function openHospitalRoomsModal(idx) {
+      const h = window.currentHospitalsData ? window.currentHospitalsData[idx] : null;
+      if (!h) return;
+
+      document.getElementById('modalHospitalTitle').innerText = h.name;
+      document.getElementById('modalHospitalMeta').innerText = `${h.city} • ${h.network_status === 'In Network' ? 'Cashless In-Network' : 'Reimbursement Only'} • Match Score: ${h.match_score || 98}%`;
+
+      const step4Elem = document.getElementById('flowStep4HospitalName');
+      if (step4Elem) {
+        step4Elem.innerText = h.name;
+        step4Elem.className = "font-extrabold text-sky-400 light:text-sky-700 text-xs truncate";
+      }
+
+      const baseCost = parseFloat(h.indicative_daily_room_cost_inr) || 4500;
+
+      const roomOptions = [
+        {
+          name: "Single Private Room (Standard)",
+          val: "Single Private Room",
+          cost: baseCost,
+          status: "100% Policy Approved (No Penalty)",
+          badgeClass: "bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border-emerald-800",
+          desc: "Standard private room fully covered without proportional deduction penalties."
+        },
+        {
+          name: "Shared Twin Room",
+          val: "Shared Twin Room",
+          cost: Math.round(baseCost * 0.65),
+          status: "100% Policy Approved",
+          badgeClass: "bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border-emerald-800",
+          desc: "Economical shared room fully covered under standard policy terms."
+        },
+        {
+          name: "Deluxe Suite",
+          val: "Deluxe Suite",
+          cost: Math.round(baseCost * 2.2),
+          status: "Proportional Penalty Deduction (15-20% Out-of-Pocket)",
+          badgeClass: "bg-amber-950 light:bg-amber-100 text-amber-400 light:text-amber-800 border-amber-800",
+          desc: "Exceeds standard room eligibility. Triggers proportional deduction penalty across entire hospital bill."
+        },
+        {
+          name: "General Ward",
+          val: "Shared Twin Room",
+          cost: Math.round(baseCost * 0.4),
+          status: "100% Policy Approved",
+          badgeClass: "bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border-emerald-800",
+          desc: "Multi-bed ward fully covered under base insurance."
+        },
+        {
+          name: "ICU / CCU Critical Unit",
+          val: "Single Private Room",
+          cost: Math.round(baseCost * 3.0),
+          status: "Critical Care 100% Covered",
+          badgeClass: "bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border-sky-800",
+          desc: "Intensive Care Unit charges covered at actuals without room rent capping."
+        }
+      ];
+
+      const safeName = h.name.replace(/'/g, "\\'");
+      const listContainer = document.getElementById('modalRoomsList');
+      listContainer.innerHTML = roomOptions.map(r => `
+        <div class="bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-50 border border-slate-800 light:border-slate-200 p-4 rounded-xl space-y-2 hover:border-sky-500/50 transition-all">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <h4 class="font-extrabold text-slate-100 light:text-slate-900 text-sm flex items-center gap-2">
+                <span>${r.name}</span>
+                <span class="text-sky-400 light:text-sky-700 font-extrabold text-xs">₹${r.cost.toLocaleString('en-IN')}/night</span>
+              </h4>
+              <p class="text-[11px] text-slate-400 light:text-slate-600 mt-0.5">${r.desc}</p>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${r.badgeClass} whitespace-nowrap">
+              ${r.status}
+            </span>
+          </div>
+          <div class="pt-2 border-t border-slate-800 light:border-slate-200 flex justify-end">
+            <button onclick="selectRoomForHospital('${safeName}', '${r.val}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer transition-colors shadow">
+              <span>Select ${r.name} & Calculate Risk ➔</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('hospitalRoomsModal').classList.remove('hidden');
+    }
+
+    function closeHospitalRoomsModal() {
+      document.getElementById('hospitalRoomsModal').classList.add('hidden');
+    }
+
+    function selectRoomForHospital(hospitalName, roomCategory) {
+      closeHospitalRoomsModal();
+      
+      const calcRoom = document.getElementById('calcRoom');
+      if (calcRoom) calcRoom.value = roomCategory;
+
+      const flowProc = document.getElementById('flowProcedureSelect').value;
+      const calcProc = document.getElementById('calcProcedure');
+      if (calcProc) calcProc.value = flowProc;
+
+      switchTab('tab4');
+      calculateRiskInUI();
     }
 
     function askPill(promptText) {
