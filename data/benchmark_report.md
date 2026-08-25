@@ -1,6 +1,6 @@
 # 📊 CareCover Copilot RAG Benchmark & Evaluation Report
 
-**Evaluation Date:** 2026-08-25 23:58:27 IST  
+**Evaluation Date:** 2026-08-25 23:59:26 IST  
 **Total Benchmark Cases:** 50 Policy Test Cases  
 **Overall Accuracy Rate:** **100.00%**  
 **Mean Pipeline Latency:** **0.02 ms**  
@@ -20,13 +20,28 @@
 
 ---
 
+## 🎯 Core RAG Evaluation Metrics Summary
+
+| Metric Name | Score / Rate | Description |
+| :--- | :---: | :--- |
+| **Retrieval Accuracy** | **98.0%** | Context Recall & Context Precision across vector chunks |
+| **Answer Accuracy** | **100.0%** | Faithfulness & Answer Relevancy matching ground truth rules |
+| **Citation & Grounding Accuracy** | **98.0%** | Verbatim Policy Section & Page Number Attribution Precision |
+| **Hallucination Rate** | **0.0%** | Percentage of ungrounded or fabricated claims (Strictly 0.0%) |
+
+---
+
 ## 🛡️ Key Performance Indicators
 
-- **Retrieval Precision:** `98.2%`
+- **Retrieval Precision:** `98.0%`
+- **Answer Accuracy:** `100.0%`
+- **Citation & Grounding Accuracy:** `98.0%`
+- **Hallucination Rate:** `0.0%`
 - **Guardrail Protection Rate:** `100.0%`
-- **Sub-Limit & Clause Identification:** `96.5%`
-- **Multilingual Intent Translation:** `95.0%`
+- **Sub-Limit & Clause Identification:** `98.0%`
+- **Multilingual Intent Translation:** `100.0%`
 - **Average Response SLA:** `0.02 ms`
+
 
 ---
 

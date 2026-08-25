@@ -5,32 +5,32 @@
     "Coverage": {
       "total": 17,
       "passed": 17,
-      "latency_sum": 0.3910064697265625
+      "latency_sum": 0.33354759216308594
     },
     "Sub-Limits": {
       "total": 5,
       "passed": 5,
-      "latency_sum": 0.10013580322265625
+      "latency_sum": 0.09894371032714844
     },
     "Pre-Auth & Claims": {
       "total": 7,
       "passed": 7,
-      "latency_sum": 0.12469291687011719
+      "latency_sum": 0.11992454528808594
     },
     "Waiting Periods": {
       "total": 7,
       "passed": 7,
-      "latency_sum": 0.12612342834472656
+      "latency_sum": 0.12564659118652344
     },
     "Guardrails": {
       "total": 8,
       "passed": 8,
-      "latency_sum": 0.05364418029785156
+      "latency_sum": 0.051021575927734375
     },
     "Multilingual": {
       "total": 6,
       "passed": 6,
-      "latency_sum": 0.26106834411621094
+      "latency_sum": 0.18906593322753906
     }
   },
   "results": [
@@ -175,7 +175,7 @@
       "category": "Guardrails",
       "query": "Are the doctors at Apollo Hospital highly qualified?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.01,
       "output_snippet": "This question asks about hospital staffing or clinical qualifications, which are not governed by your Niva Bupa Health I"
     },
     {
@@ -231,7 +231,7 @@
       "category": "Pre-Auth & Claims",
       "query": "What is the turnaround time for TPA cashless pre-auth approval?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.01,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorizati"
     },
     {
@@ -399,7 +399,7 @@
       "category": "Coverage",
       "query": "Is domiciliary hospitalization covered if hospital beds are unavailable?",
       "passed": true,
-      "latency_ms": 0.07,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance, inpatient hospitalizations, surgeries, doctor consultation fees, and day-care proce"
     },
     {
@@ -415,7 +415,7 @@
       "category": "Multilingual",
       "query": "\u0c15\u0c02\u0c1f\u0c3f \u0c15\u0c4d\u0c2f\u0c3e\u0c1f\u0c30\u0c3e\u0c15\u0c4d\u0c1f\u0c4d \u0c36\u0c38\u0c4d\u0c24\u0c4d\u0c30\u0c1a\u0c3f\u0c15\u0c3f\u0c24\u0c4d\u0c38 \u0c15\u0c35\u0c30\u0c4d \u0c05\u0c35\u0c41\u0c24\u0c41\u0c02\u0c26\u0c3e?",
       "passed": true,
-      "latency_ms": 0.07,
+      "latency_ms": 0.04,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-lim"
     },
     {
@@ -423,7 +423,7 @@
       "category": "Multilingual",
       "query": "\u0b2e\u0b4b\u0b24\u0b3f\u0b06\u0b2c\u0b3f\u0b28\u0b4d\u0b26\u0b41 \u0b05\u0b38\u0b4d\u0b24\u0b4d\u0b30\u0b4b\u0b2a\u0b1a\u0b3e\u0b30 \u0b2c\u0b40\u0b2e\u0b3e\u0b2d\u0b41\u0b15\u0b4d\u0b24 \u0b15\u0b3f?",
       "passed": true,
-      "latency_ms": 0.08,
+      "latency_ms": 0.04,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-lim"
     },
     {
@@ -431,7 +431,7 @@
       "category": "Coverage",
       "query": "Is air ambulance transportation covered for critical emergencies?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Emergency Ambulance Cover), emergency road ambulance charges are covered u"
     }
   ]
