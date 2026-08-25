@@ -530,8 +530,8 @@
           </div>
         </div>
 
-        <!-- Policy Health Score & Visual Coverage Meter -->
-        <div class="p-4 bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 rounded-xl border border-slate-800 light:border-slate-200 space-y-3">
+        <!-- Policy Health Score & Visual Coverage Meter (Revealed on Policy Upload) -->
+        <div id="policyHealthCard" class="p-4 bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 rounded-xl border border-slate-800 light:border-slate-200 space-y-3 hidden">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-xl bg-sky-950 light:bg-sky-100 border border-sky-800 light:border-sky-300 flex items-center justify-center font-extrabold text-sky-400 light:text-sky-700 text-lg shadow-inner">
@@ -1142,6 +1142,9 @@
       badge.innerText = "Demo Policy Active";
       badge.className = "text-xs bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold";
 
+      const healthCard = document.getElementById('policyHealthCard');
+      if (healthCard) healthCard.classList.remove('hidden');
+
       const status = document.getElementById('uploadStatus');
       status.innerText = "Demo Base Policy (Niva Bupa ₹5,00,000) Loaded Successfully!";
       status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
@@ -1198,6 +1201,9 @@
         const badge = document.getElementById('profileStatusBadge');
         badge.innerText = "Policy Active";
         badge.className = "text-xs bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold";
+
+        const healthCard = document.getElementById('policyHealthCard');
+        if (healthCard) healthCard.classList.remove('hidden');
 
         status.innerText = `Extracted '${file.name}' Successfully!`;
         status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
