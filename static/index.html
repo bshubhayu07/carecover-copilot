@@ -489,7 +489,7 @@
           body: JSON.stringify({ query: query, history: [], insurer_name: activePolicyName })
         });
         const data = await res.json();
-        chatBox.innerHTML += `<div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 p-3 rounded-lg max-w-[80%] text-slate-200 light:text-slate-800"><strong>CareCover Bot:</strong> ${data.answer}<div class="text-[10px] text-slate-500 light:text-slate-400 mt-1">${data.trace_id || ''}</div></div>`;
+        chatBox.innerHTML += `<div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 p-3 rounded-lg max-w-[80%] text-slate-200 light:text-slate-800"><strong>CareCover Bot:</strong> ${data.answer}</div>`;
       } catch (err) {
         chatBox.innerHTML += `<div class="bg-red-950/80 dark:bg-red-950/80 light:bg-red-100 border border-red-800 light:border-red-200 p-3 rounded-lg max-w-[80%] text-red-200 light:text-red-800"><strong>Error:</strong> Failed to fetch answer. Please try again.</div>`;
       }
