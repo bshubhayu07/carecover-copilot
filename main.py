@@ -100,6 +100,20 @@ def get_favicon():
         return FileResponse("docs/favicon.svg")
     raise HTTPException(status_code=404, detail="Asset not found")
 
+@app.get("/data/demo_base_policy.pdf")
+def get_demo_base_pdf():
+    if os.path.exists("data/demo_base_policy.pdf"):
+        return FileResponse("data/demo_base_policy.pdf", media_type="application/pdf")
+    if os.path.exists("data/demo_policy.pdf"):
+        return FileResponse("data/demo_policy.pdf", media_type="application/pdf")
+    raise HTTPException(status_code=404, detail="Demo base policy PDF not found")
+
+@app.get("/data/demo_super_topup_policy.pdf")
+def get_demo_topup_pdf():
+    if os.path.exists("data/demo_super_topup_policy.pdf"):
+        return FileResponse("data/demo_super_topup_policy.pdf", media_type="application/pdf")
+    raise HTTPException(status_code=404, detail="Demo top-up policy PDF not found")
+
 @app.get("/api/health")
 def health_check():
     return {

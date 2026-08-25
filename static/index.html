@@ -167,11 +167,14 @@
         <h2 class="text-lg font-bold text-white light:text-slate-900">Upload Base Health Insurance Policy Document</h2>
         <p class="text-xs text-slate-400 light:text-slate-600">Selecting a PDF file automatically extracts room eligibility, sum insured, co-pay, and pre-auth rules without requiring extra clicks.</p>
         
-        <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <div class="flex flex-col sm:flex-row gap-3 items-center">
           <input type="file" id="policyFileInput" accept=".pdf" onchange="handleUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-600 file:text-white hover:file:bg-sky-500 cursor-pointer">
-          <button onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap">
+          <button onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
             Load Demo Base Policy
           </button>
+          <a href="/data/demo_base_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-sky-950 dark:bg-sky-950 light:bg-sky-50 hover:bg-sky-900 light:hover:bg-sky-100 text-sky-300 light:text-sky-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-sky-800 light:border-sky-300 transition-colors whitespace-nowrap text-center cursor-pointer">
+            Download Demo PDF
+          </a>
         </div>
         <div id="uploadStatus" class="text-xs hidden"></div>
       </div>
@@ -186,11 +189,14 @@
           <span id="topupBadge" class="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full">Top-Up Optional</span>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <div class="flex flex-col sm:flex-row gap-3 items-center">
           <input type="file" id="topupFileInput" accept=".pdf" onchange="handleTopupUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
-          <button onclick="loadDemoTopup()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap">
+          <button onclick="loadDemoTopup()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
             Load Demo Super Top-Up
           </button>
+          <a href="/data/demo_super_topup_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-indigo-950 dark:bg-indigo-950 light:bg-indigo-50 hover:bg-indigo-900 light:hover:bg-indigo-100 text-indigo-300 light:text-indigo-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-indigo-800 light:border-indigo-300 transition-colors whitespace-nowrap text-center cursor-pointer">
+            Download Top-Up PDF
+          </a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
