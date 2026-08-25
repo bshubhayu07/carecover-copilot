@@ -148,7 +148,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
 
     if "cataract" in q_clean or "eye" in q_clean:
         intelligence = {
-            "coverage_status": "✅ Covered (Sub-Limited)",
+            "coverage_status": "Covered (Sub-Limited)",
             "room_eligibility": "Single Private Room",
             "co_pay": "0% Co-Pay",
             "pre_auth": "Required (48h Planned / 24h Emergency)",
@@ -165,7 +165,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
         }
     elif "joint" in q_clean or "knee" in q_clean or "hip" in q_clean:
         intelligence = {
-            "coverage_status": "✅ Covered (Subject to 24m Waiting Period)",
+            "coverage_status": "Covered (Subject to 24m Waiting Period)",
             "room_eligibility": "Single Private Room",
             "co_pay": "0% Co-Pay",
             "pre_auth": "Required (48h Planned)",
@@ -182,7 +182,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
         }
     elif "room" in q_clean or "icu" in q_clean or "rent" in q_clean:
         intelligence = {
-            "coverage_status": "✅ Fully Covered",
+            "coverage_status": "Fully Covered",
             "room_eligibility": "Single Private Room (No Proportional Deduction)",
             "co_pay": "0% Co-Pay",
             "pre_auth": "Required for Cashless Admission",
@@ -199,7 +199,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
         }
     elif "auth" in q_clean or "cashless" in q_clean or "preauth" in q_clean:
         intelligence = {
-            "coverage_status": "✅ Mandatory Operational Step",
+            "coverage_status": "Mandatory Operational Step",
             "room_eligibility": "Applicable for All Room Categories",
             "co_pay": "0%",
             "pre_auth": "Required (48 Hours Prior for Planned)",
@@ -216,7 +216,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
         }
     else:
         intelligence = {
-            "coverage_status": "✅ Covered under Standard Terms",
+            "coverage_status": "Covered under Standard Terms",
             "room_eligibility": "Single Private Room",
             "co_pay": "0% Co-Pay",
             "pre_auth": "Required for Cashless Claims",

@@ -459,16 +459,16 @@
           <!-- Risk Alert Badges Container -->
           <div class="pt-2 flex flex-wrap gap-2 text-[11px]">
             <span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium flex items-center gap-1">
-              ⚠️ 24-Month Specific Illness Waiting Period
+              [WAITING PERIOD] 24-Month Specific Illness Clause
             </span>
             <span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium flex items-center gap-1">
-              ⚠️ Cataract Surgery Sub-Limit (₹40,000 / eye)
+              [SUB-LIMIT CAP] Cataract Surgery (₹40,000 / eye)
             </span>
             <span class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-lg font-medium flex items-center gap-1">
-              ✅ Single Private Room (No Penalty)
+              [APPROVED] Single Private Room Category
             </span>
             <span class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-lg font-medium flex items-center gap-1">
-              ✅ 0% Co-Pay Requirement
+              [APPROVED] 0% Co-Pay Requirement
             </span>
           </div>
         </div>
@@ -504,16 +504,16 @@
         <!-- Quick Action Prompt Chips -->
         <div class="flex flex-wrap gap-2 text-[11px]">
           <span onclick="askPill('Is cataract surgery covered and what is the sub-limit?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
-            💬 Is cataract surgery covered?
+            Is cataract surgery covered?
           </span>
           <span onclick="askPill('What is my room rent eligibility limit?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
-            💬 What is my room rent limit?
+            What is my room rent limit?
           </span>
           <span onclick="askPill('How do I submit cashless pre-authorization?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
-            💬 Pre-authorization rules?
+            Pre-authorization rules?
           </span>
           <span onclick="askPill('Is knee joint replacement surgery covered?')" class="bg-sky-950/80 dark:bg-sky-950/80 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-3 py-1 rounded-full cursor-pointer hover:bg-sky-900 light:hover:bg-sky-200 transition-colors font-medium">
-            💬 Joint replacement cover?
+            Joint replacement cover?
           </span>
         </div>
         
@@ -675,7 +675,7 @@
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 light:border-slate-200 text-xs">
-            <span id="resTopupStatus" class="font-bold text-emerald-400 light:text-emerald-800">✅ Super Top-Up Triggered & Active</span>
+            <span id="resTopupStatus" class="font-bold text-emerald-400 light:text-emerald-800">Super Top-Up Triggered & Active</span>
             <div id="resDeductionNotes" class="text-[11px] text-slate-400 light:text-slate-600">Deductions: ₹28,800 non-payable consumables | ₹0 sub-limit caps | ₹0 co-pay</div>
           </div>
         </div>
@@ -1368,7 +1368,7 @@
                   <div class="text-[11px] text-slate-400 light:text-slate-600 mt-0.5">${h.address || h.city}</div>
                 </div>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap ${h.network_status === 'In Network' ? 'bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300' : 'bg-amber-950 dark:bg-amber-950 light:bg-amber-100 text-amber-400 light:text-amber-800 border border-amber-800 light:border-amber-300'}">
-                  ${h.network_status === 'In Network' ? '✅ Cashless Network' : '⚠️ Reimbursement'}
+                  ${h.network_status === 'In Network' ? 'Cashless Network' : 'Reimbursement Only'}
                 </span>
               </div>
 
@@ -1390,10 +1390,10 @@
                 </span>
                 <div class="flex items-center gap-2">
                   <span class="text-emerald-400 light:text-emerald-800 font-extrabold bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 border border-emerald-800/80 light:border-emerald-300 px-2.5 py-0.5 rounded-md text-[10px]">
-                    📍 ${distStr}
+                    ${distStr}
                   </span>
                   <a href="tel:${phone}" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] px-2.5 py-0.5 rounded-md flex items-center gap-1">
-                    📞 ${phone}
+                    Call: ${phone}
                   </a>
                 </div>
               </div>
@@ -1475,7 +1475,7 @@
             <div class="flex items-center justify-between">
               <div class="font-extrabold text-sky-400 light:text-sky-700 text-sm flex items-center gap-2">
                 <span class="bg-sky-950 dark:bg-sky-950 light:bg-sky-100 border border-sky-800 light:border-sky-300 text-sky-400 light:text-sky-800 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">${step.step || (idx + 1)}</span>
-                <span>${step.icon || '📌'} ${step.stage || 'Stage Guidance'}</span>
+                <span>${step.stage || 'Stage Guidance'}</span>
               </div>
               <span class="text-[10px] bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-700 px-2 py-0.5 rounded font-semibold">Stage ${step.step || (idx + 1)} of 9</span>
             </div>

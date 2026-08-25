@@ -76,7 +76,7 @@ def calculate_financial_risk(
         "total_insurance_contribution": round(total_insurance_payout, 2),
         "estimated_out_of_pocket": max(0.0, estimated_out_of_pocket),
         "topup_triggered": topup_triggered,
-        "topup_status": "✅ Triggered & Active" if topup_triggered else "ℹ️ Not Triggered (Deductible not met)",
+        "topup_status": "Active & Triggered" if topup_triggered else "Not Triggered (Deductible not met)",
         "deductions_breakdown": {
             "non_payable_consumables": non_payable_consumables,
             "room_penalty_deduction": room_penalty_deduction,

@@ -8,7 +8,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 1,
             "stage": "Diagnosis & Prescription",
-            "icon": "🩺",
             "description": "Initial clinical diagnosis and specialist prescription.",
             "policy_requirement": "Doctor must issue itemized consultation slip and diagnostic test reports. OPD consultation fees are excluded unless day-care surgery is advised.",
             "checklist": [
@@ -20,7 +19,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 2,
             "stage": "Hospital Selection",
-            "icon": "🏥",
             "description": "Choosing cashless network hospital and room category.",
             "policy_requirement": "Selected hospital must be in Insurer Cashless Network to avoid reimbursement delays. Room category must match policy eligibility (e.g. Single Private Room) to prevent proportional penalty deductions on doctor/surgery fees.",
             "checklist": [
@@ -32,7 +30,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 3,
             "stage": "Insurance Verification",
-            "icon": "🛡️",
             "description": "Verifying policy sum insured, active status, and waiting periods.",
             "policy_requirement": "Primary Base Policy Sum Insured balance must be sufficient. Super Top-Up deductible trigger threshold evaluated for secondary coverage.",
             "checklist": [
@@ -44,7 +41,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 4,
             "stage": "Pre-Authorization (Pre-Auth)",
-            "icon": "📝",
             "description": "TPA pre-authorization submission prior to admission.",
             "policy_requirement": "Planned admissions require cashless pre-auth submission at least 48 hours prior. Emergency admissions require intimation within 24 hours of admission.",
             "checklist": [
@@ -56,7 +52,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 5,
             "stage": "Hospital Admission",
-            "icon": "🛏️",
             "description": "Patient check-in and initial admission deposit.",
             "policy_requirement": "Patient and policyholder ID verification mandatory. Hospital admission deposit is usually refunded upon receipt of TPA initial cashless letter.",
             "checklist": [
@@ -68,7 +63,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 6,
             "stage": "Inpatient Treatment",
-            "icon": "💉",
             "description": "Surgical procedure, doctor visits, and inpatient care.",
             "policy_requirement": "Non-payable non-medical items (gloves, PPE kits, hygiene packs, food) are excluded from coverage (~5-8% of bill).",
             "checklist": [
@@ -80,7 +74,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 7,
             "stage": "Discharge & Final Approval",
-            "icon": "📄",
             "description": "Final bill submission to TPA and patient discharge.",
             "policy_requirement": "Hospital submits final itemized bill to TPA. Final cashless approval letter issued within 2 to 6 hours.",
             "checklist": [
@@ -92,7 +85,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 8,
             "stage": "Claim Filing & Audit",
-            "icon": "📋",
             "description": "Submitting reimbursement claim or post-hospitalization bills.",
             "policy_requirement": "Reimbursement claims must be submitted to insurer/TPA within 30 days of discharge (Post-hospitalization bills within 60 days).",
             "checklist": [
@@ -104,7 +96,6 @@ def get_journey_timeline() -> List[Dict[str, Any]]:
         {
             "step": 9,
             "stage": "Reimbursement & Super Top-Up Trigger",
-            "icon": "💰",
             "description": "Claim settlement and secondary Super Top-Up payout.",
             "policy_requirement": "If total claim exceeds primary base policy sum insured, Super Top-Up policy is activated once deductible threshold is crossed.",
             "checklist": [

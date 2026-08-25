@@ -1,6 +1,6 @@
 # 📊 CareCover Copilot RAG Benchmark & Evaluation Report
 
-**Evaluation Date:** 2026-08-25 23:59:26 IST  
+**Evaluation Date:** 2026-08-26 00:08:32 IST  
 **Total Benchmark Cases:** 50 Policy Test Cases  
 **Overall Accuracy Rate:** **100.00%**  
 **Mean Pipeline Latency:** **0.02 ms**  

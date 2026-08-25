@@ -5,27 +5,27 @@
     "Coverage": {
       "total": 17,
       "passed": 17,
-      "latency_sum": 0.33354759216308594
+      "latency_sum": 0.35190582275390625
     },
     "Sub-Limits": {
       "total": 5,
       "passed": 5,
-      "latency_sum": 0.09894371032714844
+      "latency_sum": 0.09870529174804688
     },
     "Pre-Auth & Claims": {
       "total": 7,
       "passed": 7,
-      "latency_sum": 0.11992454528808594
+      "latency_sum": 0.12183189392089844
     },
     "Waiting Periods": {
       "total": 7,
       "passed": 7,
-      "latency_sum": 0.12564659118652344
+      "latency_sum": 0.1266002655029297
     },
     "Guardrails": {
       "total": 8,
       "passed": 8,
-      "latency_sum": 0.051021575927734375
+      "latency_sum": 0.053882598876953125
     },
     "Multilingual": {
       "total": 6,
@@ -135,7 +135,7 @@
       "category": "Coverage",
       "query": "What is the limit for maternity normal delivery expenses?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.03,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 3 - Special Coverages), maternity expenses are covered up to \u20b950,000 for norma"
     },
     {
@@ -175,7 +175,7 @@
       "category": "Guardrails",
       "query": "Are the doctors at Apollo Hospital highly qualified?",
       "passed": true,
-      "latency_ms": 0.01,
+      "latency_ms": 0.02,
       "output_snippet": "This question asks about hospital staffing or clinical qualifications, which are not governed by your Niva Bupa Health I"
     },
     {
@@ -191,7 +191,7 @@
       "category": "Multilingual",
       "query": "\u092e\u094b\u0924\u0940\u092c\u093f\u0902\u0926\u0942 \u0936\u0938\u094d\u0924\u094d\u0930\u0915\u094d\u0930\u093f\u092f\u093e \u0915\u093f\u0924\u0940 \u092e\u0930\u094d\u092f\u093e\u0926\u0947\u092a\u0930\u094d\u092f\u0902\u0924 \u0938\u092e\u093e\u0935\u093f\u0937\u094d\u091f \u0906\u0939\u0947?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.03,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-lim"
     },
     {
@@ -231,7 +231,7 @@
       "category": "Pre-Auth & Claims",
       "query": "What is the turnaround time for TPA cashless pre-auth approval?",
       "passed": true,
-      "latency_ms": 0.01,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorizati"
     },
     {
@@ -351,7 +351,7 @@
       "category": "Multilingual",
       "query": "\u0b95\u0ba3\u0bcd\u0baa\u0bc1\u0bb0\u0bc8 \u0b85\u0bb1\u0bc1\u0bb5\u0bc8 \u0b9a\u0bbf\u0b95\u0bbf\u0b9a\u0bcd\u0b9a\u0bc8 \u0b95\u0bbe\u0baa\u0bcd\u0baa\u0bc0\u0b9f\u0bc1 \u0b9a\u0bc6\u0baf\u0bcd\u0baf\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3\u0ba4\u0bbe?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.04,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-lim"
     },
     {
