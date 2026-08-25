@@ -32,6 +32,10 @@ chroma_db/
 data/chroma_db/
 data/temp_*
 
+# IDE tools & stitch downloads
+.cursor/
+stitch_downloads/
+
 # Local Blueprint Master Files
 COMPLETE_PROJECT_BLUEPRINT.md
 MASTER_REPLICABLE_BLUEPRINT.md
