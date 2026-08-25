@@ -340,7 +340,7 @@
           </h3>
           <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">End-to-end evidence breakdown: Document → Clause → Rule → Conclusion</p>
         </div>
-        <button onclick="closeTraceabilityModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+        <button onclick="closeTraceabilityModal()" class="text-slate-400 hover:text-white text-lg font-bold"></button>
       </div>
 
       <div id="traceabilityContent" class="space-y-3 text-xs">
@@ -444,22 +444,22 @@
         <!-- Desktop Section Tabs -->
         <nav class="hidden md:flex text-sm gap-4 font-semibold overflow-x-auto">
           <button data-i18n="nav_dashboard" onclick="switchTab('tab-dashboard')" id="tab-dashboard-btn" class="py-3 px-2 tab-active flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>📊</span> <span>Dashboard</span>
+            <span>Dashboard</span>
           </button>
           <button data-i18n="nav_coverage" onclick="switchTab('tab1')" id="tab1-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>🛡️</span> <span>Coverage</span>
+            <span>Coverage</span>
           </button>
           <button data-i18n="nav_hospitals" onclick="switchTab('tab3')" id="tab3-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>🏥</span> <span>Hospitals & Cost</span>
+            <span>Hospitals & Cost</span>
           </button>
           <button data-i18n="nav_claims" onclick="switchTab('tab4')" id="tab4-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>📝</span> <span>Claims & Journey</span>
+            <span>Claims & Journey</span>
           </button>
           <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-3 px-2 text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>🤖</span> <span>Ask AI</span>
+            <span>Ask AI</span>
           </button>
           <button data-i18n="nav_emergency" onclick="switchTab('tab-emergency')" id="tab-emergency-btn" class="py-3 px-2 text-red-400 hover:text-red-300 flex items-center gap-1.5 cursor-pointer whitespace-nowrap font-bold">
-            <span>🚨</span> <span>Emergency SOS</span>
+            <span>Emergency SOS</span>
           </button>
         </nav>
 
@@ -478,22 +478,22 @@
       <!-- Mobile Slide-Down Drawer Container -->
       <div id="mobileMenu" class="hidden md:hidden py-3 space-y-2 border-t border-slate-800 light:border-slate-200">
         <button onclick="switchTab('tab-dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-sky-400 bg-slate-900 light:bg-slate-100 rounded-lg flex items-center gap-2">
-          <span>📊</span> <span>Dashboard</span>
+          <span>Dashboard</span>
         </button>
         <button onclick="switchTab('tab1'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
-          <span>🛡️</span> <span>Coverage</span>
+          <span>Coverage</span>
         </button>
         <button onclick="switchTab('tab3'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
-          <span>🏥</span> <span>Hospitals & Cost</span>
+          <span>Hospitals & Cost</span>
         </button>
         <button onclick="switchTab('tab4'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
-          <span>📝</span> <span>Claims & Journey</span>
+          <span>Claims & Journey</span>
         </button>
         <button onclick="switchTab('tab2'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
-          <span>🤖</span> <span>Ask AI</span>
+          <span>Ask AI</span>
         </button>
         <button onclick="switchTab('tab-emergency'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-red-400 bg-red-950/60 rounded-lg flex items-center gap-2">
-          <span>🚨</span> <span>Emergency SOS</span>
+          <span>Emergency SOS</span>
         </button>
       </div>
     </div>
@@ -554,7 +554,7 @@
         <!-- Action 1: Coverage -->
         <div onclick="switchTab('tab1')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-2xl">🛡️</span>
+            <span class="text-2xl"></span>
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Policy Coverage & Risk</h3>
@@ -564,7 +564,7 @@
         <!-- Action 2: Hospitals -->
         <div onclick="switchTab('tab3')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-2xl">🏥</span>
+            <span class="text-2xl"></span>
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Network Hospitals & Cost</h3>
@@ -574,7 +574,7 @@
         <!-- Action 3: Claims -->
         <div onclick="switchTab('tab4')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-2xl">📝</span>
+            <span class="text-2xl"></span>
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
@@ -584,7 +584,7 @@
         <!-- Action 4: Emergency SOS -->
         <div onclick="switchTab('tab-emergency')" class="glass-card p-5 rounded-xl border border-red-900/60 light:border-red-300 hover:border-red-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-2xl">🚨</span>
+            <span class="text-2xl"></span>
             <span class="text-[10px] bg-red-950 text-red-300 px-2 py-0.5 rounded-full group-hover:bg-red-600 group-hover:text-white transition-colors">Emergency →</span>
           </div>
           <h3 class="font-extrabold text-red-400 light:text-red-700 text-sm">Emergency SOS & Helplines</h3>
@@ -729,7 +729,7 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
               Extracted Policy Clauses & Sub-Limits Reference
             </span>
-            <span class="text-slate-400 group-open:rotate-180 transition-transform text-sm">▼</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform text-sm"></span>
           </summary>
           <div class="mt-3 pt-3 border-t border-slate-800 light:border-slate-200 space-y-2 text-[11px] text-slate-300 light:text-slate-700">
             <div><strong class="text-slate-100 light:text-slate-900">Section 2.1 (Inpatient Benefits):</strong> Inpatient hospitalization expenses covered 100% up to Sum Insured.</div>
@@ -973,7 +973,7 @@
         <div class="flex items-center justify-between border-b border-red-900/60 pb-3">
           <div>
             <h2 class="text-lg font-extrabold text-red-400 light:text-red-700 flex items-center gap-2">
-              <span>🚨 Emergency SOS & Immediate Cashless Navigation</span>
+              <span> Emergency SOS & Immediate Cashless Navigation</span>
             </h2>
             <p class="text-xs text-slate-300 light:text-slate-700 mt-1">24/7 National Emergency directory, hospital emergency ICUs, and 3-step emergency admission guidelines.</p>
           </div>
@@ -2128,7 +2128,7 @@
           </div>
           <div class="pt-2 border-t border-slate-800 light:border-slate-200 flex justify-end">
             <button onclick="selectRoomForHospital('${safeName}', '${r.val}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer transition-colors shadow">
-              <span>Select ${r.name} & Calculate Risk ➔</span>
+              <span>Select ${r.name} & Calculate Risk </span>
             </button>
           </div>
         </div>
