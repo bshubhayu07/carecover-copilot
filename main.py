@@ -342,11 +342,11 @@ def calculate_financial_risk_endpoint(req: FinancialRiskRequest):
     return calculate_financial_risk(
         procedure_name=req.procedure_name,
         estimated_bill=req.estimated_bill,
-        base_sum_insured=req.base_sum_insured or 300000.0,
-        super_topup_sum_insured=req.super_topup_sum_insured or 1500000.0,
-        super_topup_deductible=req.super_topup_deductible or 300000.0,
+        base_sum_insured=req.base_sum_insured if req.base_sum_insured is not None else 0.0,
+        super_topup_sum_insured=req.super_topup_sum_insured if req.super_topup_sum_insured is not None else 0.0,
+        super_topup_deductible=req.super_topup_deductible if req.super_topup_deductible is not None else 300000.0,
         room_category=req.room_category or "Single Private Room",
-        co_pay_percent=req.co_pay_percent or 0.0
+        co_pay_percent=req.co_pay_percent if req.co_pay_percent is not None else 0.0
     )
 
 if __name__ == "__main__":

@@ -821,12 +821,13 @@
           <div>
             <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Select Medical Procedure</label>
             <select id="calcProcedure" onchange="handleProcedureChange()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+              <option value="" disabled selected>-- Select Medical Procedure --</option>
               <optgroup label="Ophthalmology & ENT">
                 <option value="Cataract Surgery (Per Eye)">Cataract Surgery (Per Eye)</option>
                 <option value="LASIK / Refractive Eye Surgery">LASIK / Refractive Eye Surgery</option>
               </optgroup>
               <optgroup label="Orthopedics & Joint Care">
-                <option value="Total Knee Replacement Surgery" selected>Total Knee Replacement Surgery</option>
+                <option value="Total Knee Replacement Surgery">Total Knee Replacement Surgery</option>
                 <option value="Total Hip Replacement Surgery">Total Hip Replacement Surgery</option>
                 <option value="ACL / Knee Ligament Arthroscopy">ACL / Knee Ligament Arthroscopy</option>
                 <option value="Spine Microdiscectomy / Disc Surgery">Spine Microdiscectomy / Disc Surgery</option>
@@ -870,7 +871,8 @@
           <div>
             <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Room Category Selected</label>
             <select id="calcRoom" onchange="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
-              <option value="Single Private Room" selected>Single Private Room (Standard)</option>
+              <option value="" disabled selected>-- Select Room Category --</option>
+              <option value="Single Private Room">Single Private Room (Standard)</option>
               <option value="Deluxe Suite">Deluxe Suite (Proportional Penalty)</option>
               <option value="Shared Twin Room">Shared Twin Room</option>
             </select>
@@ -879,7 +881,8 @@
           <div>
             <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Co-Pay Percentage (%)</label>
             <select id="calcCopay" onchange="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
-              <option value="0" selected>0% Co-Pay</option>
+              <option value="" disabled selected>-- Select Co-Pay % --</option>
+              <option value="0">0% Co-Pay</option>
               <option value="10">10% Co-Pay</option>
               <option value="20">20% Co-Pay</option>
             </select>
@@ -2143,11 +2146,6 @@
     };
 
     function handleProcedureChange() {
-      const proc = document.getElementById('calcProcedure').value;
-      const billInput = document.getElementById('calcBill');
-      if (billInput && !billInput.value && ESTIMATED_PROCEDURE_COSTS[proc]) {
-        billInput.value = ESTIMATED_PROCEDURE_COSTS[proc];
-      }
       calculateRiskInUI();
     }
 

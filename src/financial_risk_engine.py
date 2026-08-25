@@ -53,7 +53,11 @@ def calculate_financial_risk(
     net_eligible_claim = payable_claim_amount - co_pay_amount
 
     # 6. Primary Base Policy Payout
-    primary_base_payout = min(net_eligible_claim, base_sum_insured)
+    if base_sum_insured > 0:
+        primary_base_payout = min(net_eligible_claim, base_sum_insured)
+    else:
+        primary_base_payout = 0.0
+
     remaining_unpaid_claim = max(0.0, net_eligible_claim - primary_base_payout)
 
     # 7. Super Top-Up Trigger & Payout
@@ -61,13 +65,19 @@ def calculate_financial_risk(
     super_topup_payout = 0.0
     
     # Super top-up triggers when total claim exceeds deductible
-    if net_eligible_claim > super_topup_deductible and remaining_unpaid_claim > 0:
+    if super_topup_sum_insured > 0 and net_eligible_claim > super_topup_deductible and remaining_unpaid_claim > 0:
         topup_triggered = True
         super_topup_payout = min(remaining_unpaid_claim, super_topup_sum_insured)
 
     # 8. Total Out-of-Pocket Expense
-    total_insurance_payout = primary_base_payout + super_topup_payout
-    estimated_out_of_pocket = round(estimated_bill - total_insurance_payout, 2)
+    if base_sum_insured == 0 and super_topup_sum_insured == 0:
+        primary_base_payout = 0.0
+        super_topup_payout = 0.0
+        total_insurance_payout = 0.0
+        estimated_out_of_pocket = round(estimated_bill, 2)
+    else:
+        total_insurance_payout = primary_base_payout + super_topup_payout
+        estimated_out_of_pocket = round(estimated_bill - total_insurance_payout, 2)
 
     return {
         "hospital_bill": round(estimated_bill, 2),
