@@ -634,8 +634,71 @@
       </div>
     </section>
 
-    <!-- TAB 3: Find Hospital Options & Flowchart Navigator -->
+    <!-- TAB 3: Find Hospital Options -->
     <section id="tab3-content" class="space-y-6 hidden">
+      <div class="glass-card p-6 rounded-xl space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
+          <div>
+            <h2 data-i18n="hospital_title" class="text-lg font-bold text-white light:text-slate-900">Compliant Network Hospitals</h2>
+            <p data-i18n="hospital_desc" class="text-xs text-slate-400 light:text-slate-600">Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.</p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label data-i18n="city_label" class="block text-slate-400 light:text-slate-600 mb-1">Select Your City</label>
+            <select id="hospitalCity" onchange="handleCityDropdownChange()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+              <option value="" disabled selected>Select Your City</option>
+              <option value="Delhi">Delhi NCR</option>
+              <option value="Pune">Pune</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Kolkata">Kolkata</option>
+              <option value="Ahmedabad">Ahmedabad</option>
+              <option value="Jaipur">Jaipur</option>
+              <option value="Lucknow">Lucknow</option>
+              <option value="Chandigarh">Chandigarh</option>
+              <option value="Kochi">Kochi</option>
+              <option value="Bhopal">Bhopal</option>
+              <option value="Bhubaneswar">Bhubaneswar</option>
+              <option value="Patna">Patna</option>
+              <option value="Guwahati">Guwahati</option>
+              <option value="Visakhapatnam">Visakhapatnam</option>
+              <option value="Raipur">Raipur</option>
+              <option value="Ranchi">Ranchi</option>
+              <option value="Dehradun">Dehradun</option>
+              <option value="Shimla">Shimla</option>
+              <option value="Panaji">Goa (Panaji)</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="specialty_label" class="block text-slate-400 light:text-slate-600 mb-1">Filter Specialty</label>
+            <select id="hospitalSpecialty" onchange="fetchHospitals()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2">
+              <option value="All Specialties">All Specialties</option>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Oncology">Oncology</option>
+              <option value="Multispecialty">Multispecialty</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <label class="flex items-center gap-2 text-slate-300 light:text-slate-700 cursor-pointer pb-2">
+              <input type="checkbox" id="inNetworkOnly" onchange="fetchHospitals()" class="rounded bg-slate-900 light:bg-slate-100 border-slate-700 light:border-slate-300 text-sky-500">
+              <span data-i18n="in_network_label">In-Network Cashless Only</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="hospitalList" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-2">
+          <!-- Hospital Cards Loaded via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Care Journey & Safety + Financial Risk Engine -->
+    <section id="tab4-content" class="space-y-6 hidden">
       
       <!-- 4-STEP PATIENT FLOWCHART BANNER -->
       <div class="glass-card p-5 rounded-xl border border-sky-800/80 light:border-sky-300 space-y-4">
@@ -726,70 +789,10 @@
         </div>
       </div>
 
-      <div class="glass-card p-6 rounded-xl space-y-4">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
-          <div>
-            <h2 data-i18n="hospital_title" class="text-lg font-bold text-white light:text-slate-900">Compliant Network Hospitals (Step 3)</h2>
-            <p data-i18n="hospital_desc" class="text-xs text-slate-400 light:text-slate-600">Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.</p>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-          <div>
-            <label data-i18n="city_label" class="block text-slate-400 light:text-slate-600 mb-1">Select Your City</label>
-            <select id="hospitalCity" onchange="handleCityDropdownChange()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
-              <option value="" disabled selected>Select Your City</option>
-              <option value="Delhi">Delhi NCR</option>
-              <option value="Pune">Pune</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Bengaluru">Bengaluru</option>
-              <option value="Hyderabad">Hyderabad</option>
-              <option value="Chennai">Chennai</option>
-              <option value="Kolkata">Kolkata</option>
-              <option value="Ahmedabad">Ahmedabad</option>
-              <option value="Jaipur">Jaipur</option>
-              <option value="Lucknow">Lucknow</option>
-              <option value="Chandigarh">Chandigarh</option>
-              <option value="Kochi">Kochi</option>
-              <option value="Bhopal">Bhopal</option>
-              <option value="Bhubaneswar">Bhubaneswar</option>
-              <option value="Patna">Patna</option>
-              <option value="Guwahati">Guwahati</option>
-              <option value="Visakhapatnam">Visakhapatnam</option>
-              <option value="Raipur">Raipur</option>
-              <option value="Ranchi">Ranchi</option>
-              <option value="Dehradun">Dehradun</option>
-              <option value="Shimla">Shimla</option>
-              <option value="Panaji">Goa (Panaji)</option>
-            </select>
-          </div>
-          <div>
-            <label data-i18n="specialty_label" class="block text-slate-400 light:text-slate-600 mb-1">Filter Specialty</label>
-            <select id="hospitalSpecialty" onchange="fetchHospitals()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2">
-              <option value="All Specialties">All Specialties</option>
-              <option value="Cardiology">Cardiology</option>
-              <option value="Orthopedics">Orthopedics</option>
-              <option value="Oncology">Oncology</option>
-              <option value="Multispecialty">Multispecialty</option>
-            </select>
-          </div>
-          <div class="flex items-end">
-            <label class="flex items-center gap-2 text-slate-300 light:text-slate-700 cursor-pointer pb-2">
-              <input type="checkbox" id="inNetworkOnly" onchange="fetchHospitals()" class="rounded bg-slate-900 light:bg-slate-100 border-slate-700 light:border-slate-300 text-sky-500">
-              <span data-i18n="in_network_label">In-Network Cashless Only</span>
-            </label>
-          </div>
-        </div>
-
-        <div id="hospitalList" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-2">
-          <!-- Hospital Cards Loaded via JS -->
-        </div>
-      </div>
-
-      <!-- AISHE CODE VERIFICATION COMPONENT (EXACT MATCH FOR USER UI SCREENSHOT) -->
+      <!-- AISHE CODE VERIFICATION COMPONENT -->
       <div class="glass-card p-6 rounded-xl space-y-4">
         <div class="space-y-2">
-          <label for="aisheCodeInput" class="block text-sm font-semibold text-slate-200 light:text-slate-800">AISHE Code</label>
+          <label for="aisheCodeInput" class="block text-sm font-semibold text-slate-200 light:text-slate-800">AISHE Code Verification</label>
           <div class="relative flex items-center w-full bg-slate-900 dark:bg-slate-950 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl shadow-sm focus-within:border-sky-500 transition-all">
             <input type="text" id="aisheCodeInput" placeholder="Enter AISHE Code (e.g. C-12345, U-0452, H-9821)" onkeypress="if(event.key==='Enter') verifyAisheCode()" class="w-full bg-transparent px-4 py-3 text-sm text-slate-100 dark:text-slate-100 light:text-slate-900 placeholder-slate-500 focus:outline-none" />
             <button onclick="verifyAisheCode()" title="Verify AISHE Code" class="px-4 py-3 text-slate-400 hover:text-sky-400 light:hover:text-sky-600 transition-colors cursor-pointer flex items-center justify-center">
