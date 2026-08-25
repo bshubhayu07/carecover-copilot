@@ -1,4 +1,9 @@
-# GitHub Linguist Overrides - Show Python Backend & TypeScript Frontend
+# Force GitHub Linguist to detect TypeScript Frontend & Python Backend
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+frontend/src/** linguist-detectable=true
+
+# Ignore vendor/generated data files
 frontend/node_modules/** linguist-vendored=true
 frontend/dist/** linguist-vendored=true
 frontend/package-lock.json linguist-generated=true
