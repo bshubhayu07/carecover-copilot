@@ -211,10 +211,8 @@ async def policy_qa_endpoint(request: QARequest):
             active_vector_collection = None
 
     profile_to_use = active_policy_profile
-    if request.insurer_name:
+    if request.insurer_name and request.insurer_name != "No Policy Uploaded":
         profile_to_use = PolicyProfile(insurer_name=request.insurer_name)
-    elif not profile_to_use:
-        profile_to_use = PolicyProfile(insurer_name="Niva Bupa Health Insurance")
 
     # 3. Track generic question count in history
     generic_history_count = 0

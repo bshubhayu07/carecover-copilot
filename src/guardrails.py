@@ -38,7 +38,10 @@ def validate_query_safety(query: str) -> tuple[bool, str]:
     return True, ""
 
 def apply_response_guardrails(response_text: str) -> str:
-    disclaimer = "\n\nNotice: Please confirm final eligibility and authorization with the insurer and hospital."
-    if "confirm final eligibility" not in response_text.lower():
-        return response_text + disclaimer
+    # Only append insurance disclaimer if response is about policy coverage terms or claims
+    policy_keywords = ["covered", "sub-limit", "claim", "deductible", "room rent", "pre-authorization", "waiting period", "co-pay", "sum insured"]
+    if any(kw in response_text.lower() for kw in policy_keywords):
+        disclaimer = "\n\nNotice: Please confirm final eligibility and authorization with the insurer and hospital."
+        if "confirm final eligibility" not in response_text.lower():
+            return response_text + disclaimer
     return response_text
