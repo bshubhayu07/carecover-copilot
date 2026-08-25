@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict, Any
 from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME, OPENAI_API_KEY
+from .bhashini_engine import translate_with_bhashini, BHASHINI_LANG_CODES
 
 GREETING_KEYWORDS = [
     "hello", "hi", "hey", "good morning", "good afternoon", "good evening", "greetings",
@@ -330,6 +331,11 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
         if lang == "Hindi":
             return f"मैं {insurer_name} के लिए आपका केयरकवर AI सहायक हूँ। क्या आप कृपया बता सकते हैं कि आप पॉलिसी कमरा किराया, मोतियाबिंद उप-सीमा, या कैशलेस नियमों के बारे में क्या जानना चाहते हैं?"
         return f"I am your CareCover AI assistant for {insurer_name}. Could you please specify what policy coverage terms, room rent rules, co-payments, or hospital network locations you would like me to check?"
+
+    if lang != "English":
+        bhashini_ans = translate_with_bhashini(base_ans, target_language=lang)
+        if bhashini_ans:
+            return bhashini_ans
 
     return base_ans
 
