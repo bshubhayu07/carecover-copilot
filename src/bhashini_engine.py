@@ -48,8 +48,11 @@ def translate_with_bhashini(text: str, target_language: str, source_language: st
     target_code = BHASHINI_LANG_CODES.get(target_language, "hi")
     source_code = BHASHINI_LANG_CODES.get(source_language, "en")
 
+    api_key = os.getenv("BHASHINI_API_KEY")
+    user_id = os.getenv("BHASHINI_USER_ID")
+
     # If Bhashini API Credentials are set in environment, execute live Cloud REST API request
-    if BHASHINI_API_KEY and BHASHINI_USER_ID:
+    if api_key and user_id:
         try:
             payload = {
                 "pipelineTasks": [
@@ -77,9 +80,9 @@ def translate_with_bhashini(text: str, target_language: str, source_language: st
                 BHASHINI_INFERENCE_URL,
                 data=json.dumps(payload).encode("utf-8"),
                 headers={
-                    "Authorization": BHASHINI_API_KEY,
+                    "Authorization": api_key,
                     "Content-Type": "application/json",
-                    "userID": BHASHINI_USER_ID
+                    "userID": user_id
                 },
                 method="POST"
             )
