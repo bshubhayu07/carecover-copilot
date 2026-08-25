@@ -705,12 +705,45 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div>
             <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Select Medical Procedure</label>
-            <select id="calcProcedure" onchange="calculateRiskInUI()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
-              <option value="Cataract Surgery">Cataract Surgery (Per Eye)</option>
-              <option value="Joint Replacement Surgery" selected>Joint Replacement Surgery</option>
-              <option value="Cardiac Stent Angioplasty">Cardiac Stent Angioplasty</option>
-              <option value="General Major Surgery">General Major Surgery</option>
-              <option value="Maternity C-Section Delivery">Maternity C-Section Delivery</option>
+            <select id="calcProcedure" onchange="handleProcedureChange()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
+              <optgroup label="Ophthalmology & ENT">
+                <option value="Cataract Surgery (Per Eye)">Cataract Surgery (Per Eye)</option>
+                <option value="LASIK / Refractive Eye Surgery">LASIK / Refractive Eye Surgery</option>
+              </optgroup>
+              <optgroup label="Orthopedics & Joint Care">
+                <option value="Total Knee Replacement Surgery" selected>Total Knee Replacement Surgery</option>
+                <option value="Total Hip Replacement Surgery">Total Hip Replacement Surgery</option>
+                <option value="ACL / Knee Ligament Arthroscopy">ACL / Knee Ligament Arthroscopy</option>
+                <option value="Spine Microdiscectomy / Disc Surgery">Spine Microdiscectomy / Disc Surgery</option>
+              </optgroup>
+              <optgroup label="Cardiology & Vascular">
+                <option value="Coronary Artery Bypass Graft (CABG)">Coronary Artery Bypass Graft (CABG)</option>
+                <option value="Cardiac Stent Angioplasty">Cardiac Stent Angioplasty</option>
+                <option value="Pacemaker Implantation Surgery">Pacemaker Implantation Surgery</option>
+              </optgroup>
+              <optgroup label="Oncology & Radiation">
+                <option value="Chemotherapy Cycle & Targeted Therapy">Chemotherapy Cycle & Targeted Therapy</option>
+                <option value="Radiation Therapy (IMRT / CyberKnife)">Radiation Therapy (IMRT / CyberKnife)</option>
+                <option value="Cancer Tumor Surgical Resection">Cancer Tumor Surgical Resection</option>
+              </optgroup>
+              <optgroup label="General & Laparoscopic Surgery">
+                <option value="Laparoscopic Cholecystectomy (Gallbladder)">Laparoscopic Cholecystectomy (Gallbladder)</option>
+                <option value="Laparoscopic Appendectomy">Laparoscopic Appendectomy</option>
+                <option value="Hernia Mesh Repair Surgery">Hernia Mesh Repair Surgery</option>
+                <option value="General Major Surgery">General Major Surgery</option>
+              </optgroup>
+              <optgroup label="Urology & Kidney Care">
+                <option value="Kidney Stone Surgery (RIRS / PCNL)">Kidney Stone Surgery (RIRS / PCNL)</option>
+                <option value="Hemodialysis Session">Hemodialysis Session</option>
+              </optgroup>
+              <optgroup label="Maternity & Gynecology">
+                <option value="Maternity Normal Delivery">Maternity Normal Delivery</option>
+                <option value="Maternity C-Section Delivery">Maternity C-Section Delivery</option>
+                <option value="Hysterectomy (Uterus Removal)">Hysterectomy (Uterus Removal)</option>
+              </optgroup>
+              <optgroup label="Neurology & Neurosurgery">
+                <option value="Brain Tumor Craniotomy Surgery">Brain Tumor Craniotomy Surgery</option>
+              </optgroup>
             </select>
           </div>
 
@@ -1756,6 +1789,39 @@
     function askPill(promptText) {
       document.getElementById('chatInput').value = promptText;
       sendChatMessage();
+    }
+
+    const ESTIMATED_PROCEDURE_COSTS = {
+      "Cataract Surgery (Per Eye)": 45000,
+      "LASIK / Refractive Eye Surgery": 65000,
+      "Total Knee Replacement Surgery": 480000,
+      "Total Hip Replacement Surgery": 320000,
+      "ACL / Knee Ligament Arthroscopy": 140000,
+      "Spine Microdiscectomy / Disc Surgery": 220000,
+      "Coronary Artery Bypass Graft (CABG)": 450000,
+      "Cardiac Stent Angioplasty": 210000,
+      "Pacemaker Implantation Surgery": 250000,
+      "Chemotherapy Cycle & Targeted Therapy": 95000,
+      "Radiation Therapy (IMRT / CyberKnife)": 240000,
+      "Cancer Tumor Surgical Resection": 380000,
+      "Laparoscopic Cholecystectomy (Gallbladder)": 85000,
+      "Laparoscopic Appendectomy": 75000,
+      "Hernia Mesh Repair Surgery": 90000,
+      "General Major Surgery": 150000,
+      "Kidney Stone Surgery (RIRS / PCNL)": 95000,
+      "Hemodialysis Session": 15000,
+      "Maternity Normal Delivery": 50000,
+      "Maternity C-Section Delivery": 85000,
+      "Hysterectomy (Uterus Removal)": 130000,
+      "Brain Tumor Craniotomy Surgery": 550000
+    };
+
+    function handleProcedureChange() {
+      const proc = document.getElementById('calcProcedure').value;
+      if (ESTIMATED_PROCEDURE_COSTS[proc]) {
+        document.getElementById('calcBill').value = ESTIMATED_PROCEDURE_COSTS[proc];
+      }
+      calculateRiskInUI();
     }
 
     async function calculateRiskInUI() {
