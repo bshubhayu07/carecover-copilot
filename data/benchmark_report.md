@@ -1,9 +1,9 @@
 # 📊 CareCover Copilot RAG Benchmark & Evaluation Report
 
-**Evaluation Date:** 2026-08-26 01:47:18 IST  
+**Evaluation Date:** 2026-08-26 01:55:54 IST  
 **Total Benchmark Cases:** 50 Policy Test Cases  
 **Overall Accuracy Rate:** **100.00%**  
-**Mean Pipeline Latency:** **0.05 ms**  
+**Mean Pipeline Latency:** **0.09 ms**  
 
 ---
 
@@ -13,7 +13,7 @@
 | :--- | :---: | :---: | :---: | :---: |
 | **Coverage** | 17 | 17 | **100.0%** | 0.1 ms |
 | **Sub-Limits** | 5 | 5 | **100.0%** | 0.1 ms |
-| **Pre-Auth & Claims** | 7 | 7 | **100.0%** | 0.0 ms |
+| **Pre-Auth & Claims** | 7 | 7 | **100.0%** | 0.1 ms |
 | **Waiting Periods** | 7 | 7 | **100.0%** | 0.1 ms |
 | **Guardrails** | 8 | 8 | **100.0%** | 0.0 ms |
 | **Multilingual** | 6 | 6 | **100.0%** | 0.1 ms |
@@ -40,7 +40,7 @@
 - **Guardrail Protection Rate:** `100.0%`
 - **Sub-Limit & Clause Identification:** `98.0%`
 - **Multilingual Intent Translation:** `100.0%`
-- **Average Response SLA:** `0.05 ms`
+- **Average Response SLA:** `0.09 ms`
 
 
 ---
@@ -49,16 +49,16 @@
 
 | ID | Category | Status | Latency | Query |
 | :--- | :--- | :---: | :---: | :--- |
-| `BENCH-001` | Coverage | ✅ PASS | 0.14 ms | Is cataract surgery covered in my policy? |
-| `BENCH-002` | Sub-Limits | ✅ PASS | 0.06 ms | What is the sub-limit for cataract surgery per eye |
-| `BENCH-003` | Coverage | ✅ PASS | 0.05 ms | Is single private room rent fully covered? |
-| `BENCH-004` | Coverage | ✅ PASS | 0.04 ms | Are ICU stay charges covered without room capping? |
-| `BENCH-005` | Sub-Limits | ✅ PASS | 0.05 ms | What is the sub-limit for total knee joint replace |
-| `BENCH-006` | Pre-Auth & Claims | ✅ PASS | 0.06 ms | How many hours prior to planned hospitalization mu |
-| `BENCH-007` | Pre-Auth & Claims | ✅ PASS | 0.05 ms | Within how many hours must emergency admission be  |
-| `BENCH-008` | Pre-Auth & Claims | ✅ PASS | 0.05 ms | What is the deadline for submitting reimbursement  |
-| `BENCH-009` | Waiting Periods | ✅ PASS | 0.06 ms | What is the initial waiting period for non-acciden |
-| `BENCH-010` | Waiting Periods | ✅ PASS | 0.07 ms | What is the waiting period for pre-existing diseas |
+| `BENCH-001` | Coverage | ✅ PASS | 0.18 ms | Is cataract surgery covered in my policy? |
+| `BENCH-002` | Sub-Limits | ✅ PASS | 0.09 ms | What is the sub-limit for cataract surgery per eye |
+| `BENCH-003` | Coverage | ✅ PASS | 0.09 ms | Is single private room rent fully covered? |
+| `BENCH-004` | Coverage | ✅ PASS | 0.08 ms | Are ICU stay charges covered without room capping? |
+| `BENCH-005` | Sub-Limits | ✅ PASS | 0.09 ms | What is the sub-limit for total knee joint replace |
+| `BENCH-006` | Pre-Auth & Claims | ✅ PASS | 0.09 ms | How many hours prior to planned hospitalization mu |
+| `BENCH-007` | Pre-Auth & Claims | ✅ PASS | 0.09 ms | Within how many hours must emergency admission be  |
+| `BENCH-008` | Pre-Auth & Claims | ✅ PASS | 0.09 ms | What is the deadline for submitting reimbursement  |
+| `BENCH-009` | Waiting Periods | ✅ PASS | 0.11 ms | What is the initial waiting period for non-acciden |
+| `BENCH-010` | Waiting Periods | ✅ PASS | 0.09 ms | What is the waiting period for pre-existing diseas |
 
 ---
 *Report generated automatically by CareCover Evaluation Engine.*
