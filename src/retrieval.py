@@ -100,7 +100,7 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
 
     t = LANGUAGE_TRANSLATIONS.get(lang, None)
 
-    # 0. Live Date / Time & Basic Temporal Queries
+    # 0. Live Date / Time & Basic Temporal Queries (Calculated in IST UTC+5:30)
     temporal_tokens = ["date", "time", "day", "today", "todays", "clock", "year", "month"]
     if any(tok in q_norm.split() for tok in temporal_tokens) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day"]):
         ist = timezone(timedelta(hours=5, minutes=30))
@@ -143,8 +143,12 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
         policy_label = insurer_name if has_active_policy else "health insurance"
         return f"This question asks about hospital staffing or clinical qualifications, which are not governed by your {policy_label} contract. Health insurance policies specify financial coverage limits, room rent caps, covered doctor consultation fees, and cashless pre-authorization procedures. Please contact the hospital administration directly for doctor credential verification."
 
-    # Base English answer generation
-    policy_label = insurer_name if has_active_policy else "Standard Health Policy Baseline"
+    # 4. Require Active Policy for Specific Policy Coverage Queries
+    if not has_active_policy:
+        return "No health insurance policy document is currently loaded. Please upload your health policy PDF or click 'Load Demo Base Policy' to extract sum insured limits, room rent rules, cataract sub-limits, and cashless pre-authorization terms."
+
+    # Base English answer generation for active policy
+    policy_label = insurer_name
 
     if any(k in q_clean for k in ["cataract", "मोतियाबिंद", "मोतीबिंदू", "ছানি", "கண்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ"]):
         base_ans = f"Based on {policy_label} (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-limit of ₹40,000 per eye (or 25% of Sum Insured, whichever is lower) with a 24-month waiting period for pre-existing conditions."
@@ -167,10 +171,7 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
     elif any(k in q_clean for k in ["coverage", "benefit", "policy", "insurance", "hospitalization", "treatment"]):
         base_ans = f"Based on {policy_label}, inpatient hospitalizations, surgeries, doctor consultation fees, and day-care procedures are covered subject to policy sum insured terms and sub-limits."
     else:
-        if has_active_policy:
-            return f"I am your CareCover AI assistant for {insurer_name}. Could you please specify what policy coverage terms, room rent rules, co-payments, or hospital network locations you would like me to check?"
-        else:
-            return "I am your CareCover AI assistant. No policy document is currently uploaded. You can upload a health insurance PDF or load the demo policy to analyze room rent rules, cataract sub-limits, cashless pre-authorization, and network hospital options."
+        return f"I am your CareCover AI assistant for {insurer_name}. Could you please specify what policy coverage terms, room rent rules, co-payments, or hospital network locations you would like me to check?"
 
     if lang != "English":
         confirm_suffix = t["confirm"] if (t and "confirm" in t) else "Please confirm final eligibility and authorization with the insurer and hospital."
@@ -198,7 +199,8 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
     is_temporal = any(tok in q_norm.split() for tok in ["date", "time", "day", "today", "todays", "clock"]) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day"])
     has_policy_kw = any(k in q_clean for k in ["cataract", "joint", "knee", "hip", "room", "icu", "rent", "auth", "cashless", "preauth", "pre-auth", "claim", "reimbursement", "doctor", "ambulance", "maternity", "waiting period", "ped", "pre-existing", "sub-limit", "copay", "co-pay", "deductible", "topup", "cover", "policy"])
 
-    if is_greeting or is_ood or is_temporal or not has_policy_kw:
+    # If no active policy is loaded OR it's a non-policy query, return NO intelligence card (intelligence = None)
+    if is_greeting or is_ood or is_temporal or not has_policy_kw or not has_active_policy:
         intelligence = None
     elif "cataract" in q_clean or "eye" in q_clean:
         intelligence = {
@@ -210,7 +212,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
             "relevant_clause": "Section 4.2 - Specific Cataract Sub-Limit Capped at ₹40,000 per eye.",
             "confidence_score": "98.4%",
             "traceability": {
-                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf" if has_active_policy else "Policy_Contract_Baseline.pdf",
+                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf",
                 "section": "Section 4.2 (Surgical Sub-Limits)",
                 "clause": "Clause 4.2.1 Cataract Capping",
                 "extracted_rule": "Max ₹40,000 per eye or 25% of Base Sum Insured (Whichever is lower).",
@@ -227,7 +229,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
             "relevant_clause": "Section 4.5 - Joint Replacement Surgery Capped at ₹1,50,000 per joint.",
             "confidence_score": "97.8%",
             "traceability": {
-                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf" if has_active_policy else "Policy_Contract_Baseline.pdf",
+                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf",
                 "section": "Section 4.5 (Major Surgical Procedures)",
                 "clause": "Clause 4.5.3 Total Knee/Hip Replacement Capping",
                 "extracted_rule": "Max ₹1,50,000 per joint after 24-month waiting period.",
@@ -244,7 +246,7 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
             "relevant_clause": "Section 2.1 - Inpatient Hospitalization Medical Expenses.",
             "confidence_score": "95.0%",
             "traceability": {
-                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf" if has_active_policy else "Policy_Contract_Baseline.pdf",
+                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf",
                 "section": "Section 2.1 (Inpatient Benefits)",
                 "clause": "Clause 2.1.1 General Hospitalization Coverage",
                 "extracted_rule": "100% coverage up to Sum Insured for active medical treatment.",
