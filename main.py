@@ -192,11 +192,8 @@ async def policy_qa_endpoint(request: QARequest):
     raw_answer = ask_policy_question(request.query, active_vector_collection, profile_to_use)
     guarded_answer = apply_response_guardrails(raw_answer)
 
-    trace_id = f"RAG-TRACE-{hashlib.sha256((request.query + str(time.time())).encode()).hexdigest()[:10].upper()}"
-
     return {
-        "answer": guarded_answer,
-        "trace_id": trace_id
+        "answer": guarded_answer
     }
 
 @app.get("/api/hospitals")
