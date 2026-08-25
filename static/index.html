@@ -88,7 +88,7 @@
       
       <!-- LIGHT / DARK MODE TOGGLE SWITCH -->
       <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1.5 cursor-pointer">
-        <span>☀️ Switch to Light Mode</span>
+        <span>Switch to Light Mode</span>
       </button>
 
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
@@ -483,12 +483,12 @@
       if (htmlEl.classList.contains('dark')) {
         htmlEl.classList.remove('dark');
         htmlEl.classList.add('light');
-        themeBtn.innerHTML = "<span>🌙 Switch to Dark Mode</span>";
+        themeBtn.innerHTML = "<span>Switch to Dark Mode</span>";
         localStorage.setItem('theme', 'light');
       } else {
         htmlEl.classList.remove('light');
         htmlEl.classList.add('dark');
-        themeBtn.innerHTML = "<span>☀️ Switch to Light Mode</span>";
+        themeBtn.innerHTML = "<span>Switch to Light Mode</span>";
         localStorage.setItem('theme', 'dark');
       }
     }
@@ -497,11 +497,11 @@
     if (localStorage.getItem('theme') === 'light') {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
-      document.getElementById('themeBtn').innerHTML = "<span>🌙 Switch to Dark Mode</span>";
+      document.getElementById('themeBtn').innerHTML = "<span>Switch to Dark Mode</span>";
     } else {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
-      document.getElementById('themeBtn').innerHTML = "<span>☀️ Switch to Light Mode</span>";
+      document.getElementById('themeBtn').innerHTML = "<span>Switch to Light Mode</span>";
     }
 
     function updateCombinedSI() {
