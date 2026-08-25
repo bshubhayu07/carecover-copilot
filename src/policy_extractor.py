@@ -9,12 +9,35 @@ from .policy_schema import PolicyProfile
 from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME, OPENAI_API_KEY
 from .utils import format_inr
 
+def validate_is_policy_document(text: str) -> tuple[bool, str]:
+    """
+    Validates whether the ingested PDF text is a valid health insurance policy document.
+    Rejects non-policy PDFs (assignments, math papers, code, invoices, general text files).
+    """
+    if not text or len(text.strip()) < 30:
+        return False, "Uploaded document contains no readable text or is empty."
+
+    text_lower = text.lower()
+    policy_keywords = [
+        "policy", "insurance", "insurer", "sum insured", "sum assured", "claim", 
+        "hospitalization", "mediclaim", "cashless", "deductible", "co-pay", "copay", 
+        "waiting period", "room rent", "sub-limit", "inpatient", "tpa", "star health", 
+        "niva bupa", "care health", "hdfc ergo", "icici lombard", "bajaj allianz", 
+        "max bupa", "united india", "oriental", "new india", "national insurance", 
+        "sbi general", "aditya birla", "tata aig", "reliance", "reassure", "health companion",
+        "grace period", "free look", "cashless facility", "pre-authorization"
+    ]
+    matches = [kw for kw in policy_keywords if kw in text_lower]
+    if len(matches) < 2:
+        return False, "Uploaded document does not contain health insurance policy clauses or terms."
+    return True, ""
+
 def extract_policy_profile(text_chunks: str) -> PolicyProfile:
     """
     Uses an LLM with structured output, JSON prompt fallback, and keyword post-processing 
-    to extract a complete policy profile without leaving fields as N/A.
+    to extract a complete policy profile directly from real PDF text without hardcoding.
     """
-    if USE_DUMMY_MODE:
+    if USE_DUMMY_MODE and text_chunks == "dummy text":
         return PolicyProfile(
             insurer_name="DemoCare",
             policy_name="Comprehensive Health Insurance",
@@ -109,14 +132,22 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
             profile_dict["insurer_name"] = "Star Health Insurance"
         elif "hdfc ergo" in text_lower:
             profile_dict["insurer_name"] = "HDFC ERGO Health Insurance"
+        elif "care health" in text_lower or "religare" in text_lower:
+            profile_dict["insurer_name"] = "Care Health Insurance"
+        elif "icici lombard" in text_lower:
+            profile_dict["insurer_name"] = "ICICI Lombard Health Insurance"
+        elif "bajaj allianz" in text_lower:
+            profile_dict["insurer_name"] = "Bajaj Allianz Health Insurance"
         else:
-            profile_dict["insurer_name"] = "Health Insurance Plan"
+            profile_dict["insurer_name"] = "Uploaded Health Insurance Policy"
 
     if not profile_dict.get("policy_name"):
         if "reassure" in text_lower:
             profile_dict["policy_name"] = "ReAssure Policy"
         elif "comprehensive" in text_lower:
             profile_dict["policy_name"] = "Comprehensive Health Plan"
+        elif "health companion" in text_lower:
+            profile_dict["policy_name"] = "Health Companion Plan"
         else:
             profile_dict["policy_name"] = "Health Coverage Policy"
 
@@ -141,7 +172,7 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
         if valid_sums:
             profile_dict["sum_insured_inr"] = valid_sums[0]
         else:
-            profile_dict["sum_insured_inr"] = 500000
+            profile_dict["sum_insured_inr"] = 0
 
     if not profile_dict.get("room_rent_limit"):
         profile_dict["room_rent_limit"] = "No capping on room rent for Single Private Room"

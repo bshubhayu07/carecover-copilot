@@ -16,7 +16,7 @@ from src.config import USE_DUMMY_MODE, CHROMA_DB_DIR
 from src.pdf_ingestion import ingest_pdf
 from src.chunking import chunk_text
 from src.embeddings import initialize_vector_store, get_chroma_client
-from src.policy_extractor import extract_policy_profile
+from src.policy_extractor import extract_policy_profile, validate_is_policy_document
 from src.retrieval import ask_policy_question, ask_policy_question_detailed
 from src.guardrails import validate_query_safety, apply_response_guardrails
 from src.hospital_repository import get_hospitals_by_city
@@ -170,6 +170,12 @@ async def extract_policy_endpoint(file: UploadFile = File(...)):
     try:
         pages = ingest_pdf(temp_path)
         raw_text = " ".join([p["text"] for p in pages])
+        
+        # Validate that the uploaded PDF is actually a health policy document
+        is_valid_policy, validation_err = validate_is_policy_document(raw_text)
+        if not is_valid_policy:
+            raise HTTPException(status_code=400, detail=f"Uploaded PDF '{file.filename}' is not a valid Health Insurance Policy document. {validation_err}")
+
         profile = extract_policy_profile(raw_text)
         
         # Chunk text & index into Python vector store

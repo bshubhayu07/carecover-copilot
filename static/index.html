@@ -1236,15 +1236,22 @@
 
       try {
         const res = await fetch('/api/extract-policy', { method: 'POST', body: formData });
-        if (!res.ok) throw new Error("Extraction failed");
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          const errMsg = (errData && errData.detail) ? errData.detail : "Uploaded PDF is not a valid Health Insurance Policy.";
+          clearBasePolicy();
+          status.innerText = `Upload Rejected: ${errMsg}`;
+          status.className = "text-xs text-red-400 light:text-red-700 block mt-2 font-bold p-2.5 bg-red-950/50 light:bg-red-50 border border-red-800/80 light:border-red-300 rounded-lg";
+          return;
+        }
         const data = await res.json();
         
-        currentBaseSI = data.sum_insured_inr || 500000;
+        currentBaseSI = data.sum_insured_inr || 0;
         activePolicyName = data.insurer_name || "Uploaded Health Policy";
         updateCombinedSI();
 
         document.getElementById('resInsurer').innerText = data.insurer_name || "Extracted Policy";
-        document.getElementById('resSumInsured').innerText = data.sum_insured_inr ? `₹${data.sum_insured_inr.toLocaleString('en-IN')}` : "₹5,00,000";
+        document.getElementById('resSumInsured').innerText = currentBaseSI > 0 ? `₹${currentBaseSI.toLocaleString('en-IN')}` : "Not Specified in PDF";
         document.getElementById('resSumInsured').className = "font-bold text-sky-400 light:text-sky-700 text-sm mt-1";
         document.getElementById('resRoom').innerText = data.room_eligibility || "Single Room";
         document.getElementById('resRoom').className = "font-bold text-slate-100 light:text-slate-800 text-sm mt-1";
@@ -1264,8 +1271,9 @@
         status.innerText = `Extracted '${file.name}' Successfully!`;
         status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
       } catch (err) {
-        status.innerText = "Upload failed or invalid PDF. Try loading Demo Base Policy.";
-        status.className = "text-xs text-red-400 light:text-red-700 block mt-2";
+        clearBasePolicy();
+        status.innerText = "Upload failed or invalid PDF. Please upload an official health insurance policy contract.";
+        status.className = "text-xs text-red-400 light:text-red-700 block mt-2 font-bold p-2.5 bg-red-950/50 light:bg-red-50 border border-red-800/80 light:border-red-300 rounded-lg";
       }
     }
 
@@ -1283,10 +1291,17 @@
 
       try {
         const res = await fetch('/api/extract-policy', { method: 'POST', body: formData });
-        if (!res.ok) throw new Error("Extraction failed");
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          const errMsg = (errData && errData.detail) ? errData.detail : "Uploaded PDF is not a valid Health Insurance Policy.";
+          clearTopupPolicy();
+          status.innerText = `Upload Rejected: ${errMsg}`;
+          status.className = "text-xs text-red-400 light:text-red-700 block mt-2 font-bold p-2.5 bg-red-950/50 light:bg-red-50 border border-red-800/80 light:border-red-300 rounded-lg";
+          return;
+        }
         const data = await res.json();
         
-        currentTopupSI = data.sum_insured_inr || 1500000;
+        currentTopupSI = data.sum_insured_inr || 0;
         updateCombinedSI();
 
         const badge = document.getElementById('topupBadge');
@@ -1296,11 +1311,14 @@
         const clearBtn = document.getElementById('clearTopupBtn');
         if (clearBtn) clearBtn.classList.remove('hidden');
 
-        status.innerText = `Extracted Super Top-Up '${file.name}' (₹${currentTopupSI.toLocaleString('en-IN')}) Successfully!`;
+        status.innerText = currentTopupSI > 0 ? 
+          `Extracted Super Top-Up '${file.name}' (₹${currentTopupSI.toLocaleString('en-IN')}) Successfully!` : 
+          `Extracted Super Top-Up '${file.name}' Successfully!`;
         status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
       } catch (err) {
-        status.innerText = "Top-Up upload failed. Using Demo Super Top-Up baseline.";
-        status.className = "text-xs text-amber-400 light:text-amber-700 block mt-2";
+        clearTopupPolicy();
+        status.innerText = "Top-Up upload failed. Please upload an official health insurance policy contract.";
+        status.className = "text-xs text-red-400 light:text-red-700 block mt-2 font-bold p-2.5 bg-red-950/50 light:bg-red-50 border border-red-800/80 light:border-red-300 rounded-lg";
       }
     }
 

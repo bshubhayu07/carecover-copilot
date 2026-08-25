@@ -5,22 +5,22 @@
     "Coverage": {
       "total": 17,
       "passed": 17,
-      "latency_sum": 0.4830360412597656
+      "latency_sum": 0.44226646423339844
     },
     "Sub-Limits": {
       "total": 5,
       "passed": 5,
-      "latency_sum": 0.13589859008789062
+      "latency_sum": 0.2288818359375
     },
     "Pre-Auth & Claims": {
       "total": 7,
       "passed": 7,
-      "latency_sum": 0.25773048400878906
+      "latency_sum": 0.1595020294189453
     },
     "Waiting Periods": {
       "total": 7,
       "passed": 7,
-      "latency_sum": 0.1862049102783203
+      "latency_sum": 0.16880035400390625
     },
     "Guardrails": {
       "total": 8,
@@ -30,7 +30,7 @@
     "Multilingual": {
       "total": 6,
       "passed": 6,
-      "latency_sum": 0.2377033233642578
+      "latency_sum": 0.2257823944091797
     }
   },
   "results": [
@@ -55,7 +55,7 @@
       "category": "Coverage",
       "query": "Is single private room rent fully covered?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 1 - Room Rent Eligibility), Single Private Room is fully covered without propo"
     },
     {
@@ -71,7 +71,7 @@
       "category": "Sub-Limits",
       "query": "What is the sub-limit for total knee joint replacement?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.13,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Major Surgeries), Joint replacement surgery is covered up to \u20b91,50,000 per"
     },
     {
@@ -79,7 +79,7 @@
       "category": "Pre-Auth & Claims",
       "query": "How many hours prior to planned hospitalization must pre-auth be submitted?",
       "passed": true,
-      "latency_ms": 0.08,
+      "latency_ms": 0.03,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorizati"
     },
     {
@@ -87,7 +87,7 @@
       "category": "Pre-Auth & Claims",
       "query": "Within how many hours must emergency admission be intimated to the insurer?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorizati"
     },
     {
@@ -95,7 +95,7 @@
       "category": "Pre-Auth & Claims",
       "query": "What is the deadline for submitting reimbursement claim documents after discharge?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 3 - Claims Procedure), reimbursement claims must be submitted within 30 days o"
     },
     {
@@ -143,7 +143,7 @@
       "category": "Coverage",
       "query": "What is the limit for C-section maternity delivery?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 3 - Special Coverages), maternity expenses are covered up to \u20b950,000 for norma"
     },
     {
@@ -183,7 +183,7 @@
       "category": "Multilingual",
       "query": "\u0915\u094d\u092f\u093e \u092e\u094b\u0924\u093f\u092f\u093e\u092c\u093f\u0902\u0926 \u0938\u0930\u094d\u091c\u0930\u0940 \u0915\u0935\u0930 \u0939\u0948?",
       "passed": true,
-      "latency_ms": 0.04,
+      "latency_ms": 0.03,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-lim"
     },
     {
@@ -215,7 +215,7 @@
       "category": "Sub-Limits",
       "query": "Is there a co-payment percentage applicable for senior citizens?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance, inpatient hospitalizations, surgeries, doctor consultation fees, and day-care proce"
     },
     {
@@ -223,7 +223,7 @@
       "category": "Pre-Auth & Claims",
       "query": "What documents are needed for submitting a cashless pre-authorization form?",
       "passed": true,
-      "latency_ms": 0.04,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorizati"
     },
     {
@@ -247,7 +247,7 @@
       "category": "Waiting Periods",
       "query": "Are accidental injuries covered from day 1 without waiting periods?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.03,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Waiting Periods), initial 30-day waiting period applies to all non-acciden"
     },
     {
@@ -263,7 +263,7 @@
       "category": "Guardrails",
       "query": "Can you give me a recipe for baking chocolate cake?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.01,
       "output_snippet": "This question is outside the scope of your health insurance policy contract. CareCover Copilot is specifically trained t"
     },
     {
@@ -271,7 +271,7 @@
       "category": "Multilingual",
       "query": "\u099b\u09be\u09a8\u09bf \u0985\u09aa\u09be\u09b0\u09c7\u09b6\u09a8\u09c7\u09b0 \u09b8\u09b0\u09cd\u09ac\u09cb\u099a\u09cd\u099a \u09b8\u09c0\u09ae\u09be \u0995\u09a4?",
       "passed": true,
-      "latency_ms": 0.04,
+      "latency_ms": 0.03,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-lim"
     },
     {
@@ -303,7 +303,7 @@
       "category": "Coverage",
       "query": "Are post-hospitalization medical expenses covered for 90 days?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance, inpatient hospitalizations, surgeries, doctor consultation fees, and day-care proce"
     },
     {
@@ -343,7 +343,7 @@
       "category": "Guardrails",
       "query": "Who won the cricket world cup final in 2023?",
       "passed": true,
-      "latency_ms": 0.02,
+      "latency_ms": 0.01,
       "output_snippet": "This question is outside the scope of your health insurance policy contract. CareCover Copilot is specifically trained t"
     },
     {
@@ -375,7 +375,7 @@
       "category": "Pre-Auth & Claims",
       "query": "What happens if planned pre-authorization is submitted less than 48 hours before?",
       "passed": true,
-      "latency_ms": 0.03,
+      "latency_ms": 0.02,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 1 - Pre-authorization), for planned hospitalizations, cashless pre-authorizati"
     },
     {
@@ -383,7 +383,7 @@
       "category": "Waiting Periods",
       "query": "How long is the waiting period for hypertension and diabetes pre-existing conditions?",
       "passed": true,
-      "latency_ms": 0.04,
+      "latency_ms": 0.03,
       "output_snippet": "Based on Niva Bupa Health Insurance (Page 2 - Waiting Periods), initial 30-day waiting period applies to all non-acciden"
     },
     {
