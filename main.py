@@ -272,8 +272,15 @@ def get_hospitals_endpoint(
     for m in matches:
         if in_network_only and m.get('network_status') != "In Network":
             continue
-        if specialty != "All Specialties" and specialty.lower() not in m.get('specialties', '').lower():
-            continue
+        if specialty != "All Specialties":
+            spec_low = specialty.lower()
+            hosp_spec_low = str(m.get('specialties', '')).lower()
+            if spec_low == "multispecialty":
+                # Hospitals with multiple specialties (or 'general') qualify as Multispecialty
+                if "multispecialty" not in hosp_spec_low and "general" not in hosp_spec_low and "|" not in hosp_spec_low:
+                    continue
+            elif spec_low not in hosp_spec_low:
+                continue
         filtered.append(m)
 
     return filtered
