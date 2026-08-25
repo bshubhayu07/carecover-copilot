@@ -454,6 +454,9 @@
           <a data-i18n="demo_base_dl" id="downloadDemoBaseBtn" href="/data/demo_base_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-sky-950 dark:bg-sky-950 light:bg-sky-50 hover:bg-sky-900 light:hover:bg-sky-100 text-sky-300 light:text-sky-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-sky-800 light:border-sky-300 transition-colors whitespace-nowrap text-center cursor-pointer">
             Download Demo PDF
           </a>
+          <button id="clearBaseBtn" onclick="clearBasePolicy()" class="w-full sm:w-auto bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 hover:bg-red-900 light:hover:bg-red-100 text-red-300 light:text-red-700 font-semibold text-xs px-4 py-2.5 rounded-lg border border-red-800 light:border-red-300 transition-colors whitespace-nowrap cursor-pointer hidden">
+            Unselect / Clear Base Policy
+          </button>
         </div>
         <div id="uploadStatus" class="text-xs hidden"></div>
       </div>
@@ -476,6 +479,9 @@
           <a data-i18n="demo_topup_dl" id="downloadDemoTopupBtn" href="/data/demo_super_topup_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-indigo-950 dark:bg-indigo-950 light:bg-indigo-50 hover:bg-indigo-900 light:hover:bg-indigo-100 text-indigo-300 light:text-indigo-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-indigo-800 light:border-indigo-300 transition-colors whitespace-nowrap text-center cursor-pointer">
             Download Top-Up PDF
           </a>
+          <button id="clearTopupBtn" onclick="clearTopupPolicy()" class="w-full sm:w-auto bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 hover:bg-red-900 light:hover:bg-red-100 text-red-300 light:text-red-700 font-semibold text-xs px-4 py-2.5 rounded-lg border border-red-800 light:border-red-300 transition-colors whitespace-nowrap cursor-pointer hidden">
+            Unselect / Clear Top-Up
+          </button>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
@@ -1139,9 +1145,41 @@
       const healthCard = document.getElementById('policyHealthCard');
       if (healthCard) healthCard.classList.remove('hidden');
 
+      const clearBtn = document.getElementById('clearBaseBtn');
+      if (clearBtn) clearBtn.classList.remove('hidden');
+
       const status = document.getElementById('uploadStatus');
       status.innerText = "Demo Base Policy (Niva Bupa ₹5,00,000) Loaded Successfully!";
       status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
+    }
+
+    function clearBasePolicy() {
+      currentBaseSI = 0;
+      activePolicyName = "";
+      document.getElementById('policyFileInput').value = "";
+      document.getElementById('resInsurer').innerText = "No Policy Uploaded";
+      document.getElementById('resSumInsured').innerText = "₹0 (Pending Upload)";
+      document.getElementById('resSumInsured').className = "font-bold text-slate-400 light:text-slate-500 text-sm mt-1";
+      document.getElementById('resRoom').innerText = "Pending Upload";
+      document.getElementById('resRoom').className = "font-bold text-slate-400 light:text-slate-500 text-sm mt-1";
+      document.getElementById('resCopay').innerText = "Pending Upload";
+      document.getElementById('resCopay').className = "font-bold text-slate-400 light:text-slate-500 text-sm mt-1";
+
+      const badge = document.getElementById('profileStatusBadge');
+      badge.innerText = "Upload PDF or Load Demo";
+      badge.className = "text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full";
+
+      const healthCard = document.getElementById('policyHealthCard');
+      if (healthCard) healthCard.classList.add('hidden');
+
+      const clearBtn = document.getElementById('clearBaseBtn');
+      if (clearBtn) clearBtn.classList.add('hidden');
+
+      const status = document.getElementById('uploadStatus');
+      status.innerText = "Base Policy unselected / cleared.";
+      status.className = "text-xs text-amber-400 light:text-amber-700 block mt-2 font-semibold";
+
+      updateCombinedSI();
     }
 
     function loadDemoTopup() {
@@ -1152,9 +1190,30 @@
       badge.innerText = "Top-Up Active";
       badge.className = "text-xs bg-sky-950 dark:bg-sky-950 light:bg-sky-50 text-sky-400 light:text-sky-700 border border-sky-800 light:border-sky-200 px-2.5 py-0.5 rounded-full font-semibold";
 
+      const clearBtn = document.getElementById('clearTopupBtn');
+      if (clearBtn) clearBtn.classList.remove('hidden');
+
       const status = document.getElementById('topupUploadStatus');
       status.innerText = "Demo Super Top-Up Policy (₹15,00,000) Loaded Successfully!";
       status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
+    }
+
+    function clearTopupPolicy() {
+      currentTopupSI = 0;
+      document.getElementById('topupFileInput').value = "";
+      
+      const badge = document.getElementById('topupBadge');
+      badge.innerText = "Top-Up Optional";
+      badge.className = "text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full";
+
+      const clearBtn = document.getElementById('clearTopupBtn');
+      if (clearBtn) clearBtn.classList.add('hidden');
+
+      const status = document.getElementById('topupUploadStatus');
+      status.innerText = "Super Top-Up policy unselected / cleared.";
+      status.className = "text-xs text-amber-400 light:text-amber-700 block mt-2 font-semibold";
+
+      updateCombinedSI();
     }
 
     async function handleUpload() {
@@ -1199,6 +1258,9 @@
         const healthCard = document.getElementById('policyHealthCard');
         if (healthCard) healthCard.classList.remove('hidden');
 
+        const clearBtn = document.getElementById('clearBaseBtn');
+        if (clearBtn) clearBtn.classList.remove('hidden');
+
         status.innerText = `Extracted '${file.name}' Successfully!`;
         status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
       } catch (err) {
@@ -1230,6 +1292,9 @@
         const badge = document.getElementById('topupBadge');
         badge.innerText = "Top-Up Active";
         badge.className = "text-xs bg-sky-950 dark:bg-sky-950 light:bg-sky-50 text-sky-400 light:text-sky-700 border border-sky-800 light:border-sky-200 px-2.5 py-0.5 rounded-full font-semibold";
+
+        const clearBtn = document.getElementById('clearTopupBtn');
+        if (clearBtn) clearBtn.classList.remove('hidden');
 
         status.innerText = `Extracted Super Top-Up '${file.name}' (₹${currentTopupSI.toLocaleString('en-IN')}) Successfully!`;
         status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
