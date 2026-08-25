@@ -171,7 +171,7 @@
               <h3 class="font-bold text-sky-400 light:text-sky-700 text-base">Dual-Policy & Super Top-Up Comparison Engine</h3>
               <p class="text-xs text-slate-400 light:text-slate-600">Combine a secondary Super Top-Up policy to calculate total protection coverage and deductible triggers.</p>
             </div>
-            <span class="text-xs bg-sky-950 dark:bg-sky-950 light:bg-sky-50 text-sky-400 light:text-sky-700 border border-sky-800 light:border-sky-200 px-2.5 py-0.5 rounded-full">Top-Up Active</span>
+            <span id="topupBadge" class="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full">Top-Up Optional</span>
           </div>
 
           <div class="flex flex-col sm:flex-row gap-4 items-center">
@@ -184,43 +184,43 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
             <div class="bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <div class="text-slate-400 light:text-slate-500">Primary Base Policy Cover</div>
-              <div id="summaryBaseSI" class="font-bold text-slate-200 light:text-slate-800 text-sm mt-1">₹5,00,000</div>
+              <div id="summaryBaseSI" class="font-bold text-slate-200 light:text-slate-800 text-sm mt-1">₹0</div>
             </div>
             <div class="bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <div class="text-slate-400 light:text-slate-500">Super Top-Up Policy Cover</div>
-              <div id="summaryTopupSI" class="font-bold text-indigo-400 light:text-indigo-700 text-sm mt-1">₹15,00,000</div>
+              <div id="summaryTopupSI" class="font-bold text-indigo-400 light:text-indigo-700 text-sm mt-1">₹0</div>
             </div>
             <div class="bg-slate-900/80 dark:bg-slate-900/80 light:bg-sky-50 p-3 rounded-lg border border-sky-800/80 light:border-sky-300">
               <div class="text-sky-300 light:text-sky-800 font-semibold">Combined Sum Insured Protection</div>
-              <div id="summaryCombinedSI" class="font-bold text-sky-400 light:text-sky-700 text-sm mt-1">₹20,00,000</div>
+              <div id="summaryCombinedSI" class="font-bold text-sky-400 light:text-sky-700 text-sm mt-1">₹0</div>
             </div>
           </div>
           <div id="topupUploadStatus" class="text-xs hidden"></div>
         </div>
 
-        <!-- Policy Summary Results Card -->
+        <!-- Policy Summary Results Card (Initial state: No policy uploaded until user uploads PDF or loads Demo) -->
         <div id="policySummaryCard" class="glass-card p-6 rounded-xl space-y-4">
           <div class="flex justify-between items-center border-b border-slate-800 light:border-slate-200 pb-3">
             <h3 class="font-bold text-slate-100 light:text-slate-900 text-base">Extracted Policy Summary Profile</h3>
-            <span class="text-xs bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200 px-2.5 py-0.5 rounded-full">Active Profile</span>
+            <span id="profileStatusBadge" class="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full">Upload PDF or Load Demo</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
             <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <div class="text-slate-400 light:text-slate-500 font-medium">Insurer Name</div>
-              <div id="resInsurer" class="font-bold text-slate-100 light:text-slate-800 text-sm mt-1">Niva Bupa Health Insurance</div>
+              <div id="resInsurer" class="font-bold text-slate-100 light:text-slate-800 text-sm mt-1">No Policy Uploaded</div>
             </div>
             <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <div class="text-slate-400 light:text-slate-500 font-medium">Sum Insured</div>
-              <div id="resSumInsured" class="font-bold text-sky-400 light:text-sky-700 text-sm mt-1">₹5,00,000</div>
+              <div id="resSumInsured" class="font-bold text-amber-400 light:text-amber-700 text-sm mt-1">₹0 (Pending Upload)</div>
             </div>
             <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <div class="text-slate-400 light:text-slate-500 font-medium">Room Rent Eligibility</div>
-              <div id="resRoom" class="font-bold text-slate-100 light:text-slate-800 text-sm mt-1">Single Private Room</div>
+              <div id="resRoom" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">Pending Upload</div>
             </div>
             <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <div class="text-slate-400 light:text-slate-500 font-medium">Co-Pay / Pre-Auth</div>
-              <div id="resCopay" class="font-bold text-emerald-400 light:text-emerald-700 text-sm mt-1">0% Co-Pay | Pre-Auth Req</div>
+              <div id="resCopay" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">Pending Upload</div>
             </div>
           </div>
         </div>
@@ -274,8 +274,8 @@
                 <option value="Chandigarh">Chandigarh</option>
                 <option value="Kochi">Kochi</option>
                 <option value="Bhopal">Bhopal</option>
-                <option value="Patna">Patna</option>
                 <option value="Bhubaneswar">Bhubaneswar</option>
+                <option value="Patna">Patna</option>
                 <option value="Guwahati">Guwahati</option>
                 <option value="Visakhapatnam">Visakhapatnam</option>
                 <option value="Raipur">Raipur</option>
@@ -283,8 +283,6 @@
                 <option value="Dehradun">Dehradun</option>
                 <option value="Shimla">Shimla</option>
                 <option value="Panaji">Goa (Panaji)</option>
-                <option value="Srinagar">Srinagar</option>
-                <option value="Jammu">Jammu</option>
               </select>
             </div>
             <div>
@@ -325,84 +323,89 @@
   </div>
 
   <script>
-    let currentBaseSI = 500000;
-    let currentTopupSI = 1500000;
-    let activePolicyName = "Niva Bupa Health Insurance";
+    let currentBaseSI = 0;
+    let currentTopupSI = 0;
+    let activePolicyName = null;
     let userLat = null;
     let userLon = null;
 
-    // Comprehensive Emergency Helpline Database covering ALL 36 States & Union Territories of India
+    // Comprehensive Emergency Helpline Database with Spelling Aliases
     const HELPLINE_DATABASE = {
+      'bhubaneswar': 'National Emergency 112 | 108 Ambulance Service (Bhubaneswar / Odisha)',
+      'bhubaneshwar': 'National Emergency 112 | 108 Ambulance Service (Bhubaneswar / Odisha)',
+      'odisha': 'National Emergency 112 | 108 Ambulance Service (Odisha)',
+      'cuttack': 'National Emergency 112 | 108 Ambulance Service (Odisha)',
+      
       'pune': 'National Emergency 112 | MEMS Ambulance 108 (Pune / Maharashtra)',
+      'poona': 'National Emergency 112 | MEMS Ambulance 108 (Pune / Maharashtra)',
       'mumbai': 'National Emergency 112 | MEMS Ambulance 108 (Mumbai / Maharashtra)',
+      'bombay': 'National Emergency 112 | MEMS Ambulance 108 (Mumbai / Maharashtra)',
       'maharashtra': 'National Emergency 112 | MEMS Ambulance 108 (Maharashtra)',
+      
       'delhi': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
       'ncr': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
+      'gurgaon': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
+      'gurugram': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
+      'noida': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
+      'ghaziabad': 'National Emergency 112 | CATS Ambulance 102 / 108 (Delhi NCR)',
+      
       'bengaluru': 'National Emergency 112 | Arogya Kavacha 108 (Bengaluru / Karnataka)',
-      'bangalore': 'National Emergency 112 | Arogya Kavacha 108 (Karnataka)',
+      'bangalore': 'National Emergency 112 | Arogya Kavacha 108 (Bengaluru / Karnataka)',
       'karnataka': 'National Emergency 112 | Arogya Kavacha 108 (Karnataka)',
+      
       'hyderabad': 'National Emergency 112 | EMRI Ambulance 108 (Hyderabad / Telangana)',
       'telangana': 'National Emergency 112 | EMRI Ambulance 108 (Telangana)',
+      
       'chennai': 'National Emergency 112 | TN EMS Ambulance 108 (Chennai / Tamil Nadu)',
+      'madras': 'National Emergency 112 | TN EMS Ambulance 108 (Chennai / Tamil Nadu)',
       'tamil nadu': 'National Emergency 112 | TN EMS Ambulance 108 (Tamil Nadu)',
+      
       'kolkata': 'National Emergency 112 | WB Health Ambulance 102 / 108 (West Bengal)',
+      'calcutta': 'National Emergency 112 | WB Health Ambulance 102 / 108 (West Bengal)',
       'west bengal': 'National Emergency 112 | WB Health Ambulance 102 / 108 (West Bengal)',
+      
       'ahmedabad': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
+      'surat': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
+      'vadodara': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
+      'baroda': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
       'gujarat': 'National Emergency 112 | 108 GVK EMRI Ambulance (Gujarat)',
+      
       'jaipur': 'National Emergency 112 | 108 Emergency Ambulance (Rajasthan)',
       'rajasthan': 'National Emergency 112 | 108 Emergency Ambulance (Rajasthan)',
+      
       'lucknow': 'National Emergency 112 | 108 ALS Ambulance (Uttar Pradesh)',
+      'kanpur': 'National Emergency 112 | 108 ALS Ambulance (Uttar Pradesh)',
       'uttar pradesh': 'National Emergency 112 | 108 ALS Ambulance (Uttar Pradesh)',
+      
       'patna': 'National Emergency 112 | 102 / 108 Swasthya Sewa (Bihar)',
       'bihar': 'National Emergency 112 | 102 / 108 Swasthya Sewa (Bihar)',
+      
       'bhopal': 'National Emergency 112 | Sanjeevani Ambulance 108 (Madhya Pradesh)',
       'indore': 'National Emergency 112 | Sanjeevani Ambulance 108 (Madhya Pradesh)',
       'madhya pradesh': 'National Emergency 112 | Sanjeevani Ambulance 108 (Madhya Pradesh)',
-      'bhubaneswar': 'National Emergency 112 | 108 Ambulance Service (Odisha)',
-      'odisha': 'National Emergency 112 | 108 Ambulance Service (Odisha)',
-      'guwahati': 'National Emergency 112 | Mrityunjoy Ambulance 108 (Assam)',
-      'assam': 'National Emergency 112 | Mrityunjoy Ambulance 108 (Assam)',
+      
+      'kochi': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      'cochin': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      'trivandrum': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      'thiruvananthapuram': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      'kerala': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      
       'visakhapatnam': 'National Emergency 112 | 108 Medical Ambulance (Andhra Pradesh)',
+      'vizag': 'National Emergency 112 | 108 Medical Ambulance (Andhra Pradesh)',
       'andhra pradesh': 'National Emergency 112 | 108 Medical Ambulance (Andhra Pradesh)',
+      
       'chandigarh': 'National Emergency 112 | 108 Emergency Ambulance (Chandigarh)',
       'punjab': 'National Emergency 112 | 108 National Ambulance (Punjab)',
       'haryana': 'National Emergency 112 | Swasthya Express 108 (Haryana)',
-      'kochi': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
-      'kerala': 'National Emergency 112 | Kaniv Ambulance 108 (Kerala)',
+      
+      'guwahati': 'National Emergency 112 | Mrityunjoy Ambulance 108 (Assam)',
+      'assam': 'National Emergency 112 | Mrityunjoy Ambulance 108 (Assam)',
+      
       'goa': 'National Emergency 112 | 108 EMS Ambulance (Goa)',
       'panaji': 'National Emergency 112 | 108 EMS Ambulance (Goa)',
-      'raipur': 'National Emergency 112 | Sanjeevani Express 108 (Chhattisgarh)',
-      'chhattisgarh': 'National Emergency 112 | Sanjeevani Express 108 (Chhattisgarh)',
-      'ranchi': 'National Emergency 112 | 108 Emergency Ambulance (Jharkhand)',
-      'jharkhand': 'National Emergency 112 | 108 Emergency Ambulance (Jharkhand)',
+      
       'dehradun': 'National Emergency 112 | Pt. Deendayal 108 Ambulance (Uttarakhand)',
-      'uttarakhand': 'National Emergency 112 | Pt. Deendayal 108 Ambulance (Uttarakhand)',
-      'shimla': 'National Emergency 112 | 108 National Ambulance (Himachal Pradesh)',
-      'himachal pradesh': 'National Emergency 112 | 108 National Ambulance (Himachal Pradesh)',
-      'srinagar': 'National Emergency 112 | 108 JK EMS Ambulance (Jammu & Kashmir)',
-      'jammu': 'National Emergency 112 | 108 JK EMS Ambulance (Jammu & Kashmir)',
-      'leh': 'National Emergency 112 | 108 EMS Ambulance (Ladakh)',
-      'ladakh': 'National Emergency 112 | 108 EMS Ambulance (Ladakh)',
-      'puducherry': 'National Emergency 112 | 108 GVK EMRI Ambulance (Puducherry)',
-      'agartala': 'National Emergency 112 | 108 Tripura Emergency Response',
-      'tripura': 'National Emergency 112 | 108 Tripura Emergency Response',
-      'shillong': 'National Emergency 112 | 108 EMRI Ambulance (Meghalaya)',
-      'meghalaya': 'National Emergency 112 | 108 EMRI Ambulance (Meghalaya)',
-      'imphal': 'National Emergency 112 | 108 EMS Ambulance (Manipur)',
-      'manipur': 'National Emergency 112 | 108 EMS Ambulance (Manipur)',
-      'kohima': 'National Emergency 112 | 108 Emergency Ambulance (Nagaland)',
-      'nagaland': 'National Emergency 112 | 108 Emergency Ambulance (Nagaland)',
-      'itanagar': 'National Emergency 112 | 108 Ambulance (Arunachal Pradesh)',
-      'arunachal pradesh': 'National Emergency 112 | 108 Ambulance (Arunachal Pradesh)',
-      'aizawl': 'National Emergency 112 | 108 EMS Ambulance (Mizoram)',
-      'mizoram': 'National Emergency 112 | 108 EMS Ambulance (Mizoram)',
-      'gangtok': 'National Emergency 112 | 108 Ambulance Services (Sikkim)',
-      'sikkim': 'National Emergency 112 | 108 Ambulance Services (Sikkim)',
-      'port blair': 'National Emergency 112 | 102 / 108 Emergency Helpline (A&N Islands)',
-      'andaman': 'National Emergency 112 | 102 / 108 Emergency Helpline (A&N Islands)',
-      'silvassa': 'National Emergency 112 | 108 EMS Ambulance (DNH & DD)',
-      'daman': 'National Emergency 112 | 108 EMS Ambulance (DNH & DD)',
-      'kavaratti': 'National Emergency 112 | Island Emergency Services (Lakshadweep)'
+      'uttarakhand': 'National Emergency 112 | Pt. Deendayal 108 Ambulance (Uttarakhand)'
     };
 
     const CITY_COORDS = {
@@ -418,8 +421,14 @@
       'Lucknow': { lat: 26.8467, lon: 80.9462 },
       'Chandigarh': { lat: 30.7333, lon: 76.7794 },
       'Kochi': { lat: 9.9312, lon: 76.2673 },
-      'Bhopal': { lat: 23.2599, lon: 77.4126 }
+      'Bhopal': { lat: 23.2599, lon: 77.4126 },
+      'Bhubaneswar': { lat: 20.2961, lon: 85.8245 }
     };
+
+    function formatCityName(str) {
+      if (!str) return '';
+      return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    }
 
     function handleUserLocationInput() {
       const inputVal = document.getElementById('userLocationInput').value.trim();
@@ -441,7 +450,8 @@
       if (matchedHelpline) {
         document.getElementById('helplineNumbers').innerText = matchedHelpline;
       } else {
-        document.getElementById('helplineNumbers').innerText = `National Emergency 112 | State Medical Ambulance 108 (${inputVal})`;
+        const formatted = formatCityName(inputVal);
+        document.getElementById('helplineNumbers').innerText = `National Emergency 112 | State Medical Ambulance 108 (${formatted})`;
       }
 
       // Sync city dropdown if matching city option exists
@@ -473,7 +483,8 @@
       if (HELPLINE_DATABASE[key]) {
         document.getElementById('helplineNumbers').innerText = HELPLINE_DATABASE[key];
       } else {
-        document.getElementById('helplineNumbers').innerText = `National Emergency 112 | State Medical Ambulance 108 (${city})`;
+        const formatted = formatCityName(city);
+        document.getElementById('helplineNumbers').innerText = `National Emergency 112 | State Medical Ambulance 108 (${formatted})`;
       }
     }
 
@@ -506,9 +517,9 @@
 
     function updateCombinedSI() {
       const combined = currentBaseSI + currentTopupSI;
-      document.getElementById('summaryBaseSI').innerText = `₹${currentBaseSI.toLocaleString('en-IN')}`;
-      document.getElementById('summaryTopupSI').innerText = `₹${currentTopupSI.toLocaleString('en-IN')}`;
-      document.getElementById('summaryCombinedSI').innerText = `₹${combined.toLocaleString('en-IN')}`;
+      document.getElementById('summaryBaseSI').innerText = currentBaseSI > 0 ? `₹${currentBaseSI.toLocaleString('en-IN')}` : "₹0";
+      document.getElementById('summaryTopupSI').innerText = currentTopupSI > 0 ? `₹${currentTopupSI.toLocaleString('en-IN')}` : "₹0";
+      document.getElementById('summaryCombinedSI').innerText = combined > 0 ? `₹${combined.toLocaleString('en-IN')}` : "₹0";
     }
 
     function switchTab(tabId) {
@@ -531,21 +542,35 @@
       currentBaseSI = 500000;
       activePolicyName = "Niva Bupa Health Insurance";
       updateCombinedSI();
+
       document.getElementById('resInsurer').innerText = "Niva Bupa Health Insurance";
       document.getElementById('resSumInsured').innerText = "₹5,00,000";
+      document.getElementById('resSumInsured').className = "font-bold text-sky-400 light:text-sky-700 text-sm mt-1";
       document.getElementById('resRoom').innerText = "Single Private Room";
+      document.getElementById('resRoom').className = "font-bold text-slate-100 light:text-slate-800 text-sm mt-1";
       document.getElementById('resCopay').innerText = "0% Co-Pay | Pre-Auth Req";
+      document.getElementById('resCopay').className = "font-bold text-emerald-400 light:text-emerald-700 text-sm mt-1";
+      
+      const badge = document.getElementById('profileStatusBadge');
+      badge.innerText = "Demo Policy Active";
+      badge.className = "text-xs bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold";
+
       const status = document.getElementById('uploadStatus');
-      status.innerText = "Demo Base Policy Loaded Successfully!";
-      status.className = "text-xs text-emerald-400 light:text-emerald-700 block";
+      status.innerText = "Demo Base Policy (Niva Bupa ₹5,00,000) Loaded Successfully!";
+      status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
     }
 
     function loadDemoTopup() {
       currentTopupSI = 1500000;
       updateCombinedSI();
+
+      const badge = document.getElementById('topupBadge');
+      badge.innerText = "Top-Up Active";
+      badge.className = "text-xs bg-sky-950 dark:bg-sky-950 light:bg-sky-50 text-sky-400 light:text-sky-700 border border-sky-800 light:border-sky-200 px-2.5 py-0.5 rounded-full font-semibold";
+
       const status = document.getElementById('topupUploadStatus');
       status.innerText = "Demo Super Top-Up Policy (₹15,00,000) Loaded Successfully!";
-      status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2";
+      status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
     }
 
     async function handleUpload() {
@@ -577,11 +602,18 @@
 
         document.getElementById('resInsurer').innerText = data.insurer_name || "Extracted Policy";
         document.getElementById('resSumInsured').innerText = data.sum_insured_inr ? `₹${data.sum_insured_inr.toLocaleString('en-IN')}` : "₹5,00,000";
+        document.getElementById('resSumInsured').className = "font-bold text-sky-400 light:text-sky-700 text-sm mt-1";
         document.getElementById('resRoom').innerText = data.room_eligibility || "Single Room";
+        document.getElementById('resRoom').className = "font-bold text-slate-100 light:text-slate-800 text-sm mt-1";
         document.getElementById('resCopay').innerText = `${data.co_payment_percentage || 0}% Co-Pay | ${data.pre_authorization_required ? 'Pre-Auth Req' : 'No Pre-Auth'}`;
+        document.getElementById('resCopay').className = "font-bold text-emerald-400 light:text-emerald-700 text-sm mt-1";
+
+        const badge = document.getElementById('profileStatusBadge');
+        badge.innerText = "Policy Active";
+        badge.className = "text-xs bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold";
 
         status.innerText = `Extracted '${file.name}' Successfully!`;
-        status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2";
+        status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
       } catch (err) {
         status.innerText = "Upload failed or invalid PDF. Try loading Demo Base Policy.";
         status.className = "text-xs text-red-400 light:text-red-700 block mt-2";
@@ -608,8 +640,12 @@
         currentTopupSI = data.sum_insured_inr || 1500000;
         updateCombinedSI();
 
+        const badge = document.getElementById('topupBadge');
+        badge.innerText = "Top-Up Active";
+        badge.className = "text-xs bg-sky-950 dark:bg-sky-950 light:bg-sky-50 text-sky-400 light:text-sky-700 border border-sky-800 light:border-sky-200 px-2.5 py-0.5 rounded-full font-semibold";
+
         status.innerText = `Extracted Super Top-Up '${file.name}' (₹${currentTopupSI.toLocaleString('en-IN')}) Successfully!`;
-        status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2";
+        status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
       } catch (err) {
         status.innerText = "Top-Up upload failed. Using Demo Super Top-Up baseline.";
         status.className = "text-xs text-amber-400 light:text-amber-700 block mt-2";
@@ -661,6 +697,7 @@
       if (lat >= 12.9 && lat <= 13.3 && lon >= 80.0) return 'Chennai';
       if (lat >= 22.3 && lat <= 22.8) return 'Kolkata';
       if (lat >= 22.9 && lat <= 23.2) return 'Ahmedabad';
+      if (lat >= 20.0 && lat <= 20.5 && lon >= 85.5 && lon <= 86.0) return 'Bhubaneswar';
       return 'Delhi';
     }
 
