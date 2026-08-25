@@ -844,12 +844,47 @@
       </div>
     </section>
 
-    <!-- TAB 4: Care Journey & Safety + Financial Risk Engine -->
+    <!-- TAB 4: Claims & Care Journey Suite -->
     <section id="tab4-content" class="space-y-6 hidden">
-    </section>
+      
+      <!-- Pre-Hospitalization Assistant Card -->
+      <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
+          <div>
+            <h2 class="text-base font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+              <span>Pre-Hospitalization Assistant & SLA Timelines</span>
+            </h2>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Mandatory pre-admission steps for planned vs emergency hospitalizations.</p>
+          </div>
+          <span class="text-xs bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">Intimation SLAs</span>
+        </div>
 
-    <!-- TAB 4: Care Journey & Safety + Financial Risk Engine -->
-    <section id="tab4-content" class="space-y-6 hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-sky-400 font-bold block">1. Planned Admission SLA</span>
+            <strong class="text-slate-100 light:text-slate-900 text-xs">48 Hours Prior Intimation</strong>
+            <p class="text-[10px] text-slate-400 mt-0.5">Submit pre-auth request form to hospital TPA desk 2 days before admission.</p>
+          </div>
+
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-red-400 font-bold block">2. Emergency Admission SLA</span>
+            <strong class="text-slate-100 light:text-slate-900 text-xs">24 Hours Post Admission</strong>
+            <p class="text-[10px] text-slate-400 mt-0.5">Inform insurer within 24 hours of emergency casualty registration.</p>
+          </div>
+
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-emerald-400 font-bold block">3. Doctor Prescription Check</span>
+            <strong class="text-slate-100 light:text-slate-900 text-xs">Valid Registration No.</strong>
+            <p class="text-[10px] text-slate-400 mt-0.5">Ensure consultation slip includes doctor registration number & diagnostic test reports dated <30 days.</p>
+          </div>
+
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3.5 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
+            <span class="text-indigo-400 font-bold block">4. Waiting Period Check</span>
+            <strong class="text-slate-100 light:text-slate-900 text-xs">Specific Illness Capping</strong>
+            <p class="text-[10px] text-slate-400 mt-0.5">Check if Cataract, Joint Replacement, or Hernia is subject to 24-month waiting period.</p>
+          </div>
+        </div>
+      </div>
       
       <!-- Financial-Risk & Out-Of-Pocket Prediction Engine Card -->
       <div class="glass-card p-6 rounded-xl space-y-5 border border-sky-900/50 light:border-sky-300">
@@ -963,6 +998,85 @@
           </div>
           </div>
         </div>
+      <!-- Claim Assistant & Mandatory Checklist Generator Card -->
+      <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
+          <div>
+            <h2 class="text-base font-extrabold text-white light:text-slate-900">Claim Assistant & Interactive Document Checklist</h2>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Generate your required claim document checklist and track missing files automatically.</p>
+          </div>
+          <span class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold">Document Verification</span>
+        </div>
+
+        <!-- Checklist Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <!-- Mandatory Documents Checklist -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-2">
+            <span class="font-bold text-sky-400 light:text-sky-700 uppercase tracking-wider text-[10px]">Mandatory Document Checklist</span>
+            <div class="space-y-1.5 text-slate-200 light:text-slate-800 text-[11px]">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
+                <span>Health Insurance Card / Policy Schedule Copy</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
+                <span>Patient Govt Photo ID Proof (Aadhaar / PAN / Passport)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
+                <span>Doctor Consultation Prescription Slip</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
+                <span>Original Hospital Discharge Summary</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
+                <span>Itemized Hospital Main Bill with Detailed Breakup</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
+                <span>Payment Receipts with Original Stamp</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Claim Status Tracker Progress Bar -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-3">
+            <span class="font-bold text-indigo-400 light:text-indigo-700 uppercase tracking-wider text-[10px]">Live Claim Status Tracker</span>
+            <div class="space-y-3 pt-1">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-300 light:text-slate-700 font-bold">1. Claim Intimation</span>
+                <span class="text-emerald-400 font-bold">Completed</span>
+              </div>
+              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="bg-emerald-400 h-full rounded-full" style="width: 100%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-300 light:text-slate-700 font-bold">2. TPA Document Verification</span>
+                <span class="text-sky-400 font-bold">In Progress</span>
+              </div>
+              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="bg-sky-400 h-full rounded-full animate-pulse" style="width: 65%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-400 light:text-slate-500 font-bold">3. Pre-Auth / Settlement Approval</span>
+                <span class="text-slate-500 font-bold">Pending</span>
+              </div>
+              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="bg-slate-700 h-full rounded-full" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post-Hospitalization Guidance Card -->
+      <div class="glass-card p-6 rounded-xl space-y-3 border border-sky-900/50 light:border-sky-300">
+        <h2 class="text-base font-extrabold text-white light:text-slate-900">Post-Hospitalization 60-Day Guidelines</h2>
+        <p class="text-xs text-slate-300 light:text-slate-700">Follow-up doctor consultations, post-op diagnostic test bills, and pharmacy receipts incurred within <strong>60 days of discharge</strong> are eligible for 100% reimbursement under Section 3.2. Retain all original invoices.</p>
       </div>
 
     </section>
