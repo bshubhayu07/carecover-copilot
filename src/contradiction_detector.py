@@ -1,5 +1,5 @@
 from typing import Dict, Any, List
-from src/policy_extractor import PolicyProfile
+from src.policy_extractor import PolicyProfile
 
 def detect_policy_contradictions(policy_profile: PolicyProfile) -> Dict[str, Any]:
     """

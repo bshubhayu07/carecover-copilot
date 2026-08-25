@@ -1,5 +1,5 @@
 from typing import Dict, Any, Optional
-from src/policy_extractor import PolicyProfile
+from src.policy_extractor import PolicyProfile
 
 def compare_policies(policy_a: PolicyProfile, policy_b: Optional[PolicyProfile] = None) -> Dict[str, Any]:
     """
