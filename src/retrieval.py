@@ -1,6 +1,6 @@
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict, Any
 from .config import USE_DUMMY_MODE, OPENAI_BASE_URL, OPENAI_MODEL_NAME, OPENAI_API_KEY
 
@@ -103,7 +103,8 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
     # 0. Live Date / Time & Basic Temporal Queries
     temporal_tokens = ["date", "time", "day", "today", "todays", "clock", "year", "month"]
     if any(tok in q_norm.split() for tok in temporal_tokens) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day"]):
-        now = datetime.now()
+        ist = timezone(timedelta(hours=5, minutes=30))
+        now = datetime.now(ist)
         day_str = now.strftime("%A, %d %B %Y")
         time_str = now.strftime("%H:%M:%S")
         return f"Today is {day_str} and the current time is {time_str} (24hr). How can I assist you with your health policy or network hospital search today?"
