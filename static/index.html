@@ -643,10 +643,10 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 light:border-slate-200 pb-4">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <span class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1">
+              <button onclick="openConsentModal()" data-i18n="dpdp_privacy_btn" class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1 hover:bg-emerald-900 light:hover:bg-emerald-200 transition-colors cursor-pointer" title="Manage DPDP 2025 Privacy Controls">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>DPDP 2025 Compliant</span>
-              </span>
+                <span>DPDP-Aligned Privacy Controls</span>
+              </button>
             </div>
             <h2 data-i18n="hero_title" class="text-xl font-extrabold text-white light:text-slate-900">Health Coverage & Patient Navigation Overview</h2>
             </div>
@@ -1397,6 +1397,14 @@
           <button onclick="location.reload()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-4 py-2 rounded-lg mt-4 cursor-pointer">Reload Page</button>
         </div>
       `;
+    }
+
+    function openConsentModal() {
+      const modal = document.getElementById('consentModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+      }
     }
 
     // PDF Export Generator

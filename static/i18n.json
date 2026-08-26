@@ -68,7 +68,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Hindi": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करें",
@@ -139,7 +140,8 @@
     "card_claims_title": "दावे और जेब का खर्च",
     "card_calculator_title": "जोखिम और बिल कैलकुलेटर",
     "card_ask_title": "AI कोपायलट से पूछें",
-    "explore_btn": "देखें →"
+    "explore_btn": "देखें →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Marathi": {
     "emergency_prefix": "आणीबाणी सूचना: कॉल करा",
@@ -210,7 +212,8 @@
     "card_claims_title": "दावे आणि स्वतःचा खर्च",
     "card_calculator_title": "जोखीम आणि बिल कॅल्क्युलेटर",
     "card_ask_title": "AI कोपायलटला विचारा",
-    "explore_btn": "पहा →"
+    "explore_btn": "पहा →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Bengali": {
     "emergency_prefix": "জরুরি বিজ্ঞপ্তি: কল করুন",
@@ -281,7 +284,8 @@
     "card_claims_title": "দাবি এবং পকেটের খরচ",
     "card_calculator_title": "ঝুঁকি ও বিল ক্যালকুলেটর",
     "card_ask_title": "AI কোপাইলটকে জিজ্ঞাসা করুন",
-    "explore_btn": "দেখুন →"
+    "explore_btn": "দেখুন →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Gujarati": {
     "emergency_prefix": "ઇમરજન્સી નોટિસ: કોલ કરો",
@@ -352,7 +356,8 @@
     "card_claims_title": "દાવાઓ અને ખિસ્સાનો ખર્ચ",
     "card_calculator_title": "જોખમ અને બિલ કેલ્ક્યુલેટર",
     "card_ask_title": "AI કોપાયલટને પૂછો",
-    "explore_btn": "જુઓ →"
+    "explore_btn": "જુઓ →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Punjabi": {
     "emergency_prefix": "ਐਮਰਜੈਂਸੀ ਨੋਟਿਸ: ਕਾਲ ਕਰੋ",
@@ -423,7 +428,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Tamil": {
     "emergency_prefix": "அவசர அறிவிப்பு: அழைக்கவும்",
@@ -494,7 +500,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Telugu": {
     "emergency_prefix": "అత్యవసర నోటీసు: కాల్ చేయండి",
@@ -565,7 +572,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Kannada": {
     "emergency_prefix": "ತುರ್ತು ಸೂಚನೆ: ಕರೆ ಮಾಡಿ",
@@ -636,7 +644,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Malayalam": {
     "emergency_prefix": "അടിയന്തിര അറിയിപ്പ്: വിളിക്കുക",
@@ -707,7 +716,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Odia": {
     "emergency_prefix": "ଜରୁରୀ ସୂଚନା: କଲ୍ କରନ୍ତୁ",
@@ -778,7 +788,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Assamese": {
     "emergency_prefix": "জৰুৰী সূচনা: কল কৰক",
@@ -849,7 +860,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Urdu": {
     "emergency_prefix": "ہنگامی اطلاع: کال کریں",
@@ -920,7 +932,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Sanskrit": {
     "emergency_prefix": "आपत्कालीनसूचना: आह्वयन्तु",
@@ -991,7 +1004,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Kashmiri": {
     "emergency_prefix": "ایمرجنسی نوٹس: کال کریو",
@@ -1062,7 +1076,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Nepali": {
     "emergency_prefix": "आपतकालीन सूचना: कल गर्नुहोस्",
@@ -1133,7 +1148,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Sindhi": {
     "emergency_prefix": "هنگامي نوٽيس: ڪال ڪريو",
@@ -1204,7 +1220,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Konkani": {
     "emergency_prefix": "आणीबाणी सूचना: फोन करा",
@@ -1275,7 +1292,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Maithili": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करू",
@@ -1346,7 +1364,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Dogri": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करो",
@@ -1417,7 +1436,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Manipuri": {
     "emergency_prefix": "ইমার্জেন্সী নোটিস: কোল তৌবীয়ু",
@@ -1488,7 +1508,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Bodo": {
     "emergency_prefix": "इमार्जेन्सी नोतिस: कल खालाम",
@@ -1559,7 +1580,8 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   },
   "Santhali": {
     "emergency_prefix": "ᱟᱯᱟᱛᱠᱟᱞᱤᱱ ᱱᱚᱴᱤᱥ: ᱠᱚᱞ ᱢᱮ",
@@ -1630,6 +1652,7 @@
     "card_claims_title": "Claims & Out-of-Pocket",
     "card_calculator_title": "Risk & Bill Calculator",
     "card_ask_title": "Ask AI Copilot",
-    "explore_btn": "Explore →"
+    "explore_btn": "Explore →",
+    "dpdp_privacy_btn": "DPDP-Aligned Privacy Controls"
   }
 }
