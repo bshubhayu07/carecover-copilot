@@ -404,7 +404,7 @@
 <body class="min-h-screen flex flex-col">
 
   <!-- Privacy & Data Compliance Site Opening Popup Modal -->
-  <div id="consentModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
+  <div id="consentModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden" style="display: none;">
     <div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5">
       <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-start">
         <div>
@@ -1393,13 +1393,6 @@
         modal.classList.add('hidden');
         modal.style.setProperty('display', 'none', 'important');
       }
-      document.body.innerHTML = `
-        <div class="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white p-6 text-center space-y-4">
-          <h1 class="text-2xl font-bold text-red-400">Access Declined</h1>
-          <p class="text-sm text-slate-400 max-w-md">You have declined document processing consent under DPDP Rules 2025. CareCover Copilot session has been closed.</p>
-          <button onclick="location.reload()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-4 py-2 rounded-lg mt-4 cursor-pointer">Reload Page</button>
-        </div>
-      `;
     }
 
     function openConsentModal() {
@@ -1409,29 +1402,6 @@
         modal.style.setProperty('display', 'flex', 'important');
       }
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const btnAccept = document.getElementById('acceptConsentBtn');
-      const btnDecline = document.getElementById('declineConsentBtn');
-      if (btnAccept) btnAccept.addEventListener('click', acceptConsent);
-      if (btnDecline) btnDecline.addEventListener('click', declineConsent);
-      
-      const modal = document.getElementById('consentModal');
-      if (modal) {
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) acceptConsent();
-        });
-      }
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' || e.key === 'Enter') {
-          const m = document.getElementById('consentModal');
-          if (m && !m.classList.contains('hidden') && m.style.display !== 'none') {
-            acceptConsent();
-          }
-        }
-      });
-    });
 
     // PDF Export Generator
     function downloadPolicyPDF() {
