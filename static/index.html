@@ -474,7 +474,7 @@
       
       <!-- Interactive User Location Input Box -->
       <div class="flex items-center gap-2 w-full md:w-auto">
-        <input type="text" id="userLocationInput" oninput="handleUserLocationInput()" placeholder="Enter your city/state (e.g. Pune, Mumbai, Delhi, Patna)..." class="bg-red-900/60 light:bg-white text-white light:text-slate-900 placeholder-red-300 light:placeholder-slate-400 border border-red-700 light:border-red-300 rounded-lg px-3 py-1.5 text-xs w-full md:w-64 focus:outline-none focus:ring-1 focus:ring-red-400">
+        <input type="text" id="userLocationInput" value="Pune" oninput="handleUserLocationInput()" placeholder="Enter your current location (e.g. Pune, Mumbai, Delhi)..." class="bg-red-900/60 light:bg-white text-white light:text-slate-900 placeholder-red-300 light:placeholder-slate-400 border border-red-700 light:border-red-300 rounded-lg px-3 py-1.5 text-xs w-full md:w-64 focus:outline-none focus:ring-1 focus:ring-red-400">
         <button data-i18n="detect_btn" onclick="requestGPSLocation()" id="gpsBtn" title="Detect GPS Location" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-sky-400 light:border-sky-600 transition-all whitespace-nowrap cursor-pointer shadow">
           Detect Location
         </button>
@@ -2574,47 +2574,25 @@
     function handleCityDropdownChange() {
       const citySelect = document.getElementById('hospitalCity');
       if (citySelect && citySelect.value) {
-        const selectedCity = citySelect.value;
-        const inputEl = document.getElementById('userLocationInput');
-        if (inputEl) inputEl.value = selectedCity;
-        if (CITY_COORDS[selectedCity]) {
-          userLat = CITY_COORDS[selectedCity].lat;
-          userLon = CITY_COORDS[selectedCity].lon;
-        }
-        updateHelplineNumbers(selectedCity);
+        updateHelplineNumbers(citySelect.value);
         fetchHospitals();
       }
     }
 
     function handleUserLocationInput() {
-      const inputVal = document.getElementById('userLocationInput').value.trim();
-      if (!inputVal) return;
-      const matched = formatCityName(inputVal);
-      const citySelect = document.getElementById('hospitalCity');
-      if (citySelect) {
-        for (let opt of citySelect.options) {
-          if (opt.value.toLowerCase() === matched.toLowerCase()) {
-            citySelect.value = opt.value;
-            break;
-          }
-        }
+      const inputVal = document.getElementById('userLocationInput')?.value?.trim();
+      if (inputVal && CITY_COORDS[inputVal.toLowerCase()]) {
+        userLat = CITY_COORDS[inputVal.toLowerCase()].lat;
+        userLon = CITY_COORDS[inputVal.toLowerCase()].lon;
       }
-      if (CITY_COORDS[matched]) {
-        userLat = CITY_COORDS[matched].lat;
-        userLon = CITY_COORDS[matched].lon;
-      }
-      updateHelplineNumbers(matched);
       fetchHospitals();
     }
 
     async function fetchHospitals() {
       const citySelect = document.getElementById('hospitalCity');
-      let city = citySelect ? citySelect.value : '';
-      if (!city) {
-        city = 'Pune';
-      }
+      let city = citySelect ? citySelect.value : 'Pune';
 
-      const userHomeCity = document.getElementById('userLocationInput')?.value?.trim() || city;
+      const userHomeCity = document.getElementById('userLocationInput')?.value?.trim() || 'Pune';
       const specialty = document.getElementById('hospitalSpecialty').value;
       const networkOnly = document.getElementById('inNetworkOnly').checked;
 
