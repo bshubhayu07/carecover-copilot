@@ -587,9 +587,6 @@
         <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
           <span>Ask AI</span>
         </button>
-        <button data-i18n="nav_emergency" onclick="switchTab('tab-emergency')" id="tab-emergency-btn" class="py-2 px-3 rounded-xl text-red-400 hover:text-red-300 flex items-center gap-1.5 cursor-pointer whitespace-nowrap font-bold">
-          <span>Emergency SOS</span>
-        </button>
       </nav>
 
       <!-- Mobile Slide-Down Drawer Container -->
@@ -608,9 +605,6 @@
         </button>
         <button data-i18n="tab2" onclick="switchTab('tab2'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Ask AI</span>
-        </button>
-        <button data-i18n="nav_emergency" onclick="switchTab('tab-emergency'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-red-400 bg-red-950/60 rounded-lg flex items-center gap-2">
-          <span>Emergency SOS</span>
         </button>
       </div>
     </div>
@@ -665,13 +659,13 @@
         </div>
       </div>
 
-      <!-- 4 Quick Journey Action Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+      <!-- 3 Quick Journey Action Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
         
         <!-- Action 1: Coverage -->
         <div onclick="switchTab('tab1')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-2xl"></span>
+            <span class="text-2xl">📋</span>
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Policy Coverage & Risk</h3>
@@ -681,7 +675,7 @@
         <!-- Action 2: Hospitals -->
         <div onclick="switchTab('tab3')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-2xl"></span>
+            <span class="text-2xl">🏥</span>
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Network Hospitals & Cost</h3>
@@ -691,21 +685,11 @@
         <!-- Action 3: Claims -->
         <div onclick="switchTab('tab4')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-2xl"></span>
+            <span class="text-2xl">🧾</span>
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
           <p class="text-slate-400 light:text-slate-600 text-[11px]">Calculate exact out-of-pocket expenses, pre-auth SLAs, and generate mandatory document checklists.</p>
-        </div>
-
-        <!-- Action 4: Emergency SOS -->
-        <div onclick="switchTab('tab-emergency')" class="glass-card p-5 rounded-xl border border-red-900/60 light:border-red-300 hover:border-red-500 transition-all cursor-pointer space-y-2 group">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl"></span>
-            <span class="text-[10px] bg-red-950 text-red-300 px-2 py-0.5 rounded-full group-hover:bg-red-600 group-hover:text-white transition-colors">Emergency →</span>
-          </div>
-          <h3 class="font-extrabold text-red-400 light:text-red-700 text-sm">Emergency SOS & Helplines</h3>
-          <p class="text-slate-400 light:text-slate-600 text-[11px]">Instant 24/7 national & city emergency helplines, TPA priority desk, and emergency admission guidelines.</p>
         </div>
       </div>
     </section>
@@ -1370,49 +1354,7 @@
 
     </section>
 
-    <!-- SECTION 6: Emergency SOS & Helplines -->
-    <section id="tab-emergency-content" class="space-y-6 hidden">
-      <div class="glass-card p-6 rounded-2xl border border-red-800/80 light:border-red-300 space-y-5 bg-red-950/20">
-        <div class="flex items-center justify-between border-b border-red-900/60 pb-3">
-          <div>
-            <h2 class="text-lg font-extrabold text-red-400 light:text-red-700 flex items-center gap-2">
-              <span> Emergency SOS & Immediate Cashless Navigation</span>
-            </h2>
-            <p class="text-xs text-slate-300 light:text-slate-700 mt-1">24/7 National Emergency directory, hospital emergency ICUs, and 3-step emergency admission guidelines.</p>
-          </div>
-          <span class="text-xs bg-red-950 text-red-300 border border-red-800 px-3 py-1 rounded-full font-extrabold animate-pulse">
-            EMERGENCY PRIORITY ACTIVE
-          </span>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <!-- Hotlines -->
-          <div class="bg-red-950/80 p-4 rounded-xl border border-red-800 space-y-2">
-            <span class="text-red-300 font-bold block uppercase tracking-wider text-[10px]">National Emergency Hotlines</span>
-            <div class="text-base font-extrabold text-white">Dial 112 (National SOS)</div>
-            <div class="text-base font-extrabold text-red-400">Dial 108 (State Ambulance)</div>
-            <p class="text-[11px] text-red-200 mt-1">Free 24/7 emergency dispatch services across all states in India.</p>
-          </div>
-
-          <!-- TPA Cashless Desk -->
-          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-            <span class="text-sky-400 font-bold block uppercase tracking-wider text-[10px]">Insurance TPA Cashless Helpdesk</span>
-            <div class="text-sm font-extrabold text-white">24-Hour Emergency Intimation</div>
-            <p class="text-slate-300 text-[11px]">Inform your insurer within <strong>24 hours</strong> of emergency admission to guarantee cashless authorization.</p>
-          </div>
-
-          <!-- Admission Checklist -->
-          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-            <span class="text-emerald-400 font-bold block uppercase tracking-wider text-[10px]">3-Step Emergency Checklist</span>
-            <ul class="space-y-1 text-[11px] text-slate-300">
-              <li>1. Show Health Card / Policy Copy at Casualty Desk.</li>
-              <li>2. Request Hospital TPA Desk for Pre-Auth Form.</li>
-              <li>3. Submit Patient Aadhaar/Govt ID proof.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
 
   </div>
 
@@ -1799,7 +1741,7 @@
     }
 
     function switchTab(tabId) {
-      ['tab-dashboard', 'tab1', 'tab2', 'tab3', 'tab4', 'tab-emergency'].forEach(id => {
+      ['tab-dashboard', 'tab1', 'tab2', 'tab3', 'tab4'].forEach(id => {
         const el = document.getElementById(id + '-content');
         if (el) el.classList.add('hidden');
         const btn = document.getElementById(id + '-btn');
