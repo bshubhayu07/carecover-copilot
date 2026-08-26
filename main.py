@@ -280,7 +280,15 @@ def get_hospitals_endpoint(
     
     effective_user_city = user_city.strip() if (user_city and user_city.strip()) else "Pune"
     use_live = (user_lat is not None and user_lon is not None) or (user_city is not None)
-    matches = match_hospitals(hospitals, p_profile, context_city=city, user_city=effective_user_city, use_live_location=use_live)
+    matches = match_hospitals(
+        hospitals, 
+        p_profile, 
+        context_city=city, 
+        user_city=effective_user_city, 
+        use_live_location=use_live,
+        user_lat=user_lat,
+        user_lon=user_lon
+    )
 
     filtered = []
     for m in matches:

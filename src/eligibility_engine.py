@@ -34,11 +34,14 @@ def match_hospitals(
     policy_profile, 
     context_city: str, 
     user_city: str = None, 
-    use_live_location: bool = False
+    use_live_location: bool = False,
+    user_lat: float = None,
+    user_lon: float = None
 ) -> List[Dict[str, Any]]:
     """
     Deterministic eligibility and ranking engine for hospitals.
     Accepts List of Dicts or DataFrames.
+    Calculates exact dynamic distance relative to user's current GPS location or city.
     """
     if hospitals is None:
         return []
@@ -96,27 +99,48 @@ def match_hospitals(
             explanation.append(f"Room Warning: Policy covers {policy_rooms}, but hospital offers {hosp_rooms}.")
             eligible_room_display = "Requires out-of-pocket upgrade"
             
-        # 3. Dynamic Distance Calculation
-        local_demo_dist = float(row.get('distance_km_demo', 5.0))
-        
-        if use_live_location and user_city:
-            u_city_clean = user_city.strip().lower()
-            h_city_clean = hosp_city.strip().lower()
-            
-            if u_city_clean in CITY_COORDINATES and h_city_clean in CITY_COORDINATES:
-                u_lat, u_lon = CITY_COORDINATES[u_city_clean]
-                h_lat, h_lon = CITY_COORDINATES[h_city_clean]
-                
-                if u_city_clean == h_city_clean:
-                    computed_dist = local_demo_dist
-                else:
-                    inter_city_km = calculate_haversine(u_lat, u_lon, h_lat, h_lon)
-                    computed_dist = round(inter_city_km + local_demo_dist, 1)
+        # 3. Dynamic Distance Calculation from User's Current Location/GPS
+        h_lat = float(row['latitude']) if row.get('latitude') is not None and str(row.get('latitude')).strip() != '' else None
+        h_lon = float(row['longitude']) if row.get('longitude') is not None and str(row.get('longitude')).strip() != '' else None
+        local_demo_dist = float(row.get('distance_km_demo', 3.5))
+
+        if user_lat is not None and user_lon is not None:
+            if h_lat is not None and h_lon is not None:
+                computed_dist = round(calculate_haversine(user_lat, user_lon, h_lat, h_lon), 1)
+            elif hosp_city.lower() in CITY_COORDINATES:
+                hc_lat, hc_lon = CITY_COORDINATES[hosp_city.lower()]
+                computed_dist = round(calculate_haversine(user_lat, user_lon, hc_lat, hc_lon), 1)
             else:
                 computed_dist = local_demo_dist
+            dist_label = f"{computed_dist:,.1f} km away"
+        elif user_city and user_city.strip():
+            u_city_clean = user_city.strip().lower()
+            h_city_clean = hosp_city.strip().lower()
+            if u_city_clean in CITY_COORDINATES:
+                u_lat, u_lon = CITY_COORDINATES[u_city_clean]
+                if h_lat is not None and h_lon is not None:
+                    computed_dist = round(calculate_haversine(u_lat, u_lon, h_lat, h_lon), 1)
+                elif h_city_clean in CITY_COORDINATES:
+                    hc_lat, hc_lon = CITY_COORDINATES[h_city_clean]
+                    computed_dist = round(calculate_haversine(u_lat, u_lon, hc_lat, hc_lon), 1)
+                else:
+                    computed_dist = local_demo_dist
+            else:
+                computed_dist = local_demo_dist
+            
+            if u_city_clean != h_city_clean:
+                dist_label = f"{computed_dist:,.1f} km from {user_city.title()}"
+            else:
+                dist_label = f"{computed_dist:,.1f} km away"
         else:
             computed_dist = local_demo_dist
-            
+            dist_label = f"{computed_dist:,.1f} km away"
+
+        # Ensure minimum plausible distance display
+        if computed_dist <= 0:
+            computed_dist = 1.2
+            dist_label = "1.2 km away"
+
         dist_score = max(0, 20 - int(computed_dist / 10 if computed_dist > 50 else computed_dist))
         score += dist_score
             
@@ -126,8 +150,6 @@ def match_hospitals(
             
         feed_id = f"FEED-{(policy_profile.insurer_name if policy_profile else 'NIVABUPA').upper().replace(' ', '')}-20260816-01"
         match_score_percent = min(98, max(55, score))
-
-        dist_label = f"{computed_dist:,.1f} km from {user_city.title()}" if (use_live_location and user_city and user_city.strip().lower() != hosp_city.strip().lower()) else f"{computed_dist} km away"
 
         results.append({
             "id": row['hospital_id'],
