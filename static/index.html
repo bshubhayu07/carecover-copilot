@@ -411,7 +411,7 @@
           <h3 data-i18n="modal_title" class="text-lg font-extrabold text-white light:text-slate-900">Privacy & Data Compliance</h3>
           <p data-i18n="modal_sub" class="text-xs text-slate-400 light:text-slate-500 mt-1">DPDP Rules 2025 Consent Verification</p>
         </div>
-        <button type="button" onclick="acceptConsent()" class="text-slate-400 hover:text-white text-xl font-bold p-1 leading-none cursor-pointer" title="Close & Continue">&times;</button>
+        <button type="button" onclick="closeConsentModalDirect()" class="text-slate-400 hover:text-white text-xl font-bold p-1 leading-none cursor-pointer" title="Close">&times;</button>
       </div>
 
       <div class="space-y-3 text-xs text-slate-300 light:text-slate-700">
@@ -426,6 +426,9 @@
           <input type="checkbox" id="modalConsentCheckbox" class="mt-0.5 rounded bg-slate-800 light:bg-slate-200 border-slate-700 light:border-slate-300 text-sky-500 focus:ring-0">
           <span data-i18n="modal_consent_label" class="text-xs font-medium text-slate-200 light:text-slate-800">I consent to temporary document processing for this session (DPDP Rules 2025).</span>
         </label>
+        <div id="consentErrorMsg" class="hidden text-[11px] text-red-400 font-bold pt-1 flex items-center gap-1">
+          <span>⚠️ Please check the consent box to agree to DPDP Rules 2025 processing before proceeding.</span>
+        </div>
       </div>
 
       <div class="flex gap-3 pt-2">
@@ -1374,10 +1377,34 @@
       }
     }
 
-    // Site-opening DPDP consent handler
+    // Site-opening DPDP consent handler - strictly validates checkbox
     function acceptConsent() {
       const checkbox = document.getElementById('modalConsentCheckbox');
-      if (checkbox) checkbox.checked = true;
+      const errEl = document.getElementById('consentErrorMsg');
+      
+      if (!checkbox || !checkbox.checked) {
+        if (errEl) errEl.classList.remove('hidden');
+        if (checkbox) {
+          checkbox.focus();
+          checkbox.classList.add('ring-2', 'ring-red-500');
+        }
+        return;
+      }
+      
+      if (errEl) errEl.classList.add('hidden');
+      const modal = document.getElementById('consentModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.setProperty('display', 'none', 'important');
+      }
+    }
+
+    function closeConsentModalDirect() {
+      const checkbox = document.getElementById('modalConsentCheckbox');
+      if (!checkbox || !checkbox.checked) {
+        acceptConsent();
+        return;
+      }
       const modal = document.getElementById('consentModal');
       if (modal) {
         modal.classList.add('hidden');
