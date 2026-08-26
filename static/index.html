@@ -808,19 +808,19 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
             <div data-i18n="insurer_label" class="text-slate-400 light:text-slate-500 font-medium">Insurer Name</div>
-            <div id="resInsurer" class="font-bold text-slate-100 light:text-slate-800 text-sm mt-1">No Policy Uploaded</div>
+            <div id="resInsurer" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">--</div>
           </div>
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
             <div data-i18n="si_label" class="text-slate-400 light:text-slate-500 font-medium">Sum Insured</div>
-            <div id="resSumInsured" class="font-bold text-amber-400 light:text-amber-700 text-sm mt-1">₹0 (Pending Upload)</div>
+            <div id="resSumInsured" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">--</div>
           </div>
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
             <div data-i18n="room_label" class="text-slate-400 light:text-slate-500 font-medium">Room Rent Eligibility</div>
-            <div id="resRoom" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">Pending Upload</div>
+            <div id="resRoom" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">--</div>
           </div>
           <div class="bg-slate-900/60 dark:bg-slate-900/60 light:bg-slate-50 p-3 rounded-lg border border-slate-800 light:border-slate-200">
             <div data-i18n="copay_label" class="text-slate-400 light:text-slate-500 font-medium">Co-Pay / Pre-Auth</div>
-            <div id="resCopay" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">Pending Upload</div>
+            <div id="resCopay" class="font-bold text-slate-400 light:text-slate-500 text-sm mt-1">--</div>
           </div>
         </div>
 
@@ -895,17 +895,8 @@
           </div>
 
           <!-- Coverage Result Box -->
-          <div id="coverageCheckerResult" class="bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 space-y-2 text-xs">
-            <div class="flex items-center justify-between border-b border-slate-800 light:border-slate-200 pb-2">
-              <span class="font-extrabold text-slate-200 light:text-slate-900">Coverage Status: <span class="text-emerald-400 font-bold">Covered (Subject to Sub-Limit Cap)</span></span>
-              <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">AI Confidence: 98.4%</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
-              <div><strong class="text-slate-300 light:text-slate-700">Sub-Limit Cap:</strong> Max ₹40,000 per eye</div>
-              <div><strong class="text-slate-300 light:text-slate-700">Waiting Period:</strong> 24-Month Specific Illness Clause</div>
-              <div><strong class="text-slate-300 light:text-slate-700">Pre-Auth SLA:</strong> Required (48h Planned / 24h Emergency)</div>
-              <div><strong class="text-slate-300 light:text-slate-700">Policy Citation:</strong> <span class="text-sky-400 font-bold">Section 4.2 - Surgical Sub-Limits</span></div>
-            </div>
+          <div id="coverageCheckerResult" class="bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 text-xs text-center text-slate-400 light:text-slate-500 font-medium">
+            No policy uploaded. Please upload a policy PDF or load a demo policy to view treatment coverage details.
           </div>
         </div>
 
@@ -1969,12 +1960,12 @@
         dlBtn.innerText = "Download Demo PDF";
       }
 
-      document.getElementById('resInsurer').innerText = "No Policy Uploaded";
-      document.getElementById('resSumInsured').innerText = "₹0 (Pending Upload)";
+      document.getElementById('resInsurer').innerText = "--";
+      document.getElementById('resSumInsured').innerText = "--";
       document.getElementById('resSumInsured').className = "font-bold text-slate-400 light:text-slate-500 text-sm mt-1";
-      document.getElementById('resRoom').innerText = "Pending Upload";
+      document.getElementById('resRoom').innerText = "--";
       document.getElementById('resRoom').className = "font-bold text-slate-400 light:text-slate-500 text-sm mt-1";
-      document.getElementById('resCopay').innerText = "Pending Upload";
+      document.getElementById('resCopay').innerText = "--";
       document.getElementById('resCopay').className = "font-bold text-slate-400 light:text-slate-500 text-sm mt-1";
 
       const badge = document.getElementById('profileStatusBadge');
@@ -1992,6 +1983,8 @@
       status.className = "text-xs text-amber-400 light:text-amber-700 block mt-2 font-semibold";
 
       updateCombinedSI();
+      if (typeof runTreatmentCoverageCheck === 'function') runTreatmentCoverageCheck();
+    }
     }
 
     function loadDemoTopup() {
@@ -2315,6 +2308,14 @@
       const proc = document.getElementById('coverageCheckerSelect').value;
       const resContainer = document.getElementById('coverageCheckerResult');
       if (!resContainer) return;
+
+      if (!activePolicyData && currentBaseSI <= 0 && currentTopupSI <= 0) {
+        resContainer.className = "bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 text-xs text-center text-slate-400 light:text-slate-500 font-medium";
+        resContainer.innerHTML = "No policy uploaded. Please upload a policy PDF or load a demo policy to view treatment coverage details.";
+        return;
+      }
+
+      resContainer.className = "bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 space-y-2 text-xs";
 
       try {
         const res = await fetch(`/api/cost-estimate?procedure=${encodeURIComponent(proc)}&city=Delhi`);
