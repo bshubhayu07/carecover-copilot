@@ -63,16 +63,19 @@ def get_all_cities(file_path: str = None) -> list:
 def generate_city_hospitals(city_name: str) -> List[Dict[str, Any]]:
     city_title = city_name.strip().title()
     templates = [
-        ("Apollo Super Speciality (Civil Lines)", "General|Cardiology|Orthopedics", "3520", "1.8"),
-        ("Manipal Super Speciality (VIP Road)", "Oncology|Neurology|Cardiology", "4500", "2.4"),
+        ("Apollo Super Speciality (Civil Lines)", "General|Cardiology|Orthopedics|Multispecialty", "3520", "1.8"),
+        ("Manipal Super Speciality (VIP Road)", "Oncology|Neurology|Cardiology|Multispecialty", "4500", "2.4"),
         ("Fortis Super Speciality (Station Road)", "Orthopedics|Neurology|Multispecialty", "4200", "3.0"),
+        ("Dr. Agarwal Eye Hospital & Laser Center", "Ophthalmology|Eye Care|Laser Surgery", "3200", "1.5"),
         ("Max Super Speciality (Shankar Nagar)", "Cardiology|Oncology|Multispecialty", "4800", "3.6"),
         ("Narayana Health Super Speciality (Pandri)", "Gastroenterology|Urology|Multispecialty", "3900", "4.2"),
-        ("Aster Super Speciality (Telibandha)", "Pulmonology|Gynecology|Multispecialty", "4100", "4.8"),
+        ("Aster Super Speciality (Telibandha)", "Pulmonology|Gynecology|Obstetrics|Multispecialty", "4100", "4.8"),
         ("KIMS Super Speciality (Ring Road)", "Pediatrics|Ophthalmology|Multispecialty", "3800", "5.4"),
         ("Yashoda Super Speciality (Main Market)", "ENT|Multispecialty|Orthopedics", "3600", "6.0"),
+        ("PulmoCare Respiratory & Chest Center", "Pulmonology|Respiratory Care|Multispecialty", "4500", "2.2"),
+        ("Kidney & Urology Super Speciality Center", "Urology|Nephrology|Kidney Care|Multispecialty", "4800", "2.8"),
         ("Columbia Asia Super Speciality (New Town)", "Cardiology|Neurology|Multispecialty", "4400", "6.6"),
-        ("Sahyadri Super Speciality (Bypass)", "Oncology|Urology|Multispecialty", "4000", "7.2")
+        ("Sahyadri Super Speciality (Bypass)", "Oncology|Urology|Obstetrics|Multispecialty", "4000", "7.2")
     ]
     hospitals = []
     for idx, (name_tmpl, spec, cost, dist) in enumerate(templates, 1):
