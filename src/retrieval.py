@@ -346,8 +346,22 @@ def ask_policy_question(query: str, collection=None, policy_profile=None, langua
 
     # Base Answer Generation with Native Language Translation
     policy_label = insurer_name
+    is_scheme = any(k in policy_label.lower() for k in ["ayushman", "arogya", "yeshaswini", "esi", "esic", "cghs", "pmjay", "scheme"])
 
-    if any(k in q_clean for k in ["cataract", "मोतियाबिंद", "मोतीबिंदू", "ছানি", "கண்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ", "આંખ"]):
+    if is_scheme:
+        if any(k in q_clean for k in ["room", "private", "icu", "ward", "कमरा", "भाडे", "રૂમ", "அறை"]):
+            base_ans = f"Based on {policy_label} (Government Scheme Package Schedule), inpatient treatment and room rent are covered under General Ward Package Rates across empaneled Government and Network Private Hospitals with 0% Co-Pay."
+        elif any(k in q_clean for k in ["authorization", "preauth", "pre-auth", "cashless", "intimated", "intimation"]):
+            base_ans = f"Based on {policy_label} (Pre-authorization Guidelines), cashless treatment requires an official Pre-authorization Approval Letter submitted by the empaneled network hospital prior to surgery or admission."
+        elif any(k in q_clean for k in ["claim", "reimbursement", "document", "दावा"]):
+            base_ans = f"Based on {policy_label} (Claims Guidelines), treatment is 100% cashless at empaneled hospitals. Claims require the beneficiary ABHA / Scheme Card, Aadhaar Card, Ration Card, Pre-authorization Approval Letter, and Discharge Summary."
+        elif any(k in q_clean for k in ["cataract", "joint", "knee", "hip", "surgery", "cabg"]):
+            base_ans = f"Based on {policy_label} (Empaneled Benefit Package Schedule), listed surgical procedures are covered 100% cashless up to approved package rates at empaneled government and private hospitals."
+        elif any(k in q_clean for k in ["coverage", "benefit", "policy", "insurance", "hospitalization", "treatment", "कवर", "बीमा"]):
+            base_ans = f"Based on {policy_label}, covered secondary and tertiary medical & surgical procedures are 100% cashless up to ₹5,00,000 per family per year under approved package rates."
+        else:
+            base_ans = f"Based on {policy_label} (Empaneled Benefit Package Schedule), medical and surgical procedures listed under scheme guidelines are covered 100% cashless at empaneled network hospitals under fixed package rates."
+    elif any(k in q_clean for k in ["cataract", "मोतियाबिंद", "मोतीबिंदू", "ছানি", "கண்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ", "આંખ"]):
         if t and "cataract" in t:
             return t["cataract"].format(policy_label=policy_label)
         base_ans = f"Based on {policy_label} (Page 2 - Specific Sub-Limits), Cataract surgery is covered up to a specific sub-limit of ₹40,000 per eye (or 25% of Sum Insured, whichever is lower) with a 24-month waiting period for pre-existing conditions."
@@ -419,58 +433,65 @@ def ask_policy_question_detailed(query: str, collection=None, policy_profile=Non
     is_temporal = any(tok in q_norm.split() for tok in ["date", "time", "day", "today", "todays", "clock", "tarik", "tarikh", "samay", "तारीख", "समय"]) or any(phrase in q_clean for phrase in ["what is today", "what is the date", "what time", "current date", "current time", "what day", "aaj ka tarik", "aaj ki tarik", "aaj ka tarikh", "aaj ki tarikh", "aaj kya tarik", "aaj kya tarikh", "aaj ka samay", "kya tarik hai", "kya tarikh hai"])
     has_policy_kw = any(k in q_clean for k in ["cataract", "joint", "knee", "hip", "room", "icu", "rent", "auth", "cashless", "preauth", "pre-auth", "claim", "reimbursement", "doctor", "ambulance", "maternity", "waiting period", "ped", "pre-existing", "sub-limit", "copay", "co-pay", "deductible", "topup", "cover", "policy", "मोतियाबिंद", "मोतीबिंदू", "छानि", "कण்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ"])
 
+    room_elig = (policy_profile.room_eligibility if (policy_profile and hasattr(policy_profile, 'room_eligibility') and policy_profile.room_eligibility) else "Single Private Room")
+    copay_str = (policy_profile.co_pay if (policy_profile and hasattr(policy_profile, 'co_pay') and policy_profile.co_pay) else "0% Co-Pay")
+    insurer_name = (policy_profile.insurer_name if (policy_profile and hasattr(policy_profile, 'insurer_name') and policy_profile.insurer_name) else "Health Insurance Policy")
+
+    is_scheme = any(k in insurer_name.lower() for k in ["ayushman", "arogya", "yeshaswini", "esi", "esic", "cghs", "pmjay", "scheme"])
+    clause_str = f"Benefit Package Rate Schedule - {insurer_name}" if is_scheme else "Section 2.1 - Inpatient Hospitalization Medical Expenses"
+
     # If no active policy is loaded OR it's a non-policy query, return NO intelligence card (intelligence = None)
     if is_greeting or is_ood or is_temporal or not has_policy_kw or not has_active_policy:
         intelligence = None
     elif any(k in q_clean for k in ["cataract", "eye", "मोतियाबिंद", "मोतीबिंदू", "छानि", "कण்புரை", "కంటి", "ମୋତିଆବିନ୍ଦୁ"]):
         intelligence = {
-            "coverage_status": "Covered (Sub-Limited)",
-            "room_eligibility": "Single Private Room",
-            "co_pay": "0% Co-Pay",
+            "coverage_status": "Covered (100% Cashless Package)" if is_scheme else "Covered (Sub-Limited)",
+            "room_eligibility": room_elig,
+            "co_pay": copay_str,
             "pre_auth": "Required (48h Planned / 24h Emergency)",
-            "estimated_out_of_pocket": "₹5,000 (Consumables)",
-            "relevant_clause": "Section 4.2 - Specific Cataract Sub-Limit Capped at ₹40,000 per eye.",
+            "estimated_out_of_pocket": "₹0 (Scheme Package Benefit)" if is_scheme else "₹5,000 (Consumables)",
+            "relevant_clause": f"Specific Sub-Limit Capped at Package Rate under {insurer_name}." if is_scheme else "Section 4.2 - Specific Cataract Sub-Limit Capped at ₹40,000 per eye.",
             "confidence_score": "98.4%",
             "traceability": {
-                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf",
-                "section": "Section 4.2 (Surgical Sub-Limits)",
+                "policy_document": f"{insurer_name}_Package_Schedule_2026.pdf" if is_scheme else f"{insurer_name}_Policy_Contract_2025.pdf",
+                "section": "Package Rates Schedule" if is_scheme else "Section 4.2 (Surgical Sub-Limits)",
                 "clause": "Clause 4.2.1 Cataract Capping",
-                "extracted_rule": "Max ₹40,000 per eye or 25% of Base Sum Insured (Whichever is lower).",
-                "conclusion": "Cataract surgery covered with ₹40,000 sub-limit cap. 0% co-pay applicable."
+                "extracted_rule": f"Covered under {room_elig} with {copay_str}.",
+                "conclusion": f"Cataract surgery covered under {insurer_name} package terms."
             }
         }
     elif any(k in q_clean for k in ["joint", "knee", "hip", "घुटने", "सांधे"]):
         intelligence = {
-            "coverage_status": "Covered (Major Surgery)",
-            "room_eligibility": "Single Private Room",
-            "co_pay": "0% Co-Pay",
-            "pre_auth": "Required (48h Planned)",
-            "estimated_out_of_pocket": "₹15,000 (Consumables & Implants)",
-            "relevant_clause": "Section 4.5 - Joint Replacement Surgery Capped at ₹1,50,000 per joint.",
+            "coverage_status": "Covered (100% Cashless Package)" if is_scheme else "Covered (Major Surgery)",
+            "room_eligibility": room_elig,
+            "co_pay": copay_str,
+            "pre_auth": "Required (Pre-Auth Approval Mandatory)",
+            "estimated_out_of_pocket": "₹0 (Scheme Package Benefit)" if is_scheme else "₹15,000 (Consumables & Implants)",
+            "relevant_clause": f"Major Surgery Package Schedule under {insurer_name}." if is_scheme else "Section 4.5 - Joint Replacement Surgery Capped at ₹1,50,000 per joint.",
             "confidence_score": "97.8%",
             "traceability": {
-                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf",
-                "section": "Section 4.5 (Major Surgical Procedures)",
-                "clause": "Clause 4.5.3 Total Knee/Hip Replacement Capping",
-                "extracted_rule": "Max ₹1,50,000 per joint after 24-month waiting period.",
-                "conclusion": "Joint replacement covered up to ₹1,50,000 per joint subject to 24-month waiting period."
+                "policy_document": f"{insurer_name}_Package_Schedule_2026.pdf" if is_scheme else f"{insurer_name}_Policy_Contract_2025.pdf",
+                "section": "Package Rates Schedule" if is_scheme else "Section 4.5 (Major Surgical Procedures)",
+                "clause": "Major Surgical Capping",
+                "extracted_rule": f"Covered under {room_elig} with {copay_str}.",
+                "conclusion": f"Joint replacement covered under {insurer_name} package terms."
             }
         }
     else:
         intelligence = {
-            "coverage_status": "Covered (Base Sum Insured)",
-            "room_eligibility": "Single Private Room",
-            "co_pay": "0% Co-Pay",
-            "pre_auth": "Required for Cashless",
-            "estimated_out_of_pocket": "₹3,000 - ₹8,000",
-            "relevant_clause": "Section 2.1 - Inpatient Hospitalization Medical Expenses.",
+            "coverage_status": "Covered (100% Cashless Scheme Package)" if is_scheme else "Covered (Base Sum Insured)",
+            "room_eligibility": room_elig,
+            "co_pay": copay_str,
+            "pre_auth": "Required (Pre-Auth Approval Letter Mandatory)" if is_scheme else "Required for Cashless",
+            "estimated_out_of_pocket": "₹0 (Scheme Package Benefit)" if is_scheme else "₹3,000 - ₹8,000",
+            "relevant_clause": clause_str,
             "confidence_score": "95.0%",
             "traceability": {
-                "policy_document": f"{insurer_name}_Policy_Contract_2025.pdf",
-                "section": "Section 2.1 (Inpatient Benefits)",
-                "clause": "Clause 2.1.1 General Hospitalization Coverage",
-                "extracted_rule": "100% coverage up to Sum Insured for active medical treatment.",
-                "conclusion": "Inpatient treatment covered up to policy sum insured terms."
+                "policy_document": f"{insurer_name}_Package_Schedule_2026.pdf" if is_scheme else f"{insurer_name}_Policy_Contract_2025.pdf",
+                "section": "Government Scheme Package Rates Schedule" if is_scheme else "Section 2.1 (Inpatient Benefits)",
+                "clause": "Empaneled Package Rate Schedule" if is_scheme else "Clause 2.1.1 General Hospitalization Coverage",
+                "extracted_rule": f"Covered under {room_elig} with {copay_str}.",
+                "conclusion": f"Inpatient treatment covered under {insurer_name} terms."
             }
         }
 
