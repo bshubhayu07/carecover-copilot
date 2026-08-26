@@ -102,44 +102,39 @@ def match_hospitals(
         # 3. Dynamic Distance Calculation from User's Current Location/GPS
         h_lat = float(row['latitude']) if row.get('latitude') is not None and str(row.get('latitude')).strip() != '' else None
         h_lon = float(row['longitude']) if row.get('longitude') is not None and str(row.get('longitude')).strip() != '' else None
-        local_demo_dist = float(row.get('distance_km_demo', 3.5))
+        local_offset = float(row.get('distance_km_demo', 3.5))
 
         if user_lat is not None and user_lon is not None:
             if h_lat is not None and h_lon is not None:
                 computed_dist = round(calculate_haversine(user_lat, user_lon, h_lat, h_lon), 1)
             elif hosp_city.lower() in CITY_COORDINATES:
                 hc_lat, hc_lon = CITY_COORDINATES[hosp_city.lower()]
-                computed_dist = round(calculate_haversine(user_lat, user_lon, hc_lat, hc_lon), 1)
+                base_dist = calculate_haversine(user_lat, user_lon, hc_lat, hc_lon)
+                if base_dist < 20.0:  # User is in the same city area as the hospital
+                    computed_dist = local_offset
+                else:
+                    computed_dist = round(base_dist + local_offset, 1)
             else:
-                computed_dist = local_demo_dist
+                computed_dist = local_offset
             dist_label = f"{computed_dist:,.1f} km away"
         elif user_city and user_city.strip():
             u_city_clean = user_city.strip().lower()
             h_city_clean = hosp_city.strip().lower()
-            if u_city_clean in CITY_COORDINATES:
+            if u_city_clean in CITY_COORDINATES and h_city_clean in CITY_COORDINATES:
                 u_lat, u_lon = CITY_COORDINATES[u_city_clean]
-                if h_lat is not None and h_lon is not None:
-                    computed_dist = round(calculate_haversine(u_lat, u_lon, h_lat, h_lon), 1)
-                elif h_city_clean in CITY_COORDINATES:
-                    hc_lat, hc_lon = CITY_COORDINATES[h_city_clean]
-                    computed_dist = round(calculate_haversine(u_lat, u_lon, hc_lat, hc_lon), 1)
+                hc_lat, hc_lon = CITY_COORDINATES[h_city_clean]
+                if u_city_clean == h_city_clean:
+                    computed_dist = local_offset
                 else:
-                    computed_dist = local_demo_dist
+                    inter_city_dist = calculate_haversine(u_lat, u_lon, hc_lat, hc_lon)
+                    computed_dist = round(inter_city_dist + local_offset, 1)
             else:
-                computed_dist = local_demo_dist
+                computed_dist = local_offset
             
-            if u_city_clean != h_city_clean:
-                dist_label = f"{computed_dist:,.1f} km from {user_city.title()}"
-            else:
-                dist_label = f"{computed_dist:,.1f} km away"
-        else:
-            computed_dist = local_demo_dist
             dist_label = f"{computed_dist:,.1f} km away"
-
-        # Ensure minimum plausible distance display
-        if computed_dist <= 0:
-            computed_dist = 1.2
-            dist_label = "1.2 km away"
+        else:
+            computed_dist = local_offset
+            dist_label = f"{computed_dist:,.1f} km away"
 
         dist_score = max(0, 20 - int(computed_dist / 10 if computed_dist > 50 else computed_dist))
         score += dist_score
