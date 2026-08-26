@@ -269,6 +269,23 @@ def detect_ip_location_endpoint(request: Request):
     try:
         import urllib.request
         import json
+        req = urllib.request.Request("https://ipwho.is/", headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=3.0) as resp:
+            data = json.loads(resp.read().decode())
+            if data.get("success") and "latitude" in data and "longitude" in data:
+                return {
+                    "ip": data.get("ip", client_ip),
+                    "city": data.get("city", "Pune"),
+                    "region": data.get("region", "Maharashtra"),
+                    "latitude": float(data["latitude"]),
+                    "longitude": float(data["longitude"])
+                }
+    except Exception:
+        pass
+
+    try:
+        import urllib.request
+        import json
         req = urllib.request.Request("http://ip-api.com/json/", headers={"User-Agent": "Mozilla/5.0"})
         with urllib.request.urlopen(req, timeout=3.0) as resp:
             data = json.loads(resp.read().decode())
@@ -282,6 +299,7 @@ def detect_ip_location_endpoint(request: Request):
                 }
     except Exception:
         pass
+
     return {"ip": client_ip, "city": "Pune", "region": "Maharashtra", "latitude": 18.5204, "longitude": 73.8567}
 
 @app.get("/api/hospitals")
@@ -296,13 +314,14 @@ def get_hospitals_endpoint(
     hospitals = get_hospitals_by_city(city)
     p_profile = active_policy_profile if active_policy_profile else PolicyProfile(insurer_name="Niva Bupa", room_eligibility="Single Room")
     
-    effective_user_city = user_city.strip() if (user_city and user_city.strip()) else city
+    raw_user_city = user_city.strip() if (user_city and user_city.strip()) else city
+    clean_user_city = raw_user_city.split('(')[0].split(',')[0].strip() if raw_user_city else city
     use_live = (user_lat is not None and user_lon is not None) or (user_city is not None)
     matches = match_hospitals(
         hospitals, 
         p_profile, 
         context_city=city, 
-        user_city=effective_user_city, 
+        user_city=clean_user_city, 
         use_live_location=use_live,
         user_lat=user_lat,
         user_lon=user_lon

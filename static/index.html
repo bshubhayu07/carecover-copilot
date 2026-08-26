@@ -2581,65 +2581,62 @@
 
     async function autoDetectIPLocation() {
       const btn = document.getElementById('gpsBtn');
+      const inputEl = document.getElementById('userLocationInput');
       if (btn) btn.innerText = "Locating...";
 
+      let ip = "";
+      let city = "Pune";
+      let region = "Maharashtra";
+      let lat = 18.5204;
+      let lon = 73.8567;
+
       try {
-        const res = await fetch('/api/detect-ip-location');
+        const res = await fetch('https://ipwho.is/');
         if (res.ok) {
           const data = await res.json();
-          if (data.latitude && data.longitude) {
-            userLat = parseFloat(data.latitude);
-            userLon = parseFloat(data.longitude);
-            const detectedCity = data.city || 'Pune';
-
-            const inputEl = document.getElementById('userLocationInput');
-            if (inputEl) inputEl.value = detectedCity;
-
-            if (btn) {
-              btn.innerText = `Detected (${detectedCity})`;
-              btn.className = "bg-emerald-800 dark:bg-emerald-950 light:bg-emerald-600 text-white border border-emerald-600 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm";
-            }
-            fetchHospitals();
-            return;
+          if (data.success && data.latitude && data.longitude) {
+            ip = data.ip || "";
+            city = data.city || data.region || "Pune";
+            region = data.region || "Maharashtra";
+            lat = parseFloat(data.latitude);
+            lon = parseFloat(data.longitude);
           }
         }
-      } catch (e) {
-        console.warn("IP Geolocation Error:", e);
+      } catch (err) {
+        console.warn("Client IP fetch failed, trying backend API", err);
       }
 
-      requestGPSLocation();
+      if (!ip) {
+        try {
+          const backRes = await fetch('/api/detect-ip-location');
+          if (backRes.ok) {
+            const data = await backRes.json();
+            ip = data.ip || "";
+            city = data.city || "Pune";
+            region = data.region || "Maharashtra";
+            lat = data.latitude;
+            lon = data.longitude;
+          }
+        } catch (e) {
+          console.warn("Backend IP fetch failed", e);
+        }
+      }
+
+      userLat = lat;
+      userLon = lon;
+
+      const displayStr = ip ? `${city}, ${region} (IP: ${ip}, GPS)` : `${city}, ${region}`;
+      if (inputEl) inputEl.value = displayStr;
+      if (btn) {
+        btn.innerText = "Detect Location";
+        btn.className = "bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-sky-400 light:border-sky-600 transition-all whitespace-nowrap cursor-pointer shadow";
+      }
+
+      fetchHospitals();
     }
 
     function requestGPSLocation() {
-      const btn = document.getElementById('gpsBtn');
-      if (navigator.geolocation) {
-        if (btn) btn.innerText = "Detecting...";
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            userLat = pos.coords.latitude;
-            userLon = pos.coords.longitude;
-            const detectedCity = detectCityFromCoords(userLat, userLon);
-            const inputEl = document.getElementById('userLocationInput');
-            if (inputEl) inputEl.value = detectedCity;
-            if (btn) {
-              btn.innerText = `Detected (${detectedCity})`;
-              btn.className = "bg-emerald-800 dark:bg-emerald-950 light:bg-emerald-600 text-white border border-emerald-600 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm";
-            }
-            fetchHospitals();
-          },
-          (err) => {
-            const inputVal = document.getElementById('userLocationInput')?.value?.trim() || 'Pune';
-            if (CITY_COORDS[inputVal.toLowerCase()]) {
-              userLat = CITY_COORDS[inputVal.toLowerCase()].lat;
-              userLon = CITY_COORDS[inputVal.toLowerCase()].lon;
-            }
-            if (btn) btn.innerText = `Active (${inputVal})`;
-            fetchHospitals();
-          }
-        );
-      } else {
-        fetchHospitals();
-      }
+      autoDetectIPLocation();
     }
 
     function handleCityDropdownChange() {
