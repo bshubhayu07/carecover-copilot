@@ -594,22 +594,22 @@
 
       <!-- Mobile Slide-Down Drawer Container -->
       <div id="mobileMenu" class="hidden md:hidden py-3 space-y-2 border-t border-slate-800 light:border-slate-200">
-        <button onclick="switchTab('tab-dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-sky-400 bg-slate-900 light:bg-slate-100 rounded-lg flex items-center gap-2">
+        <button data-i18n="nav_dashboard" onclick="switchTab('tab-dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-sky-400 bg-slate-900 light:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Dashboard</span>
         </button>
-        <button onclick="switchTab('tab1'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+        <button data-i18n="nav_coverage" onclick="switchTab('tab1'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Coverage</span>
         </button>
-        <button onclick="switchTab('tab3'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+        <button data-i18n="nav_hospitals" onclick="switchTab('tab3'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Hospitals & Cost</span>
         </button>
-        <button onclick="switchTab('tab4'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+        <button data-i18n="nav_claims" onclick="switchTab('tab4'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Claims & Journey</span>
         </button>
-        <button onclick="switchTab('tab2'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+        <button data-i18n="tab2" onclick="switchTab('tab2'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Ask AI</span>
         </button>
-        <button onclick="switchTab('tab-emergency'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-red-400 bg-red-950/60 rounded-lg flex items-center gap-2">
+        <button data-i18n="nav_emergency" onclick="switchTab('tab-emergency'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-red-400 bg-red-950/60 rounded-lg flex items-center gap-2">
           <span>Emergency SOS</span>
         </button>
       </div>
@@ -1458,18 +1458,36 @@
       })
       .catch(err => console.error("Failed to load i18n data", err));
 
+    function getTranslation(key, defaultVal = '') {
+      if (window.UI_I18N && selectedLanguage && UI_I18N[selectedLanguage] && UI_I18N[selectedLanguage][key]) {
+        return UI_I18N[selectedLanguage][key];
+      }
+      if (window.UI_I18N && UI_I18N["English"] && UI_I18N["English"][key]) {
+        return UI_I18N["English"][key];
+      }
+      return defaultVal;
+    }
+
     function changeLanguage() {
       selectedLanguage = document.getElementById('languageSelect').value;
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
+        const translatedText = getTranslation(key);
         
-        if (UI_I18N[selectedLanguage] && UI_I18N[selectedLanguage][key]) {
-          el.innerText = UI_I18N[selectedLanguage][key];
-        } else if (UI_I18N["English"][key]) {
-          el.innerText = UI_I18N["English"][key]; // CLEAN FALLBACK TO ENGLISH BASELINE
+        if (translatedText) {
+          const targetSpan = el.querySelector('span:not(.animate-pulse)');
+          if (targetSpan) {
+            targetSpan.innerText = translatedText;
+          } else {
+            el.innerText = translatedText;
+          }
         }
       });
+
+      if (typeof fetchHospitals === 'function' && document.getElementById('hospitalList')) {
+        fetchHospitals();
+      }
     }
 
     // Site-opening DPDP consent handler
@@ -2548,17 +2566,17 @@
                   <div class="text-[11px] text-slate-400 light:text-slate-600 mt-0.5">${h.address || h.city}</div>
                 </div>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap ${h.network_status === 'In Network' ? 'bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300' : 'bg-amber-950 dark:bg-amber-950 light:bg-amber-100 text-amber-400 light:text-amber-800 border border-amber-800 light:border-amber-300'}">
-                  ${h.network_status === 'In Network' ? 'Cashless Network' : 'Reimbursement Only'}
+                  ${h.network_status === 'In Network' ? getTranslation('cashless_network', 'Cashless Network') : getTranslation('reimbursement_only', 'Reimbursement Only')}
                 </span>
               </div>
 
               <div class="grid grid-cols-2 gap-2 text-[11px]">
                 <div class="bg-slate-950/60 dark:bg-slate-950/60 light:bg-white p-2 rounded-lg border border-slate-800/80 light:border-slate-200">
-                  <span class="text-slate-400 light:text-slate-500 block text-[10px]">Specialties</span>
+                  <span class="text-slate-400 light:text-slate-500 block text-[10px]">${getTranslation('specialties_label', 'Specialties')}</span>
                   <span class="font-bold text-sky-400 light:text-sky-700">${h.specialties || 'Multispecialty'}</span>
                 </div>
                 <div class="bg-slate-950/60 dark:bg-slate-950/60 light:bg-white p-2 rounded-lg border border-slate-800/80 light:border-slate-200">
-                  <span class="text-slate-400 light:text-slate-500 block text-[10px]">Indicative Room Rate</span>
+                  <span class="text-slate-400 light:text-slate-500 block text-[10px]">${getTranslation('room_rate_label', 'Indicative Room Rate')}</span>
                   <span class="font-bold text-emerald-400 light:text-emerald-700">₹${(parseFloat(h.indicative_daily_room_cost_inr) || 4500).toLocaleString('en-IN')}/night</span>
                 </div>
               </div>
@@ -2566,21 +2584,20 @@
               <div class="flex justify-between items-center text-[11px] pt-1">
                 <span class="text-sky-400 light:text-sky-700 font-extrabold flex items-center gap-1">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                  Match Score: ${h.match_score || 98}%
+                  ${getTranslation('match_score_label', 'Match Score')}: ${h.match_score || 98}%
                 </span>
                 <div class="flex items-center gap-2">
                   <span class="text-emerald-400 light:text-emerald-800 font-extrabold bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 border border-emerald-800/80 light:border-emerald-300 px-2.5 py-0.5 rounded-md text-[10px]">
                     ${distStr}
                   </span>
                   <a href="tel:${phone}" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] px-2.5 py-0.5 rounded-md flex items-center gap-1">
-                    Call: ${phone}
+                    ${getTranslation('call_btn', 'Call')}: ${phone}
                   </a>
                 </div>
               </div>
 
-              <!-- STEP 4 FLOWCHART ACTION BUTTON -->
               <button onclick="openHospitalRoomsModal(${idx})" class="w-full mt-2 bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-extrabold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 shadow transition-all cursor-pointer">
-                <span>Select Hospital & View Room Categories (Step 4)</span>
+                <span>${getTranslation('select_hospital_btn', 'Select Hospital & View Room Categories (Step 4)')}</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </button>
             </div>
