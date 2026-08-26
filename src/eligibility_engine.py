@@ -178,6 +178,7 @@ def match_hospitals(
             "name": row['hospital_name'],
             "city": row['city'],
             "specialties": row['specialties'],
+            "indicative_daily_room_cost_inr": row.get('indicative_daily_room_cost_inr', 4500),
             "score": score,
             "match_score_percent": match_score_percent,
             "match_reasons": explanation,
