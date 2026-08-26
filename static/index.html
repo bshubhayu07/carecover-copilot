@@ -679,8 +679,8 @@
         </div>
       </div>
 
-      <!-- 3 Quick Journey Action Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+      <!-- 5 Connected Quick Journey Action Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-xs">
         
         <!-- Action 1: Coverage -->
         <div onclick="switchTab('tab1')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
@@ -707,6 +707,24 @@
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
           <p class="text-slate-400 light:text-slate-600 text-[11px]">Calculate exact out-of-pocket expenses, pre-auth SLAs, and generate mandatory document checklists.</p>
+        </div>
+
+        <!-- Action 4: Risk & Bill Calculator -->
+        <div onclick="switchTab('tab-calculator')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
+          <div class="flex items-center justify-end">
+            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+          </div>
+          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Risk & Bill Calculator</h3>
+          <p class="text-slate-400 light:text-slate-600 text-[11px]">Simulate potential out-of-pocket financial risks, room rent penalties, and analyze itemized hospital bills.</p>
+        </div>
+
+        <!-- Action 5: Ask AI -->
+        <div onclick="switchTab('tab2')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
+          <div class="flex items-center justify-end">
+            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+          </div>
+          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Ask AI Copilot</h3>
+          <p class="text-slate-400 light:text-slate-600 text-[11px]">Ask policy questions in 23 Indian languages with RAG policy verification and instant confidence scores.</p>
         </div>
       </div>
     </section>
