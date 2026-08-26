@@ -2579,31 +2579,66 @@
       return 'Delhi';
     }
 
+    async function autoDetectIPLocation() {
+      const btn = document.getElementById('gpsBtn');
+      if (btn) btn.innerText = "Locating...";
+
+      try {
+        const res = await fetch('/api/detect-ip-location');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.latitude && data.longitude) {
+            userLat = parseFloat(data.latitude);
+            userLon = parseFloat(data.longitude);
+            const detectedCity = data.city || 'Pune';
+
+            const inputEl = document.getElementById('userLocationInput');
+            if (inputEl) inputEl.value = detectedCity;
+
+            if (btn) {
+              btn.innerText = `Detected (${detectedCity})`;
+              btn.className = "bg-emerald-800 dark:bg-emerald-950 light:bg-emerald-600 text-white border border-emerald-600 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm";
+            }
+            fetchHospitals();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn("IP Geolocation Error:", e);
+      }
+
+      requestGPSLocation();
+    }
+
     function requestGPSLocation() {
       const btn = document.getElementById('gpsBtn');
       if (navigator.geolocation) {
-        btn.innerText = "Detecting...";
+        if (btn) btn.innerText = "Detecting...";
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             userLat = pos.coords.latitude;
             userLon = pos.coords.longitude;
             const detectedCity = detectCityFromCoords(userLat, userLon);
-            document.getElementById('userLocationInput').value = detectedCity;
-            const citySelect = document.getElementById('hospitalCity');
-            if (citySelect) citySelect.value = detectedCity;
-            updateHelplineNumbers(detectedCity);
-            btn.innerText = `Detected (${detectedCity})`;
-            btn.className = "bg-emerald-800 dark:bg-emerald-950 light:bg-emerald-600 text-white border border-emerald-600 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm";
+            const inputEl = document.getElementById('userLocationInput');
+            if (inputEl) inputEl.value = detectedCity;
+            if (btn) {
+              btn.innerText = `Detected (${detectedCity})`;
+              btn.className = "bg-emerald-800 dark:bg-emerald-950 light:bg-emerald-600 text-white border border-emerald-600 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm";
+            }
             fetchHospitals();
           },
           (err) => {
-            const inputVal = document.getElementById('userLocationInput').value.trim();
-            const city = inputVal || 'Delhi';
-            updateHelplineNumbers(city);
-            btn.innerText = `Active (${city})`;
+            const inputVal = document.getElementById('userLocationInput')?.value?.trim() || 'Pune';
+            if (CITY_COORDS[inputVal.toLowerCase()]) {
+              userLat = CITY_COORDS[inputVal.toLowerCase()].lat;
+              userLon = CITY_COORDS[inputVal.toLowerCase()].lon;
+            }
+            if (btn) btn.innerText = `Active (${inputVal})`;
             fetchHospitals();
           }
         );
+      } else {
+        fetchHospitals();
       }
     }
 
@@ -3181,25 +3216,10 @@
       }
     }
 
-    // Auto Location Detection on Load
+    // Auto Location & IP Geolocation Detection on Load
     window.addEventListener('DOMContentLoaded', () => {
       loadCareJourneyStage('admission');
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            userLat = pos.coords.latitude;
-            userLon = pos.coords.longitude;
-            const detectedCity = detectCityFromCoords(userLat, userLon);
-            document.getElementById('userLocationInput').value = detectedCity;
-            const citySelect = document.getElementById('hospitalCity');
-            if (citySelect) citySelect.value = detectedCity;
-            updateHelplineNumbers(detectedCity);
-          },
-          (err) => {
-            // Geolocation pending/declined, keep neutral national baseline
-          }
-        );
-      }
+      autoDetectIPLocation();
     });
   </script>
 

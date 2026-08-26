@@ -263,6 +263,27 @@ async def policy_qa_endpoint(request: QARequest):
         "intelligence": detailed_res["intelligence"]
     }
 
+@app.get("/api/detect-ip-location")
+def detect_ip_location_endpoint(request: Request):
+    client_ip = request.client.host if request.client else ""
+    try:
+        import urllib.request
+        import json
+        req = urllib.request.Request("http://ip-api.com/json/", headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=3.0) as resp:
+            data = json.loads(resp.read().decode())
+            if data.get("status") == "success" and "lat" in data and "lon" in data:
+                return {
+                    "ip": data.get("query", client_ip),
+                    "city": data.get("city", "Pune"),
+                    "region": data.get("regionName", "Maharashtra"),
+                    "latitude": float(data["lat"]),
+                    "longitude": float(data["lon"])
+                }
+    except Exception:
+        pass
+    return {"ip": client_ip, "city": "Pune", "region": "Maharashtra", "latitude": 18.5204, "longitude": 73.8567}
+
 @app.get("/api/hospitals")
 def get_hospitals_endpoint(
     city: str = Query("Pune"),
