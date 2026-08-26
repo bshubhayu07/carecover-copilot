@@ -466,7 +466,7 @@
       <!-- Interactive User Location Input Box -->
       <div class="flex items-center gap-2 w-full md:w-auto">
         <input type="text" id="userLocationInput" oninput="handleUserLocationInput()" placeholder="Enter your city/state (e.g. Pune, Mumbai, Delhi, Patna)..." class="bg-red-900/60 light:bg-white text-white light:text-slate-900 placeholder-red-300 light:placeholder-slate-400 border border-red-700 light:border-red-300 rounded-lg px-3 py-1.5 text-xs w-full md:w-64 focus:outline-none focus:ring-1 focus:ring-red-400">
-        <button data-i18n="detect_btn" onclick="requestGPSLocation()" id="gpsBtn" title="Detect GPS Location" class="bg-red-800 hover:bg-red-700 light:bg-red-600 light:hover:bg-red-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-red-600 transition-colors whitespace-nowrap cursor-pointer">
+        <button data-i18n="detect_btn" onclick="requestGPSLocation()" id="gpsBtn" title="Detect GPS Location" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg border border-sky-400 light:border-sky-600 transition-all whitespace-nowrap cursor-pointer shadow">
           Detect Location
         </button>
       </div>
@@ -543,10 +543,10 @@
 
     <!-- Right Header Tools -->
     <div class="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full md:w-auto">
-      <button data-i18n="purge_btn" id="purgeBtnHeader" onclick="purgeSession()" class="bg-red-950/80 hover:bg-red-900 light:bg-red-600 light:hover:bg-red-700 text-red-200 light:text-white border border-red-800 light:border-red-600 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap">
+      <button data-i18n="purge_btn" id="purgeBtnHeader" onclick="purgeSession()" class="bg-red-950/80 hover:bg-red-900 light:bg-red-50 light:hover:bg-red-100 text-red-300 light:text-red-700 border border-red-800 light:border-red-300 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap">
         Purge Data
       </button>
-      <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-slate-800 light:hover:bg-slate-700 text-white font-bold text-xs px-2.5 py-1.5 rounded-lg shadow-md border border-sky-400 light:border-slate-600 transition-all flex items-center gap-1 cursor-pointer">
+      <button onclick="toggleTheme()" id="themeBtn" title="Switch Theme Mode" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-md border border-sky-400 light:border-sky-600 transition-all flex items-center gap-1 cursor-pointer">
         <span data-i18n="theme_btn" id="themeBtnSpan">Light Mode</span>
       </button>
       <span class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-emerald-950 dark:bg-emerald-950 light:bg-emerald-50 text-emerald-400 light:text-emerald-700 border border-emerald-800 light:border-emerald-200">
@@ -739,13 +739,13 @@
         
         <div class="flex flex-col sm:flex-row gap-3 items-center">
           <input type="file" id="policyFileInput" accept=".pdf" onchange="handleUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-600 file:text-white hover:file:bg-sky-500 cursor-pointer">
-          <button data-i18n="demo_base_btn" id="loadDemoBaseBtn" onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
+          <button data-i18n="demo_base_btn" id="loadDemoBaseBtn" onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-extrabold text-xs px-4 py-2.5 rounded-lg transition-all shadow cursor-pointer whitespace-nowrap">
             Load Demo Base Policy
           </button>
-          <a data-i18n="demo_base_dl" id="downloadDemoBaseBtn" href="/data/demo_base_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-sky-950 dark:bg-sky-950 light:bg-sky-50 hover:bg-sky-900 light:hover:bg-sky-100 text-sky-300 light:text-sky-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-sky-800 light:border-sky-300 transition-colors whitespace-nowrap text-center cursor-pointer">
+          <a data-i18n="demo_base_dl" id="downloadDemoBaseBtn" href="/data/demo_base_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 light:bg-slate-100 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-bold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-all whitespace-nowrap text-center cursor-pointer shadow-sm">
             Download Demo PDF
           </a>
-          <button id="clearBaseBtn" onclick="clearBasePolicy()" class="w-full sm:w-auto bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 hover:bg-red-900 light:hover:bg-red-100 text-red-300 light:text-red-700 font-semibold text-xs px-4 py-2.5 rounded-lg border border-red-800 light:border-red-300 transition-colors whitespace-nowrap cursor-pointer hidden">
+          <button id="clearBaseBtn" onclick="clearBasePolicy()" class="w-full sm:w-auto bg-red-950/80 hover:bg-red-900 light:bg-red-50 light:hover:bg-red-100 text-red-300 light:text-red-700 border border-red-800 light:border-red-300 font-bold text-xs px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap cursor-pointer hidden">
             Unselect / Clear Base Policy
           </button>
         </div>
@@ -765,14 +765,14 @@
         </div>
 
         <div class="flex flex-col sm:flex-row gap-3 items-center">
-          <input type="file" id="topupFileInput" accept=".pdf" onchange="handleTopupUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
-          <button data-i18n="demo_topup_btn" id="loadDemoTopupBtn" onclick="loadDemoTopup()" class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-colors whitespace-nowrap cursor-pointer">
+          <input type="file" id="topupFileInput" accept=".pdf" onchange="handleTopupUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-600 file:text-white hover:file:bg-sky-500 cursor-pointer">
+          <button data-i18n="demo_topup_btn" id="loadDemoTopupBtn" onclick="loadDemoTopup()" class="w-full sm:w-auto bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-extrabold text-xs px-4 py-2.5 rounded-lg transition-all shadow cursor-pointer whitespace-nowrap">
             Load Demo Super Top-Up
           </button>
-          <a data-i18n="demo_topup_dl" id="downloadDemoTopupBtn" href="/data/demo_super_topup_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-indigo-950 dark:bg-indigo-950 light:bg-indigo-50 hover:bg-indigo-900 light:hover:bg-indigo-100 text-indigo-300 light:text-indigo-700 font-bold text-xs px-4 py-2.5 rounded-lg border border-indigo-800 light:border-indigo-300 transition-colors whitespace-nowrap text-center cursor-pointer">
+          <a data-i18n="demo_topup_dl" id="downloadDemoTopupBtn" href="/data/demo_super_topup_policy.pdf" target="_blank" download class="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 light:bg-slate-100 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 font-bold text-xs px-4 py-2.5 rounded-lg border border-slate-700 light:border-slate-300 transition-all whitespace-nowrap text-center cursor-pointer shadow-sm">
             Download Top-Up PDF
           </a>
-          <button id="clearTopupBtn" onclick="clearTopupPolicy()" class="w-full sm:w-auto bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 hover:bg-red-900 light:hover:bg-red-100 text-red-300 light:text-red-700 font-semibold text-xs px-4 py-2.5 rounded-lg border border-red-800 light:border-red-300 transition-colors whitespace-nowrap cursor-pointer hidden">
+          <button id="clearTopupBtn" onclick="clearTopupPolicy()" class="w-full sm:w-auto bg-red-950/80 hover:bg-red-900 light:bg-red-50 light:hover:bg-red-100 text-red-300 light:text-red-700 border border-red-800 light:border-red-300 font-bold text-xs px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap cursor-pointer hidden">
             Unselect / Clear Top-Up
           </button>
         </div>
@@ -2612,7 +2612,7 @@
             </span>
           </div>
           <div class="pt-2 border-t border-slate-800 light:border-slate-200 flex justify-end">
-            <button onclick="selectRoomForHospital('${safeName}', '${r.val}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer transition-colors shadow">
+            <button onclick="selectRoomForHospital('${safeName}', '${r.val}')" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer transition-all shadow">
               <span>Select ${r.name} & Calculate Risk </span>
             </button>
           </div>
