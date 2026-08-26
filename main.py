@@ -273,12 +273,9 @@ def get_hospitals_endpoint(
     user_city: Optional[str] = Query(None)
 ):
     hospitals = get_hospitals_by_city(city)
-    if not hospitals:
-        hospitals = get_hospitals_by_city("Pune")
-
     p_profile = active_policy_profile if active_policy_profile else PolicyProfile(insurer_name="Niva Bupa", room_eligibility="Single Room")
     
-    effective_user_city = user_city.strip() if (user_city and user_city.strip()) else "Pune"
+    effective_user_city = user_city.strip() if (user_city and user_city.strip()) else city
     use_live = (user_lat is not None and user_lon is not None) or (user_city is not None)
     matches = match_hospitals(
         hospitals, 

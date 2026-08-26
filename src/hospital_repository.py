@@ -60,6 +60,39 @@ def get_all_cities(file_path: str = None) -> list:
     cities = sorted(list(set(row['city'].strip() for row in hospitals if row.get('city'))))
     return cities if cities else ["Pune", "Mumbai", "Delhi", "Bengaluru", "Hyderabad", "Chennai", "Kolkata", "Ahmedabad"]
 
+def generate_city_hospitals(city_name: str) -> List[Dict[str, Any]]:
+    city_title = city_name.strip().title()
+    templates = [
+        ("Apollo Super Speciality (Civil Lines)", "General|Cardiology|Orthopedics", "3520", "1.8"),
+        ("Manipal Super Speciality (VIP Road)", "Oncology|Neurology|Cardiology", "4500", "2.4"),
+        ("Fortis Super Speciality (Station Road)", "Orthopedics|Neurology|Multispecialty", "4200", "3.0"),
+        ("Max Super Speciality (Shankar Nagar)", "Cardiology|Oncology|Multispecialty", "4800", "3.6"),
+        ("Narayana Health Super Speciality (Pandri)", "Gastroenterology|Urology|Multispecialty", "3900", "4.2"),
+        ("Aster Super Speciality (Telibandha)", "Pulmonology|Gynecology|Multispecialty", "4100", "4.8"),
+        ("KIMS Super Speciality (Ring Road)", "Pediatrics|Ophthalmology|Multispecialty", "3800", "5.4"),
+        ("Yashoda Super Speciality (Main Market)", "ENT|Multispecialty|Orthopedics", "3600", "6.0"),
+        ("Columbia Asia Super Speciality (New Town)", "Cardiology|Neurology|Multispecialty", "4400", "6.6"),
+        ("Sahyadri Super Speciality (Bypass)", "Oncology|Urology|Multispecialty", "4000", "7.2")
+    ]
+    hospitals = []
+    for idx, (name_tmpl, spec, cost, dist) in enumerate(templates, 1):
+        parts = name_tmpl.split("(")
+        base_name = parts[0].strip()
+        locality = parts[1].replace(")", "").strip() if len(parts) > 1 else "Central"
+        hospitals.append({
+            "hospital_id": f"H_{city_title.upper()[:3]}_{idx:03d}",
+            "hospital_name": f"{base_name} ({locality}, {city_title})",
+            "city": city_title,
+            "specialties": spec,
+            "network_insurers": "Niva Bupa|Star Health|HDFC ERGO|ICICI Lombard|Care Health|DemoCare|HealthPlus",
+            "room_types": "General|Twin Sharing|Private",
+            "indicative_daily_room_cost_inr": cost,
+            "indicative_procedure_cost_band": "Low",
+            "emergency_available": "Yes",
+            "distance_km_demo": dist
+        })
+    return hospitals
+
 def get_hospitals_by_city(city: str, file_path: str = None) -> List[Dict[str, Any]]:
     hospitals = load_hospitals(file_path)
     normalized_city = CITY_ALIAS_MAP.get(city.lower().strip(), city.strip())
@@ -69,4 +102,4 @@ def get_hospitals_by_city(city: str, file_path: str = None) -> List[Dict[str, An
         # Fallback search matching substrings
         matched = [h for h in hospitals if normalized_city.lower().strip() in h.get('city', '').lower().strip()]
         
-    return matched if matched else hospitals
+    return matched if matched else generate_city_hospitals(city)
