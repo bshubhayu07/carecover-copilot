@@ -1169,22 +1169,22 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
             <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <span class="text-slate-400 light:text-slate-600 block">Total Hospital Bill</span>
-              <strong id="resBill" class="text-slate-100 light:text-slate-900 text-base font-extrabold">₹0</strong>
+              <strong id="resBill" class="text-slate-400 light:text-slate-500 text-base font-extrabold">--</strong>
             </div>
 
             <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <span class="text-slate-400 light:text-slate-600 block">Primary Base Payout</span>
-              <strong id="resPrimary" class="text-sky-400 light:text-sky-700 text-base font-extrabold">₹0 (No Policy)</strong>
+              <strong id="resPrimary" class="text-slate-400 light:text-slate-500 text-base font-extrabold">--</strong>
             </div>
 
             <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
               <span class="text-slate-400 light:text-slate-600 block">Super Top-Up Contribution</span>
-              <strong id="resTopup" class="text-indigo-400 light:text-indigo-700 text-base font-extrabold">₹0 (No Top-Up)</strong>
+              <strong id="resTopup" class="text-slate-400 light:text-slate-500 text-base font-extrabold">--</strong>
             </div>
 
             <div class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 p-3 rounded-lg border border-red-800 light:border-red-300">
               <span class="text-red-300 light:text-red-700 block font-semibold">Estimated Out-of-Pocket</span>
-              <strong id="resOutpocket" class="text-red-400 light:text-red-800 text-base font-extrabold">₹0</strong>
+              <strong id="resOutpocket" class="text-slate-400 light:text-slate-500 text-base font-extrabold">--</strong>
             </div>
           </div>
 
@@ -2872,22 +2872,31 @@
       const room = document.getElementById('calcRoom').value;
       const copay = parseFloat(document.getElementById('calcCopay').value) || 0;
 
-      if (!billInputVal || bill === 0) {
-        document.getElementById('resBill').innerText = "₹0";
-        document.getElementById('resPrimary').innerText = currentBaseSI > 0 ? `₹0 (Policy: ₹${currentBaseSI.toLocaleString('en-IN')})` : "₹0 (No Policy)";
-        document.getElementById('resTopup').innerText = currentTopupSI > 0 ? `₹0 (Top-Up: ₹${currentTopupSI.toLocaleString('en-IN')})` : "₹0 (No Top-Up)";
-        document.getElementById('resOutpocket').innerText = "₹0";
+      if (!activePolicyData && currentBaseSI <= 0 && currentTopupSI <= 0) {
+        document.getElementById('resBill').innerText = "--";
+        document.getElementById('resPrimary').innerText = "--";
+        document.getElementById('resTopup').innerText = "--";
+        document.getElementById('resOutpocket').innerText = "--";
         const topupBadge = document.getElementById('resTopupStatus');
-        if (currentBaseSI === 0) {
+        if (topupBadge) {
           topupBadge.innerText = "No Base Policy Uploaded";
           topupBadge.className = "font-bold text-slate-400 light:text-slate-500 bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-full text-xs";
-        } else {
+        }
+        document.getElementById('resDeductionNotes').innerText = "Upload your policy PDF or click 'Load Demo Base Policy' to analyze coverage dynamically.";
+        return;
+      }
+
+      if (!billInputVal || bill === 0) {
+        document.getElementById('resBill').innerText = "--";
+        document.getElementById('resPrimary').innerText = `₹0 (Policy: ₹${currentBaseSI.toLocaleString('en-IN')})`;
+        document.getElementById('resTopup').innerText = currentTopupSI > 0 ? `₹0 (Top-Up: ₹${currentTopupSI.toLocaleString('en-IN')})` : "--";
+        document.getElementById('resOutpocket').innerText = "--";
+        const topupBadge = document.getElementById('resTopupStatus');
+        if (topupBadge) {
           topupBadge.innerText = `Base Policy Active (${activePolicyName})`;
           topupBadge.className = "font-bold text-emerald-400 light:text-emerald-800 bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-full text-xs";
         }
-        document.getElementById('resDeductionNotes').innerText = currentBaseSI > 0 ?
-          `Base Policy Loaded (${activePolicyName}: ₹${currentBaseSI.toLocaleString('en-IN')} Base SI). Enter estimated hospital bill above to calculate out-of-pocket risk.` :
-          "Upload your policy PDF or click 'Load Demo Base Policy' to analyze coverage dynamically.";
+        document.getElementById('resDeductionNotes').innerText = `Base Policy Loaded (${activePolicyName}: ₹${currentBaseSI.toLocaleString('en-IN')} Base SI). Enter estimated hospital bill above to calculate out-of-pocket risk.`;
         return;
       }
 
