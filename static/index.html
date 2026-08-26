@@ -1386,11 +1386,22 @@
     }
 
     function declineConsent() {
-      const modal = document.getElementById('consentModal');
-      if (modal) {
-        modal.classList.add('hidden');
-        modal.style.setProperty('display', 'none', 'important');
-      }
+      document.body.innerHTML = `
+        <div class="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white p-6 text-center space-y-5">
+          <div class="w-16 h-16 bg-red-950/80 border border-red-800 rounded-full flex items-center justify-center text-red-400 text-2xl font-bold">
+            ✕
+          </div>
+          <h1 class="text-2xl font-extrabold text-red-400">Access Declined</h1>
+          <p class="text-sm text-slate-300 max-w-md leading-relaxed">
+            You have declined document processing consent under <strong>DPDP Rules 2025</strong>. CareCover Copilot session has been terminated and access to healthcare policy analytics is restricted.
+          </p>
+          <div class="pt-2">
+            <button onclick="location.reload()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-6 py-3 rounded-xl transition-all shadow-lg cursor-pointer">
+              Reload Page & Grant Consent
+            </button>
+          </div>
+        </div>
+      `;
     }
 
     function openConsentModal() {
