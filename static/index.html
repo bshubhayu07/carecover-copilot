@@ -1770,72 +1770,104 @@
 
     function calculatePolicyHealthScore(data) {
       if (!data) data = activePolicyData || {};
-      let score = 75; // Neutral starting baseline score
+      
+      const sumInsured = currentBaseSI || data.sum_insured_inr || 0;
+      if (sumInsured <= 0) {
+        document.getElementById('healthScoreValue').innerText = "--";
+        document.getElementById('healthMeterPercent').innerText = "--% Covered";
+        document.getElementById('healthProgressBar').style.width = "0%";
+        const badgeEl = document.getElementById('healthRatingBadge');
+        if (badgeEl) {
+          badgeEl.innerText = "No Policy Active";
+          badgeEl.className = "bg-slate-800 text-slate-400 border border-slate-700 px-2 py-0.5 rounded-full text-[10px]";
+        }
+        const container = document.getElementById('healthRiskBadgesContainer');
+        if (container) container.innerHTML = '<span class="bg-slate-800 text-slate-400 border border-slate-700 px-2.5 py-1 rounded-lg font-medium">[NO POLICY] Upload policy PDF to analyze rating</span>';
+        return;
+      }
+
+      let score = 70; // Baseline
       const badges = [];
 
+      // 1. Sum Insured Rating Factor (+25 to -15)
+      if (sumInsured >= 2500000) {
+        score += 25;
+      } else if (sumInsured >= 1000000) {
+        score += 18;
+      } else if (sumInsured >= 750000) {
+        score += 12;
+      } else if (sumInsured >= 500000) {
+        score += 5;
+      } else if (sumInsured >= 300000) {
+        score -= 5;
+      } else {
+        score -= 15;
+      }
+
+      // 2. Room Rent Eligibility (+10 to -25)
       const room = (data.room_eligibility || '').toLowerCase();
+      if (room.includes('single') || room.includes('private') || room.includes('no cap') || room.includes('any room')) {
+        score += 10;
+        badges.push(`<span class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-lg font-medium">[APPROVED] ${data.room_eligibility || 'Single Private Room'}</span>`);
+      } else if (room.includes('twin') || room.includes('shared') || room.includes('1%')) {
+        score -= 15;
+        badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT CAP] ${data.room_eligibility || 'Shared Room Rent Capped'}</span>`);
+      } else if (room.includes('general')) {
+        score -= 25;
+        badges.push(`<span class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-100 text-red-300 light:text-red-800 border border-red-800 light:border-red-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT CAP] General Ward Category</span>`);
+      } else if (data.room_eligibility) {
+        badges.push(`<span class="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-lg font-medium">[ROOM ELIGIBILITY] ${data.room_eligibility}</span>`);
+      }
+
+      // 3. Co-Payment Penalty / Bonus (+10 to -20)
       const copayStr = (data.co_pay || '').toLowerCase();
       let copay = data.co_payment_percentage || 0;
       if (copayStr.includes('10%')) copay = 10;
       else if (copayStr.includes('20%')) copay = 20;
       else if (copayStr.includes('30%')) copay = 30;
 
-      const sumInsured = currentBaseSI || data.sum_insured_inr || 0;
-
-      // 1. Base Sum Insured Factor (+15 to -20)
-      if (sumInsured >= 2500000) {
-        score += 15;
-      } else if (sumInsured >= 1000000) {
-        score += 10;
-      } else if (sumInsured >= 500000) {
-        score += 5;
-      } else if (sumInsured > 0 && sumInsured < 500000) {
-        score -= 10;
-      } else {
-        score -= 20;
-      }
-
-      // 2. Room Rent Capping Deduction / Bonus
-      if (room.includes('twin') || room.includes('shared') || room.includes('1%')) {
-        score -= 15;
-        badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT CAP] ${data.room_eligibility || 'Room Rent Capped'}</span>`);
-      } else if (room.includes('general')) {
-        score -= 25;
-        badges.push(`<span class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-100 text-red-300 light:text-red-800 border border-red-800 light:border-red-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT CAP] General Ward Category</span>`);
-      } else if (room.includes('single') || room.includes('private') || room.includes('no cap')) {
-        score += 5;
-        badges.push(`<span class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-lg font-medium">[APPROVED] Single Private Room Category</span>`);
-      } else {
-        badges.push(`<span class="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-lg font-medium">[ROOM RENT] ${data.room_eligibility || 'Standard Room'}</span>`);
-      }
-
-      // 3. Co-Pay Deduction / Bonus
       if (copay > 0) {
         score -= (copay >= 20 ? 20 : 10);
         badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[CO-PAY] ${copay}% Mandatory Co-Payment</span>`);
       } else {
-        score += 5;
+        score += 10;
         badges.push(`<span class="bg-emerald-950/60 dark:bg-emerald-950/60 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-1 rounded-lg font-medium">[APPROVED] 0% Co-Pay Requirement</span>`);
       }
 
-      // 4. Super Top-Up Presence (+15 / -5)
+      // 4. Super Top-Up Coverage (+15 / -5)
       if (currentTopupSI > 0) {
         score += 15;
         badges.push(`<span class="bg-sky-950/60 dark:bg-sky-950/60 light:bg-sky-100 text-sky-300 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-1 rounded-lg font-medium">[TOP-UP ACTIVE] Super Top-Up Protection (₹${currentTopupSI.toLocaleString('en-IN')})</span>`);
       } else {
-        score -= 5;
         badges.push(`<span class="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300 px-2.5 py-1 rounded-lg font-medium">[NO TOP-UP] Base Policy Only</span>`);
       }
 
-      // 5. Waiting Period & Sub-Limit Badges
-      if (data.waiting_periods && data.waiting_periods.length > 0) {
-        score -= 3;
-        badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[WAITING PERIOD] 24-Month Specific Illness Clause</span>`);
+      // 5. Dynamic Waiting Periods
+      if (data.waiting_periods) {
+        if (typeof data.waiting_periods === 'object' && !Array.isArray(data.waiting_periods)) {
+          for (let [key, val] of Object.entries(data.waiting_periods)) {
+            score -= 3;
+            badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[WAITING PERIOD] ${key.toUpperCase()}: ${val}</span>`);
+          }
+        } else if (Array.isArray(data.waiting_periods)) {
+          data.waiting_periods.forEach(wp => {
+            score -= 3;
+            badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[WAITING PERIOD] ${wp}</span>`);
+          });
+        }
       }
 
-      badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[SUB-LIMIT CAP] Cataract Surgery (₹40,000 / eye)</span>`);
+      // 6. Dynamic Sub-Limits / Disease Limits
+      const sublimits = data.disease_sub_limits || data.sub_limits || {};
+      if (typeof sublimits === 'object' && Object.keys(sublimits).length > 0) {
+        for (let [dis, cap] of Object.entries(sublimits)) {
+          score -= 4;
+          badges.push(`<span class="bg-amber-950/60 dark:bg-amber-950/60 light:bg-amber-100 text-amber-300 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2.5 py-1 rounded-lg font-medium">[SUB-LIMIT CAP] ${dis}: ${cap}</span>`);
+        }
+      }
 
-      score = Math.max(30, Math.min(100, score));
+      // Final Score Clamping
+      score = Math.max(35, Math.min(100, Math.round(score)));
 
       // Update UI Elements
       document.getElementById('healthScoreValue').innerText = score;
@@ -1843,18 +1875,26 @@
       document.getElementById('healthProgressBar').style.width = `${score}%`;
 
       const badgeEl = document.getElementById('healthRatingBadge');
+      let ratingText = "Moderate Protection";
+      let ratingClass = "bg-amber-950 light:bg-amber-100 text-amber-400 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2 py-0.5 rounded-full text-[10px]";
+
       if (score >= 85) {
-        badgeEl.innerText = "Excellent Protection";
-        badgeEl.className = "bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2 py-0.5 rounded-full text-[10px]";
+        ratingText = "Excellent Protection";
+        ratingClass = "bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2 py-0.5 rounded-full text-[10px]";
       } else if (score >= 70) {
-        badgeEl.innerText = "Good Protection";
-        badgeEl.className = "bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2 py-0.5 rounded-full text-[10px]";
+        ratingText = "Good Protection";
+        ratingClass = "bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2 py-0.5 rounded-full text-[10px]";
       } else if (score >= 50) {
-        badgeEl.innerText = "Moderate Protection";
-        badgeEl.className = "bg-amber-950 light:bg-amber-100 text-amber-400 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2 py-0.5 rounded-full text-[10px]";
+        ratingText = "Moderate Protection";
+        ratingClass = "bg-amber-950 light:bg-amber-100 text-amber-400 light:text-amber-800 border border-amber-800 light:border-amber-300 px-2 py-0.5 rounded-full text-[10px]";
       } else {
-        badgeEl.innerText = "Basic Coverage";
-        badgeEl.className = "bg-red-950 light:bg-red-100 text-red-400 light:text-red-800 border border-red-800 light:border-red-300 px-2 py-0.5 rounded-full text-[10px]";
+        ratingText = "Basic Coverage";
+        ratingClass = "bg-red-950 light:bg-red-100 text-red-400 light:text-red-800 border border-red-800 light:border-red-300 px-2 py-0.5 rounded-full text-[10px]";
+      }
+
+      if (badgeEl) {
+        badgeEl.innerText = ratingText;
+        badgeEl.className = ratingClass;
       }
 
       const container = document.getElementById('healthRiskBadgesContainer');
@@ -1862,19 +1902,10 @@
 
       const dashHealth = document.getElementById('dashHealthGrade');
       const dashHealthSub = document.getElementById('dashHealthSub');
-      if (dashHealth) {
-        let label = "Good Protection";
-        if (score >= 85) label = "Excellent Protection";
-        else if (score >= 70) label = "Good Protection";
-        else if (score >= 50) label = "Moderate Protection";
-        else label = "Basic Coverage";
-
-        dashHealth.innerText = `${label} (${score}/100)`;
-        dashHealth.className = "text-sky-400 light:text-sky-700 text-sm font-extrabold block";
-        if (dashHealthSub) {
-          dashHealthSub.innerText = "Informational Health Score";
-          dashHealthSub.className = "text-[10px] text-slate-400";
-        }
+      if (dashHealth) dashHealth.innerText = `${ratingText} (${score}/100)`;
+      if (dashHealthSub) {
+        dashHealthSub.innerText = "Informational Health Score";
+        dashHealthSub.className = "text-[10px] text-slate-400";
       }
     }
 
