@@ -135,13 +135,12 @@ def match_hospitals(
         if user_lat is not None and user_lon is not None:
             if h_lat is not None and h_lon is not None:
                 computed_dist = round(calculate_haversine(user_lat, user_lon, h_lat, h_lon), 1)
+                if computed_dist < 0.2:
+                    computed_dist = round(local_offset, 1)
             elif hosp_city.lower() in CITY_COORDINATES:
                 hc_lat, hc_lon = CITY_COORDINATES[hosp_city.lower()]
                 base_dist = calculate_haversine(user_lat, user_lon, hc_lat, hc_lon)
-                if base_dist < 20.0:  # User is in the same city area as the hospital
-                    computed_dist = local_offset
-                else:
-                    computed_dist = round(base_dist + local_offset, 1)
+                computed_dist = round(base_dist + (local_offset if base_dist < 10.0 else 0), 1)
             else:
                 computed_dist = local_offset
             dist_label = f"{computed_dist:,.1f} km away"

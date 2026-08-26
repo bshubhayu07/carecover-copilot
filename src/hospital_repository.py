@@ -78,10 +78,17 @@ def generate_city_hospitals(city_name: str) -> List[Dict[str, Any]]:
         ("Sahyadri Super Speciality (Bypass)", "Oncology|Urology|Obstetrics|Multispecialty", "4000", "7.2")
     ]
     hospitals = []
+    base_lat, base_lon = CITY_COORDINATES.get(city_title.lower(), (18.5204, 73.8567))
+
     for idx, (name_tmpl, spec, cost, dist) in enumerate(templates, 1):
         parts = name_tmpl.split("(")
         base_name = parts[0].strip()
         locality = parts[1].replace(")", "").strip() if len(parts) > 1 else "Central"
+        
+        # Distinct locality lat/lon offsets around city center
+        offset_lat = ((idx % 5) * 0.018) - 0.035
+        offset_lon = (((idx + 2) % 6) * 0.022) - 0.045
+        
         hospitals.append({
             "hospital_id": f"H_{city_title.upper()[:3]}_{idx:03d}",
             "hospital_name": f"{base_name} ({locality}, {city_title})",
@@ -92,7 +99,9 @@ def generate_city_hospitals(city_name: str) -> List[Dict[str, Any]]:
             "indicative_daily_room_cost_inr": cost,
             "indicative_procedure_cost_band": "Low",
             "emergency_available": "Yes",
-            "distance_km_demo": dist
+            "distance_km_demo": dist,
+            "latitude": round(base_lat + offset_lat, 4),
+            "longitude": round(base_lon + offset_lon, 4)
         })
     return hospitals
 
