@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 # Ensure project root is in Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -63,6 +63,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def add_security_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:;"
+    return response
+
 # Mount static directory if it exists
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -108,8 +117,11 @@ def get_bg_soothing():
 @app.get("/favicon.svg")
 def get_favicon():
     if os.path.exists("docs/favicon.svg"):
-        return FileResponse("docs/favicon.svg")
-    raise HTTPException(status_code=404, detail="Asset not found")
+        return FileResponse("docs/favicon.svg", media_type="image/svg+xml")
+    if os.path.exists("static/favicon.svg"):
+        return FileResponse("static/favicon.svg", media_type="image/svg+xml")
+    svg_data = """<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><path stroke='%23ffffff' d='m9 12 2 2 4-4'/></svg>"""
+    return Response(content=svg_data, media_type="image/svg+xml")
 
 @app.get("/static/i18n.json")
 def get_i18n_json():
@@ -346,23 +358,37 @@ Issued by CareCover Security & Compliance Systems"""
     }
 
 class FinancialRiskRequest(BaseModel):
-    procedure_name: str = "Cataract Surgery"
-    estimated_bill: float = 480000.0
+    procedure_name: Optional[str] = "Cataract Surgery"
+    estimated_bill: Optional[float] = None
+    total_bill: Optional[float] = None
+    claimed_amount: Optional[float] = None
     base_sum_insured: Optional[float] = 300000.0
     super_topup_sum_insured: Optional[float] = 1500000.0
     super_topup_deductible: Optional[float] = 300000.0
-    room_category: Optional[str] = "Single Private Room"
+    room_category: Optional[str] = None
+    room_type: Optional[str] = None
     co_pay_percent: Optional[float] = 0.0
 
 @app.post("/api/financial-risk")
 def calculate_financial_risk_endpoint(req: FinancialRiskRequest):
+    effective_bill = 480000.0
+    if req.estimated_bill is not None:
+        effective_bill = float(req.estimated_bill)
+    elif req.total_bill is not None:
+        effective_bill = float(req.total_bill)
+    elif req.claimed_amount is not None:
+        effective_bill = float(req.claimed_amount)
+
+    effective_room = req.room_category or req.room_type or "Single Private Room"
+    effective_proc = req.procedure_name or "Cataract Surgery"
+
     return calculate_financial_risk(
-        procedure_name=req.procedure_name,
-        estimated_bill=req.estimated_bill,
+        procedure_name=effective_proc,
+        estimated_bill=effective_bill,
         base_sum_insured=req.base_sum_insured if req.base_sum_insured is not None else 0.0,
         super_topup_sum_insured=req.super_topup_sum_insured if req.super_topup_sum_insured is not None else 0.0,
         super_topup_deductible=req.super_topup_deductible if req.super_topup_deductible is not None else 300000.0,
-        room_category=req.room_category or "Single Private Room",
+        room_category=effective_room,
         co_pay_percent=req.co_pay_percent if req.co_pay_percent is not None else 0.0
     )
 
@@ -563,10 +589,19 @@ SAMPLE_POLICIES_DATABASE = [
 def get_sample_policies_endpoint():
     return {"policies": SAMPLE_POLICIES_DATABASE}
 
+class SelectSamplePolicyRequest(BaseModel):
+    policy_id: Optional[str] = "sample_1"
+
 @app.post("/api/select-sample-policy")
-def select_sample_policy_endpoint(policy_id: str = Query("sample_1")):
+def select_sample_policy_endpoint(req: Optional[SelectSamplePolicyRequest] = None, policy_id: Optional[str] = Query(None)):
     global active_policy_profile
-    found = next((p for p in SAMPLE_POLICIES_DATABASE if p["id"] == policy_id), SAMPLE_POLICIES_DATABASE[0])
+    eff_id = "sample_1"
+    if req and req.policy_id:
+        eff_id = req.policy_id
+    elif policy_id:
+        eff_id = policy_id
+
+    found = next((p for p in SAMPLE_POLICIES_DATABASE if p["id"] == eff_id or p["filename"] == eff_id), SAMPLE_POLICIES_DATABASE[0])
     active_policy_profile = PolicyProfile(
         insurer_name=found["insurer_name"],
         policy_name=found["policy_name"],

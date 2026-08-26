@@ -39,8 +39,8 @@ def compare_policies(policy_a: PolicyProfile, policy_b: Optional[PolicyProfile] 
         },
         {
             "dimension": "Co-Payment %",
-            "policy_a_val": f"{getattr(policy_a, 'co_payment_percentage', getattr(policy_a, 'co_pay', 0)) or 0}% Co-Pay",
-            "policy_b_val": f"{getattr(policy_b, 'co_payment_percentage', getattr(policy_b, 'co_pay', 0)) or 0}% Co-Pay",
+            "policy_a_val": str(getattr(policy_a, 'co_pay', None) or f"{getattr(policy_a, 'co_payment_percentage', 0) or 0}% Co-Pay").replace("% Co-Pay% Co-Pay", "% Co-Pay"),
+            "policy_b_val": str(getattr(policy_b, 'co_pay', None) or f"{getattr(policy_b, 'co_payment_percentage', 0) or 0}% Co-Pay").replace("% Co-Pay% Co-Pay", "% Co-Pay"),
             "winner": "Policy A" if (getattr(policy_a, 'co_payment_percentage', 0) or 0) <= (getattr(policy_b, 'co_payment_percentage', 0) or 0) else "Policy B"
         },
         {

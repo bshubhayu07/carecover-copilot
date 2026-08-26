@@ -41,9 +41,21 @@ BASE_PROCEDURE_BENCHMARKS = {
 def estimate_treatment_cost(procedure_name: str, city: str = "Pune") -> Dict[str, Any]:
     """
     Estimates procedure treatment costs, ICU charges, and expected insurance coverage % by city.
+    Supports fuzzy matching and unknown procedure detection.
     """
     multiplier = CITY_COST_MULTIPLIERS.get(city, 1.0)
-    proc_info = BASE_PROCEDURE_BENCHMARKS.get(procedure_name, {"base": 120000, "icu_avg": 20000, "stay_days": "3 Days"})
+    
+    # Fuzzy matching against benchmarks
+    proc_clean = procedure_name.lower().strip()
+    found_key = None
+    for key in BASE_PROCEDURE_BENCHMARKS:
+        k_clean = key.lower().strip()
+        if k_clean == proc_clean or proc_clean in k_clean or k_clean in proc_clean:
+            found_key = key
+            break
+            
+    is_known = found_key is not None
+    proc_info = BASE_PROCEDURE_BENCHMARKS.get(found_key or "", {"base": 120000, "icu_avg": 20000, "stay_days": "3 Days"})
     
     estimated_cost = round(proc_info["base"] * multiplier, 2)
     estimated_icu = round(proc_info["icu_avg"] * multiplier, 2)
@@ -52,7 +64,9 @@ def estimate_treatment_cost(procedure_name: str, city: str = "Pune") -> Dict[str
     cost_range_max = round(estimated_cost * 1.20, 2)
     
     return {
-        "procedure_name": procedure_name,
+        "procedure_name": found_key or procedure_name,
+        "query_procedure": procedure_name,
+        "procedure_found": is_known,
         "city": city,
         "city_multiplier": multiplier,
         "estimated_average_cost": estimated_cost,
@@ -60,6 +74,8 @@ def estimate_treatment_cost(procedure_name: str, city: str = "Pune") -> Dict[str
         "cost_range_max": cost_range_max,
         "estimated_icu_charge": estimated_icu,
         "typical_hospital_stay": proc_info["stay_days"],
-        "projected_insurance_coverage_percent": 94.0,  # 94% standard coverage (less 6% consumables)
-        "cashless_pre_auth_required": True
+        "projected_insurance_coverage_percent": 94.0 if is_known else 80.0,
+        "cashless_pre_auth_required": True,
+        "note": "Standard procedure benchmark loaded." if is_known else "Unrecognized procedure name; displaying generic baseline healthcare cost estimate."
     }
+
