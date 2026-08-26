@@ -884,13 +884,7 @@
           <div>
             <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Select Medical Treatment / Procedure</label>
             <select id="coverageCheckerSelect" onchange="runTreatmentCoverageCheck()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2.5 font-semibold text-xs focus:outline-none focus:border-sky-500">
-              <option value="Cataract Surgery">Cataract Surgery (Per Eye)</option>
-              <option value="Total Knee Replacement">Total Knee Replacement Surgery</option>
-              <option value="Coronary Artery Bypass Graft (CABG)">Coronary Artery Bypass Graft (CABG)</option>
-              <option value="Chemotherapy Cycle">Chemotherapy & Targeted Cancer Therapy</option>
-              <option value="Maternity Delivery">Maternity Delivery (Normal / C-Section)</option>
-              <option value="LASIK Eye Surgery">LASIK / Refractive Eye Surgery</option>
-              <option value="Laparoscopic Appendectomy">Laparoscopic Appendectomy</option>
+              <option value="">-- Upload Policy to View Covered Diseases --</option>
             </select>
           </div>
 
@@ -1941,6 +1935,8 @@
       if (clearBtn) clearBtn.classList.remove('hidden');
 
       calculatePolicyHealthScore(activePolicyData);
+      populatePolicyTreatmentsDropdown(activePolicyData);
+      if (typeof runTreatmentCoverageCheck === 'function') runTreatmentCoverageCheck();
 
       const status = document.getElementById('uploadStatus');
       status.innerText = "Demo Base Policy (Niva Bupa ₹5,00,000) Loaded Successfully!";
@@ -1983,6 +1979,7 @@
       status.className = "text-xs text-amber-400 light:text-amber-700 block mt-2 font-semibold";
 
       updateCombinedSI();
+      populatePolicyTreatmentsDropdown(null);
       if (typeof runTreatmentCoverageCheck === 'function') runTreatmentCoverageCheck();
     }
     }
@@ -2102,6 +2099,8 @@
         if (clearBtn) clearBtn.classList.remove('hidden');
 
         calculatePolicyHealthScore(activePolicyData);
+        populatePolicyTreatmentsDropdown(activePolicyData);
+        if (typeof runTreatmentCoverageCheck === 'function') runTreatmentCoverageCheck();
 
         status.innerText = `Extracted '${file.name}' Successfully!`;
         status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
@@ -2300,8 +2299,38 @@
       document.getElementById('traceabilityModal').classList.remove('hidden');
     }
 
-    function closeTraceabilityModal() {
-      document.getElementById('traceabilityModal').classList.add('hidden');
+    function populatePolicyTreatmentsDropdown(policyData) {
+      const select = document.getElementById('coverageCheckerSelect');
+      if (!select) return;
+
+      if (!policyData && currentBaseSI <= 0 && currentTopupSI <= 0) {
+        select.innerHTML = '<option value="">-- Upload Policy to View Covered Diseases --</option>';
+        select.disabled = true;
+        return;
+      }
+
+      select.disabled = false;
+
+      let options = [
+        { value: "Cataract Surgery", label: "Cataract Surgery (Sub-Limit Capped)" },
+        { value: "Total Knee Replacement", label: "Total Knee Replacement (Major Joint Clause)" },
+        { value: "Coronary Artery Bypass Graft (CABG)", label: "Coronary Artery Bypass Graft (Inpatient Cardiac)" },
+        { value: "Chemotherapy Cycle", label: "Chemotherapy & Targeted Oncology (Day Care)" },
+        { value: "Maternity Delivery", label: "Maternity Delivery (Rider Sub-Limit)" },
+        { value: "LASIK Eye Surgery", label: "LASIK / Refractive Surgery (Specific Clause)" },
+        { value: "Laparoscopic Appendectomy", label: "Laparoscopic Appendectomy (Emergency Surgery)" },
+        { value: "Kidney Dialysis", label: "Kidney Dialysis & Renal Care (Day Care)" }
+      ];
+
+      if (policyData && policyData.exclusions && Array.isArray(policyData.exclusions)) {
+        policyData.exclusions.forEach(ex => {
+          if (ex && ex.length > 3) {
+            options.push({ value: ex, label: `${ex} (Exclusion Clause)` });
+          }
+        });
+      }
+
+      select.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
     }
 
     async function runTreatmentCoverageCheck() {
