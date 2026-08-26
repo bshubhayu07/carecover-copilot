@@ -38,6 +38,7 @@ data/temp_*
 .agents/
 stitch_downloads/
 
-# Local Blueprint Master Files
+# Local Blueprint Master Files & Video Scripts
 COMPLETE_PROJECT_BLUEPRINT.md
 MASTER_REPLICABLE_BLUEPRINT.md
+carecover_copilot_video_script.md
