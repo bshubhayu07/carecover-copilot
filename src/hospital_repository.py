@@ -1,6 +1,8 @@
 import os
 import csv
+import math
 from typing import List, Dict, Any
+from src.eligibility_engine import CITY_COORDINATES
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_CSV_PATH = os.path.join(BASE_DIR, "data", "hospitals.csv")
