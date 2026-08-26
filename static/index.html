@@ -84,6 +84,12 @@
     .light .logo-cover {
       color: #0f172a !important;
     }
+    #headerLogoCheckmark {
+      stroke: #38bdf8;
+    }
+    .light #headerLogoCheckmark {
+      stroke: #0f172a !important;
+    }
 
     /* Preserve white text inside buttons, badges, and colored spans in Light Mode */
     .light button.text-white,
@@ -1644,7 +1650,7 @@
       const logoShield = document.getElementById('headerLogoShield');
       const logoCheckmark = document.getElementById('headerLogoCheckmark');
       if (logoShield) logoShield.setAttribute('stroke', isLight ? '#0284c7' : '#38bdf8');
-      if (logoCheckmark) logoCheckmark.setAttribute('stroke', isLight ? '#0284c7' : '#ffffff');
+      if (logoCheckmark) logoCheckmark.setAttribute('stroke', isLight ? '#0f172a' : '#38bdf8');
     }
 
     function toggleTheme() {
