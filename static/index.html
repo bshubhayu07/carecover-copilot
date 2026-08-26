@@ -406,9 +406,12 @@
   <!-- Privacy & Data Compliance Site Opening Popup Modal -->
   <div id="consentModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5">
-      <div class="border-b border-slate-800 light:border-slate-200 pb-3">
-        <h3 data-i18n="modal_title" class="text-lg font-extrabold text-white light:text-slate-900">Privacy & Data Compliance</h3>
-        <p data-i18n="modal_sub" class="text-xs text-slate-400 light:text-slate-500 mt-1">DPDP Rules 2025 Consent Verification</p>
+      <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-start">
+        <div>
+          <h3 data-i18n="modal_title" class="text-lg font-extrabold text-white light:text-slate-900">Privacy & Data Compliance</h3>
+          <p data-i18n="modal_sub" class="text-xs text-slate-400 light:text-slate-500 mt-1">DPDP Rules 2025 Consent Verification</p>
+        </div>
+        <button type="button" onclick="acceptConsent()" class="text-slate-400 hover:text-white text-xl font-bold p-1 leading-none cursor-pointer" title="Close & Continue">&times;</button>
       </div>
 
       <div class="space-y-3 text-xs text-slate-300 light:text-slate-700">
@@ -426,10 +429,10 @@
       </div>
 
       <div class="flex gap-3 pt-2">
-        <button data-i18n="decline_btn" onclick="declineConsent()" class="w-1/2 bg-red-950/80 hover:bg-red-900 light:bg-red-100 light:hover:bg-red-200 text-red-200 light:text-red-800 font-semibold text-xs py-2.5 rounded-xl border border-red-800 light:border-red-300 transition-colors cursor-pointer">
+        <button id="declineConsentBtn" type="button" data-i18n="decline_btn" onclick="declineConsent()" class="w-1/2 bg-red-950/80 hover:bg-red-900 light:bg-red-100 light:hover:bg-red-200 text-red-200 light:text-red-800 font-semibold text-xs py-2.5 rounded-xl border border-red-800 light:border-red-300 transition-colors cursor-pointer">
           Decline & Exit
         </button>
-        <button data-i18n="accept_btn" onclick="acceptConsent()" class="w-1/2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs py-2.5 rounded-xl transition-colors shadow-md cursor-pointer">
+        <button id="acceptConsentBtn" type="button" data-i18n="accept_btn" onclick="acceptConsent()" class="w-1/2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs py-2.5 rounded-xl transition-colors shadow-md cursor-pointer">
           Accept & Proceed
         </button>
       </div>
@@ -1380,7 +1383,7 @@
       const modal = document.getElementById('consentModal');
       if (modal) {
         modal.classList.add('hidden');
-        modal.style.display = 'none';
+        modal.style.setProperty('display', 'none', 'important');
       }
     }
 
@@ -1388,7 +1391,7 @@
       const modal = document.getElementById('consentModal');
       if (modal) {
         modal.classList.add('hidden');
-        modal.style.display = 'none';
+        modal.style.setProperty('display', 'none', 'important');
       }
       document.body.innerHTML = `
         <div class="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white p-6 text-center space-y-4">
@@ -1403,9 +1406,32 @@
       const modal = document.getElementById('consentModal');
       if (modal) {
         modal.classList.remove('hidden');
-        modal.style.display = 'flex';
+        modal.style.setProperty('display', 'flex', 'important');
       }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnAccept = document.getElementById('acceptConsentBtn');
+      const btnDecline = document.getElementById('declineConsentBtn');
+      if (btnAccept) btnAccept.addEventListener('click', acceptConsent);
+      if (btnDecline) btnDecline.addEventListener('click', declineConsent);
+      
+      const modal = document.getElementById('consentModal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) acceptConsent();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' || e.key === 'Enter') {
+          const m = document.getElementById('consentModal');
+          if (m && !m.classList.contains('hidden') && m.style.display !== 'none') {
+            acceptConsent();
+          }
+        }
+      });
+    });
 
     // PDF Export Generator
     function downloadPolicyPDF() {
