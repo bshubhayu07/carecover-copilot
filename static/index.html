@@ -1017,21 +1017,7 @@
           <div>
             <label class="block text-slate-400 light:text-slate-600 mb-1 font-semibold">Procedure</label>
             <select id="costEstProcedure" onchange="runCostEstimate()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
-              <option value="Cataract Surgery">Cataract Surgery (Per Eye)</option>
-              <option value="Total Knee Replacement">Total Knee Replacement</option>
-              <option value="Total Hip Replacement">Total Hip Replacement</option>
-              <option value="Coronary Artery Bypass Graft (CABG)">CABG Heart Bypass</option>
-              <option value="Cardiac Stent Angioplasty">Cardiac Stent Angioplasty</option>
-              <option value="Chemotherapy Cycle">Chemotherapy & Targeted Cancer Therapy</option>
-              <option value="Radiation Therapy">Radiation Therapy (IMRT / CyberKnife)</option>
-              <option value="Maternity Normal Delivery">Maternity Normal Delivery</option>
-              <option value="Maternity C-Section Delivery">Maternity C-Section Delivery</option>
-              <option value="LASIK / Refractive Eye Surgery">LASIK / Refractive Eye Surgery</option>
-              <option value="Laparoscopic Appendectomy">Laparoscopic Appendectomy</option>
-              <option value="Laparoscopic Cholecystectomy">Laparoscopic Cholecystectomy (Gallbladder)</option>
-              <option value="Hernia Mesh Repair Surgery">Hernia Mesh Repair Surgery</option>
-              <option value="Kidney Stone Surgery">Kidney Stone Surgery (RIRS / PCNL)</option>
-              <option value="Brain Tumor Craniotomy">Brain Tumor Craniotomy Surgery</option>
+              <option value="">-- Upload Policy to View Cost Estimates --</option>
             </select>
           </div>
           <div>
@@ -1053,21 +1039,8 @@
           </div>
         </div>
 
-        <div id="costEstResult" class="bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 space-y-2 text-xs">
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
-              <span class="text-slate-400 light:text-slate-600 block text-[10px]">Average Bill Cost</span>
-              <strong id="estAvgCost" class="text-slate-100 light:text-slate-900 text-sm font-extrabold">₹1,85,000</strong>
-            </div>
-            <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
-              <span class="text-slate-400 light:text-slate-600 block text-[10px]">Estimated Insurance Payout</span>
-              <strong id="estInsuranceCover" class="text-emerald-400 light:text-emerald-700 text-sm font-extrabold">₹1,70,000 (91%)</strong>
-            </div>
-            <div class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 p-3 rounded-lg border border-red-800 light:border-red-300">
-              <span class="text-red-300 light:text-red-700 block text-[10px]">Estimated Out-of-Pocket</span>
-              <strong id="estOutofpocketCost" class="text-red-400 light:text-red-800 text-sm font-extrabold">₹15,000</strong>
-            </div>
-          </div>
+        <div id="costEstResult" class="bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 text-xs text-center text-slate-400 light:text-slate-500 font-medium">
+          No policy uploaded. Please upload a policy PDF or load a demo policy to calculate estimated insurance payouts and out-of-pocket expenses.
         </div>
       </div>
     </section>
@@ -1400,22 +1373,28 @@
       }
     }
 
-    // Site-opening DPDP consent handler (re-appears on every site reload)
+    // Site-opening DPDP consent handler
     function acceptConsent() {
       const checkbox = document.getElementById('modalConsentCheckbox');
-      if (!checkbox.checked) {
-        alert("Please check the consent box to proceed.");
-        return;
+      if (checkbox) checkbox.checked = true;
+      const modal = document.getElementById('consentModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
       }
-      document.getElementById('consentModal').style.display = 'none';
     }
 
     function declineConsent() {
+      const modal = document.getElementById('consentModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
       document.body.innerHTML = `
         <div class="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white p-6 text-center space-y-4">
           <h1 class="text-2xl font-bold text-red-400">Access Declined</h1>
           <p class="text-sm text-slate-400 max-w-md">You have declined document processing consent under DPDP Rules 2025. CareCover Copilot session has been closed.</p>
-          <button onclick="location.reload()" class="bg-sky-600 text-white font-bold text-xs px-4 py-2 rounded-lg mt-4">Reload Page</button>
+          <button onclick="location.reload()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-4 py-2 rounded-lg mt-4 cursor-pointer">Reload Page</button>
         </div>
       `;
     }
@@ -1937,6 +1916,7 @@
       calculatePolicyHealthScore(activePolicyData);
       populatePolicyTreatmentsDropdown(activePolicyData);
       if (typeof runTreatmentCoverageCheck === 'function') runTreatmentCoverageCheck();
+      if (typeof runCostEstimate === 'function') runCostEstimate();
 
       const status = document.getElementById('uploadStatus');
       status.innerText = "Demo Base Policy (Niva Bupa ₹5,00,000) Loaded Successfully!";
@@ -1981,7 +1961,7 @@
       updateCombinedSI();
       populatePolicyTreatmentsDropdown(null);
       if (typeof runTreatmentCoverageCheck === 'function') runTreatmentCoverageCheck();
-    }
+      if (typeof runCostEstimate === 'function') runCostEstimate();
     }
 
     function loadDemoTopup() {
@@ -2101,6 +2081,7 @@
         calculatePolicyHealthScore(activePolicyData);
         populatePolicyTreatmentsDropdown(activePolicyData);
         if (typeof runTreatmentCoverageCheck === 'function') runTreatmentCoverageCheck();
+        if (typeof runCostEstimate === 'function') runCostEstimate();
 
         status.innerText = `Extracted '${file.name}' Successfully!`;
         status.className = "text-xs text-emerald-400 light:text-emerald-700 block mt-2 font-bold";
@@ -2300,16 +2281,23 @@
     }
 
     function populatePolicyTreatmentsDropdown(policyData) {
-      const select = document.getElementById('coverageCheckerSelect');
-      if (!select) return;
+      const select1 = document.getElementById('coverageCheckerSelect');
+      const select2 = document.getElementById('costEstProcedure');
 
-      if (!policyData && currentBaseSI <= 0 && currentTopupSI <= 0) {
-        select.innerHTML = '<option value="">-- Upload Policy to View Covered Diseases --</option>';
-        select.disabled = true;
+      if ((!policyData && currentBaseSI <= 0 && currentTopupSI <= 0) || !policyData) {
+        if (select1) {
+          select1.innerHTML = '<option value="">-- Upload Policy to View Covered Diseases --</option>';
+          select1.disabled = true;
+        }
+        if (select2) {
+          select2.innerHTML = '<option value="">-- Upload Policy to View Cost Estimates --</option>';
+          select2.disabled = true;
+        }
         return;
       }
 
-      select.disabled = false;
+      if (select1) select1.disabled = false;
+      if (select2) select2.disabled = false;
 
       let options = [
         { value: "Cataract Surgery", label: "Cataract Surgery (Sub-Limit Capped)" },
@@ -2330,7 +2318,9 @@
         });
       }
 
-      select.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+      const html = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+      if (select1) select1.innerHTML = html;
+      if (select2) select2.innerHTML = html;
     }
 
     async function runTreatmentCoverageCheck() {
@@ -2419,20 +2409,45 @@
     }
 
     async function runCostEstimate() {
-      const proc = document.getElementById('costEstProcedure').value;
+      const procSelect = document.getElementById('costEstProcedure');
+      const proc = procSelect ? procSelect.value : '';
       const city = document.getElementById('costEstCity').value;
+      const resContainer = document.getElementById('costEstResult');
+      if (!resContainer) return;
+
+      if (!activePolicyData && currentBaseSI <= 0 && currentTopupSI <= 0) {
+        resContainer.className = "bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 text-xs text-center text-slate-400 light:text-slate-500 font-medium";
+        resContainer.innerHTML = "No policy uploaded. Please upload a policy PDF or load a demo policy to calculate estimated insurance payouts and out-of-pocket expenses.";
+        return;
+      }
 
       try {
         const res = await fetch(`/api/cost-estimate?procedure=${encodeURIComponent(proc)}&city=${encodeURIComponent(city)}`);
         const data = await res.json();
         
         const avg = data.average_cost_inr || 185000;
-        const insPayout = Math.round(avg * ((data.coverage_percent || 90) / 100));
+        let copayPercent = (activePolicyData && typeof activePolicyData.co_payment_percentage === 'number') ? activePolicyData.co_payment_percentage : 0;
+        let covPercent = 100 - copayPercent;
+        const insPayout = Math.round(avg * (covPercent / 100));
         const oop = Math.max(0, avg - insPayout);
 
-        document.getElementById('estAvgCost').innerText = `₹${avg.toLocaleString('en-IN')}`;
-        document.getElementById('estInsuranceCover').innerText = `₹${insPayout.toLocaleString('en-IN')} (${data.coverage_percent || 90}%)`;
-        document.getElementById('estOutofpocketCost').innerText = `₹${oop.toLocaleString('en-IN')}`;
+        resContainer.className = "bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-50 p-4 rounded-xl border border-slate-800 light:border-slate-300 space-y-2 text-xs";
+        resContainer.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-600 block text-[10px]">Average Bill Cost</span>
+              <strong id="estAvgCost" class="text-slate-100 light:text-slate-900 text-sm font-extrabold">₹${avg.toLocaleString('en-IN')}</strong>
+            </div>
+            <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-3 rounded-lg border border-slate-800 light:border-slate-200">
+              <span class="text-slate-400 light:text-slate-600 block text-[10px]">Estimated Insurance Payout</span>
+              <strong id="estInsuranceCover" class="text-emerald-400 light:text-emerald-700 text-sm font-extrabold">₹${insPayout.toLocaleString('en-IN')} (${covPercent}%)</strong>
+            </div>
+            <div class="bg-red-950/60 dark:bg-red-950/60 light:bg-red-50 p-3 rounded-lg border border-red-800 light:border-red-300">
+              <span class="text-red-300 light:text-red-700 block text-[10px]">Estimated Out-of-Pocket</span>
+              <strong id="estOutofpocketCost" class="text-red-400 light:text-red-800 text-sm font-extrabold">₹${oop.toLocaleString('en-IN')}</strong>
+            </div>
+          </div>
+        `;
       } catch (e) {
         console.error(e);
       }
