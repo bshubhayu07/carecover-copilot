@@ -294,14 +294,27 @@ def get_hospitals_endpoint(
         if specialty != "All Specialties":
             spec_low = specialty.lower()
             hosp_spec_low = str(m.get('specialties', '')).lower()
-            if "multispecialty" in spec_low or "multispecialty" in hosp_spec_low or "general" in hosp_spec_low:
-                pass
+            
+            if spec_low == "multispecialty":
+                if "multispecialty" not in hosp_spec_low and "|" not in hosp_spec_low and "general" not in hosp_spec_low:
+                    continue
             else:
-                keywords = [k for k in ["cardio", "ortho", "onco", "neuro", "gastro", "uro", "nephro", "pulmo", "gynec", "pediatr", "ophthal", "ent", "obstet", "matern", "women"] if k in spec_low]
-                if keywords:
-                    if not any(k in hosp_spec_low for k in keywords) and "multispecialty" not in hosp_spec_low:
-                        continue
-                elif spec_low not in hosp_spec_low and "multispecialty" not in hosp_spec_low:
+                KEYWORD_MAP = {
+                    "cardiology": ["cardio", "vascular", "heart"],
+                    "orthopedics": ["ortho", "joint", "bone"],
+                    "oncology": ["onco", "cancer", "tumor"],
+                    "neurology": ["neuro", "brain", "spine"],
+                    "gastroenterology": ["gastro", "hepato", "digestive"],
+                    "urology": ["uro", "nephro", "kidney"],
+                    "pulmonology": ["pulmo", "resp", "chest", "lung"],
+                    "gynecology": ["gynec", "obstet", "matern", "women", "gynaec"],
+                    "pediatrics": ["pediatr", "child"],
+                    "ophthalmology": ["ophthal", "eye", "vision"],
+                    "ent": ["ent", "ear", "nose", "throat"]
+                }
+                req_keywords = KEYWORD_MAP.get(spec_low, [spec_low])
+                has_spec = any(k in hosp_spec_low for k in req_keywords) or "multispecialty" in hosp_spec_low
+                if not has_spec:
                     continue
         filtered.append(m)
 
