@@ -79,17 +79,28 @@ def extract_policy_profile(text_chunks: str) -> PolicyProfile:
 
     # Special Handling for Government Schemes / Benefit Packages (e.g. Ayushman Bharat, Arogya Karnataka, Yeshaswini, ESI, CGHS)
     if "ayushman bharat" in text_lower or "arogya karnataka" in text_lower or "benefit package" in text_lower or "ab-pmjay" in text_lower or "cghs" in text_lower or "yeshaswini" in text_lower or "esi" in text_lower:
-        scheme_name = "Government Health Protection Scheme"
-        if "arogya karnataka" in text_lower or "ayushman bharat" in text_lower:
+        if "arogya karnataka" in text_lower:
             scheme_name = "Ayushman Bharat - Arogya Karnataka Scheme"
+            policy_title = "Arogya Karnataka Health Protection Benefit Package"
+        elif "ayushman bharat" in text_lower or "ab-pmjay" in text_lower or "pmjay" in text_lower or "pm-jay" in text_lower:
+            scheme_name = "Ayushman Bharat (AB-PMJAY) National Health Authority"
+            policy_title = "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana Package Schedule"
         elif "yeshaswini" in text_lower:
-            scheme_name = "Yeshaswini Co-operative Health Scheme"
+            scheme_name = "Yeshaswini Co-operative Farmers Health Scheme"
+            policy_title = "Yeshaswini Health Scheme Benefit Package"
         elif "esi" in text_lower or "esic" in text_lower:
-            scheme_name = "Employees' State Insurance (ESI) Scheme"
+            scheme_name = "Employees' State Insurance Corporation (ESIC)"
+            policy_title = "ESI Medical Benefit Scheme Package"
+        elif "cghs" in text_lower:
+            scheme_name = "Central Government Health Scheme (CGHS)"
+            policy_title = "CGHS Empaneled Hospital Rate Schedule"
+        else:
+            scheme_name = "Government Health Protection Scheme"
+            policy_title = "Government Health Scheme Benefit Package"
 
         return PolicyProfile(
             insurer_name=scheme_name,
-            policy_name="Government Health Protection Benefit Package",
+            policy_name=policy_title,
             sum_insured_inr=500000,
             room_eligibility="General Ward Rates (Empaneled Network Hospitals)",
             room_rent_limit="Standard Scheme Package Rates per procedure",
