@@ -648,9 +648,9 @@
                 <span>DPDP 2025 Compliant</span>
               </span>
             </div>
-            <h2 class="text-xl font-extrabold text-white light:text-slate-900">Health Coverage & Patient Navigation Overview</h2>
+            <h2 data-i18n="hero_title" class="text-xl font-extrabold text-white light:text-slate-900">Health Coverage & Patient Navigation Overview</h2>
             </div>
-          <button onclick="switchTab('tab1')" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-md cursor-pointer whitespace-nowrap">
+          <button data-i18n="upload_manage_btn" onclick="switchTab('tab1')" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-md cursor-pointer whitespace-nowrap">
             + Upload / Manage Policy PDF
           </button>
         </div>
@@ -658,25 +658,25 @@
         <!-- 4 Metrics Overview Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
-            <span class="text-slate-400 light:text-slate-600 block">Active Health Insurer</span>
+            <span data-i18n="metric_insurer" class="text-slate-400 light:text-slate-600 block">Active Health Insurer</span>
             <strong id="dashInsurerName" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block truncate">--</strong>
             <span id="dashInsurerSub" class="text-[10px] text-slate-400">No Policy Loaded</span>
           </div>
 
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
-            <span class="text-slate-400 light:text-slate-600 block">Total Combined Protection</span>
+            <span data-i18n="metric_protection" class="text-slate-400 light:text-slate-600 block">Total Combined Protection</span>
             <strong id="dashTotalSI" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block">--</strong>
             <span id="dashTotalSub" class="text-[10px] text-slate-400">Base SI + Super Top-Up</span>
           </div>
 
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
-            <span class="text-slate-400 light:text-slate-600 block">Room Rent Eligibility</span>
+            <span data-i18n="metric_room" class="text-slate-400 light:text-slate-600 block">Room Rent Eligibility</span>
             <strong id="dashRoomEligibility" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block truncate">--</strong>
             <span id="dashRoomSub" class="text-[10px] text-slate-400">Pending Upload</span>
           </div>
 
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
-            <span class="text-slate-400 light:text-slate-600 block">Policy Health Rating</span>
+            <span data-i18n="metric_health" class="text-slate-400 light:text-slate-600 block">Policy Health Rating</span>
             <strong id="dashHealthGrade" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block">--</strong>
             <span id="dashHealthSub" class="text-[10px] text-slate-400">Pending Upload</span>
           </div>
@@ -689,41 +689,41 @@
         <!-- Action 1: Coverage -->
         <div onclick="switchTab('tab1')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-end">
-            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+            <span data-i18n="explore_btn" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
-          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Policy Coverage & Risk</h3>
+          <h3 data-i18n="card_coverage_title" class="font-extrabold text-white light:text-slate-900 text-sm">Policy Coverage & Risk</h3>
           </div>
 
         <!-- Action 2: Hospitals -->
         <div onclick="switchTab('tab3')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-end">
-            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+            <span data-i18n="explore_btn" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
-          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Network Hospitals & Cost</h3>
+          <h3 data-i18n="card_hospitals_title" class="font-extrabold text-white light:text-slate-900 text-sm">Network Hospitals & Cost</h3>
           </div>
 
         <!-- Action 3: Claims -->
         <div onclick="switchTab('tab4')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-end">
-            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+            <span data-i18n="explore_btn" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
-          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
+          <h3 data-i18n="card_claims_title" class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
           </div>
 
         <!-- Action 4: Risk & Bill Calculator -->
         <div onclick="switchTab('tab-calculator')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-end">
-            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+            <span data-i18n="explore_btn" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
-          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Risk & Bill Calculator</h3>
+          <h3 data-i18n="card_calculator_title" class="font-extrabold text-white light:text-slate-900 text-sm">Risk & Bill Calculator</h3>
           </div>
 
         <!-- Action 5: Ask AI -->
         <div onclick="switchTab('tab2')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
           <div class="flex items-center justify-end">
-            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
+            <span data-i18n="explore_btn" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
-          <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Ask AI Copilot</h3>
+          <h3 data-i18n="card_ask_title" class="font-extrabold text-white light:text-slate-900 text-sm">Ask AI Copilot</h3>
           </div>
       </div>
     </section>
@@ -1349,6 +1349,8 @@
     let userLat = null;
     let userLon = null;
     let selectedLanguage = "English";
+    let userLon = null;
+    let selectedLanguage = "English";
     let UI_I18N = {};
 
     // Load i18n translation dictionary from static JSON asset
@@ -1356,24 +1358,31 @@
       .then(res => res.json())
       .then(data => {
         UI_I18N = data;
-        if (selectedLanguage && selectedLanguage !== "English") {
-          changeLanguage();
+        window.UI_I18N = data;
+        const selectEl = document.getElementById('languageSelect');
+        if (selectEl && selectEl.value) {
+          selectedLanguage = selectEl.value;
         }
+        changeLanguage();
       })
       .catch(err => console.error("Failed to load i18n data", err));
 
     function getTranslation(key, defaultVal = '') {
-      if (window.UI_I18N && selectedLanguage && UI_I18N[selectedLanguage] && UI_I18N[selectedLanguage][key]) {
-        return UI_I18N[selectedLanguage][key];
+      const lang = selectedLanguage || "English";
+      if (UI_I18N && UI_I18N[lang] && UI_I18N[lang][key]) {
+        return UI_I18N[lang][key];
       }
-      if (window.UI_I18N && UI_I18N["English"] && UI_I18N["English"][key]) {
+      if (UI_I18N && UI_I18N["English"] && UI_I18N["English"][key]) {
         return UI_I18N["English"][key];
       }
       return defaultVal;
     }
 
     function changeLanguage() {
-      selectedLanguage = document.getElementById('languageSelect').value;
+      const selectEl = document.getElementById('languageSelect');
+      if (selectEl) {
+        selectedLanguage = selectEl.value;
+      }
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -1384,7 +1393,19 @@
           if (targetSpan) {
             targetSpan.innerText = translatedText;
           } else {
-            el.innerText = translatedText;
+            if (el.children.length === 0) {
+              el.innerText = translatedText;
+            } else {
+              let updated = false;
+              for (let child of el.childNodes) {
+                if (child.nodeType === Node.TEXT_NODE && child.textContent.trim().length > 0) {
+                  child.textContent = translatedText;
+                  updated = true;
+                  break;
+                }
+              }
+              if (!updated) el.innerText = translatedText;
+            }
           }
         }
       });
