@@ -1490,7 +1490,7 @@
       }
     }
 
-    // Site-opening DPDP consent handler
+    // Site-opening DPDP consent handler (re-appears on every site reload)
     function acceptConsent() {
       const checkbox = document.getElementById('modalConsentCheckbox');
       if (!checkbox.checked) {
@@ -1498,7 +1498,6 @@
         return;
       }
       document.getElementById('consentModal').style.display = 'none';
-      sessionStorage.setItem('dpdp_consent', 'granted');
     }
 
     function declineConsent() {
@@ -1509,10 +1508,6 @@
           <button onclick="location.reload()" class="bg-sky-600 text-white font-bold text-xs px-4 py-2 rounded-lg mt-4">Reload Page</button>
         </div>
       `;
-    }
-
-    if (sessionStorage.getItem('dpdp_consent') === 'granted') {
-      document.getElementById('consentModal').style.display = 'none';
     }
 
     // PDF Export Generator
