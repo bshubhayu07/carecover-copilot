@@ -654,26 +654,26 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
             <span class="text-slate-400 light:text-slate-600 block">Active Health Insurer</span>
-            <strong id="dashInsurerName" class="text-white light:text-slate-900 text-sm font-extrabold block truncate">No Policy Uploaded</strong>
-            <span class="text-[10px] text-sky-400 light:text-sky-700">DPDP Encrypted Buffer</span>
+            <strong id="dashInsurerName" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block truncate">--</strong>
+            <span id="dashInsurerSub" class="text-[10px] text-slate-400">No Policy Loaded</span>
           </div>
 
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
             <span class="text-slate-400 light:text-slate-600 block">Total Combined Protection</span>
-            <strong id="dashTotalSI" class="text-emerald-400 light:text-emerald-700 text-sm font-extrabold block">₹0</strong>
-            <span class="text-[10px] text-slate-400">Base SI + Super Top-Up</span>
+            <strong id="dashTotalSI" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block">--</strong>
+            <span id="dashTotalSub" class="text-[10px] text-slate-400">Base SI + Super Top-Up</span>
           </div>
 
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
             <span class="text-slate-400 light:text-slate-600 block">Room Rent Eligibility</span>
-            <strong id="dashRoomEligibility" class="text-slate-200 light:text-slate-800 text-sm font-extrabold block truncate">Single Private Room</strong>
-            <span class="text-[10px] text-emerald-400">No Capping Penalty</span>
+            <strong id="dashRoomEligibility" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block truncate">--</strong>
+            <span id="dashRoomSub" class="text-[10px] text-slate-400">Pending Upload</span>
           </div>
 
           <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-1">
             <span class="text-slate-400 light:text-slate-600 block">Policy Health Rating</span>
-            <strong id="dashHealthGrade" class="text-sky-400 light:text-sky-700 text-sm font-extrabold block">Good Protection (75/100)</strong>
-            <span class="text-[10px] text-slate-400">Informational Health Score</span>
+            <strong id="dashHealthGrade" class="text-slate-400 light:text-slate-500 text-sm font-extrabold block">--</strong>
+            <span id="dashHealthSub" class="text-[10px] text-slate-400">Pending Upload</span>
           </div>
         </div>
       </div>
@@ -1680,10 +1680,66 @@
 
       // Sync Executive Dashboard Widgets
       const dashInsurer = document.getElementById('dashInsurerName');
-      if (dashInsurer) dashInsurer.innerText = activePolicyName || "No Policy Uploaded";
+      const dashInsurerSub = document.getElementById('dashInsurerSub');
+      if (dashInsurer) {
+        if (activePolicyName && activePolicyName.length > 0) {
+          dashInsurer.innerText = activePolicyName;
+          dashInsurer.className = "text-white light:text-slate-900 text-sm font-extrabold block truncate";
+          if (dashInsurerSub) {
+            dashInsurerSub.innerText = "DPDP Encrypted Buffer";
+            dashInsurerSub.className = "text-[10px] text-sky-400 light:text-sky-700";
+          }
+        } else {
+          dashInsurer.innerText = "--";
+          dashInsurer.className = "text-slate-400 light:text-slate-500 text-sm font-extrabold block truncate";
+          if (dashInsurerSub) {
+            dashInsurerSub.innerText = "No Policy Loaded";
+            dashInsurerSub.className = "text-[10px] text-slate-400";
+          }
+        }
+      }
       
       const dashSI = document.getElementById('dashTotalSI');
-      if (dashSI) dashSI.innerText = combined > 0 ? `₹${combined.toLocaleString('en-IN')}` : "₹0";
+      if (dashSI) {
+        if (combined > 0) {
+          dashSI.innerText = `₹${combined.toLocaleString('en-IN')}`;
+          dashSI.className = "text-emerald-400 light:text-emerald-700 text-sm font-extrabold block";
+        } else {
+          dashSI.innerText = "--";
+          dashSI.className = "text-slate-400 light:text-slate-500 text-sm font-extrabold block";
+        }
+      }
+
+      const dashRoom = document.getElementById('dashRoomEligibility');
+      const dashRoomSub = document.getElementById('dashRoomSub');
+      if (dashRoom) {
+        if (activePolicyData && activePolicyData.room_eligibility) {
+          dashRoom.innerText = activePolicyData.room_eligibility;
+          dashRoom.className = "text-slate-100 light:text-slate-800 text-sm font-extrabold block truncate";
+          if (dashRoomSub) {
+            dashRoomSub.innerText = "No Capping Penalty";
+            dashRoomSub.className = "text-[10px] text-emerald-400 light:text-emerald-700";
+          }
+        } else {
+          dashRoom.innerText = "--";
+          dashRoom.className = "text-slate-400 light:text-slate-500 text-sm font-extrabold block truncate";
+          if (dashRoomSub) {
+            dashRoomSub.innerText = "Pending Upload";
+            dashRoomSub.className = "text-[10px] text-slate-400";
+          }
+        }
+      }
+
+      const dashHealth = document.getElementById('dashHealthGrade');
+      const dashHealthSub = document.getElementById('dashHealthSub');
+      if (dashHealth && (!activePolicyData && currentBaseSI <= 0 && currentTopupSI <= 0)) {
+        dashHealth.innerText = "--";
+        dashHealth.className = "text-slate-400 light:text-slate-500 text-sm font-extrabold block";
+        if (dashHealthSub) {
+          dashHealthSub.innerText = "Pending Upload";
+          dashHealthSub.className = "text-[10px] text-slate-400";
+        }
+      }
 
       const exportBtn = document.getElementById('exportPdfBtn');
       if (exportBtn) {
@@ -1824,6 +1880,23 @@
 
       const container = document.getElementById('healthRiskBadgesContainer');
       if (container) container.innerHTML = badges.join('');
+
+      const dashHealth = document.getElementById('dashHealthGrade');
+      const dashHealthSub = document.getElementById('dashHealthSub');
+      if (dashHealth) {
+        let label = "Good Protection";
+        if (score >= 85) label = "Excellent Protection";
+        else if (score >= 70) label = "Good Protection";
+        else if (score >= 50) label = "Moderate Protection";
+        else label = "Basic Coverage";
+
+        dashHealth.innerText = `${label} (${score}/100)`;
+        dashHealth.className = "text-sky-400 light:text-sky-700 text-sm font-extrabold block";
+        if (dashHealthSub) {
+          dashHealthSub.innerText = "Informational Health Score";
+          dashHealthSub.className = "text-[10px] text-slate-400";
+        }
+      }
     }
 
     function loadDemoPolicy() {
