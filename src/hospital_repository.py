@@ -85,9 +85,9 @@ def generate_city_hospitals(city_name: str) -> List[Dict[str, Any]]:
         base_name = parts[0].strip()
         locality = parts[1].replace(")", "").strip() if len(parts) > 1 else "Central"
         
-        # Distinct locality lat/lon offsets around city center
-        offset_lat = ((idx % 5) * 0.018) - 0.035
-        offset_lon = (((idx + 2) % 6) * 0.022) - 0.045
+        # Distinct locality lat/lon radial offsets around city center
+        offset_lat = math.sin(idx * 1.37) * 0.11
+        offset_lon = math.cos(idx * 1.51) * 0.13
         
         hospitals.append({
             "hospital_id": f"H_{city_title.upper()[:3]}_{idx:03d}",
