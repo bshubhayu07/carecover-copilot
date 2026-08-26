@@ -1310,8 +1310,6 @@
     let userLat = null;
     let userLon = null;
     let selectedLanguage = "English";
-    let userLon = null;
-    let selectedLanguage = "English";
     let UI_I18N = {};
 
     // Load i18n translation dictionary from static JSON asset
@@ -2282,6 +2280,11 @@
       `;
 
       document.getElementById('traceabilityModal').classList.remove('hidden');
+    }
+
+    function closeTraceabilityModal() {
+      const modal = document.getElementById('traceabilityModal');
+      if (modal) modal.classList.add('hidden');
     }
 
     function populatePolicyTreatmentsDropdown(policyData) {
