@@ -584,6 +584,9 @@
         <button data-i18n="nav_claims" onclick="switchTab('tab4')" id="tab4-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
           <span>Claims & Journey</span>
         </button>
+        <button data-i18n="nav_calculator" onclick="switchTab('tab-calculator')" id="tab-calculator-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+          <span>Risk & Bill Calculator</span>
+        </button>
         <button data-i18n="tab2" onclick="switchTab('tab2')" id="tab2-btn" class="py-2 px-3 rounded-xl text-slate-400 light:text-slate-500 hover:text-sky-400 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
           <span>Ask AI</span>
         </button>
@@ -602,6 +605,9 @@
         </button>
         <button data-i18n="nav_claims" onclick="switchTab('tab4'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Claims & Journey</span>
+        </button>
+        <button data-i18n="nav_calculator" onclick="switchTab('tab-calculator'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
+          <span>Risk & Bill Calculator</span>
         </button>
         <button data-i18n="tab2" onclick="switchTab('tab2'); toggleMobileMenu()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-200 light:text-slate-800 hover:bg-slate-900 light:hover:bg-slate-100 rounded-lg flex items-center gap-2">
           <span>Ask AI</span>
@@ -1121,6 +1127,89 @@
         </div>
       </div>
       
+
+      <!-- Claim Assistant & Mandatory Checklist Generator Card -->
+      <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
+          <div>
+            <h2 class="text-base font-extrabold text-white light:text-slate-900">Claim Assistant & Interactive Document Checklist</h2>
+            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Generate your required claim document checklist and track missing files automatically.</p>
+          </div>
+          <span class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold">Document Verification</span>
+        </div>
+
+        <!-- Checklist Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <!-- Mandatory Documents Checklist -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-2">
+            <span class="font-bold text-sky-400 light:text-sky-700 uppercase tracking-wider text-[10px]">Mandatory Document Checklist</span>
+            <div class="space-y-1.5 text-slate-200 light:text-slate-800 text-[11px]">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
+                <span>Health Insurance Card / Policy Schedule Copy</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
+                <span>Patient Govt Photo ID Proof (Aadhaar / PAN / Passport)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
+                <span>Doctor Consultation Prescription Slip</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
+                <span>Original Hospital Discharge Summary</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
+                <span>Itemized Hospital Main Bill with Detailed Breakup</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
+                <span>Payment Receipts with Original Stamp</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Claim Status Tracker Progress Bar -->
+          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-3">
+            <span class="font-bold text-indigo-400 light:text-indigo-700 uppercase tracking-wider text-[10px]">Live Claim Status Tracker</span>
+            <div class="space-y-3 pt-1">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-300 light:text-slate-700 font-bold">1. Claim Intimation</span>
+                <span class="text-emerald-400 font-bold">Completed</span>
+              </div>
+              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="bg-emerald-400 h-full rounded-full" style="width: 100%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-300 light:text-slate-700 font-bold">2. TPA Document Verification</span>
+                <span class="text-sky-400 font-bold">In Progress</span>
+              </div>
+              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="bg-sky-400 h-full rounded-full animate-pulse" style="width: 65%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-400 light:text-slate-500 font-bold">3. Pre-Auth / Settlement Approval</span>
+                <span class="text-slate-500 font-bold">Pending</span>
+              </div>
+              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="bg-slate-700 h-full rounded-full" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </section>
+
+    <!-- TAB 5: Risk & Bill Calculator -->
+    <section id="tab-calculator-content" class="space-y-6 hidden">
+
       <!-- Financial-Risk & Out-Of-Pocket Prediction Engine Card -->
       <div class="glass-card p-6 rounded-xl space-y-5 border border-sky-900/50 light:border-sky-300">
         <div class="border-b border-slate-800 light:border-slate-200 pb-3">
@@ -1231,8 +1320,8 @@
             <span id="resTopupStatus" class="font-bold text-slate-400 light:text-slate-500">No Policy Uploaded</span>
             <div id="resDeductionNotes" class="text-[11px] text-slate-400 light:text-slate-600">Upload your policy PDF or load Demo Base Policy to calculate risk dynamically.</div>
           </div>
-          </div>
         </div>
+      </div>
 
       <!-- Hospital Bill Analyzer & Non-Payable Consumables Detector Card -->
       <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
@@ -1275,82 +1364,6 @@
           </div>
         </div>
       </div>
-      <!-- Claim Assistant & Mandatory Checklist Generator Card -->
-      <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
-        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
-          <div>
-            <h2 class="text-base font-extrabold text-white light:text-slate-900">Claim Assistant & Interactive Document Checklist</h2>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Generate your required claim document checklist and track missing files automatically.</p>
-          </div>
-          <span class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold">Document Verification</span>
-        </div>
-
-        <!-- Checklist Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <!-- Mandatory Documents Checklist -->
-          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-2">
-            <span class="font-bold text-sky-400 light:text-sky-700 uppercase tracking-wider text-[10px]">Mandatory Document Checklist</span>
-            <div class="space-y-1.5 text-slate-200 light:text-slate-800 text-[11px]">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
-                <span>Health Insurance Card / Policy Schedule Copy</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
-                <span>Patient Govt Photo ID Proof (Aadhaar / PAN / Passport)</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
-                <span>Doctor Consultation Prescription Slip</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
-                <span>Original Hospital Discharge Summary</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
-                <span>Itemized Hospital Main Bill with Detailed Breakup</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="rounded border-slate-700 text-sky-500">
-                <span>Payment Receipts with Original Stamp</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Claim Status Tracker Progress Bar -->
-          <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-3">
-            <span class="font-bold text-indigo-400 light:text-indigo-700 uppercase tracking-wider text-[10px]">Live Claim Status Tracker</span>
-            <div class="space-y-3 pt-1">
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="text-slate-300 light:text-slate-700 font-bold">1. Claim Intimation</span>
-                <span class="text-emerald-400 font-bold">Completed</span>
-              </div>
-              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
-                <div class="bg-emerald-400 h-full rounded-full" style="width: 100%;"></div>
-              </div>
-
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="text-slate-300 light:text-slate-700 font-bold">2. TPA Document Verification</span>
-                <span class="text-sky-400 font-bold">In Progress</span>
-              </div>
-              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
-                <div class="bg-sky-400 h-full rounded-full animate-pulse" style="width: 65%;"></div>
-              </div>
-
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="text-slate-400 light:text-slate-500 font-bold">3. Pre-Auth / Settlement Approval</span>
-                <span class="text-slate-500 font-bold">Pending</span>
-              </div>
-              <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
-                <div class="bg-slate-700 h-full rounded-full" style="width: 0%;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
 
     </section>
 
@@ -1741,7 +1754,7 @@
     }
 
     function switchTab(tabId) {
-      ['tab-dashboard', 'tab1', 'tab2', 'tab3', 'tab4'].forEach(id => {
+      ['tab-dashboard', 'tab1', 'tab2', 'tab3', 'tab4', 'tab-calculator'].forEach(id => {
         const el = document.getElementById(id + '-content');
         if (el) el.classList.add('hidden');
         const btn = document.getElementById(id + '-btn');

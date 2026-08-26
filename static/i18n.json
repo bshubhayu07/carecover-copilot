@@ -55,7 +55,8 @@
     "match_score_label": "Match Score",
     "select_hospital_btn": "Select Hospital & View Room Categories (Step 4)",
     "call_btn": "Call",
-    "away_label": "km away"
+    "away_label": "km away",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Hindi": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करें",
@@ -113,7 +114,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "जोखिम एवं बिल कैलकुलेटर"
   },
   "Marathi": {
     "emergency_prefix": "आणीबाणी सूचना: कॉल करा",
@@ -171,7 +173,8 @@
     "match_score_label": "मॅच स्कोर",
     "select_hospital_btn": "रुग्णालय निवडा आणि खोलीचे प्रकार पहा (टप्पा 4)",
     "call_btn": "कॉल करा",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "जोखीम आणि बिल कॅल्क्युलेटर"
   },
   "Bengali": {
     "emergency_prefix": "জরুরি বিজ্ঞপ্তি: কল করুন",
@@ -229,7 +232,8 @@
     "match_score_label": "ম্যাচ স্কোর",
     "select_hospital_btn": "হাসপাতাল নির্বাচন করুন এবং রুম ক্যাটাগরি দেখুন (ধাপ ৪)",
     "call_btn": "কল করুন",
-    "away_label": "কিমি দূরে"
+    "away_label": "কিমি দূরে",
+    "nav_calculator": "ঝুঁকি ও বিল ক্যালকুলেটর"
   },
   "Gujarati": {
     "emergency_prefix": "ઇમરજન્સી નોટિસ: કોલ કરો",
@@ -287,7 +291,8 @@
     "match_score_label": "મેચ સ્કોર",
     "select_hospital_btn": "હોસ્પિટલ પસંદ કરો અને રૂમ શ્રેણીઓ જુઓ (પગલું 4)",
     "call_btn": "કૉલ કરો",
-    "away_label": "કિમી દૂર"
+    "away_label": "કિમી દૂર",
+    "nav_calculator": "જોખમ અને બિલ કેલ્ક્યુલેટર"
   },
   "Punjabi": {
     "emergency_prefix": "ਐਮਰਜੈਂਸੀ ਨੋਟਿਸ: ਕਾਲ ਕਰੋ",
@@ -345,7 +350,8 @@
     "match_score_label": "ਮੈਚ ਸਕੋਰ",
     "select_hospital_btn": "ਹਸਪਤਾਲ ਚੁਣੋ ਅਤੇ ਕਮਰੇ ਦੀ ਸ਼੍ਰੇਣੀ ਵੇਖੋ (ਕਦਮ 4)",
     "call_btn": "ਕਾਲ ਕਰੋ",
-    "away_label": "ਕਿ.ਮੀ. ਦੂਰ"
+    "away_label": "ਕਿ.ਮੀ. ਦੂਰ",
+    "nav_calculator": "ਜੋਖਮ ਅਤੇ ਬਿਲ ਕੈਲਕੁਲੇਟਰ"
   },
   "Tamil": {
     "emergency_prefix": "அவசர அறிவிப்பு: அழைக்கவும்",
@@ -403,7 +409,8 @@
     "match_score_label": "பொருந்தும் மதிப்பெண்",
     "select_hospital_btn": "மருத்துவமனையைத் தேர்ந்தெடுத்து அறைகளைப் பார்க்கவும் (படி 4)",
     "call_btn": "அழைக்கவும்",
-    "away_label": "கிமீ தொலைவில்"
+    "away_label": "கிமீ தொலைவில்",
+    "nav_calculator": "ஆபத்து & பில் கணக்கிடும் கருவி"
   },
   "Telugu": {
     "emergency_prefix": "అత్యవసర నోటీసు: కాల్ చేయండి",
@@ -461,7 +468,8 @@
     "match_score_label": "మ్యాచ్ స్కోరు",
     "select_hospital_btn": "ఆసుపత్రిని ఎంచుకుని గది వర్గాలను చూడండి (దశ 4)",
     "call_btn": "కాల్ చేయండి",
-    "away_label": "కిమీ దూరంలో"
+    "away_label": "కిమీ దూరంలో",
+    "nav_calculator": "రిస్క్ & బిల్ కాలిక్యులేటర్"
   },
   "Kannada": {
     "emergency_prefix": "ತುರ್ತು ಸೂಚನೆ: ಕರೆ ಮಾಡಿ",
@@ -519,7 +527,8 @@
     "match_score_label": "ಮ್ಯಾಚ್ ಸ್ಕೋರ್",
     "select_hospital_btn": "ಆಸ್ಪತ್ರೆ ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ಕೋಣೆ ವರ್ಗಗಳನ್ನು ವೀಕ್ಷಿಸಿ (ಹಂತ 4)",
     "call_btn": "ಕರೆ ಮಾಡಿ",
-    "away_label": "ಕಿಮೀ ದೂರದಲ್ಲಿದೆ"
+    "away_label": "ಕಿಮೀ ದೂರದಲ್ಲಿದೆ",
+    "nav_calculator": "ಅಪಾಯ ಮತ್ತು ಬಿಲ್ ಕ್ಯಾಲ್ಕುಲೇಟರ್"
   },
   "Malayalam": {
     "emergency_prefix": "അടിയന്തിര അറിയിപ്പ്: വിളിക്കുക",
@@ -577,7 +586,8 @@
     "match_score_label": "മാച്ച് സ്‌കോർ",
     "select_hospital_btn": "ആശുപത്രി തിരഞ്ഞെടുക്കുക മുറികൾ കാണുക (ഘട്ടം 4)",
     "call_btn": "വിളിക്കുക",
-    "away_label": "കിമീ അകലെ"
+    "away_label": "കിമീ അകലെ",
+    "nav_calculator": "റിസ്ക് & ബിൽ കാൽക്കുലേറ്റർ"
   },
   "Odia": {
     "emergency_prefix": "ଜରୁରୀ ସୂଚନା: କଲ୍ କରନ୍ତୁ",
@@ -635,7 +645,8 @@
     "match_score_label": "ମ୍ୟାଚ୍ ସ୍କୋର",
     "select_hospital_btn": "ହାସପାତାଳ ବାଛନ୍ତୁ ଏବଂ ରୁମ୍ ଶ୍ରେଣୀ ଦେଖନ୍ତୁ (ପଦକ୍ଷେପ ୪)",
     "call_btn": "କଲ୍ କରନ୍ତୁ",
-    "away_label": "କିମି ଦୂର"
+    "away_label": "କିମି ଦୂର",
+    "nav_calculator": "ଜୋଖମ ଓ ବିଲ୍ କାଲକୁଲେଟର"
   },
   "Assamese": {
     "emergency_prefix": "জৰুৰী সূচনা: কল কৰক",
@@ -693,7 +704,8 @@
     "match_score_label": "মেচ স্কোৰ",
     "select_hospital_btn": "হাস্পতাল বাছনি কৰক (পদ্ধতি ৪)",
     "call_btn": "কল কৰক",
-    "away_label": "কিমি আঁতৰত"
+    "away_label": "কিমি আঁতৰত",
+    "nav_calculator": "ঝুঁকি আৰু বিল কেলকুলেটৰ"
   },
   "Urdu": {
     "emergency_prefix": "ہنگامی اطلاع: کال کریں",
@@ -751,7 +763,8 @@
     "match_score_label": "میچ اسکور",
     "select_hospital_btn": "ہسپتال منتخب کریں اور کمرے دیکھیں (مرحلہ 4)",
     "call_btn": "کال کریں",
-    "away_label": "کلو میٹر دور"
+    "away_label": "کلو میٹر دور",
+    "nav_calculator": "رسک اور بل کیلکولیٹر"
   },
   "Sanskrit": {
     "emergency_prefix": "आपत्कालीनसूचना: आह्वयन्तु",
@@ -809,7 +822,8 @@
     "match_score_label": "मेलनाङ्कः",
     "select_hospital_btn": "चिकित्सालयं चिनोतु (चरणम् ४)",
     "call_btn": "आह्वयतु",
-    "away_label": "किमी दूरे"
+    "away_label": "किमी दूरे",
+    "nav_calculator": "जोखिमः मूल्यगणकः च"
   },
   "Kashmiri": {
     "emergency_prefix": "ایمرجنسی نوٹس: کال کریو",
@@ -867,7 +881,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Nepali": {
     "emergency_prefix": "आपतकालीन सूचना: कल गर्नुहोस्",
@@ -925,7 +940,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल छान्नुहोस् र कोठा श्रेणी हेर्नुहोस् (चरण ४)",
     "call_btn": "कल गर्नुहोस्",
-    "away_label": "किमी टाढा"
+    "away_label": "किमी टाढा",
+    "nav_calculator": "जोखिम र बिल क्याल्कुलेटर"
   },
   "Sindhi": {
     "emergency_prefix": "هنگامي نوٽيس: ڪال ڪريو",
@@ -983,7 +999,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Konkani": {
     "emergency_prefix": "आणीबाणी सूचना: फोन करा",
@@ -1041,7 +1058,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Maithili": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करू",
@@ -1099,7 +1117,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Dogri": {
     "emergency_prefix": "आपातकालीन सूचना: कॉल करो",
@@ -1157,7 +1176,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Manipuri": {
     "emergency_prefix": "ইমার্জেন্সী নোটিস: কোল তৌবীয়ু",
@@ -1215,7 +1235,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Bodo": {
     "emergency_prefix": "इमार्जेन्सी नोतिस: कल खालाम",
@@ -1273,7 +1294,8 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   },
   "Santhali": {
     "emergency_prefix": "ᱟᱯᱟᱛᱠᱟᱞᱤᱱ ᱱᱚᱴᱤᱥ: ᱠᱚᱞ ᱢᱮ",
@@ -1331,6 +1353,7 @@
     "match_score_label": "मैच स्कोर",
     "select_hospital_btn": "अस्पताल चुनें एवं कमरा श्रेणियां देखें (चरण 4)",
     "call_btn": "कॉल करें",
-    "away_label": "किमी दूर"
+    "away_label": "किमी दूर",
+    "nav_calculator": "Risk & Bill Calculator"
   }
 }
