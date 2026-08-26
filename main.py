@@ -123,6 +123,15 @@ def get_favicon():
     svg_data = """<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><path stroke='%23ffffff' d='m9 12 2 2 4-4'/></svg>"""
     return Response(content=svg_data, media_type="image/svg+xml")
 
+@app.get("/favicon.ico")
+def get_favicon_ico():
+    if os.path.exists("docs/favicon.svg"):
+        return FileResponse("docs/favicon.svg", media_type="image/svg+xml")
+    if os.path.exists("static/favicon.svg"):
+        return FileResponse("static/favicon.svg", media_type="image/svg+xml")
+    svg_data = """<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><path stroke='%23ffffff' d='m9 12 2 2 4-4'/></svg>"""
+    return Response(content=svg_data, media_type="image/svg+xml")
+
 @app.get("/static/i18n.json")
 def get_i18n_json():
     if os.path.exists("static/i18n.json"):
