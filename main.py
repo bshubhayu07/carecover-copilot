@@ -297,12 +297,15 @@ def get_hospitals_endpoint(
         if specialty != "All Specialties":
             spec_low = specialty.lower()
             hosp_spec_low = str(m.get('specialties', '')).lower()
-            if spec_low == "multispecialty":
-                # Hospitals with multiple specialties (or 'general') qualify as Multispecialty
-                if "multispecialty" not in hosp_spec_low and "general" not in hosp_spec_low and "|" not in hosp_spec_low:
+            if "multispecialty" in spec_low or "multispecialty" in hosp_spec_low or "general" in hosp_spec_low:
+                pass
+            else:
+                keywords = [k for k in ["cardio", "ortho", "onco", "neuro", "gastro", "uro", "nephro", "pulmo", "gynec", "pediatr", "ophthal", "ent"] if k in spec_low]
+                if keywords:
+                    if not any(k in hosp_spec_low for k in keywords) and "multispecialty" not in hosp_spec_low:
+                        continue
+                elif spec_low not in hosp_spec_low and "multispecialty" not in hosp_spec_low:
                     continue
-            elif spec_low not in hosp_spec_low:
-                continue
         filtered.append(m)
 
     return filtered

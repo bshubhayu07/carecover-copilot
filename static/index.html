@@ -970,9 +970,17 @@
             <label data-i18n="specialty_label" class="block text-slate-400 light:text-slate-600 mb-1">Filter Specialty</label>
             <select id="hospitalSpecialty" onchange="fetchHospitals()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2">
               <option value="All Specialties">All Specialties</option>
-              <option value="Cardiology">Cardiology</option>
-              <option value="Orthopedics">Orthopedics</option>
-              <option value="Oncology">Oncology</option>
+              <option value="Cardiology">Cardiology & Vascular Care</option>
+              <option value="Orthopedics">Orthopedics & Joint Surgery</option>
+              <option value="Oncology">Oncology & Cancer Care</option>
+              <option value="Neurology">Neurology & Neurosurgery</option>
+              <option value="Gastroenterology">Gastroenterology & Hepatology</option>
+              <option value="Urology">Urology & Nephrology</option>
+              <option value="Pulmonology">Pulmonology & Respiratory Care</option>
+              <option value="Gynecology">Obstetrics & Gynecology</option>
+              <option value="Pediatrics">Pediatrics & Child Care</option>
+              <option value="Ophthalmology">Ophthalmology & Eye Care</option>
+              <option value="ENT">ENT & Head-Neck Surgery</option>
               <option value="Multispecialty">Multispecialty</option>
             </select>
           </div>
@@ -1005,10 +1013,19 @@
             <select id="costEstProcedure" onchange="runCostEstimate()" class="w-full bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-700 light:border-slate-300 text-white light:text-slate-900 rounded-lg px-3 py-2 font-semibold">
               <option value="Cataract Surgery">Cataract Surgery (Per Eye)</option>
               <option value="Total Knee Replacement">Total Knee Replacement</option>
+              <option value="Total Hip Replacement">Total Hip Replacement</option>
               <option value="Coronary Artery Bypass Graft (CABG)">CABG Heart Bypass</option>
               <option value="Cardiac Stent Angioplasty">Cardiac Stent Angioplasty</option>
-              <option value="Chemotherapy Cycle">Chemotherapy Cycle</option>
-              <option value="Maternity Normal Delivery">Maternity Delivery</option>
+              <option value="Chemotherapy Cycle">Chemotherapy & Targeted Cancer Therapy</option>
+              <option value="Radiation Therapy">Radiation Therapy (IMRT / CyberKnife)</option>
+              <option value="Maternity Normal Delivery">Maternity Normal Delivery</option>
+              <option value="Maternity C-Section Delivery">Maternity C-Section Delivery</option>
+              <option value="LASIK / Refractive Eye Surgery">LASIK / Refractive Eye Surgery</option>
+              <option value="Laparoscopic Appendectomy">Laparoscopic Appendectomy</option>
+              <option value="Laparoscopic Cholecystectomy">Laparoscopic Cholecystectomy (Gallbladder)</option>
+              <option value="Hernia Mesh Repair Surgery">Hernia Mesh Repair Surgery</option>
+              <option value="Kidney Stone Surgery">Kidney Stone Surgery (RIRS / PCNL)</option>
+              <option value="Brain Tumor Craniotomy">Brain Tumor Craniotomy Surgery</option>
             </select>
           </div>
           <div>
@@ -1118,45 +1135,7 @@
           </div>
         </div>
       </div>
-      
-
-      <!-- Claim Assistant & Mandatory Checklist Generator Card -->
-      <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
-        <div class="border-b border-slate-800 light:border-slate-200 pb-3">
-          <h2 class="text-base font-extrabold text-white light:text-slate-900">Claim Assistant & Interactive Document Checklist</h2>
-        </div>
-
-        <!-- Mandatory Documents Checklist -->
-        <div class="bg-slate-900 dark:bg-slate-900 light:bg-white p-4 rounded-xl border border-slate-800 light:border-slate-200 space-y-2 text-xs">
-          <span class="font-bold text-sky-400 light:text-sky-700 uppercase tracking-wider text-[10px]">Mandatory Document Checklist</span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-slate-200 light:text-slate-800 text-[11px] pt-1">
-            <label class="flex items-center gap-2 cursor-pointer p-2 bg-slate-950/60 light:bg-slate-50 rounded-lg border border-slate-800 light:border-slate-200">
-              <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
-              <span>Health Insurance Card / Policy Schedule Copy</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-2 bg-slate-950/60 light:bg-slate-50 rounded-lg border border-slate-800 light:border-slate-200">
-              <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
-              <span>Patient Govt Photo ID Proof (Aadhaar / PAN / Passport)</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-2 bg-slate-950/60 light:bg-slate-50 rounded-lg border border-slate-800 light:border-slate-200">
-              <input type="checkbox" checked class="rounded border-slate-700 text-sky-500">
-              <span>Doctor Consultation Prescription Slip</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-2 bg-slate-950/60 light:bg-slate-50 rounded-lg border border-slate-800 light:border-slate-200">
-              <input type="checkbox" class="rounded border-slate-700 text-sky-500">
-              <span>Original Hospital Discharge Summary</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-2 bg-slate-950/60 light:bg-slate-50 rounded-lg border border-slate-800 light:border-slate-200">
-              <input type="checkbox" class="rounded border-slate-700 text-sky-500">
-              <span>Itemized Hospital Main Bill with Detailed Breakup</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-2 bg-slate-950/60 light:bg-slate-50 rounded-lg border border-slate-800 light:border-slate-200">
-              <input type="checkbox" class="rounded border-slate-700 text-sky-500">
-              <span>Payment Receipts with Original Stamp</span>
-            </label>
-          </div>
-        </div>
-      </div>
+    </section>
 
 
 
