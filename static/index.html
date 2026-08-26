@@ -1054,14 +1054,10 @@
       
       <!-- Interactive 4-Stage Patient Care Journey Tracker -->
       <div class="glass-card p-6 rounded-xl space-y-4 border border-indigo-900/50 light:border-indigo-200">
-        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
-          <div>
-            <h2 class="text-base font-extrabold text-white light:text-slate-900 flex items-center gap-2">
-              <span>Patient Hospital Care Journey Tracker</span>
-            </h2>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Step-by-step decision support, document checklists, and policy guidance for each phase of hospital stay.</p>
-          </div>
-          <span class="text-xs bg-indigo-950 light:bg-indigo-100 text-indigo-400 light:text-indigo-800 border border-indigo-800 light:border-indigo-300 px-2.5 py-0.5 rounded-full font-bold">4 Stage Timeline</span>
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3">
+          <h2 class="text-base font-extrabold text-white light:text-slate-900">
+            <span>Patient Hospital Care Journey Tracker</span>
+          </h2>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
@@ -1090,14 +1086,10 @@
 
       <!-- Pre-Hospitalization Assistant Card -->
       <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
-        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
-          <div>
-            <h2 class="text-base font-extrabold text-white light:text-slate-900 flex items-center gap-2">
-              <span>Pre-Hospitalization Assistant & SLA Timelines</span>
-            </h2>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Mandatory pre-admission steps for planned vs emergency hospitalizations.</p>
-          </div>
-          <span class="text-xs bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">Intimation SLAs</span>
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3">
+          <h2 class="text-base font-extrabold text-white light:text-slate-900">
+            <span>Pre-Hospitalization Assistant & SLA Timelines</span>
+          </h2>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
@@ -1130,12 +1122,8 @@
 
       <!-- Claim Assistant & Mandatory Checklist Generator Card -->
       <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
-        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
-          <div>
-            <h2 class="text-base font-extrabold text-white light:text-slate-900">Claim Assistant & Interactive Document Checklist</h2>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Generate your required claim document checklist and track missing files automatically.</p>
-          </div>
-          <span class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold">Document Verification</span>
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3">
+          <h2 class="text-base font-extrabold text-white light:text-slate-900">Claim Assistant & Interactive Document Checklist</h2>
         </div>
 
         <!-- Mandatory Documents Checklist -->
@@ -1180,9 +1168,8 @@
       <!-- Financial-Risk & Out-Of-Pocket Prediction Engine Card -->
       <div class="glass-card p-6 rounded-xl space-y-5 border border-sky-900/50 light:border-sky-300">
         <div class="border-b border-slate-800 light:border-slate-200 pb-3">
-          <h2 class="text-lg font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+          <h2 class="text-lg font-extrabold text-white light:text-slate-900">
             <span>Financial-Risk & Out-of-Pocket Calculator</span>
-            <span class="text-xs bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">What Could I Potentially Pay?</span>
           </h2>
         </div>
 
@@ -1292,12 +1279,8 @@
 
       <!-- Hospital Bill Analyzer & Non-Payable Consumables Detector Card -->
       <div class="glass-card p-6 rounded-xl space-y-4 border border-sky-900/50 light:border-sky-300">
-        <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
-          <div>
-            <h2 class="text-base font-extrabold text-white light:text-slate-900">Hospital Bill Analyzer & Deduction Detector</h2>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Analyze itemized hospital bills to detect covered medical expenses vs non-payable consumables (gloves, masks, admin fees) and room rent penalties.</p>
-          </div>
-          <span class="text-xs bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">Line-Item Parser</span>
+        <div class="border-b border-slate-800 light:border-slate-200 pb-3">
+          <h2 class="text-base font-extrabold text-white light:text-slate-900">Hospital Bill Analyzer & Deduction Detector</h2>
         </div>
 
         <div class="space-y-3 text-xs">
@@ -2948,10 +2931,8 @@
         const notes = data.customized_policy_notes || [];
 
         let html = `
-          <div class="border-b border-slate-800 light:border-slate-200 pb-3">
-            <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider bg-sky-950 px-2 py-0.5 rounded">Active Stage Guidance</span>
-            <h3 class="text-sm font-bold text-slate-100 light:text-slate-900 mt-1">${info.title}</h3>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">${info.description}</p>
+          <div class="border-b border-slate-800 light:border-slate-200 pb-2">
+            <h3 class="text-sm font-extrabold text-slate-100 light:text-slate-900">${info.title}</h3>
           </div>
         `;
 
