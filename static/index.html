@@ -649,8 +649,7 @@
               </span>
             </div>
             <h2 class="text-xl font-extrabold text-white light:text-slate-900">Health Coverage & Patient Navigation Overview</h2>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-1">Real-time policy health scoring, sum insured tracking, cashless hospital matching, and risk prediction.</p>
-          </div>
+            </div>
           <button onclick="switchTab('tab1')" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-md cursor-pointer whitespace-nowrap">
             + Upload / Manage Policy PDF
           </button>
@@ -693,8 +692,7 @@
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Policy Coverage & Risk</h3>
-          <p class="text-slate-400 light:text-slate-600 text-[11px]">View extracted sum insured, sub-limits, room capping, and specific illness waiting periods.</p>
-        </div>
+          </div>
 
         <!-- Action 2: Hospitals -->
         <div onclick="switchTab('tab3')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
@@ -702,8 +700,7 @@
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Network Hospitals & Cost</h3>
-          <p class="text-slate-400 light:text-slate-600 text-[11px]">Find nearest cashless hospitals by city, specialty, match score, and estimate treatment costs.</p>
-        </div>
+          </div>
 
         <!-- Action 3: Claims -->
         <div onclick="switchTab('tab4')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
@@ -711,8 +708,7 @@
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
-          <p class="text-slate-400 light:text-slate-600 text-[11px]">Calculate exact out-of-pocket expenses, pre-auth SLAs, and generate mandatory document checklists.</p>
-        </div>
+          </div>
 
         <!-- Action 4: Risk & Bill Calculator -->
         <div onclick="switchTab('tab-calculator')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
@@ -720,8 +716,7 @@
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Risk & Bill Calculator</h3>
-          <p class="text-slate-400 light:text-slate-600 text-[11px]">Simulate potential out-of-pocket financial risks, room rent penalties, and analyze itemized hospital bills.</p>
-        </div>
+          </div>
 
         <!-- Action 5: Ask AI -->
         <div onclick="switchTab('tab2')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
@@ -729,8 +724,7 @@
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Ask AI Copilot</h3>
-          <p class="text-slate-400 light:text-slate-600 text-[11px]">Ask policy questions in 23 Indian languages with RAG policy verification and instant confidence scores.</p>
-        </div>
+          </div>
       </div>
     </section>
 
@@ -740,8 +734,6 @@
       <!-- Base Policy Upload Card -->
       <div class="glass-card p-6 rounded-xl space-y-4">
         <h2 data-i18n="upload_title" class="text-lg font-bold text-white light:text-slate-900">Upload Base Health Insurance Policy Document</h2>
-        <p data-i18n="upload_desc" class="text-xs text-slate-400 light:text-slate-600">Selecting a PDF file automatically extracts room eligibility, sum insured, co-pay, and pre-auth rules without requiring extra clicks.</p>
-        
         <div class="flex flex-col sm:flex-row gap-3 items-center">
           <input type="file" id="policyFileInput" accept=".pdf" onchange="handleUpload()" class="block w-full text-xs text-slate-400 light:text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-600 file:text-white hover:file:bg-sky-500 cursor-pointer">
           <button data-i18n="demo_base_btn" id="loadDemoBaseBtn" onclick="loadDemoPolicy()" class="w-full sm:w-auto bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-extrabold text-xs px-4 py-2.5 rounded-lg transition-all shadow cursor-pointer whitespace-nowrap">
@@ -764,8 +756,7 @@
         <div class="flex justify-between items-center border-b border-slate-800 light:border-slate-200 pb-3">
           <div>
             <h3 data-i18n="topup_title" class="font-bold text-sky-400 light:text-sky-700 text-base">Dual-Policy & Super Top-Up Comparison Engine</h3>
-            <p data-i18n="topup_desc" class="text-xs text-slate-400 light:text-slate-600">Combine a secondary Super Top-Up policy to calculate total protection coverage and deductible triggers.</p>
-          </div>
+            </div>
           <span id="topupBadge" class="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-slate-400 light:text-slate-600 border border-slate-700 light:border-slate-300 px-2.5 py-0.5 rounded-full">Top-Up Optional</span>
         </div>
 
@@ -804,8 +795,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-800 light:border-slate-200 pb-3">
           <div>
             <h3 data-i18n="summary_title" class="font-bold text-slate-100 light:text-slate-900 text-base">Extracted Policy Summary Profile</h3>
-            <p data-i18n="summary_sub" class="text-xs text-slate-400 light:text-slate-500">Structured policy clauses and financial coverage limits</p>
-          </div>
+            </div>
           <div class="flex items-center gap-3">
             <!-- EXPORT POLICY INFORMATION AS PDF BUTTON (Only Visible When Policy is Loaded) -->
             <button id="exportPdfBtn" data-i18n="export_pdf_btn" onclick="downloadPolicyPDF()" title="Export Extracted Policy Summary as PDF Report" class="bg-sky-600 hover:bg-sky-500 light:bg-sky-700 light:hover:bg-sky-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg border border-sky-400 flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm hidden">
@@ -887,8 +877,7 @@
           <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
             <div>
               <h3 class="font-extrabold text-white light:text-slate-900 text-base">Treatment Coverage Checker & Clause Citations</h3>
-              <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Enter or select a medical treatment to check whether your policy covers it, sub-limit caps, waiting periods, and clause citations.</p>
-            </div>
+              </div>
             <span class="text-xs bg-sky-950 light:bg-sky-100 text-sky-400 light:text-sky-800 border border-sky-800 light:border-sky-300 px-2.5 py-0.5 rounded-full font-bold">Policy Intelligence Active</span>
           </div>
 
@@ -968,8 +957,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 light:border-slate-200 pb-3">
           <div>
             <h2 data-i18n="hospital_title" class="text-lg font-bold text-white light:text-slate-900">Compliant Network Hospitals</h2>
-            <p data-i18n="hospital_desc" class="text-xs text-slate-400 light:text-slate-600">Select your city below or share your live GPS location to find nearest cashless network hospitals and local emergency numbers.</p>
-          </div>
+            </div>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
@@ -1036,8 +1024,7 @@
         <div class="border-b border-slate-800 light:border-slate-200 pb-3 flex justify-between items-center">
           <div>
             <h3 class="font-extrabold text-white light:text-slate-900 text-base">Hospital Treatment Cost Estimator</h3>
-            <p class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Estimate average surgical costs across 22 Indian cities and your expected insurance coverage ratio.</p>
-          </div>
+            </div>
           <span class="text-xs bg-emerald-950 light:bg-emerald-100 text-emerald-400 light:text-emerald-800 border border-emerald-800 light:border-emerald-300 px-2.5 py-0.5 rounded-full font-bold">22 City Benchmarks</span>
         </div>
 
@@ -1341,8 +1328,7 @@
         <div>
           <span class="text-[10px] font-extrabold text-sky-400 light:text-sky-700 uppercase tracking-wider block">Flowchart Step 4: Room Category Selection</span>
           <h3 id="modalHospitalTitle" class="text-base font-extrabold text-white light:text-slate-900">Hospital Room Options</h3>
-          <p id="modalHospitalMeta" class="text-xs text-slate-400 light:text-slate-600 mt-0.5">Select a room category available at this hospital to evaluate coverage eligibility and room rent capping penalties.</p>
-        </div>
+          </div>
         <button onclick="closeHospitalRoomsModal()" class="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer">&times;</button>
       </div>
 
