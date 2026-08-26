@@ -684,8 +684,7 @@
         
         <!-- Action 1: Coverage -->
         <div onclick="switchTab('tab1')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">📋</span>
+          <div class="flex items-center justify-end">
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Policy Coverage & Risk</h3>
@@ -694,8 +693,7 @@
 
         <!-- Action 2: Hospitals -->
         <div onclick="switchTab('tab3')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">🏥</span>
+          <div class="flex items-center justify-end">
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Network Hospitals & Cost</h3>
@@ -704,8 +702,7 @@
 
         <!-- Action 3: Claims -->
         <div onclick="switchTab('tab4')" class="glass-card p-5 rounded-xl border border-slate-800 light:border-slate-200 hover:border-sky-500 light:hover:border-sky-500 transition-all cursor-pointer space-y-2 group">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">🧾</span>
+          <div class="flex items-center justify-end">
             <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-colors">Explore →</span>
           </div>
           <h3 class="font-extrabold text-white light:text-slate-900 text-sm">Claims & Out-of-Pocket</h3>
@@ -2949,7 +2946,7 @@
             <div class="space-y-2">
               <h4 class="font-bold text-slate-200 light:text-slate-800">Required Documents</h4>
               <div class="space-y-1.5 text-slate-300 light:text-slate-700">
-                ${info.required_documents.map(d => `<div class="p-2 bg-slate-900/60 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg flex items-center gap-2"><span class="text-purple-400 font-bold">📄</span><span>${d}</span></div>`).join('')}
+                ${info.required_documents.map(d => `<div class="p-2 bg-slate-900/60 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg flex items-center gap-2"><span class="text-purple-400 font-bold">•</span><span>${d}</span></div>`).join('')}
               </div>
             </div>
           </div>
